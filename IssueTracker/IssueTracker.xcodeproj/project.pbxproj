@@ -11,12 +11,12 @@
 		293CB51825471486003E1262 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CB51725471486003E1262 /* SceneDelegate.swift */; };
 		293CB51A25471486003E1262 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CB51925471486003E1262 /* SignInViewController.swift */; };
 		293CB51D25471486003E1262 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 293CB51B25471486003E1262 /* Main.storyboard */; };
-		293CB51F25471486003E1262 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CB51E25471486003E1262 /* ContentView.swift */; };
 		293CB52125471487003E1262 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 293CB52025471487003E1262 /* Assets.xcassets */; };
 		293CB52425471487003E1262 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 293CB52225471487003E1262 /* LaunchScreen.storyboard */; };
 		293CB52F25471488003E1262 /* IssueTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CB52E25471488003E1262 /* IssueTrackerTests.swift */; };
 		293CB53A25471488003E1262 /* IssueTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CB53925471488003E1262 /* IssueTrackerUITests.swift */; };
 		2994F96E2547AAA800122CBB /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994F96D2547AAA800122CBB /* RootCoordinator.swift */; };
+		8006671525482CF200B42428 /* IssueListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8006671425482CF200B42428 /* IssueListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +42,6 @@
 		293CB51725471486003E1262 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		293CB51925471486003E1262 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		293CB51C25471486003E1262 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		293CB51E25471486003E1262 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		293CB52025471487003E1262 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		293CB52325471487003E1262 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		293CB52525471487003E1262 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -54,6 +53,7 @@
 		293CB53B25471488003E1262 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		293CB54825471BF2003E1262 /* IssueTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IssueTracker.entitlements; sourceTree = "<group>"; };
 		2994F96D2547AAA800122CBB /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
+		8006671425482CF200B42428 /* IssueListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,10 +110,10 @@
 				293CB51525471486003E1262 /* AppDelegate.swift */,
 				293CB51725471486003E1262 /* SceneDelegate.swift */,
 				293CB51B25471486003E1262 /* Main.storyboard */,
-				293CB51E25471486003E1262 /* ContentView.swift */,
 				293CB52025471487003E1262 /* Assets.xcassets */,
 				293CB52225471487003E1262 /* LaunchScreen.storyboard */,
 				293CB52525471487003E1262 /* Info.plist */,
+				8006671425482CF200B42428 /* IssueListViewController.swift */,
 			);
 			path = IssueTracker;
 			sourceTree = "<group>";
@@ -284,8 +284,8 @@
 			files = (
 				293CB51A25471486003E1262 /* SignInViewController.swift in Sources */,
 				293CB51625471486003E1262 /* AppDelegate.swift in Sources */,
+				8006671525482CF200B42428 /* IssueListViewController.swift in Sources */,
 				2994F96E2547AAA800122CBB /* RootCoordinator.swift in Sources */,
-				293CB51F25471486003E1262 /* ContentView.swift in Sources */,
 				293CB51825471486003E1262 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -392,7 +392,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -447,7 +447,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
