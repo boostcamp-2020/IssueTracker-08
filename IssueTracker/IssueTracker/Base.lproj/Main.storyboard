@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+=======
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+>>>>>>> dev-ios
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Sign In View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
+<<<<<<< HEAD
                 <viewController storyboardIdentifier="Signin" id="BYZ-38-t0r" customClass="SignInViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
+=======
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
+>>>>>>> dev-ios
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+<<<<<<< HEAD
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Uu6-sz-6Vb">
                                 <rect key="frame" x="100" y="40" width="214" height="200"/>
                                 <constraints>
@@ -63,7 +76,16 @@
                             <constraint firstItem="Uu6-sz-6Vb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="ocK-Tf-XQN"/>
                             <constraint firstItem="ZnO-4r-nqM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="180" id="owC-ON-a6r"/>
                         </constraints>
+=======
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eQJ-0A-zRN">
+                                <rect key="frame" x="175" y="350" width="65" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Issue List"/>
+                            </button>
+                        </subviews>
+>>>>>>> dev-ios
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
                         <outlet property="AuthSignInStackView" destination="Vue-g4-TPy" id="O5n-H9-Whu"/>
@@ -71,10 +93,20 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+<<<<<<< HEAD
             <point key="canvasLocation" x="18.840579710144929" y="79.6875"/>
         </scene>
     </scenes>
     <resources>
         <image name="logo" width="768" height="768"/>
+=======
+            <point key="canvasLocation" x="139" y="77"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+>>>>>>> dev-ios
     </resources>
 </document>
