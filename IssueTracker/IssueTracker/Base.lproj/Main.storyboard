@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QtD-UP-V9m">
-=======
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QtD-UP-V9m">
->>>>>>> upstream/feat-signin
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -82,14 +78,6 @@
         <!--Item-->
         <scene sceneID="4UL-XK-ttX">
             <objects>
-<<<<<<< HEAD
-                <viewController id="jDf-vm-7BY" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="4dH-4G-Hoa">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="3wS-rd-Ogv"/>
-=======
                 <viewController id="jDf-vm-7BY" customClass="IssueListViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4dH-4G-Hoa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -105,17 +93,12 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="3wS-rd-Ogv"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
->>>>>>> upstream/feat-signin
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="3ni-iu-brI"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HHI-Js-1Mc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-<<<<<<< HEAD
-            <point key="canvasLocation" x="928.98550724637687" y="750"/>
-=======
             <point key="canvasLocation" x="769.56521739130437" y="750"/>
->>>>>>> upstream/feat-signin
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="jmc-En-fhE">
@@ -123,10 +106,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="QtD-UP-V9m" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jsv-DS-Y4c">
-<<<<<<< HEAD
-=======
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
->>>>>>> upstream/feat-signin
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>

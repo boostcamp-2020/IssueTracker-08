@@ -15,7 +15,10 @@ class IssueListViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
+    func b() {
+        print("b")
+    }
+    
     /*
     // MARK: - Navigation
 
