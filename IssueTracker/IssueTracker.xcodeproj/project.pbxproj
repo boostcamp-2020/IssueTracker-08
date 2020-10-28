@@ -141,6 +141,7 @@
 		800666C82547D24200B42428 /* IssueTracker */ = {
 			isa = PBXGroup;
 			children = (
+				80AA06EF2549CB6900086F5F /* Scene */,
 				800666C92547D24200B42428 /* AppDelegate.swift */,
 				800666CB2547D24200B42428 /* SceneDelegate.swift */,
 				800666CD2547D24200B42428 /* ViewController.swift */,
@@ -169,6 +170,21 @@
 				800666ED2547D24300B42428 /* Info.plist */,
 			);
 			path = IssueTrackerUITests;
+			sourceTree = "<group>";
+		};
+		80AA06EF2549CB6900086F5F /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				80AA06F02549CB7400086F5F /* IssueList */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		80AA06F02549CB7400086F5F /* IssueList */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = IssueList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
