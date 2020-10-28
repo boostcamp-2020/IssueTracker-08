@@ -16,6 +16,7 @@
 		800666D62547D24300B42428 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 800666D42547D24300B42428 /* LaunchScreen.storyboard */; };
 		800666E12547D24300B42428 /* IssueTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666E02547D24300B42428 /* IssueTrackerTests.swift */; };
 		800666EC2547D24300B42428 /* IssueTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666EB2547D24300B42428 /* IssueTrackerUITests.swift */; };
+		80AA06F72549D09F00086F5F /* IssueListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA06F62549D09F00086F5F /* IssueListViewController.swift */; };
 		82AEAB5DE534EAD2DDF13B50 /* Pods_IssueTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E914C3F312B834FAB1DC2FDC /* Pods_IssueTrackerTests.framework */; };
 		A199FF356F7D518199628888 /* Pods_IssueTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D018D0CA68C57EEA8CB7F764 /* Pods_IssueTracker.framework */; };
 		BDBB6B1A254974D500575E8D /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBB6B19254974D500575E8D /* CollectionViewController.swift */; };
@@ -58,6 +59,7 @@
 		800666E72547D24300B42428 /* IssueTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IssueTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		800666EB2547D24300B42428 /* IssueTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTrackerUITests.swift; sourceTree = "<group>"; };
 		800666ED2547D24300B42428 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		80AA06F62549D09F00086F5F /* IssueListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueListViewController.swift; sourceTree = "<group>"; };
 		8B3831EA6FDFCB7AA038395F /* Pods-IssueTracker-IssueTrackerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker-IssueTrackerUITests.debug.xcconfig"; path = "Target Support Files/Pods-IssueTracker-IssueTrackerUITests/Pods-IssueTracker-IssueTrackerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BDBB6B19254974D500575E8D /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		D018D0CA68C57EEA8CB7F764 /* Pods_IssueTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,7 +143,7 @@
 		800666C82547D24200B42428 /* IssueTracker */ = {
 			isa = PBXGroup;
 			children = (
-				80AA06EF2549CB6900086F5F /* Scene */,
+				80AA06F42549D07E00086F5F /* Scenes */,
 				800666C92547D24200B42428 /* AppDelegate.swift */,
 				800666CB2547D24200B42428 /* SceneDelegate.swift */,
 				800666CD2547D24200B42428 /* ViewController.swift */,
@@ -172,17 +174,18 @@
 			path = IssueTrackerUITests;
 			sourceTree = "<group>";
 		};
-		80AA06EF2549CB6900086F5F /* Scene */ = {
+		80AA06F42549D07E00086F5F /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				80AA06F02549CB7400086F5F /* IssueList */,
+				80AA06F52549D08900086F5F /* IssueList */,
 			);
-			path = Scene;
+			path = Scenes;
 			sourceTree = "<group>";
 		};
-		80AA06F02549CB7400086F5F /* IssueList */ = {
+		80AA06F52549D08900086F5F /* IssueList */ = {
 			isa = PBXGroup;
 			children = (
+				80AA06F62549D09F00086F5F /* IssueListViewController.swift */,
 			);
 			path = IssueList;
 			sourceTree = "<group>";
@@ -427,6 +430,7 @@
 			files = (
 				BDBB6B1A254974D500575E8D /* CollectionViewController.swift in Sources */,
 				800666CE2547D24200B42428 /* ViewController.swift in Sources */,
+				80AA06F72549D09F00086F5F /* IssueListViewController.swift in Sources */,
 				800666CA2547D24200B42428 /* AppDelegate.swift in Sources */,
 				800666CC2547D24200B42428 /* SceneDelegate.swift in Sources */,
 			);
