@@ -1,0 +1,16 @@
+PODS:
+  - STPopup (1.8.7)
+
+DEPENDENCIES:
+  - STPopup
+
+SPEC REPOS:
+  trunk:
+    - STPopup
+
+SPEC CHECKSUMS:
+  STPopup: a9045557bc48a0df51fbb7bf0544447c5fe84d34
+
+PODFILE CHECKSUM: 1162b81712f99a4c31fd8ecbbd9ea454b22d301a
+
+COCOAPODS: 1.9.3
