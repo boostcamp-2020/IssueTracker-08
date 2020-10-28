@@ -7,6 +7,7 @@ module.exports = {
   requestQuery: async (query, params) => {
     const result = {};
     const connection = await pool.getConnection(async (conn) => conn);
+
     try {
       result.data = await connection.execute(query, params);
       result.status = 'success';
@@ -16,6 +17,7 @@ module.exports = {
     } finally {
       connection.release();
     }
+
     return result;
   },
 };
