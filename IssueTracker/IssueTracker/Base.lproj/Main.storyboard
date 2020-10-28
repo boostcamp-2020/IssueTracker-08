@@ -103,7 +103,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="IssueListCollectionViewCell" reuseIdentifier="issueCell" id="MCw-Kq-6u6">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="IssueListCollectionViewCell" reuseIdentifier="issueCell" id="MCw-Kq-6u6" customClass="IssueListCollectionViewCell" customModule="IssueTracker" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="eEB-Uu-9JN">
@@ -159,6 +159,11 @@
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="414" height="88"/>
                                         <connections>
+                                            <outlet property="descriptionLabel" destination="ynL-Je-cwR" id="W6q-Bw-Hsx"/>
+                                            <outlet property="milestoneLabel" destination="I9c-FT-ANj" id="jlE-Tu-1bS"/>
+                                            <outlet property="titleLabel" destination="Tvg-oR-LBi" id="BjF-LG-tvK"/>
+                                            <outletCollection property="labelCollection" destination="evi-76-6V6" collectionClass="NSMutableArray" id="7A4-D8-26J"/>
+                                            <outletCollection property="labelCollection" destination="lul-Mc-TG0" collectionClass="NSMutableArray" id="9fZ-uK-mDc"/>
                                             <segue destination="V7l-zD-64l" kind="show" id="6U1-zK-Q73"/>
                                         </connections>
                                     </collectionViewCell>
