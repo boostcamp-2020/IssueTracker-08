@@ -2,14 +2,14 @@
 //  AppDelegate.swift
 //  IssueTracker
 //
-//  Created by Sue Cho on 2020/10/27.
+//  Created by 김영렬 on 2020/10/26.
 //
 
 import UIKit
 
-@main
+//@main
+@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
