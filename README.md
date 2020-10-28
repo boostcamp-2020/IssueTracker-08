@@ -30,7 +30,7 @@
 
 
 | Label & Milestone | STPopupController |
-| -------- | -------- | -------- |
+| -------- | -------- |
 | <img width = 400 src = "https://user-images.githubusercontent.com/34840140/97448240-c90df280-1973-11eb-93c4-353d10191783.png">     | ![](https://i.imgur.com/Y4BxA7K.gif)     | 
 
 ### [iOS] Mock Data 생성
