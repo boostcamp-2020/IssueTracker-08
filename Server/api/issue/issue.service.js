@@ -97,7 +97,7 @@ module.exports = {
     const results = await requestQuery(query.CREATE_ASSIGNEE_FOR_ISSUE, params);
 
     if (results.status === 'success') {
-      return callBack(null, '요청하신 이슈의 담당자 생성이 완료되었습니다.');
+      return callBack(null, '요청하신 이슈의 담당자 지정이 완료되었습니다.');
     }
 
     return callBack(results.data);
@@ -107,6 +107,45 @@ module.exports = {
     const { userId, issueId } = req;
     const params = [userId, issueId];
     const results = await requestQuery(query.DELETE_ASSIGNEE_FOR_ISSUE, params);
+
+    if (results.data[0].affectedRows == 0) {
+      return callBack('삭제를 요청하신 이슈가 존재하지 않습니다.');
+    }
+
+    if (results.status === 'success') {
+      return callBack(null, '요청하신 이슈의 담당자 삭제가 완료되었습니다.');
+    }
+
+    return callBack(results.data);
+  },
+
+  createMilestone: async (req, callBack) => {
+    const { milestoneId, issueId } = req;
+    const params = [milestoneId, issueId];
+    const results = await requestQuery(
+      query.CREATE_MILESTONE_FOR_ISSUE,
+      params
+    );
+
+    if (results.data[0].affectedRows == 0) {
+      return callBack('수정을 요청하신 이슈가 존재하지 않습니다.');
+    }
+
+    if (results.status === 'success') {
+      return callBack(null, '요청하신 이슈의 마일스톤 지정이 완료되었습니다.');
+    }
+
+    return callBack(results.data);
+  },
+
+  deleteMilestone: async (issueId, callBack) => {
+    const results = await requestQuery(query.DELETE_MILESTONE_FOR_ISSUE, [
+      issueId,
+    ]);
+
+    if (results.data[0].affectedRows == 0) {
+      return callBack('수정을 요청하신 이슈가 존재하지 않습니다.');
+    }
 
     if (results.status === 'success') {
       return callBack(null, '요청하신 이슈의 담당자 삭제가 완료되었습니다.');

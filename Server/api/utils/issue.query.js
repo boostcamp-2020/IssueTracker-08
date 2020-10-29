@@ -20,6 +20,9 @@ const query = {
     'INSERT INTO issue_assignee (userId, issueId) VALUES(?, ?)',
   DELETE_ASSIGNEE_FOR_ISSUE:
     'DELETE FROM issue_assignee WHERE userId = ? and issueId = ?',
+  CREATE_MILESTONE_FOR_ISSUE: 'UPDATE issue SET milestoneId = ? WHERE id = ?',
+  DELETE_MILESTONE_FOR_ISSUE:
+    'UPDATE issue SET milestoneId = NULL WHERE id = ?',
 };
 
 module.exports = query;

@@ -8,6 +8,8 @@ const {
   closeIssue,
   createAssignee,
   deleteAssignee,
+  createMilestone,
+  deleteMilestone,
 } = require('./issue.service');
 const { failResponse, successResponse } = require('../utils/returnForm');
 
@@ -127,10 +129,29 @@ module.exports = {
 
   deleteAssignee: (req, res) => {
     deleteAssignee(req.body, (err, results) => {
-      const failMessage = '요청하신 이슈의 담당자 삭제를 실패했습니다.';
-
       if (err) {
-        return res.status(400).json(failResponse(failMessage));
+        return res.status(400).json(failResponse(err));
+      }
+
+      return res.status(200).json(successResponse(results));
+    });
+  },
+
+  createMilestone: (req, res) => {
+    createMilestone(req.body, (err, results) => {
+      if (err) {
+        return res.status(400).json(failResponse(err));
+      }
+
+      return res.status(200).json(successResponse(results));
+    });
+  },
+
+  deleteMilestone: (req, res) => {
+    const issueId = req.body.issueId;
+    deleteMilestone(issueId, (err, results) => {
+      if (err) {
+        return res.status(400).json(failResponse(err));
       }
 
       return res.status(200).json(successResponse(results));
