@@ -23,6 +23,10 @@ const query = {
   CREATE_MILESTONE_FOR_ISSUE: 'UPDATE issue SET milestoneId = ? WHERE id = ?',
   DELETE_MILESTONE_FOR_ISSUE:
     'UPDATE issue SET milestoneId = NULL WHERE id = ?',
+  CREATE_LABEL_FOR_ISSUE:
+    'INSERT INTO issue_label (issueId, labelId) VALUES(?, ?)',
+  DELETE_LABEL_FOR_ISSUE:
+    'DELETE FROM issue_label WHERE issueId = ? and labelId = ?',
 };
 
 module.exports = query;

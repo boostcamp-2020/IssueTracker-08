@@ -153,4 +153,32 @@ module.exports = {
 
     return callBack(results.data);
   },
+
+  createLabel: async (req, callBack) => {
+    const { issueId, labelId } = req;
+    const params = [issueId, labelId];
+    const results = await requestQuery(query.CREATE_LABEL_FOR_ISSUE, params);
+
+    if (results.status === 'success') {
+      return callBack(null, '요청하신 이슈의 label 지정이 완료되었습니다.');
+    }
+
+    return callBack(results.data);
+  },
+
+  deleteLabel: async (req, callBack) => {
+    const { issueId, labelId } = req;
+    const params = [issueId, labelId];
+    const results = await requestQuery(query.DELETE_LABEL_FOR_ISSUE, params);
+
+    if (results.data[0].affectedRows == 0) {
+      return callBack('삭제를 요청하신 이슈가 존재하지 않습니다.');
+    }
+
+    if (results.status === 'success') {
+      return callBack(null, '요청하신 이슈의 label 삭제가 완료되었습니다.');
+    }
+
+    return callBack(results.data);
+  },
 };

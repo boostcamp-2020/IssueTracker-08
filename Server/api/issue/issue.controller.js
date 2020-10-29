@@ -10,6 +10,8 @@ const {
   deleteAssignee,
   createMilestone,
   deleteMilestone,
+  createLabel,
+  deleteLabel,
 } = require('./issue.service');
 const { failResponse, successResponse } = require('../utils/returnForm');
 
@@ -150,6 +152,28 @@ module.exports = {
   deleteMilestone: (req, res) => {
     const issueId = req.body.issueId;
     deleteMilestone(issueId, (err, results) => {
+      if (err) {
+        return res.status(400).json(failResponse(err));
+      }
+
+      return res.status(200).json(successResponse(results));
+    });
+  },
+
+  createLabel: (req, res) => {
+    createLabel(req.body, (err, results) => {
+      const failMessage = '요청하신 이슈의 label 지정을 실패했습니다.';
+
+      if (err) {
+        return res.status(400).json(failResponse(failMessage));
+      }
+
+      return res.status(200).json(successResponse(results));
+    });
+  },
+
+  deleteLabel: (req, res) => {
+    deleteLabel(req.body, (err, results) => {
       if (err) {
         return res.status(400).json(failResponse(err));
       }
