@@ -187,12 +187,6 @@ module.exports = {
     });
   },
 
-  // getComments,
-  // getCommentsCount,
-  // createComment,
-  // updateComment,
-  // deleteComment,
-
   createComment: (req, res) => {
     createComment(req.body, (err, results) => {
       const failMessage = '이슈의 comment를 생성하는데 실패했습니다.';
