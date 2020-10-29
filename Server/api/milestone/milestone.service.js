@@ -34,4 +34,16 @@ module.exports = {
 
     return callBack(results.data);
   },
+  updateMilestone: async (req, callBack) => {
+    const id = req.params.milestone_id;
+    const { title, dueDate, content } = req.body;
+    const params = [title, dueDate, content, id];
+    const results = await requestQuery(query.UPDATE_MILESTONE, params);
+
+    if (results.status === 'success') {
+      return callBack(null, results.data[0]);
+    }
+
+    return callBack(results.data);
+  },
 };
