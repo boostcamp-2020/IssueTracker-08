@@ -1,6 +1,10 @@
-const githubOAuth = require('../../config/github.oauth');
 const fetch = require('node-fetch');
 const { Headers } = require('node-fetch');
+
+const githubOAuth = require('../../config/github.oauth');
+const { requestQuery } = require('../../config/database');
+const query = require('../utils/signin.query');
+const { request } = require('../../app');
 
 module.exports = {
   githubSignIn: (req, res) => {
@@ -14,6 +18,13 @@ module.exports = {
 
     return githubOAuth.callback(req, res);
   },
+};
+
+const createUser = async (data) => {
+  const { login, avatar_url } = data;
+  const params = [login, `${login}@github.io`, avatar_url];
+  const results = await requestQuery(query.CREATE_USER, params);
+  console.dir(results);
 };
 
 githubOAuth.on('error', function (err) {
@@ -33,7 +44,12 @@ githubOAuth.on('token', function (token, res) {
     })
     .then(function (data) {
       console.log(data);
-      // login, id, avatar_url
+
+      /* 
+      TODO: 이메일이 중복이라면 UPDATE avatar_url 해주고
+      중복이 아니라면 createUser 해주는 식으로 바꾸자.
+      */
+      createUser(data);
     });
 
   res.redirect('/');
