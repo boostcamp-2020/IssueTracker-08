@@ -1,10 +1,10 @@
-const { getAllIssues } = require('./issue.service');
+const { githubSignIn } = require('./signin.service');
 const { failResponse, successResponse } = require('../utils/returnForm');
 
 module.exports = {
-  getAllIssues: (req, res) => {
-    getAllIssues(req.body, (err, results) => {
-      const failMessage = '이슈 목록을 불러오는데 실패했습니다.';
+  githubSignIn: (req, res) => {
+    githubSignIn(req.body, (err, results) => {
+      const failMessage = '로그인에 실패했습니다.';
 
       if (err) {
         return res.status(400).json(failResponse(failMessage));
