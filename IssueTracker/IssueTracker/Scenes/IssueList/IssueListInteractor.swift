@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 protocol IssueListBusinessLogic {
     func fetchIssues(request: ListIssues.FetchLists.Request)
 }
@@ -32,6 +33,4 @@ extension IssueListInteractor: IssueListBusinessLogic {
     }
 }
 
-extension IssueListInteractor: IssueListDataSource {
-    
-}
+extension IssueListInteractor: IssueListDataSource { }

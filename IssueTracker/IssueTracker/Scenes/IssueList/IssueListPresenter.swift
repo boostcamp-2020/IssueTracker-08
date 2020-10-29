@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 protocol IssueListPresentationLogic {
     func presentFetchedIssues(response: ListIssues.FetchLists.Response)
 }
@@ -14,13 +15,7 @@ protocol IssueListPresentationLogic {
 class IssueListPresenter {
     
     weak var viewController: IssueListDisplayLogic?
-    
-    let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .none
-        return dateFormatter
-    }()
+
 }
 
 extension IssueListPresenter: IssueListPresentationLogic {
@@ -39,5 +34,4 @@ extension IssueListPresenter: IssueListPresentationLogic {
         let viewModel = ListIssues.FetchLists.ViewModel(displayedIssues: displayedIssues)
         viewController?.displayFetchedOrders(viewModel: viewModel)
     }
-    
 }

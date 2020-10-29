@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 protocol IssueListDisplayLogic: class {
     func displayFetchedOrders(viewModel: ListIssues.FetchLists.ViewModel)
 }
@@ -110,7 +111,6 @@ extension IssueListViewController: UICollectionViewDataSource {
 extension IssueListViewController: UICollectionViewDelegate { }
 
 extension IssueListViewController: UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let itemsPerRow: CGFloat = 1
         let sectionInsets = UIEdgeInsets(top: 0, left: 5.0, bottom: 0, right: 5.0)
@@ -118,5 +118,4 @@ extension IssueListViewController: UICollectionViewDelegateFlowLayout {
         let widthPerItem = view.frame.width - paddingSpace
         return CGSize(width: widthPerItem, height: widthPerItem * 0.25)
     }
-    
 }

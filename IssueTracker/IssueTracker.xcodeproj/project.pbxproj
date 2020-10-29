@@ -27,6 +27,8 @@
 		80AA072B254A8A0600086F5F /* issue.json in Resources */ = {isa = PBXBuildFile; fileRef = 80AA072A254A8A0600086F5F /* issue.json */; };
 		82AEAB5DE534EAD2DDF13B50 /* Pods_IssueTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E914C3F312B834FAB1DC2FDC /* Pods_IssueTrackerTests.framework */; };
 		A199FF356F7D518199628888 /* Pods_IssueTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D018D0CA68C57EEA8CB7F764 /* Pods_IssueTracker.framework */; };
+		BD5A2459254A7F0600D2EE64 /* IssueListWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5A2458254A7F0600D2EE64 /* IssueListWorker.swift */; };
+		BD5A245F254A80EA00D2EE64 /* issue.json in Resources */ = {isa = PBXBuildFile; fileRef = BD5A245E254A80EA00D2EE64 /* issue.json */; };
 		BDBB6B1A254974D500575E8D /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBB6B19254974D500575E8D /* CollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +79,8 @@
 		80AA0722254A88DF00086F5F /* IssueDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDataManager.swift; sourceTree = "<group>"; };
 		80AA072A254A8A0600086F5F /* issue.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = issue.json; sourceTree = "<group>"; };
 		8B3831EA6FDFCB7AA038395F /* Pods-IssueTracker-IssueTrackerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker-IssueTrackerUITests.debug.xcconfig"; path = "Target Support Files/Pods-IssueTracker-IssueTrackerUITests/Pods-IssueTracker-IssueTrackerUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		BD5A2458254A7F0600D2EE64 /* IssueListWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueListWorker.swift; sourceTree = "<group>"; };
+		BD5A245E254A80EA00D2EE64 /* issue.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = issue.json; sourceTree = "<group>"; };
 		BDBB6B19254974D500575E8D /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		D018D0CA68C57EEA8CB7F764 /* Pods_IssueTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB7C5D95BB108BDD81533688 /* Pods-IssueTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker.debug.xcconfig"; path = "Target Support Files/Pods-IssueTracker/Pods-IssueTracker.debug.xcconfig"; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 		800666C82547D24200B42428 /* IssueTracker */ = {
 			isa = PBXGroup;
 			children = (
+				BD5A245D254A80C000D2EE64 /* Extension */,
 				80AA06F42549D07E00086F5F /* Scenes */,
 				800666C92547D24200B42428 /* AppDelegate.swift */,
 				800666CB2547D24200B42428 /* SceneDelegate.swift */,
@@ -208,11 +213,16 @@
 				80AA070C2549F0A700086F5F /* IssueListPresenter.swift */,
 				80AA07112549F0C100086F5F /* IssueListModels.swift */,
 				80AA07162549F0F800086F5F /* IssueListRouter.swift */,
+<<<<<<< HEAD
 				80AA071B254A846800086F5F /* IssueListWorker.swift */,
+=======
+				BD5A2458254A7F0600D2EE64 /* IssueListWorker.swift */,
+>>>>>>> upstream/feat-issue
 			);
 			path = IssueList;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 		80AA0720254A871500086F5F /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -228,6 +238,14 @@
 				80AA07022549ED4700086F5F /* IssueListCollectionViewCell.swift */,
 			);
 			path = Views;
+=======
+		BD5A245D254A80C000D2EE64 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				BD5A245E254A80EA00D2EE64 /* issue.json */,
+			);
+			path = Extension;
+>>>>>>> upstream/feat-issue
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -341,7 +359,11 @@
 				800666D62547D24300B42428 /* LaunchScreen.storyboard in Resources */,
 				800666D32547D24300B42428 /* Assets.xcassets in Resources */,
 				800666D12547D24200B42428 /* Main.storyboard in Resources */,
+<<<<<<< HEAD
 				80AA072B254A8A0600086F5F /* issue.json in Resources */,
+=======
+				BD5A245F254A80EA00D2EE64 /* issue.json in Resources */,
+>>>>>>> upstream/feat-issue
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,7 +493,11 @@
 			files = (
 				80AA070D2549F0A700086F5F /* IssueListPresenter.swift in Sources */,
 				80AA07032549ED4700086F5F /* IssueListCollectionViewCell.swift in Sources */,
+<<<<<<< HEAD
 				80AA071C254A846800086F5F /* IssueListWorker.swift in Sources */,
+=======
+				BD5A2459254A7F0600D2EE64 /* IssueListWorker.swift in Sources */,
+>>>>>>> upstream/feat-issue
 				BDBB6B1A254974D500575E8D /* CollectionViewController.swift in Sources */,
 				800666CE2547D24200B42428 /* ViewController.swift in Sources */,
 				80AA07172549F0F800086F5F /* IssueListRouter.swift in Sources */,
