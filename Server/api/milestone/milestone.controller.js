@@ -20,6 +20,7 @@ module.exports = {
       return res.status(200).json(successResponse(results));
     });
   },
+
   getMilestone: (req, res) => {
     getMilestone(req, (err, results) => {
       const failMessage = '요청한 마일스톤 조회에 실패했습니다.';
@@ -31,6 +32,7 @@ module.exports = {
       return res.status(200).json(successResponse(results));
     });
   },
+
   createMilestone: (req, res) => {
     createMilestone(req, (err, results) => {
       const failMessage = '마일스톤 등록에 실패했습니다.';
@@ -42,6 +44,7 @@ module.exports = {
       return res.status(200).json(successResponse(results));
     });
   },
+
   updateMilestone: (req, res) => {
     updateMilestone(req, (err, results) => {
       const failMessage = '마일스톤 정보 변경에 실패했습니다.';
@@ -58,6 +61,7 @@ module.exports = {
       return res.status(200).json(successResponse(results));
     });
   },
+
   updateMilestoneState: (req, res) => {
     updateMilestoneState(req, (err, results) => {
       const failMessage = '마일스톤 상태 변경에 실패했습니다.';
@@ -74,6 +78,7 @@ module.exports = {
       return res.status(200).json(successResponse(results));
     });
   },
+
   deleteMilestone: (req, res) => {
     deleteMilestone(req, (err, results) => {
       const failMessage = '마일스톤 삭제에 실패했습니다.';

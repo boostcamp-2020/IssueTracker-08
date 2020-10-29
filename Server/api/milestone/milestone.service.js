@@ -23,6 +23,7 @@ module.exports = {
 
     return callBack(results.data);
   },
+
   createMilestone: async (req, callBack) => {
     const { title, dueDate, content } = req.body;
     const params = [title, dueDate, content];
@@ -34,6 +35,7 @@ module.exports = {
 
     return callBack(results.data);
   },
+
   updateMilestone: async (req, callBack) => {
     const id = req.params.milestone_id;
     const { title, dueDate, content } = req.body;
@@ -46,6 +48,7 @@ module.exports = {
 
     return callBack(results.data);
   },
+
   updateMilestoneState: async (req, callBack) => {
     const id = req.params.milestone_id;
     const { isOpen } = req.body;
@@ -58,6 +61,7 @@ module.exports = {
 
     return callBack(results.data);
   },
+
   deleteMilestone: async (req, callBack) => {
     const id = req.params.milestone_id;
     const params = [id];
