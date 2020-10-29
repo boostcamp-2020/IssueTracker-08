@@ -27,6 +27,11 @@ const query = {
     'INSERT INTO issue_label (issueId, labelId) VALUES(?, ?)',
   DELETE_LABEL_FOR_ISSUE:
     'DELETE FROM issue_label WHERE issueId = ? and labelId = ?',
+  CREATE_COMMENT:
+    'INSERT INTO comment (userId, issueId, content) VALUES(?, ?, ?)',
+  UPDATE_COMMENT:
+    'UPDATE comment SET userId = ?, issueId = ?, content = ? WHERE id = ?',
+  DELETE_COMMENT: 'DELETE FROM comment WHERE id = ?',
 };
 
 module.exports = query;

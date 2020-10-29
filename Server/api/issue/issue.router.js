@@ -12,6 +12,11 @@ const {
   deleteMilestone,
   createLabel,
   deleteLabel,
+  getComments,
+  getCommentsCount,
+  createComment,
+  updateComment,
+  deleteComment,
 } = require('./issue.controller');
 const router = require('express').Router();
 
@@ -32,7 +37,11 @@ router.delete('/assignee', deleteAssignee);
 router.delete('/milestone', deleteMilestone);
 router.delete('/label', deleteLabel);
 
-// 이슈에 댓글 달면, 그에 맞는 코멘트 생성
-// 이슈의 코멘트 개수 반환
+// issue의 comment 관련
+// router.get('/comment/:issue_id', getComments);
+// router.get('/comment/count/:issue_id', getCommentsCount);
+router.post('/comment', createComment);
+router.post('/comment/update', updateComment);
+router.delete('/comment', deleteComment);
 
 module.exports = router;

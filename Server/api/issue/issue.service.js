@@ -181,4 +181,51 @@ module.exports = {
 
     return callBack(results.data);
   },
+
+  createComment: async (req, callBack) => {
+    const { userId, issueId, content } = req;
+    const params = [userId, issueId, content];
+    const results = await requestQuery(query.CREATE_COMMENT, params);
+
+    if (results.status === 'success') {
+      return callBack(null, '요청하신 이슈의 comment 생성이 완료되었습니다.');
+    }
+
+    return callBack(results.data);
+  },
+
+  updateComment: async (req, callBack) => {
+    const { userId, issueId, content, commentId } = req;
+    const params = [userId, issueId, content, commentId];
+    const updatedItem = await requestQuery(query.UPDATE_COMMENT, params);
+
+    if (updatedItem.data[0].affectedRows == 0) {
+      return callBack('수정을 요청하신 컬럼이 존재하지 않습니다.');
+    }
+
+    const results = {
+      userId,
+      issueId,
+      content,
+      commentId,
+    };
+
+    return callBack(null, results);
+  },
+
+  deleteComment: async (req, callBack) => {
+    const { commentId } = req;
+    const params = [commentId];
+    const results = await requestQuery(query.DELETE_COMMENT, params);
+
+    if (results.data[0].affectedRows == 0) {
+      return callBack('삭제를 요청하신 이슈가 존재하지 않습니다.');
+    }
+
+    if (results.status === 'success') {
+      return callBack(null, '요청하신 이슈의 comment 삭제가 완료되었습니다.');
+    }
+
+    return callBack(results.data);
+  },
 };
