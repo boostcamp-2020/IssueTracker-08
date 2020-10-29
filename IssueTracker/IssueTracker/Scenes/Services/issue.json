@@ -3,7 +3,7 @@
     "issueId": 1,
     "username": "lala", 
     "userEmail": "lala@github.io",
-    "title": "view create",
+    "title": "Create Issue List View",
     "content": "",
     "isOpen": true,
     "milestone": "IOS",
@@ -14,9 +14,9 @@
   },
   {
     "issueId": 2,
-    "username": "why", 
+    "username": "why",
     "userEmail": "why@github.io",
-    "title": "view setting",
+    "title": "Login with Apple ID",
     "content": "view setting design",
     "isOpen": true,
     "milestone": "Swift",
@@ -26,10 +26,10 @@
   },
   {
     "issueId": 3,
-    "username": "lala", 
+    "username": "lala",
     "userEmail": "lala@github.io",
-    "title": "react install",
-    "content": "react good", 
+    "title": "Install React",
+    "content": "Dunkin and Donut, Dunkin Donut~ I am hungry Oh yeahhhhhh",
     "isOpen": true,
     "milestone": "FE",
     "label": ["FE"],
@@ -38,14 +38,15 @@
   },
   {
     "issueId": 4,
-    "username": "lala", 
+    "username": "lala",
     "userEmail": "lala@github.io",
-    "title": "react design",
-    "content": "react good", 
+    "title": "Design React",
+    "content": "I love react",
     "isOpen": true,
     "label": ["FE"],
     "createAt": "2020-10-28T10:01:49.000Z",
     "closeAt": "2020-10-28T10:01:49.000Z"
   }
+
 ]
 
