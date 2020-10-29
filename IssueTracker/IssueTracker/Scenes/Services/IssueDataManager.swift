@@ -13,7 +13,6 @@ protocol IssueDataManagerProtocol {
 
 class IssueDataManager: IssueDataManagerProtocol {
     func fetchIssues(completion: @escaping ([Issue]) -> Void) {
-        print("Data Manager")
         let decoder = JSONDecoder()
         let issueFile = Bundle.main.path(forResource: "issue", ofType: "json")
         let content = try! String(contentsOfFile: issueFile!)

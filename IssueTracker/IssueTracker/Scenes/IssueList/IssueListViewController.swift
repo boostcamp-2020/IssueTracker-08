@@ -13,26 +13,25 @@ protocol IssueListDisplayLogic: class {
 }
 
 class IssueListViewController: UIViewController {
-
+    
     var interactor: IssueListBusinessLogic?
     //var router: (IssueListRoutingLogic & IssueListDataPassing)?
     var displayedIssues: [ListIssues.FetchLists.ViewModel.DisplayedIssue] = []
     let identifier = "issueCell"
     
     @IBOutlet weak var issueListCollectionView: UICollectionView!
+    @IBOutlet weak var test: UILabel!
     
     
     // MARK:- Object Lifecycle
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
-    {
-      super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-      setup()
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
     }
 
-    required init?(coder aDecoder: NSCoder)
-    {
-      super.init(coder: aDecoder)
-      setup()
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
     }
     
     // MARK:- Setup
@@ -75,7 +74,6 @@ extension IssueListViewController: IssueListDisplayLogic {
     func displayFetchedOrders(viewModel: ListIssues.FetchLists.ViewModel) {
         displayedIssues = viewModel.displayedIssues
         issueListCollectionView.reloadData()
-        print(displayedIssues)
     }
 }
 
@@ -94,11 +92,12 @@ extension IssueListViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? IssueListCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.backgroundColor = UIColor.systemYellow
+        
+        cell.configure()
         let displayedIssue = displayedIssues[indexPath.item]
         cell.titleLabel.text = displayedIssue.title
         if displayedIssue.content.isEmpty {
-            cell.descriptionLabel.text = "No description provided"
+            cell.descriptionLabel.text = "No description provide"
         } else {
             cell.descriptionLabel.text = displayedIssue.content
         }
@@ -115,7 +114,7 @@ extension IssueListViewController: UICollectionViewDelegateFlowLayout {
         let itemsPerRow: CGFloat = 1
         let sectionInsets = UIEdgeInsets(top: 0, left: 5.0, bottom: 0, right: 5.0)
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-        let widthPerItem = view.frame.width - paddingSpace
+        let widthPerItem = UIScreen.main.bounds.width - paddingSpace
         return CGSize(width: widthPerItem, height: widthPerItem * 0.25)
     }
 }

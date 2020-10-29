@@ -96,7 +96,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wUV-Ux-NXD">
                                 <rect key="frame" x="0.0" y="213" width="414" height="600"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="5" minimumInteritemSpacing="5" id="Obe-ob-ODF">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="Obe-ob-ODF">
                                     <size key="itemSize" width="414" height="81"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -111,25 +111,36 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="레이블 목록 보기 구현" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tvg-oR-LBi">
-                                                    <rect key="frame" x="16" y="10" width="145.5" height="20.5"/>
+                                                    <rect key="frame" x="16" y="15" width="145.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MileStone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I9c-FT-ANj">
-                                                    <rect key="frame" x="333.5" y="10" width="64.5" height="17"/>
+                                                    <rect key="frame" x="333.5" y="15" width="64.5" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                            <integer key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                                            <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="레이블 전체 목록을 보여주어야 한다." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ynL-Je-cwR">
-                                                    <rect key="frame" x="16" y="36.5" width="215" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <rect key="frame" x="16" y="41.5" width="215" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="215" id="NTw-LY-ODN"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="4pI-0Y-QQA">
-                                                    <rect key="frame" x="310" y="33" width="88" height="34"/>
+                                                    <rect key="frame" x="310" y="38" width="88" height="34"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="feature" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="evi-76-6V6">
                                                             <rect key="frame" x="0.0" y="0.0" width="88" height="17"/>
@@ -145,13 +156,23 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oPh-3h-8G7">
+                                                    <rect key="frame" x="10" y="87" width="394" height="1"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="eJo-u4-Abi"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="ynL-Je-cwR" firstAttribute="top" secondItem="Tvg-oR-LBi" secondAttribute="bottom" constant="6" id="059-sF-EwX"/>
+                                                <constraint firstItem="oPh-3h-8G7" firstAttribute="leading" secondItem="eEB-Uu-9JN" secondAttribute="leading" constant="10" id="7yb-bv-2VA"/>
                                                 <constraint firstItem="Tvg-oR-LBi" firstAttribute="leading" secondItem="eEB-Uu-9JN" secondAttribute="leading" constant="16" id="ABN-HR-gJ2"/>
+                                                <constraint firstAttribute="trailing" secondItem="oPh-3h-8G7" secondAttribute="trailing" constant="10" id="BfW-X1-UiW"/>
                                                 <constraint firstItem="4pI-0Y-QQA" firstAttribute="top" secondItem="I9c-FT-ANj" secondAttribute="bottom" constant="6" id="Foq-bc-Bu7"/>
-                                                <constraint firstItem="I9c-FT-ANj" firstAttribute="top" secondItem="eEB-Uu-9JN" secondAttribute="top" constant="10" id="IC1-3l-rxP"/>
-                                                <constraint firstItem="Tvg-oR-LBi" firstAttribute="top" secondItem="eEB-Uu-9JN" secondAttribute="top" constant="10" id="P1r-VK-aQ9"/>
+                                                <constraint firstItem="I9c-FT-ANj" firstAttribute="top" secondItem="eEB-Uu-9JN" secondAttribute="top" constant="15" id="IC1-3l-rxP"/>
+                                                <constraint firstAttribute="bottom" secondItem="oPh-3h-8G7" secondAttribute="bottom" id="MjS-v2-Ibe"/>
+                                                <constraint firstItem="Tvg-oR-LBi" firstAttribute="top" secondItem="eEB-Uu-9JN" secondAttribute="top" constant="15" id="P1r-VK-aQ9"/>
                                                 <constraint firstItem="ynL-Je-cwR" firstAttribute="leading" secondItem="eEB-Uu-9JN" secondAttribute="leading" constant="16" id="PrE-Oi-U9H"/>
                                                 <constraint firstAttribute="trailing" secondItem="I9c-FT-ANj" secondAttribute="trailing" constant="16" id="byK-mK-4MN"/>
                                                 <constraint firstAttribute="trailing" secondItem="4pI-0Y-QQA" secondAttribute="trailing" constant="16" id="xZp-nB-zGB"/>
@@ -211,6 +232,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="issueListCollectionView" destination="wUV-Ux-NXD" id="GZI-YQ-oGf"/>
+                        <outlet property="test" destination="zY4-gg-arA" id="DHd-GS-Q2g"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HHI-Js-1Mc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -943,7 +965,7 @@
         <scene sceneID="k25-wU-Rad">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="10m-Rp-dn2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Label" selectedImage="2.circle.fill" catalog="system" id="o6p-aP-3ON"/>
+                    <tabBarItem key="tabBarItem" title="Label" image="2.circle.fill" catalog="system" id="o6p-aP-3ON"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HhT-uC-2Ve">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -1037,7 +1059,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="3 open\n1closed" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fML-0A-pWE">
-                                            <rect key="frame" x="342" y="39" width="54" height="27"/>
+                                            <rect key="frame" x="291" y="39" width="105" height="27"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
@@ -1072,13 +1094,13 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iVc-Vx-kvz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1352" y="2210"/>
+            <point key="canvasLocation" x="1350.7246376811595" y="2209.8214285714284"/>
         </scene>
         <!--Milestone-->
         <scene sceneID="HGP-33-orn">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iMK-Ok-0A5" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Milestone" selectedImage="3.circle.fill" catalog="system" id="rye-F4-rk5"/>
+                    <tabBarItem key="tabBarItem" title="Milestone" image="3.circle.fill" catalog="system" id="rye-F4-rk5"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ObV-fC-VOI">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
