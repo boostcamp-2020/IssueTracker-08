@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Issues: Decodable {
+struct Issue: Decodable {
     var issueId: Int
     var username: String
     var userEmail: String
@@ -23,9 +23,9 @@ struct Issues: Decodable {
 
 enum ListIssues {
     enum FetchLists {
-        struct Request {}
+        struct Request { }
         struct Response {
-            var issues: [Issues]
+            var issues: [Issue]
         }
         struct ViewModel {
             struct DisplayedIssue {

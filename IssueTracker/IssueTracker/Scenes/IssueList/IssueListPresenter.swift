@@ -7,21 +7,30 @@
 
 import Foundation
 
-protocol ListIssuesPresentationLogic {
-    func presentFetchedOrders(response: ListIssues.FetchLists.Response)
+
+protocol IssueListPresentationLogic {
+    func presentFetchedIssues(response: ListIssues.FetchLists.Response)
 }
 
-class IssueListPresenter: ListIssuesPresentationLogic {
-    weak var viewController: IssueListDesplayLogic?
+class IssueListPresenter {
     
-    func presentFetchedOrders(response: ListIssues.FetchLists.Response) {
+    weak var viewController: IssueListDisplayLogic?
+
+}
+
+extension IssueListPresenter: IssueListPresentationLogic {
+    
+    func presentFetchedIssues(response: ListIssues.FetchLists.Response) {
         var displayedIssues: [ListIssues.FetchLists.ViewModel.DisplayedIssue] = []
-        
         for issue in response.issues {
-            let displayedissue = ListIssues.FetchLists.ViewModel.DisplayedIssue(title: issue.title, content: issue.content, mileStone: issue.mileStone, label: issue.label)
-            displayedIssues.append(displayedissue)
+            let displayedIssue = ListIssues.FetchLists.ViewModel.DisplayedIssue(
+                title: issue.title,
+                content: issue.content,
+                mileStone: issue.mileStone,
+                label: issue.label
+            )
+            displayedIssues.append(displayedIssue)
         }
-        
         let viewModel = ListIssues.FetchLists.ViewModel(displayedIssues: displayedIssues)
         viewController?.displayFetchedOrders(viewModel: viewModel)
     }

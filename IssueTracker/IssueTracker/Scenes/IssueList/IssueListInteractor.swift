@@ -7,21 +7,30 @@
 
 import Foundation
 
-protocol IssueListsBusinessLogic {
+
+protocol IssueListBusinessLogic {
     func fetchIssues(request: ListIssues.FetchLists.Request)
 }
 
-class IssueListInteractor: IssueListsBusinessLogic {
-    var presenter: ListIssuesPresentationLogic?
-    var issuesWorker = IssueListsWorker(issuesStore: IssueMemStore())
-    var issues: [Issues]?
+protocol IssueListDataSource {
+    var issues: [Issue]? { get }
+}
+
+class IssueListInteractor {
     
+    var presenter: IssueListPresentationLogic?
+    var issueWorker = IssueListWorker(dataManager: IssueDataManager())
+    var issues: [Issue]?
+}
+
+extension IssueListInteractor: IssueListBusinessLogic {
     func fetchIssues(request: ListIssues.FetchLists.Request) {
-        issuesWorker.fetchIssues { (issues) -> Void in
+        issueWorker.fetchIssues(completion: { (issues) -> Void in
             self.issues = issues
             let response = ListIssues.FetchLists.Response(issues: issues)
-            
-            self.presenter?.presentFetchedOrders(response: response)
-        }
+            self.presenter?.presentFetchedIssues(response: response)
+        })
     }
 }
+
+extension IssueListInteractor: IssueListDataSource { }
