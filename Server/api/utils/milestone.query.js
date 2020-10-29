@@ -7,6 +7,7 @@ const query = {
   UPDATE_MILESTONE:
     'UPDATE milestone SET title = ?, dueDate = ?, content = ? WHERE id = ?',
   UPDATE_MILESTONE_STATE: 'UPDATE milestone SET isOpen = ? WHERE id = ?',
+  DELETE_MILESTONE: 'DELETE FROM milestone WHERE id = ?',
 };
 
 module.exports = query;

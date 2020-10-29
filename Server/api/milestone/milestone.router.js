@@ -4,6 +4,7 @@ const {
   createMilestone,
   updateMilestone,
   updateMilestoneState,
+  deleteMilestone,
 } = require('./milestone.controller');
 const router = require('express').Router();
 
@@ -14,5 +15,7 @@ router.post('/', createMilestone);
 
 router.put('/:milestone_id', updateMilestone);
 router.put('/:milestone_id/state', updateMilestoneState);
+
+router.delete('/:milestone_id', deleteMilestone);
 
 module.exports = router;
