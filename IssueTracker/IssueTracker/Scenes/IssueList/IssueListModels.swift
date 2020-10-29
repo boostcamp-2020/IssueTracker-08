@@ -14,7 +14,7 @@ struct Issue: Decodable {
     var title: String
     var content: String
     var isOpen: Bool
-    var mileStone: String?
+    var milestone: String?
     var label: [String]?
     var assign: [String]?
     var createAt: String
@@ -31,7 +31,7 @@ enum ListIssues {
             struct DisplayedIssue {
                 var title: String
                 var content: String
-                var mileStone: String?
+                var milestone: String?
                 var label: [String]?
             }
             var displayedIssues: [DisplayedIssue]
