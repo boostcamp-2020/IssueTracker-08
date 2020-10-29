@@ -1,4 +1,8 @@
-const { getAllMilestones, getMilestone } = require('./milestone.service');
+const {
+  getAllMilestones,
+  getMilestone,
+  createMilestone,
+} = require('./milestone.service');
 const { failResponse, successResponse } = require('../utils/returnForm');
 
 module.exports = {
@@ -16,6 +20,17 @@ module.exports = {
   getMilestone: (req, res) => {
     getMilestone(req, (err, results) => {
       const failMessage = '요청한 마일스톤 조회에 실패했습니다.';
+
+      if (err) {
+        return res.status(400).json(failResponse(failMessage));
+      }
+
+      return res.status(200).json(successResponse(results));
+    });
+  },
+  createMilestone: (req, res) => {
+    createMilestone(req, (err, results) => {
+      const failMessage = '마일스톤 등록에 실패했습니다.';
 
       if (err) {
         return res.status(400).json(failResponse(failMessage));
