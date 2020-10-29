@@ -213,16 +213,11 @@
 				80AA070C2549F0A700086F5F /* IssueListPresenter.swift */,
 				80AA07112549F0C100086F5F /* IssueListModels.swift */,
 				80AA07162549F0F800086F5F /* IssueListRouter.swift */,
-<<<<<<< HEAD
 				80AA071B254A846800086F5F /* IssueListWorker.swift */,
-=======
-				BD5A2458254A7F0600D2EE64 /* IssueListWorker.swift */,
->>>>>>> upstream/feat-issue
 			);
 			path = IssueList;
 			sourceTree = "<group>";
 		};
-<<<<<<< HEAD
 		80AA0720254A871500086F5F /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,14 +233,6 @@
 				80AA07022549ED4700086F5F /* IssueListCollectionViewCell.swift */,
 			);
 			path = Views;
-=======
-		BD5A245D254A80C000D2EE64 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				BD5A245E254A80EA00D2EE64 /* issue.json */,
-			);
-			path = Extension;
->>>>>>> upstream/feat-issue
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -359,11 +346,7 @@
 				800666D62547D24300B42428 /* LaunchScreen.storyboard in Resources */,
 				800666D32547D24300B42428 /* Assets.xcassets in Resources */,
 				800666D12547D24200B42428 /* Main.storyboard in Resources */,
-<<<<<<< HEAD
 				80AA072B254A8A0600086F5F /* issue.json in Resources */,
-=======
-				BD5A245F254A80EA00D2EE64 /* issue.json in Resources */,
->>>>>>> upstream/feat-issue
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,11 +476,7 @@
 			files = (
 				80AA070D2549F0A700086F5F /* IssueListPresenter.swift in Sources */,
 				80AA07032549ED4700086F5F /* IssueListCollectionViewCell.swift in Sources */,
-<<<<<<< HEAD
 				80AA071C254A846800086F5F /* IssueListWorker.swift in Sources */,
-=======
-				BD5A2459254A7F0600D2EE64 /* IssueListWorker.swift in Sources */,
->>>>>>> upstream/feat-issue
 				BDBB6B1A254974D500575E8D /* CollectionViewController.swift in Sources */,
 				800666CE2547D24200B42428 /* ViewController.swift in Sources */,
 				80AA07172549F0F800086F5F /* IssueListRouter.swift in Sources */,
