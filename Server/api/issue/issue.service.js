@@ -90,4 +90,28 @@ module.exports = {
 
     return callBack(results.data);
   },
+
+  createAssignee: async (req, callBack) => {
+    const { userId, issueId } = req;
+    const params = [userId, issueId];
+    const results = await requestQuery(query.CREATE_ASSIGNEE_FOR_ISSUE, params);
+
+    if (results.status === 'success') {
+      return callBack(null, '요청하신 이슈의 담당자 생성이 완료되었습니다.');
+    }
+
+    return callBack(results.data);
+  },
+
+  deleteAssignee: async (req, callBack) => {
+    const { userId, issueId } = req;
+    const params = [userId, issueId];
+    const results = await requestQuery(query.DELETE_ASSIGNEE_FOR_ISSUE, params);
+
+    if (results.status === 'success') {
+      return callBack(null, '요청하신 이슈의 담당자 삭제가 완료되었습니다.');
+    }
+
+    return callBack(results.data);
+  },
 };

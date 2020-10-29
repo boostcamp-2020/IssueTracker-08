@@ -16,6 +16,10 @@ const query = {
     'UPDATE issue SET userId = ?, milestoneId = ?, title = ?, content = ? WHERE id = ?',
   OPEN_ISSUE: 'UPDATE issue SET isOpen = 1 WHERE id = ?',
   CLOSE_ISSUE: 'UPDATE issue SET isOpen = 0 WHERE id = ?',
+  CREATE_ASSIGNEE_FOR_ISSUE:
+    'INSERT INTO issue_assignee (userId, issueId) VALUES(?, ?)',
+  DELETE_ASSIGNEE_FOR_ISSUE:
+    'DELETE FROM issue_assignee WHERE userId = ? and issueId = ?',
 };
 
 module.exports = query;
