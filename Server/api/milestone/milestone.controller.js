@@ -3,6 +3,7 @@ const {
   getMilestone,
   createMilestone,
   updateMilestone,
+  updateMilestoneState,
 } = require('./milestone.service');
 const { failResponse, successResponse } = require('../utils/returnForm');
 
@@ -43,6 +44,22 @@ module.exports = {
   updateMilestone: (req, res) => {
     updateMilestone(req, (err, results) => {
       const failMessage = '마일스톤 정보 변경에 실패했습니다.';
+      const failMessageById = '존재하지 않는 마일스톤에 대한 수정 요청입니다.';
+
+      if (err) {
+        return res.status(400).json(failResponse(failMessage));
+      }
+
+      if (results.affectedRows === 0) {
+        return res.status(400).json(failResponse(failMessageById));
+      }
+
+      return res.status(200).json(successResponse(results));
+    });
+  },
+  updateMilestoneState: (req, res) => {
+    updateMilestoneState(req, (err, results) => {
+      const failMessage = '마일스톤 상태 변경에 실패했습니다.';
       const failMessageById = '존재하지 않는 마일스톤에 대한 수정 요청입니다.';
 
       if (err) {

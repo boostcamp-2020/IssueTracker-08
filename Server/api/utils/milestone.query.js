@@ -6,6 +6,7 @@ const query = {
     'INSERT INTO milestone (title, dueDate, content) VALUES(?, ?, ?)',
   UPDATE_MILESTONE:
     'UPDATE milestone SET title = ?, dueDate = ?, content = ? WHERE id = ?',
+  UPDATE_MILESTONE_STATE: 'UPDATE milestone SET isOpen = ? WHERE id = ?',
 };
 
 module.exports = query;
