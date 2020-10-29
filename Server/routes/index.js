@@ -11,6 +11,5 @@ router.get('/', function (req, res, next) {
 /* API 요청 */
 router.use('/api/issues', issueApiRouter);
 router.use('/auth/github', signinApiRouter);
-router.use('/auth/github/callback', signinApiRouter);
 
 module.exports = router;

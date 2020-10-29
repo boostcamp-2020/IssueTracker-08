@@ -4,7 +4,7 @@ dotenv.config();
 const githubOAuth = require('github-oauth')({
   githubClient: process.env.GITHUB_CLIENT_ID,
   githubSecret: process.env.GITHUB_SECRET,
-  baseURL: 'http://localhost:3000/',
+  baseURL: process.env.BASE_URL,
   loginURI: '/auth/github',
   callbackURI: '/auth/github/callback',
 });
