@@ -88,20 +88,25 @@ extension IssueListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? IssueListCollectionViewCell else {
             return UICollectionViewCell()
         }
+        cell.setupComponents()
         
-        cell.configure()
         let displayedIssue = displayedIssues[indexPath.item]
         cell.titleLabel.text = displayedIssue.title
-        if displayedIssue.content.isEmpty {
-            cell.descriptionLabel.text = "No description provide"
-        } else {
-            cell.descriptionLabel.text = displayedIssue.content
+        cell.descriptionLabel.text = displayedIssue.content
+        if let labels: [String] = displayedIssue.label {
+            labels.enumerated().forEach({ (idx, labelText) in
+                let projectLabel: UIButton = cell.labelButtonCollection[idx]
+                projectLabel.setTitle(labelText, for: .normal)
+                cell.configureLabelButton(label: projectLabel, hexString: "#6367bf")              
+            })
         }
-        
+        if let milestoneText = displayedIssue.milestone {
+            cell.milestoneLabel.setTitle(milestoneText, for: .normal)
+            cell.configureMilestone()
+        }
         return cell
     }
     
