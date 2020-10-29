@@ -20,6 +20,8 @@
 
 [WEB](https://github.com/boostcamp-2020/IssueTracker-08/blob/master/sprint-web.md)&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;[IOS](https://github.com/boostcamp-2020/IssueTracker-08/blob/master/sprint-ios.md)
 
+[Split Backlog](https://docs.google.com/spreadsheets/d/19wkM--KlfBSZAe7_RBzZKZ5Rq0YNnLkuxhtWNhTGxDA/edit#gid=0)&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;[Wiki](https://github.com/boostcamp-2020/IssueTracker-08/wiki)&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;[Team Ground Rules](https://github.com/boostcamp-2020/IssueTracker-08/wiki/Team-Ground-Rules)
+
 </div>
 
 ## 모쨍이 팀원들
