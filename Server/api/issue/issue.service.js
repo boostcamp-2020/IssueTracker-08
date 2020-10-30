@@ -8,6 +8,7 @@ module.exports = {
 
     if (results.status === 'success') {
       const issueList = await makeIssueTemplate(results);
+
       return callBack(null, issueList);
     }
 
@@ -19,6 +20,7 @@ module.exports = {
 
     if (results.status === 'success') {
       const issueList = await makeIssueTemplate(results);
+
       return callBack(null, issueList);
     }
 
@@ -34,6 +36,7 @@ module.exports = {
       }
 
       const issueList = await makeIssueTemplate(results);
+
       return callBack(null, issueList);
     }
 
