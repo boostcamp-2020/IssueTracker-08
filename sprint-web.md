@@ -39,7 +39,7 @@ GET_OPEN_ISSUES:
 ```
 
 ### 📌 [BE] 자주 사용되는 부분은 template로 관리
-~~~JSON
+~~~javascript
   makeIssueTemplate: async (results) => {
     const issueList = [...results.data[0]];
 
