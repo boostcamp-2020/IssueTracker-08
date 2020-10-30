@@ -13,8 +13,8 @@ module.exports = {
         query.GET_ASSIGNEES_BY_ISSUE_ID,
         [issue.issueId]
       );
-
       const assigneeList = [];
+
       for (let assign of assigneeResults.data[0]) {
         assigneeList.push(assign.name);
       }
