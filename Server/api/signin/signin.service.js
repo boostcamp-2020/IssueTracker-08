@@ -19,10 +19,24 @@ module.exports = {
   },
 };
 
+const getUser = async (data) => {
+  const { login } = data;
+  const params = [login];
+  const results = await requestQuery(query.GET_USER, params);
+
+  return results.data[0].length;
+};
+
 const createUser = async (data) => {
   const { login, avatar_url } = data;
   const params = [login, `${login}@github.io`, avatar_url];
   const results = await requestQuery(query.CREATE_USER, params);
+};
+
+const updateUserImage = async (data) => {
+  const { avatar_url } = data;
+  const params = [avatar_url];
+  const results = await requestQuery(query.UPDATE_USER_IMAGE, params);
 };
 
 githubOAuth.on('error', function (err) {
@@ -40,11 +54,13 @@ githubOAuth.on('token', function (token, res) {
       return res.json();
     })
     .then(function (data) {
-      /* 
-      TODO: 이메일이 중복이라면 UPDATE avatar_url 해주고
-      중복이 아니라면 createUser 해주는 식으로 바꾸자.
-      */
-      createUser(data);
+      getUser(data).then(function (res) {
+        if (res === 1) {
+          updateUserImage(data);
+        } else {
+          createUser(data);
+        }
+      });
     });
 
   res.redirect('/');
