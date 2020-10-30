@@ -1,4 +1,3 @@
-// get, create, update, delete
 const query = {
   GET_OPEN_ISSUES:
     'SELECT issue.id as issueId, (SELECT user.email FROM user WHERE user.id = issue.userId) as email, (SELECT user.name FROM user WHERE user.id = issue.userId) as name, (SELECT milestone.title FROM milestone WHERE issue.milestoneID = milestone.id) as milestone, issue.title, issue.content, issue.isOpen, issue.createAt, issue.closeAt FROM issue WHERE issue.isOpen = 1',
