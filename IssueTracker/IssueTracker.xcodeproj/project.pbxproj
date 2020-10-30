@@ -17,6 +17,8 @@
 		800666E12547D24300B42428 /* IssueTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666E02547D24300B42428 /* IssueTrackerTests.swift */; };
 		800666EC2547D24300B42428 /* IssueTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666EB2547D24300B42428 /* IssueTrackerUITests.swift */; };
 		8042B7E7254BA1C700910C6F /* UIColor+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7E6254BA1C700910C6F /* UIColor+HexString.swift */; };
+		8042B7F9254BAC3D00910C6F /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7F8254BAC3D00910C6F /* SignInViewController.swift */; };
+		8042B7FE254BAD7A00910C6F /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7FD254BAD7A00910C6F /* RootCoordinator.swift */; };
 		80AA06F72549D09F00086F5F /* IssueListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA06F62549D09F00086F5F /* IssueListViewController.swift */; };
 		80AA07032549ED4700086F5F /* IssueListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA07022549ED4700086F5F /* IssueListCollectionViewCell.swift */; };
 		80AA07082549F08300086F5F /* IssueListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA07072549F08300086F5F /* IssueListInteractor.swift */; };
@@ -69,6 +71,8 @@
 		800666EB2547D24300B42428 /* IssueTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTrackerUITests.swift; sourceTree = "<group>"; };
 		800666ED2547D24300B42428 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8042B7E6254BA1C700910C6F /* UIColor+HexString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexString.swift"; sourceTree = "<group>"; };
+		8042B7F8254BAC3D00910C6F /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		8042B7FD254BAD7A00910C6F /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		80AA06F62549D09F00086F5F /* IssueListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueListViewController.swift; sourceTree = "<group>"; };
 		80AA07022549ED4700086F5F /* IssueListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueListCollectionViewCell.swift; sourceTree = "<group>"; };
 		80AA07072549F08300086F5F /* IssueListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueListInteractor.swift; sourceTree = "<group>"; };
@@ -201,9 +205,19 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		8042B7F7254BAC1F00910C6F /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				8042B7F8254BAC3D00910C6F /* SignInViewController.swift */,
+				8042B7FD254BAD7A00910C6F /* RootCoordinator.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
 		80AA06F42549D07E00086F5F /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				8042B7F7254BAC1F00910C6F /* SignIn */,
 				80AA0720254A871500086F5F /* Services */,
 				80AA06F52549D08900086F5F /* IssueList */,
 			);
@@ -480,12 +494,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8042B7F9254BAC3D00910C6F /* SignInViewController.swift in Sources */,
 				80AA070D2549F0A700086F5F /* IssueListPresenter.swift in Sources */,
 				8042B7E7254BA1C700910C6F /* UIColor+HexString.swift in Sources */,
 				80AA07032549ED4700086F5F /* IssueListCollectionViewCell.swift in Sources */,
 				80AA071C254A846800086F5F /* IssueListWorker.swift in Sources */,
 				BDBB6B1A254974D500575E8D /* CollectionViewController.swift in Sources */,
 				800666CE2547D24200B42428 /* ViewController.swift in Sources */,
+				8042B7FE254BAD7A00910C6F /* RootCoordinator.swift in Sources */,
 				80AA07172549F0F800086F5F /* IssueListRouter.swift in Sources */,
 				80AA06F72549D09F00086F5F /* IssueListViewController.swift in Sources */,
 				80AA07082549F08300086F5F /* IssueListInteractor.swift in Sources */,
