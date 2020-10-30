@@ -74,6 +74,7 @@ module.exports = {
 
   updateIssue: (req, res) => {
     req.body.id = req.params.issue_id;
+
     updateIssue(req.body, (err, results) => {
       if (err) {
         return res.status(400).json(failResponse(err));
@@ -113,6 +114,7 @@ module.exports = {
 
   updateIssue: (req, res) => {
     req.body.id = req.params.issue_id;
+
     updateIssue(req.body, (err, results) => {
       if (err) {
         return res.status(400).json(failResponse(err));
@@ -156,6 +158,7 @@ module.exports = {
 
   deleteMilestone: (req, res) => {
     const issueId = req.body.issueId;
+
     deleteMilestone(issueId, (err, results) => {
       if (err) {
         return res.status(400).json(failResponse(err));
@@ -181,6 +184,34 @@ module.exports = {
     deleteLabel(req.body, (err, results) => {
       if (err) {
         return res.status(400).json(failResponse(err));
+      }
+
+      return res.status(200).json(successResponse(results));
+    });
+  },
+
+  getComments: (req, res) => {
+    const issueId = req.params.issue_id;
+
+    getComments(issueId, (err, results) => {
+      const failMessage = '요청하신 이슈의 comment가 존재하지 않습니다.';
+
+      if (err) {
+        return res.status(400).json(failResponse(failMessage));
+      }
+
+      return res.status(200).json(successResponse(results));
+    });
+  },
+
+  getCommentsCount: (req, res) => {
+    const issueId = req.params.issue_id;
+
+    getCommentsCount(issueId, (err, results) => {
+      const failMessage = '요청하신 이슈가 존재하지 않습니다.';
+
+      if (err) {
+        return res.status(400).json(failResponse(failMessage));
       }
 
       return res.status(200).json(successResponse(results));

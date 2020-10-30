@@ -32,6 +32,10 @@ const query = {
   UPDATE_COMMENT:
     'UPDATE comment SET userId = ?, issueId = ?, content = ? WHERE id = ?',
   DELETE_COMMENT: 'DELETE FROM comment WHERE id = ?',
+  GET_COMMENTS:
+    'SELECT comment.id as commentId, (SELECT user.name FROM user WHERE user.id = comment.userId) as name, comment.content, comment.createAt FROM comment WHERE comment.issueId = ?',
+  GET_COMMENTS_COUNT:
+    'SELECT count(*) as commentCount FROM comment where issueId = ?',
 };
 
 module.exports = query;

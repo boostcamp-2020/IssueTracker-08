@@ -38,10 +38,12 @@ router.delete('/milestone', deleteMilestone);
 router.delete('/label', deleteLabel);
 
 // issue의 comment 관련
-// router.get('/comment/:issue_id', getComments);
-// router.get('/comment/count/:issue_id', getCommentsCount);
+router.get('/comment/:issue_id', getComments);
+router.get('/comment/count/:issue_id', getCommentsCount);
+
 router.post('/comment', createComment);
 router.post('/comment/update', updateComment);
+
 router.delete('/comment', deleteComment);
 
 module.exports = router;

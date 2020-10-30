@@ -182,6 +182,30 @@ module.exports = {
     return callBack(results.data);
   },
 
+  getComments: async (issueId, callBack) => {
+    const results = await requestQuery(query.GET_COMMENTS, [issueId]);
+
+    if (results.status === 'success') {
+      if (results.data[0].length === 0) {
+        return callBack(results.data);
+      }
+
+      return callBack(null, results.data[0]);
+    }
+
+    return callBack(results.data[0]);
+  },
+
+  getCommentsCount: async (issueId, callBack) => {
+    const results = await requestQuery(query.GET_COMMENTS_COUNT, [issueId]);
+
+    if (results.status === 'success') {
+      return callBack(null, results.data[0]);
+    }
+
+    return callBack(results.data[0]);
+  },
+
   createComment: async (req, callBack) => {
     const { userId, issueId, content } = req;
     const params = [userId, issueId, content];
