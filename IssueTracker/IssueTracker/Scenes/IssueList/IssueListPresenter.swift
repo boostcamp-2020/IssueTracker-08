@@ -23,10 +23,12 @@ extension IssueListPresenter: IssueListPresentationLogic {
     func presentFetchedIssues(response: ListIssues.FetchLists.Response) {
         var displayedIssues: [ListIssues.FetchLists.ViewModel.DisplayedIssue] = []
         for issue in response.issues {
+            var description = issue.content
+            if description.isEmpty { description = "No description provided" }
             let displayedIssue = ListIssues.FetchLists.ViewModel.DisplayedIssue(
                 title: issue.title,
-                content: issue.content,
-                mileStone: issue.mileStone,
+                content: description,
+                milestone: issue.milestone,
                 label: issue.label
             )
             displayedIssues.append(displayedIssue)
