@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const labelApiRouter = require('../api/label/label.router');
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+/* API 요청 */
+router.use('/api/labels', labelApiRouter);
 
 module.exports = router;
