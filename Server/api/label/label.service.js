@@ -12,6 +12,13 @@ module.exports = {
     return callBack(results.data);
   },
 
+  getRandomColor: async (req, callBack) => {
+    let randomHex = (Math.random() * 0xfffff * 1000000).toString(16);
+    const randomHexColor = '#' + randomHex.slice(0, 6);
+
+    return callBack(null, randomHexColor);
+  },
+
   createLabel: async (req, callBack) => {
     const { name, color, description } = req.body;
     const params = [name, color, description];

@@ -1,5 +1,6 @@
 const {
   getAllLabels,
+  getRandomColor,
   createLabel,
   updateLabel,
   deleteLabel,
@@ -7,6 +8,7 @@ const {
 const router = require('express').Router();
 
 router.get('/', getAllLabels);
+router.get('/color', getRandomColor);
 
 router.post('/', createLabel);
 
