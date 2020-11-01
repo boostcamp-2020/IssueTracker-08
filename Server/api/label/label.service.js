@@ -11,4 +11,16 @@ module.exports = {
 
     return callBack(results.data);
   },
+
+  createLabel: async (req, callBack) => {
+    const { name, color, description } = req.body;
+    const params = [name, color, description];
+    const results = await requestQuery(query.CREATE_LABEL, params);
+
+    if (results.status === 'success') {
+      return callBack(null, results.data[0]);
+    }
+
+    return callBack(results.data);
+  },
 };
