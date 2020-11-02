@@ -20,8 +20,6 @@ class IssueListViewController: UIViewController {
     let identifier = "issueCell"
     
     @IBOutlet weak var issueListCollectionView: UICollectionView!
-    @IBOutlet weak var test: UILabel!
-    
     
     // MARK:- Object Lifecycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -59,6 +57,7 @@ class IssueListViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
         fetchIssues()
     }
     
@@ -96,20 +95,25 @@ extension IssueListViewController: UICollectionViewDataSource {
         let displayedIssue = displayedIssues[indexPath.item]
         cell.titleLabel.text = displayedIssue.title
         cell.descriptionLabel.text = displayedIssue.content
-        if let labels: [String] = displayedIssue.label {
-            labels.enumerated().forEach({ (idx, labelText) in
+        if let labels: [Label] = displayedIssue.label {
+            labels.enumerated().forEach({ (idx, labelData) in
                 let projectLabel: UIButton = cell.labelButtonCollection[idx]
-                projectLabel.setTitle(labelText, for: .normal)
-                cell.configureLabelButton(label: projectLabel, hexString: "#6367bf")              
+                projectLabel.setTitle(labelData.labelName, for: .normal)
+                cell.configureLabelButton(label: projectLabel, hexString: "\(labelData.labelColor)")
+                
             })
         }
         if let milestoneText = displayedIssue.milestone {
             cell.milestoneLabel.setTitle(milestoneText, for: .normal)
             cell.configureMilestone()
         }
+        
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(displayedIssues[indexPath.row].issueId) // tag
+    }
 }
 
 extension IssueListViewController: UICollectionViewDelegate { }

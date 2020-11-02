@@ -7,17 +7,32 @@
 
 import Foundation
 
+struct IssueListResponse: Decodable {
+    var status: String
+    var data: [Issue]
+}
+
 protocol IssueDataManagerProtocol {
     func fetchIssues(completion: @escaping ([Issue]) -> Void)
 }
 
 class IssueDataManager: IssueDataManagerProtocol {
     func fetchIssues(completion: @escaping ([Issue]) -> Void) {
-        let decoder = JSONDecoder()
-        let issueFile = Bundle.main.path(forResource: "issue", ofType: "json")
-        let content = try! String(contentsOfFile: issueFile!)
-        let data = content.data(using: .utf8)
-        let result = try! decoder.decode(Array<Issue>.self, from: data!)
-        completion(result)
+        let session = URLSession.shared
+        guard let requestURL = URL(string: EndPoint.issues) else { return }
+        session.dataTask(with: requestURL) { data, response, error in
+            if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                do {
+                    let issueResponse = try JSONDecoder().decode(IssueListResponse.self, from: data)
+                    var issueData = [Issue]()
+                    issueResponse.data.forEach { issueData.append($0) }
+                    DispatchQueue.main.async {
+                        completion(issueData)
+                    }
+                } catch (let err) {
+                    print(err.localizedDescription)
+                }
+            }
+        }.resume()
     }
 }

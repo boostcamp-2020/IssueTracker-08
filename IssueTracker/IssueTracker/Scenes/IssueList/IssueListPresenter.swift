@@ -26,6 +26,7 @@ extension IssueListPresenter: IssueListPresentationLogic {
             var description = issue.content
             if description.isEmpty { description = "No description provided" }
             let displayedIssue = ListIssues.FetchLists.ViewModel.DisplayedIssue(
+                issueId: issue.issueId,
                 title: issue.title,
                 content: description,
                 milestone: issue.milestone,
