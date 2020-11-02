@@ -64,7 +64,7 @@
 ### 결과화면
 
 | 이슈 목록 화면  | Interactive Bottom Card View |
-| -------- | -------- | -------- |
+| -------- | -------- |
 | <img width = 250 src = "https://user-images.githubusercontent.com/34840140/97856567-d1817700-1d3f-11eb-9488-d4b5fecc5919.png">     | ![](https://i.imgur.com/1aV8Y0b.gif)
 
 
