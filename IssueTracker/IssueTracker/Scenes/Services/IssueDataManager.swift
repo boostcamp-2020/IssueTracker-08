@@ -16,23 +16,18 @@ protocol IssueDataManagerProtocol {
     func fetchIssues(completion: @escaping ([Issue]) -> Void)
 }
 
-class IssueDataManager: IssueDataManagerProtocol {
+final class IssueDataManager: IssueDataManagerProtocol {
+    
     func fetchIssues(completion: @escaping ([Issue]) -> Void) {
-        let session = URLSession.shared
-        guard let requestURL = URL(string: EndPoint.issues) else { return }
-        session.dataTask(with: requestURL) { data, response, error in
-            if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                do {
-                    let issueResponse = try JSONDecoder().decode(IssueListResponse.self, from: data)
-                    var issueData = [Issue]()
-                    issueResponse.data.forEach { issueData.append($0) }
-                    DispatchQueue.main.async {
-                        completion(issueData)
-                    }
-                } catch (let err) {
-                    print(err.localizedDescription)
-                }
+        NetworkService.shared.getData(url: EndPoint.issues, completion: { data in
+            guard let receivedData = try? JSONDecoder().decode(IssueListResponse.self, from: data) else {
+                return // completion으로 경우 넘겨 주어야 함
             }
-        }.resume()
+            let issues: [Issue] = receivedData.data
+            var issueData = [Issue]()
+            issues.forEach({ issueData.append($0) })
+            completion(issueData)
+        })
     }
+
 }
