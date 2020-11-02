@@ -250,7 +250,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HHI-Js-1Mc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1810.144927536232" y="2209.8214285714284"/>
+            <point key="canvasLocation" x="-2754" y="2210"/>
         </scene>
         <!--Issue Filter Table View Controller-->
         <scene sceneID="yUX-c4-VL5">
@@ -306,7 +306,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hPn-az-3gl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2500" y="2926"/>
+            <point key="canvasLocation" x="-3443" y="2926"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="0Ki-L2-PyV">
@@ -432,12 +432,15 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Edit"/>
                             </button>
+                            <connections>
+                                <segue destination="Bzc-QL-d6q" kind="show" id="f38-h2-dX7"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wkb-6v-ChG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1810" y="2926"/>
+            <point key="canvasLocation" x="-2754" y="2926"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Wee-gF-XcW">
@@ -475,9 +478,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WJl-88-DAz">
                                 <rect key="frame" x="351" y="108" width="49" height="30"/>
                                 <state key="normal" title="Setting"/>
-                                <connections>
-                                    <segue destination="KJU-Q3-nuF" kind="presentation" id="h9B-lV-zMV"/>
-                                </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" text="코멘트는 여기에 작성하세요" translatesAutoresizingMaskIntoConstraints="NO" id="aXk-cK-LsE">
                                 <rect key="frame" x="20" y="284" width="374" height="515"/>
@@ -516,7 +516,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lxK-iN-XNV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1126.0869565217392" y="2925.6696428571427"/>
+            <point key="canvasLocation" x="-1693" y="2926"/>
         </scene>
         <!--Test View Controller-->
         <scene sceneID="Lqr-HF-ZUX">
@@ -660,30 +660,6 @@
             </objects>
             <point key="canvasLocation" x="19" y="2926"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="7hI-hw-0sj">
-            <objects>
-                <viewController id="KJU-Q3-nuF" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="OUQ-B7-c52">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="이 화면 : 이슈 생성 또는 수정 시 담당자, 레이블 등을 설정할 수 있는 화면" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Wt-A7-CRD">
-                                <rect key="frame" x="20" y="39" width="386" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="rFq-8m-g0w"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="S4O-y9-1HU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1126" y="3607"/>
-        </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="jmc-En-fhE">
             <objects>
@@ -812,7 +788,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qf5-Ig-GBb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1126" y="1484"/>
+            <point key="canvasLocation" x="-2070" y="1484"/>
         </scene>
         <!--Label-->
         <scene sceneID="k25-wU-Rad">
@@ -983,6 +959,9 @@
             <point key="canvasLocation" x="1352" y="1484"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="br4-7g-5eE"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="1.circle.fill" catalog="system" width="128" height="121"/>
         <image name="2.circle.fill" catalog="system" width="128" height="121"/>
