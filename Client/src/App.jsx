@@ -1,5 +1,5 @@
 import React from 'react';
-import Routes from './components/Routes';
+import Routes from './components/Routes.jsx';
 import './App.css';
 
 const App = () => {
