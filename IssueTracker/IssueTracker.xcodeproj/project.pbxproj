@@ -17,6 +17,7 @@
 		800666E12547D24300B42428 /* IssueTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666E02547D24300B42428 /* IssueTrackerTests.swift */; };
 		800666EC2547D24300B42428 /* IssueTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666EB2547D24300B42428 /* IssueTrackerUITests.swift */; };
 		80163C6E254FF5070073AAD5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80163C6D254FF5070073AAD5 /* NetworkService.swift */; };
+		80163C73255009450073AAD5 /* CustomAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80163C72255009450073AAD5 /* CustomAddButton.swift */; };
 		8042B7E7254BA1C700910C6F /* UIColor+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7E6254BA1C700910C6F /* UIColor+HexString.swift */; };
 		8042B7F9254BAC3D00910C6F /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7F8254BAC3D00910C6F /* SignInViewController.swift */; };
 		8042B7FE254BAD7A00910C6F /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7FD254BAD7A00910C6F /* RootCoordinator.swift */; };
@@ -90,6 +91,7 @@
 		800666EB2547D24300B42428 /* IssueTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTrackerUITests.swift; sourceTree = "<group>"; };
 		800666ED2547D24300B42428 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80163C6D254FF5070073AAD5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		80163C72255009450073AAD5 /* CustomAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAddButton.swift; sourceTree = "<group>"; };
 		8042B7E6254BA1C700910C6F /* UIColor+HexString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexString.swift"; sourceTree = "<group>"; };
 		8042B7F8254BAC3D00910C6F /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		8042B7FD254BAD7A00910C6F /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				80AA07022549ED4700086F5F /* IssueListCollectionViewCell.swift */,
+				80163C72255009450073AAD5 /* CustomAddButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -595,6 +598,7 @@
 				8042B7F9254BAC3D00910C6F /* SignInViewController.swift in Sources */,
 				BD5D4157254FDD06008BCB36 /* LabelCollectionReusableView.swift in Sources */,
 				BD5D4131254FDA85008BCB36 /* MilestoneListWorker.swift in Sources */,
+				80163C73255009450073AAD5 /* CustomAddButton.swift in Sources */,
 				80AA070D2549F0A700086F5F /* IssueListPresenter.swift in Sources */,
 				8042B7E7254BA1C700910C6F /* UIColor+HexString.swift in Sources */,
 				BD5D414E254FDCFA008BCB36 /* LabelCollectionViewController.swift in Sources */,

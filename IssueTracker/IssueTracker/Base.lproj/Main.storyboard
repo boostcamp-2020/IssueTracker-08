@@ -199,9 +199,17 @@
                                     <outlet property="delegate" destination="jDf-vm-7BY" id="v3w-eT-hkh"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k5o-Gz-RoK">
-                                <rect key="frame" x="358" y="758" width="31" height="30"/>
-                                <state key="normal" title="New"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k5o-Gz-RoK" customClass="CustomAddButton" customModule="IssueTracker" customModuleProvider="target">
+                                <rect key="frame" x="339" y="738" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.85098039219999999" green="0.89411764709999997" blue="0.86666666670000003" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="PzC-Ie-k4x"/>
+                                    <constraint firstAttribute="width" constant="50" id="yvJ-xB-D6C"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <segue destination="Bzc-QL-d6q" kind="show" id="br4-7g-5eE"/>
                                 </connections>
