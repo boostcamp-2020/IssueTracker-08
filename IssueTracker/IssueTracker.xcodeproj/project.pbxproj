@@ -123,7 +123,7 @@
 		BD5D414C254FDCFA008BCB36 /* LabelListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListInteractor.swift; sourceTree = "<group>"; };
 		BD5D4155254FDD06008BCB36 /* LabelCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCollectionReusableView.swift; sourceTree = "<group>"; };
 		BD5D4156254FDD06008BCB36 /* LabelCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCollectionViewCell.swift; sourceTree = "<group>"; };
-		BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueFilterTableViewController.swift; path = IssueFilter/IssueFilterTableViewController.swift; sourceTree = "<group>"; };
+		BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueFilterTableViewController.swift; sourceTree = "<group>"; };
 		D018D0CA68C57EEA8CB7F764 /* Pods_IssueTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB7C5D95BB108BDD81533688 /* Pods-IssueTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker.debug.xcconfig"; path = "Target Support Files/Pods-IssueTracker/Pods-IssueTracker.debug.xcconfig"; sourceTree = "<group>"; };
 		E914C3F312B834FAB1DC2FDC /* Pods_IssueTrackerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTrackerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,6 +205,7 @@
 		800666C82547D24200B42428 /* IssueTracker */ = {
 			isa = PBXGroup;
 			children = (
+				80AA0720254A871500086F5F /* Services */,
 				8042B7E5254BA19500910C6F /* Extensions */,
 				80AA06F42549D07E00086F5F /* Scenes */,
 				800666C92547D24200B42428 /* AppDelegate.swift */,
@@ -258,11 +259,9 @@
 			isa = PBXGroup;
 			children = (
 				BD5D415F254FDE2D008BCB36 /* IssueFilter */,
-				BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */,
 				BD5D4127254FDA59008BCB36 /* MilestoneList */,
 				BD5D411C254FD611008BCB36 /* LabelList */,
 				8042B7F7254BAC1F00910C6F /* SignIn */,
-				80AA0720254A871500086F5F /* Services */,
 				80AA06F52549D08900086F5F /* IssueList */,
 			);
 			path = Scenes;
@@ -351,6 +350,7 @@
 		BD5D415F254FDE2D008BCB36 /* IssueFilter */ = {
 			isa = PBXGroup;
 			children = (
+				BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */,
 			);
 			path = IssueFilter;
 			sourceTree = "<group>";
