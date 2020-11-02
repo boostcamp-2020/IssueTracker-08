@@ -1,3 +1,73 @@
+## **`Sprint #2 - Day1`**
+
+### 이슈 목록 화면 완성
+
+* UIColor를 extension하여 hex string 값으로 데이터를 받아오면 label의 배경 색이 바뀝니다.
+    * 또한, (redValue * 0.299 + greenValue * 0.587 + blueValue * 0.114) / 255 값이 0.5보다 작을 시에는 label의 글자 색상이 흰색, 0.5보다 크면 검은색으로 표기 됩니다.
+* Floating button은 custom class를 통해 제작했습니다.
+* 추후에 cell이 재사용 될 때 문제가 생기지 않는지 확인해보아야 합니다. 
+
+
+### Router를 통한 Data 전달
+* Issue Controller에서 Filter Controller로 Data 전달을 위해 사용
+    1. ViewController에서 프로토콜 채택
+    ```swift
+    // IssueListViewController
+    var router: (NSObjectProtocol & IssueListRoutingLogic & IssueListDataPassing)?
+    
+    ...
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let scene = segue.identifier {
+            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
+            if let router = router, router.responds(to: selector) {
+                router.perform(selector, with: segue)
+            }
+        }
+    }
+    ```
+    2. DestinationVC를 설정하여 Data 전달
+    ```swift
+    // IssueListRouter
+    // IssueListViewController
+    @objc protocol IssueListRoutingLogic {
+        func routeTo\(scene)(segue: UIStoryboardSegue?)
+    }
+
+    protocol IssueListDataPassing {
+        var Data: Data? { get }
+    }
+    
+    func routeTo\(scene)(segue: UIStoryboardSegue?) {
+        if let segue = segue {
+            let destinationVC = segue.destination as! ViewController
+            destinationVC.router?.Data? = Data!
+        } else {
+            let destinationVC = viewController?.storyboard?.instantiateViewController(withIdentifier: "") as! ViewController
+            destinationVC.router?.Data? = Data!
+        }
+    }
+    ```
+    3. 받는 Controller에도 해당 Router 형식에 맞춰 제작
+
+
+
+### URLSession으로 데이터 받아오기
+* 현재 어플은 API를 통해 계속해서 목록을 서버로부터 받아오는 일을 하므로 NetworkService class를 만들었습니다.
+    * dataTask를 통해 데이터를 받아옵니다.
+    * 추후에 사용자 프로필 사진처럼 용량이 큰 파일들이 오간다면 caching을 구현할 예정입니다.
+* 각 Scene의 DataManager들이 NetworkService를 사용하여 필요한 데이터를 받아와 decoding을 진행합니다.
+* Decoding 이후에는 알맞은 모델에 저장하여 collection view / table viewd에 표현되도록 했습니다.
+
+![](https://i.imgur.com/NpzFKAz.png)
+
+### 결과화면
+
+| 이슈 목록 화면  | Interactive Bottom Card View |
+| -------- | -------- | -------- |
+| <img width = 250 src = "https://user-images.githubusercontent.com/34840140/97856567-d1817700-1d3f-11eb-9488-d4b5fecc5919.png">     | ![](https://i.imgur.com/1aV8Y0b.gif)
+
+
 ## **`Sprint #1 - Day4`**
 
 ### VIP 패턴을 적용한 IssueListViewController  
