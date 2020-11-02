@@ -24,7 +24,7 @@ extension IssueListPresenter: IssueListPresentationLogic {
         var displayedIssues: [ListIssues.FetchLists.ViewModel.DisplayedIssue] = []
         for issue in response.issues {
             let description = configureDescription(text: issue.content)
-            let labels = configureLabel(texts: issue.label)
+            let labels = configureLabel(labels: issue.label)
             let displayedIssue = ListIssues.FetchLists.ViewModel.DisplayedIssue(
                 issueId: issue.issueId,
                 title: issue.title,
@@ -32,16 +32,6 @@ extension IssueListPresenter: IssueListPresentationLogic {
                 milestone: issue.milestone,
                 label: labels
             )
-            
-            
-//            var description = issue.content
-//            if description.isEmpty { description = "No description provided" }
-//            let displayedIssue = ListIssues.FetchLists.ViewModel.DisplayedIssue(
-//                title: issue.title,
-//                content: description,
-//                milestone: issue.milestone,
-//                label: issue.label
-//            )
             displayedIssues.append(displayedIssue)
         }
         let viewModel = ListIssues.FetchLists.ViewModel(displayedIssues: displayedIssues)
@@ -55,11 +45,12 @@ extension IssueListPresenter: IssueListPresentationLogic {
         return "No description provided"
     }
     
-    private func configureLabel(texts: [String]?) -> [String]? {
-        if let labels = texts {
+    private func configureLabel(labels: [Label]?) -> [Label]? {
+        if let labels = labels {
             if labels.count > 2 { return [labels[0], labels[1]] }
             else { return labels }
         }
         return nil
     }
+    
 }
