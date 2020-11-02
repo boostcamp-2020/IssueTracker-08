@@ -26,6 +26,7 @@ extension IssueListPresenter: IssueListPresentationLogic {
             let description = configureDescription(text: issue.content)
             let labels = configureLabel(texts: issue.label)
             let displayedIssue = ListIssues.FetchLists.ViewModel.DisplayedIssue(
+                issueId: issue.issueId,
                 title: issue.title,
                 content: description,
                 milestone: issue.milestone,

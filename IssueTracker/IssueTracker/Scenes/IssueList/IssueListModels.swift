@@ -9,16 +9,16 @@ import Foundation
 
 struct Issue: Decodable {
     var issueId: Int
-    var username: String
-    var userEmail: String
+    var email: String
+    var name: String
+    var milestone: String?
     var title: String
     var content: String
-    var isOpen: Bool
-    var milestone: String?
-    var label: [String]?
-    var assign: [String]?
+    var isOpen: Int
     var createAt: String
     var closeAt: String
+    var label: [Label]?
+    var assign: [String]?
 }
 
 enum ListIssues {
@@ -29,10 +29,11 @@ enum ListIssues {
         }
         struct ViewModel {
             struct DisplayedIssue {
+                var issueId: Int
                 var title: String
                 var content: String
                 var milestone: String?
-                var label: [String]?
+                var label: [Label]?
             }
             var displayedIssues: [DisplayedIssue]
         }
