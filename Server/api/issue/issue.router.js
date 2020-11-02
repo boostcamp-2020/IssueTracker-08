@@ -20,8 +20,53 @@ const {
 } = require('./issue.controller');
 const router = require('express').Router();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Issues
+ *   description: 이슈에 대한 API
+ */
+
+/**
+ * @swagger
+ * /issues/open:
+ *   get:
+ *     tags: [Issues]
+ *     summary: "open된 issue list"
+ *     responses:
+ *       200:
+ *         description: "OK"
+ */
 router.get('/open', getAllOpenIssues);
+
+/**
+ * @swagger
+ * /issues/closed:
+ *   get:
+ *     tags: [Issues]
+ *     summary: "closed된 issue list"
+ *     responses:
+ *       200:
+ *         description: "OK"
+ */
 router.get('/closed', getAllCloseIssues);
+
+/**
+ * @swagger
+ * /issues/{issue_id}:
+ *   get:
+ *     tags: [Issues]
+ *     summary: "특정 issue 조회"
+ *     parameters:
+ *        - name: issue_id
+ *          in: path
+ *          required: true
+ *          schema:
+ *            type: string
+ *     responses:
+ *       200:
+ *         description: "OK"
+ */
 router.get('/:issue_id', getIssue);
 
 router.post('/', createIssue);
