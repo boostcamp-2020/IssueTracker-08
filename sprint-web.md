@@ -8,6 +8,41 @@
 #### 🐕 : [윤영우](https://github.com/yoonwoo123)
 
 -----
+# Front end
+## `💻 Sprint #2 - Day1`
+### 📌 [FE] Client 프로젝트 생성
+* create react app 없이 프로젝트를 생성했다.
+* react에 능숙한 사람이 없어 팀원 모두 zoom에 접속하여 함께 찾아보며 결정하였다.
+* js와 jsx는 기능은 동일하지만 React에서 권장하는 jsx를 사용하기로 하였다.
+* React 프로젝트의 폴더 구조를 설계하였다. 👍👍
+    * ex) Routes.jsx 가 모든 경로를 갖고있다.
+        ```bash
+        ㄴ /Client
+            App.jsx
+            App.scss
+            ㄴ /src
+                ㄴ /components
+                    ㄴ Routes.jsx
+                    ㄴ /navbar
+                        ㄴ Navbar.jsx
+                        ㄴ Navbar.scss
+                    ㄴ /form
+                        ㄴ IssueAddForm.jsx
+                        ㄴ IssueAddForm.scss
+
+                ㄴ /pages
+                    ㄴ /login
+                        ㄴ LoginPage.jsx
+                        ㄴ LoginPage.scss 
+        ```
+
+### 📌 [FE] webpack 버전 관리
+* 최신 버전의 webpack-dev-server/webpack-cli를 사용하니
+  webpack-dev-server를 실행 시 에러가 발생했다.
+* 의존성이 확인된 버전을 찾아 변경 후, 재실행을 진행했더니 에러를 해결할 수 있었다.
+* 버전 관리의 중요성을 다시 한 번 느꼈다.
+
+-----
 # Back end
 ## :computer: **`Sprint #1 - Day5`**
 ### 📌 [BE] Sprint 1에서 개발한 feature branch -> Dev-Server로 Merge 진행
