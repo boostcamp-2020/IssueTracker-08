@@ -1,7 +1,15 @@
-const { getUser, createUser, updateUserImage } = require('./signin.service');
 const fetch = require('node-fetch');
-const { Headers } = require('node-fetch');
 const githubOAuth = require('../../config/github.oauth');
+const { Headers } = require('node-fetch');
+const { tokenResponse } = require('../utils/returnForm');
+const {
+  isExistUser,
+  getUserAllInfo,
+  createUser,
+  updateUserImage,
+} = require('./signin.service');
+const { createJWT } = require('../utils/auth.token');
+const { user } = require('../../config/database.config');
 
 module.exports = {
   githubSignIn: (req, res) => {
@@ -17,29 +25,30 @@ module.exports = {
   },
 };
 
-githubOAuth.on('error', function (err) {
+githubOAuth.on('error', (err) => {
   console.error('there was a login error', err);
 });
 
-githubOAuth.on('token', function (token, res) {
+githubOAuth.on('token', (token, res) => {
   const myHeaders = new Headers();
 
   myHeaders.append('Authorization', `Bearer ${token.access_token}`);
   fetch('https://api.github.com/user', {
     headers: myHeaders,
   })
-    .then(function (res) {
+    .then((res) => {
       return res.json();
     })
-    .then(function (data) {
-      getUser(data).then(function (res) {
-        if (res === 1) {
-          updateUserImage(data);
-        } else {
-          createUser(data);
-        }
-      });
-    });
+    .then(async (data) => {
+      if (await isExistUser(data)) {
+        await updateUserImage(data);
+      } else {
+        await createUser(data);
+      }
 
-  res.status(200).json({ token: 'test' });
+      const user = await getUserAllInfo(data);
+      const token = createJWT(user[0]);
+
+      res.status(200).json(tokenResponse(token));
+    });
 });

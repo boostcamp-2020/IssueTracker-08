@@ -2,12 +2,24 @@ const query = require('../utils/signin.query');
 const { requestQuery } = require('../../config/database');
 
 module.exports = {
-  getUser: async (data) => {
-    const { login } = data;
-    const params = [login];
-    const results = await requestQuery(query.GET_USER, params);
+  isExistUser: async (data) => {
+    const { login: name } = data;
+    const params = [name];
+    const results = await requestQuery(query.GET_USER_BY_NAME, params);
 
-    return results.data[0].length;
+    if (results.data[0].length === 1) {
+      return true;
+    }
+
+    return false;
+  },
+
+  getUserAllInfo: async (data) => {
+    const { login: name } = data;
+    const params = [name];
+    const results = await requestQuery(query.GET_USER_ALL, params);
+
+    return results.data[0];
   },
 
   createUser: async (data) => {
