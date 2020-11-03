@@ -7,19 +7,50 @@
 
 import UIKit
 
+private enum Section: Hashable {
+    case main
+}
+
+private struct LabelHash: Hashable {
+    var labelName: String
+    var labelColor: String
+    var labelDescription: String?
+}
+
+private struct Item: Hashable {
+    let issueId: Int
+    let title: String
+    let content: String
+    let milestone: String?
+    let label: [LabelHash]?
+    
+    init(issueId: Int, title: String, content: String, milestone: String? = nil, label: [LabelHash]? = nil) {
+        self.issueId = issueId
+        self.title = title
+        self.content = content
+        self.milestone = milestone
+        self.label = label
+    }
+    
+    static let all = [
+        Item(issueId: 1, title: "2", content: "3", milestone: "4", label: nil)
+    ]
+}
 
 protocol IssueListDisplayLogic: class {
     func displayFetchedOrders(viewModel: ListIssues.FetchLists.ViewModel)
 }
 
 class IssueListViewController: UIViewController {
-    
+    var filterData = ListFilter.IssueFilterData()
     var interactor: IssueListBusinessLogic?
-    //var router: (IssueListRoutingLogic & IssueListDataPassing)?
+    var router: (NSObjectProtocol & IssueListRoutingLogic & IssueListDataPassing)?
     var displayedIssues: [ListIssues.FetchLists.ViewModel.DisplayedIssue] = []
     let identifier = "issueCell"
     
     @IBOutlet weak var issueListCollectionView: UICollectionView!
+    private var collectionView: UICollectionView! = nil
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Item>! = nil
     
     // MARK:- Object Lifecycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -37,13 +68,13 @@ class IssueListViewController: UIViewController {
         let viewController = self
         let interactor = IssueListInteractor()
         let presenter = IssueListPresenter()
-        //let router = IssueListRouter()
+        let router = IssueListRouter()
         viewController.interactor = interactor
-        //viewController.router = router
+        viewController.router = router
         interactor.presenter = presenter
         presenter.viewController = viewController
-        //router.viewController = viewController
-        //router.dataStore = interactor
+        router.viewController = viewController
+        router.filterData = filterData
     }
     
     // MARK:- Routing
@@ -58,9 +89,77 @@ class IssueListViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
+        filterData = (router?.filterData)!
         fetchIssues()
+        var config = UICollectionLayoutListConfiguration(appearance: .plain)
+        config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
+            let action1 = UIContextualAction(style: .normal, title: "Action 1") { (action, view, completion) in
+                completion(true)
+            }
+            action1.backgroundColor = .systemGreen
+            let action2 = UIContextualAction(style: .normal, title: "Action 2") { (action, view, completion) in
+                completion(true)
+            }
+            action2.backgroundColor = .systemPink
+            return UISwipeActionsConfiguration(actions: [action2, action1])
+        }
+        let check = UICollectionViewCompositionalLayout.list(using: config)
+        //issueListCollectionView.collectionViewLayout = check
+        issueListCollectionView.delegate = self
+        issueListCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        //configureHierarchy()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let scene = segue.identifier {
+            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
+            if let router = router, router.responds(to: selector) {
+                router.perform(selector, with: segue)
+            }
+        }
+    }
+    
+    private func configureHierarchy() {
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(collectionView)
+        collectionView.delegate = self
+    }
+    
+    private func createLayout() -> UICollectionViewLayout {
+        var config = UICollectionLayoutListConfiguration(appearance: .plain)
+        config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
+            let action1 = UIContextualAction(style: .normal, title: "Action 1") { (action, view, completion) in
+                completion(true)
+            }
+            action1.backgroundColor = .systemGreen
+            let action2 = UIContextualAction(style: .normal, title: "Action 2") { (action, view, completion) in
+                completion(true)
+            }
+            action2.backgroundColor = .systemPink
+            return UISwipeActionsConfiguration(actions: [action2, action1])
+        }
+        return UICollectionViewCompositionalLayout.list(using: config)
+    }
+    
+    private func configureDataSource() {
+        let cellRegistration = UICollectionView.CellRegistration<ItemListCell, Item> { (cell, indexPath, item) in
+            cell.updateWithItem(item)
+            cell.accessories = [.disclosureIndicator()]
+        }
+        
+        dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView) {
+            (collectionView: UICollectionView, indexPath: IndexPath, item: Item) -> UICollectionViewCell? in
+            return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
+        }
+        
+        // initial data
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        print(Section.main)
+        snapshot.appendSections([.main])
+        snapshot.appendItems(Item.all)
+        dataSource.apply(snapshot, animatingDifferences: false)
+    }
 }
 
 extension IssueListViewController: IssueListDisplayLogic {
@@ -83,15 +182,16 @@ extension IssueListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(3)
         return displayedIssues.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print(4)
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? IssueListCollectionViewCell else {
             return UICollectionViewCell()
         }
         cell.setupComponents()
-        
         let displayedIssue = displayedIssues[indexPath.item]
         cell.titleLabel.text = displayedIssue.title
         cell.descriptionLabel.text = displayedIssue.content
@@ -107,7 +207,6 @@ extension IssueListViewController: UICollectionViewDataSource {
             cell.milestoneLabel.setTitle(milestoneText, for: .normal)
             cell.configureMilestone()
         }
-        
         return cell
     }
     
@@ -119,11 +218,24 @@ extension IssueListViewController: UICollectionViewDataSource {
 extension IssueListViewController: UICollectionViewDelegate { }
 
 extension IssueListViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemsPerRow: CGFloat = 1
-        let sectionInsets = UIEdgeInsets(top: 0, left: 5.0, bottom: 0, right: 5.0)
-        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-        let widthPerItem = UIScreen.main.bounds.width - paddingSpace
-        return CGSize(width: widthPerItem, height: widthPerItem * 0.25)
+
+    // MARK: - UICollectionViewDelegateFlowLayout
+
+}
+
+private class ItemListCell: UICollectionViewListCell {
+    private var item: Item? = nil
+    
+    func updateWithItem(_ newItem: Item) {
+        guard item != newItem else { return }
+        item = newItem
+        setNeedsUpdateConfiguration()
+    }
+    
+    override var configurationState: UICellConfigurationState {
+        var state = super.configurationState
+        //state.item = self.item
+        return state
     }
 }
+

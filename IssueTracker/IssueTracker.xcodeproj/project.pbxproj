@@ -49,6 +49,8 @@
 		BD5D4157254FDD06008BCB36 /* LabelCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4155254FDD06008BCB36 /* LabelCollectionReusableView.swift */; };
 		BD5D4158254FDD06008BCB36 /* LabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4156254FDD06008BCB36 /* LabelCollectionViewCell.swift */; };
 		BD5D4164254FDE4D008BCB36 /* IssueFilterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */; };
+		BD5D416E254FEDB0008BCB36 /* IssueFilterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D416D254FEDB0008BCB36 /* IssueFilterModels.swift */; };
+		BD5D4176254FF38C008BCB36 /* IssueFilterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4175254FF38C008BCB36 /* IssueFilterRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,7 +121,9 @@
 		BD5D414C254FDCFA008BCB36 /* LabelListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListInteractor.swift; sourceTree = "<group>"; };
 		BD5D4155254FDD06008BCB36 /* LabelCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCollectionReusableView.swift; sourceTree = "<group>"; };
 		BD5D4156254FDD06008BCB36 /* LabelCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCollectionViewCell.swift; sourceTree = "<group>"; };
-		BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueFilterTableViewController.swift; path = IssueFilter/IssueFilterTableViewController.swift; sourceTree = "<group>"; };
+		BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueFilterTableViewController.swift; sourceTree = "<group>"; };
+		BD5D416D254FEDB0008BCB36 /* IssueFilterModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterModels.swift; sourceTree = "<group>"; };
+		BD5D4175254FF38C008BCB36 /* IssueFilterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterRouter.swift; sourceTree = "<group>"; };
 		D018D0CA68C57EEA8CB7F764 /* Pods_IssueTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB7C5D95BB108BDD81533688 /* Pods-IssueTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker.debug.xcconfig"; path = "Target Support Files/Pods-IssueTracker/Pods-IssueTracker.debug.xcconfig"; sourceTree = "<group>"; };
 		E914C3F312B834FAB1DC2FDC /* Pods_IssueTrackerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTrackerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -254,7 +258,6 @@
 			isa = PBXGroup;
 			children = (
 				BD5D415F254FDE2D008BCB36 /* IssueFilter */,
-				BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */,
 				BD5D4127254FDA59008BCB36 /* MilestoneList */,
 				BD5D411C254FD611008BCB36 /* LabelList */,
 				8042B7F7254BAC1F00910C6F /* SignIn */,
@@ -345,6 +348,9 @@
 		BD5D415F254FDE2D008BCB36 /* IssueFilter */ = {
 			isa = PBXGroup;
 			children = (
+				BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */,
+				BD5D416D254FEDB0008BCB36 /* IssueFilterModels.swift */,
+				BD5D4175254FF38C008BCB36 /* IssueFilterRouter.swift */,
 			);
 			path = IssueFilter;
 			sourceTree = "<group>";
@@ -591,6 +597,8 @@
 				BD5D411E254FD6D5008BCB36 /* LabelListModels.swift in Sources */,
 				8042B7F9254BAC3D00910C6F /* SignInViewController.swift in Sources */,
 				BD5D4157254FDD06008BCB36 /* LabelCollectionReusableView.swift in Sources */,
+				BD5D4176254FF38C008BCB36 /* IssueFilterRouter.swift in Sources */,
+				BD5D416E254FEDB0008BCB36 /* IssueFilterModels.swift in Sources */,
 				BD5D4131254FDA85008BCB36 /* MilestoneListWorker.swift in Sources */,
 				80AA070D2549F0A700086F5F /* IssueListPresenter.swift in Sources */,
 				8042B7E7254BA1C700910C6F /* UIColor+HexString.swift in Sources */,

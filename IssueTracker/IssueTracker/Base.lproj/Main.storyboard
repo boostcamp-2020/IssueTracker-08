@@ -78,7 +78,7 @@
         <!--Issue List View Controller-->
         <scene sceneID="4UL-XK-ttX">
             <objects>
-                <viewController storyboardIdentifier="IssueList" id="jDf-vm-7BY" customClass="IssueListViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="IssueList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jDf-vm-7BY" customClass="IssueListViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4dH-4G-Hoa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -96,8 +96,8 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wUV-Ux-NXD">
                                 <rect key="frame" x="0.0" y="213" width="414" height="600"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="Obe-ob-ODF">
-                                    <size key="itemSize" width="414" height="81"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9XL-dP-VLK">
+                                    <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -230,7 +230,7 @@
                     <navigationItem key="navigationItem" id="q0k-3q-gvO">
                         <barButtonItem key="leftBarButtonItem" title="Filter" id="F3G-dF-8Vn">
                             <connections>
-                                <segue destination="Ule-O3-Ok4" kind="show" id="jcY-8p-kWv"/>
+                                <segue destination="Ule-O3-Ok4" kind="show" identifier="Filter" id="jcY-8p-kWv"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="zbu-2F-XbP"/>
@@ -246,7 +246,7 @@
         <!--Issue Filter Table View Controller-->
         <scene sceneID="yUX-c4-VL5">
             <objects>
-                <tableViewController id="Ule-O3-Ok4" customClass="IssueFilterTableViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="IssueFilter" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ule-O3-Ok4" customClass="IssueFilterTableViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ESU-5d-Wzl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -291,6 +291,9 @@
                                 <rect key="frame" x="302" y="7" width="92" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="btnChangeFilterData:" destination="Ule-O3-Ok4" eventType="touchUpInside" id="0Fq-Xb-GVe"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>

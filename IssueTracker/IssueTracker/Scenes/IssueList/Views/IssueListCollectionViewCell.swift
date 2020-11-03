@@ -8,11 +8,12 @@
 import UIKit
 
 class IssueListCollectionViewCell: UICollectionViewCell {
-    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var milestoneLabel: UIButton!
     @IBOutlet var labelButtonCollection: [UIButton]!
+    
+    let hiddenContainerView = UIView()
     
     func setupComponents() {
         milestoneLabel.isHidden = true
@@ -43,4 +44,8 @@ class IssueListCollectionViewCell: UICollectionViewCell {
         else { label.setTitleColor(.black, for: .normal) }
     }
     
+    override func updateConfiguration(using state: UICellConfigurationState) {
+        contentView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        contentView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
+    }
 }
