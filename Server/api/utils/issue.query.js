@@ -1,10 +1,10 @@
 const query = {
   GET_OPEN_ISSUES:
-    'SELECT issue.id as issueId, (SELECT user.email FROM user WHERE user.id = issue.userId) as email, (SELECT user.name FROM user WHERE user.id = issue.userId) as name, (SELECT milestone.title FROM milestone WHERE issue.milestoneID = milestone.id) as milestone, issue.title, issue.content, issue.isOpen, issue.createAt, issue.closeAt FROM issue WHERE issue.isOpen = 1',
+    'SELECT issue.id as issueId, (SELECT user.email FROM user WHERE user.id = issue.userId) as email, (SELECT user.name FROM user WHERE user.id = issue.userId) as name, milestoneId, (SELECT milestone.title FROM milestone WHERE issue.milestoneID = milestone.id) as milestone, issue.title, issue.content, issue.isOpen, issue.createAt, issue.closeAt FROM issue WHERE issue.isOpen = 1',
   GET_CLOSE_ISSUES:
-    'SELECT issue.id as issueId, (SELECT user.email FROM user WHERE user.id = issue.userId) as email, (SELECT user.name FROM user WHERE user.id = issue.userId) as name, (SELECT milestone.title FROM milestone WHERE issue.milestoneID = milestone.id) as milestone, issue.title, issue.content, issue.isOpen, issue.createAt, issue.closeAt FROM issue WHERE issue.isOpen = 0',
+    'SELECT issue.id as issueId, (SELECT user.email FROM user WHERE user.id = issue.userId) as email, (SELECT user.name FROM user WHERE user.id = issue.userId) as name, milestoneId, (SELECT milestone.title FROM milestone WHERE issue.milestoneID = milestone.id) as milestone, issue.title, issue.content, issue.isOpen, issue.createAt, issue.closeAt FROM issue WHERE issue.isOpen = 0',
   GET_ISSUE:
-    'SELECT issue.id as issueId, (SELECT user.email FROM user WHERE user.id = issue.userId) as email, (SELECT user.name FROM user WHERE user.id = issue.userId) as name, (SELECT milestone.title FROM milestone WHERE issue.milestoneID = milestone.id) as milestone, issue.title, issue.content, issue.isOpen, issue.createAt, issue.closeAt FROM issue WHERE issue.id = ?',
+    'SELECT issue.id as issueId, (SELECT user.email FROM user WHERE user.id = issue.userId) as email, (SELECT user.name FROM user WHERE user.id = issue.userId) as name, milestoneId, (SELECT milestone.title FROM milestone WHERE issue.milestoneID = milestone.id) as milestone, issue.title, issue.content, issue.isOpen, issue.createAt, issue.closeAt FROM issue WHERE issue.id = ?',
   GET_LABELS_BY_ISSUE_ID:
     'SELECT (SELECT label.name FROM label WHERE label.id = issue_label.labelId) as labelName, (SELECT label.color FROM label WHERE label.id = issue_label.labelId) as labelColor, (SELECT label.description FROM label WHERE label.id = issue_label.labelId) as labelDescription FROM issue JOIN issue_label ON issue.id = issue_label.issueId WHERE issue_label.issueId = ?',
   GET_ASSIGNEES_BY_ISSUE_ID:
