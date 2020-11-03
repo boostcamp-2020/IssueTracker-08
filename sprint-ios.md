@@ -1,3 +1,33 @@
+## **`Sprint #2 - Day2`**
+
+### Modern Collection List View
+
+* Reference : WWDC 2020 Advances in UICollectionView [LINK](https://developer.apple.com/documentation/uikit/views_and_controls/collection_views/implementing_modern_collection_views#see-also)
+
+
+#### Swipe
+* UICollectionLayoutListConfiguration
+    * trailingSwipeAction 기능을 이용하여 액션 추가
+        * clese, delete Action 추가
+        * 이후 handler을 추가하여 기능 구현할 예정
+    * 기존에 있는 layout 변경
+        * CompositionalLayout.list에 위의 configure 추가
+        * 사용하고 있던 CollectionView의 collectionViewLayout를 변경
+        * delegate 채택
+
+#### Accessory Items(Multiselect)
+* UICellAccessory 중 multiselect를 통해 다중선택 화면 구현
+* 기존의 cell을 옆으로 변경하기 위해서 cell의 separatorLayoutGuide에게 constraint를 줌
+* isEditing property를 오버라이딩하여 현재 모드를 관찰하여(didSet) 적절하게 화면 구성을 바꿈
+    * Title, Navigation bar button item, Button
+
+### 결과화면
+
+| Swipe Cell  | Multiselect Accessory |
+| -------- | -------- |
+| <img width = 380, src = "https://i.imgur.com/NPt1c1q.gif"> | ![](https://user-images.githubusercontent.com/34840140/97972024-44a1f080-1e07-11eb-8b14-9288a4db47e6.gif) |
+
+
 ## **`Sprint #2 - Day1`**
 
 ### 이슈 목록 화면 완성
