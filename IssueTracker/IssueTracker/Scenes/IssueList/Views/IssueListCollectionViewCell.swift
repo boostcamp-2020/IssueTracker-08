@@ -7,7 +7,7 @@
 
 import UIKit
 
-class IssueListCollectionViewCell: UICollectionViewCell {
+class IssueListCollectionViewCell: UICollectionViewListCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -21,6 +21,7 @@ class IssueListCollectionViewCell: UICollectionViewCell {
             label.isHidden = true
             label.isUserInteractionEnabled = false
         })
+        separatorLayoutGuide.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
     }
     
     func configureMilestone() {
