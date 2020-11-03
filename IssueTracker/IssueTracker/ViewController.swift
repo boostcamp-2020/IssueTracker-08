@@ -7,13 +7,13 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class testViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        self.contentSizeInPopup = CGSize(width: 300, height: 280)
+        self.landscapeContentSizeInPopup = CGSize(width: 300, height: 200)
     }
-
-
 }
 
