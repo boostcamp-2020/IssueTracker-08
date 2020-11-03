@@ -8,6 +8,12 @@
 import UIKit
 
 extension UIColor {
+    var redValue: CGFloat{ return CIColor(color: self).red }
+    var greenValue: CGFloat{ return CIColor(color: self).green }
+    var blueValue: CGFloat{ return CIColor(color: self).blue }
+    var alphaValue: CGFloat{ return CIColor(color: self).alpha }
+    
+    
     convenience init(hexString: String, alpha: CGFloat = 1.0) {
         let hexString: String = hexString.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         let scanner = Scanner(string: hexString)
@@ -27,13 +33,20 @@ extension UIColor {
     }
     
     func toHexString() -> String {
-        var r:CGFloat = 0
-        var g:CGFloat = 0
-        var b:CGFloat = 0
-        var a:CGFloat = 0
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
         getRed(&r, green: &g, blue: &b, alpha: &a)
         let rgb:Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
-        return String(format:"#%06x", rgb)
+        return String(format:"%06x", rgb)
     }
-    
+}
+
+func randomColor() -> UIColor {
+    let randomRed:CGFloat = CGFloat(drand48())
+    let randomGreen:CGFloat = CGFloat(drand48())
+    let randomBlue:CGFloat = CGFloat(drand48())
+            
+    return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
 }

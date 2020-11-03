@@ -9,7 +9,6 @@ import Foundation
 
 
 class IssueListWorker {
-    
     var dataManager: IssueDataManagerProtocol
     init(dataManager: IssueDataManagerProtocol) {
         self.dataManager = dataManager
@@ -20,5 +19,4 @@ class IssueListWorker {
             completion(issues)
         })
     }
-    
 }

@@ -13,15 +13,13 @@ protocol IssueListDisplayLogic: class {
 }
 
 class IssueListViewController: UIViewController {
-    
+    var filterData = ListFilter.IssueFilterData()
     var interactor: IssueListBusinessLogic?
-    //var router: (IssueListRoutingLogic & IssueListDataPassing)?
+    var router: (NSObjectProtocol & IssueListRoutingLogic & IssueListDataPassing)?
     var displayedIssues: [ListIssues.FetchLists.ViewModel.DisplayedIssue] = []
     let identifier = "issueCell"
     
     @IBOutlet weak var issueListCollectionView: UICollectionView!
-    @IBOutlet weak var test: UILabel!
-    
     
     // MARK:- Object Lifecycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -39,13 +37,33 @@ class IssueListViewController: UIViewController {
         let viewController = self
         let interactor = IssueListInteractor()
         let presenter = IssueListPresenter()
-        //let router = IssueListRouter()
+        let router = IssueListRouter()
         viewController.interactor = interactor
-        //viewController.router = router
+        viewController.router = router
         interactor.presenter = presenter
         presenter.viewController = viewController
-        //router.viewController = viewController
-        //router.dataStore = interactor
+        router.viewController = viewController
+        router.filterData = filterData
+    }
+    
+    func setupCollectionview() {
+        var config = UICollectionLayoutListConfiguration(appearance: .plain)
+        config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
+            let action1 = UIContextualAction(style: .normal, title: "Action 1") { (action, view, completion) in
+                completion(true)
+            }
+            action1.backgroundColor = .systemGreen
+            let action2 = UIContextualAction(style: .normal, title: "Action 2") { (action, view, completion) in
+                completion(true)
+            }
+                action2.backgroundColor = .systemPink
+                return UISwipeActionsConfiguration(actions: [action2, action1])
+            }
+                
+        let layout = UICollectionViewCompositionalLayout.list(using: config)
+        issueListCollectionView.collectionViewLayout = layout
+        issueListCollectionView.delegate = self
+        issueListCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
     // MARK:- Routing
@@ -55,11 +73,15 @@ class IssueListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupCollectionview()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
+        filterData = (router?.filterData)!
         fetchIssues()
+        print(filterData)
     }
     
 }
@@ -74,6 +96,15 @@ extension IssueListViewController: IssueListDisplayLogic {
     func displayFetchedOrders(viewModel: ListIssues.FetchLists.ViewModel) {
         displayedIssues = viewModel.displayedIssues
         issueListCollectionView.reloadData()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let scene = segue.identifier {
+            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
+            if let router = router, router.responds(to: selector) {
+                router.perform(selector, with: segue)
+            }
+        }
     }
 }
 
@@ -96,20 +127,25 @@ extension IssueListViewController: UICollectionViewDataSource {
         let displayedIssue = displayedIssues[indexPath.item]
         cell.titleLabel.text = displayedIssue.title
         cell.descriptionLabel.text = displayedIssue.content
-        if let labels: [String] = displayedIssue.label {
-            labels.enumerated().forEach({ (idx, labelText) in
+        if let labels: [Label] = displayedIssue.label {
+            labels.enumerated().forEach({ (idx, labelData) in
                 let projectLabel: UIButton = cell.labelButtonCollection[idx]
-                projectLabel.setTitle(labelText, for: .normal)
-                cell.configureLabelButton(label: projectLabel, hexString: "#6367bf")              
+                projectLabel.setTitle(labelData.labelName, for: .normal)
+                cell.configureLabelButton(label: projectLabel, hexString: "\(labelData.labelColor)")
+                
             })
         }
         if let milestoneText = displayedIssue.milestone {
             cell.milestoneLabel.setTitle(milestoneText, for: .normal)
             cell.configureMilestone()
         }
+        
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(displayedIssues[indexPath.row].issueId) // tag
+    }
 }
 
 extension IssueListViewController: UICollectionViewDelegate { }
