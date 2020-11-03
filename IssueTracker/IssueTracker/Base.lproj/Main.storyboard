@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QtD-UP-V9m">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QtD-UP-V9m">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -97,7 +97,7 @@
                                 <rect key="frame" x="0.0" y="213" width="414" height="600"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9XL-dP-VLK">
-                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="itemSize" width="414" height="88"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -133,7 +133,7 @@
                                                     </constraints>
                                                 </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="bottom" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Tt6-ER-Otg">
-                                                    <rect key="frame" x="306" y="38" width="92" height="42"/>
+                                                    <rect key="frame" x="306" y="38" width="92" height="39"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l4C-da-1ZL">
                                                             <rect key="frame" x="43" y="0.0" width="49" height="20"/>
@@ -146,7 +146,7 @@
                                                             </state>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QdI-Ua-v0l">
-                                                            <rect key="frame" x="0.0" y="22" width="92" height="20"/>
+                                                            <rect key="frame" x="0.0" y="22" width="92" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="Nrm-vt-caq"/>
                                                             </constraints>
@@ -174,6 +174,7 @@
                                                 <constraint firstItem="oPh-3h-8G7" firstAttribute="leading" secondItem="eEB-Uu-9JN" secondAttribute="leading" constant="10" id="7yb-bv-2VA"/>
                                                 <constraint firstItem="Tvg-oR-LBi" firstAttribute="leading" secondItem="eEB-Uu-9JN" secondAttribute="leading" constant="16" id="ABN-HR-gJ2"/>
                                                 <constraint firstAttribute="trailing" secondItem="oPh-3h-8G7" secondAttribute="trailing" constant="10" id="BfW-X1-UiW"/>
+                                                <constraint firstItem="oPh-3h-8G7" firstAttribute="top" secondItem="Tt6-ER-Otg" secondAttribute="bottom" constant="10" id="Fg8-Jw-yKA"/>
                                                 <constraint firstAttribute="bottom" secondItem="oPh-3h-8G7" secondAttribute="bottom" id="MjS-v2-Ibe"/>
                                                 <constraint firstItem="Tt6-ER-Otg" firstAttribute="top" secondItem="W1T-5h-JpC" secondAttribute="bottom" constant="3" id="Ney-Qe-p2u"/>
                                                 <constraint firstItem="Tvg-oR-LBi" firstAttribute="top" secondItem="eEB-Uu-9JN" secondAttribute="top" constant="15" id="P1r-VK-aQ9"/>
@@ -181,6 +182,7 @@
                                                 <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Tvg-oR-LBi" secondAttribute="trailing" constant="253.5" id="Z86-9V-ggF"/>
                                                 <constraint firstAttribute="trailing" secondItem="W1T-5h-JpC" secondAttribute="trailing" constant="16" id="cAy-0W-1yN"/>
                                                 <constraint firstItem="W1T-5h-JpC" firstAttribute="top" secondItem="eEB-Uu-9JN" secondAttribute="top" constant="15" id="yCu-ca-9rZ"/>
+                                                <constraint firstItem="oPh-3h-8G7" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ynL-Je-cwR" secondAttribute="bottom" constant="15" id="zLg-LA-viT"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="414" height="88"/>

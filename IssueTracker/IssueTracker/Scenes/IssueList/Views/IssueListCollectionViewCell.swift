@@ -13,8 +13,6 @@ class IssueListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var milestoneLabel: UIButton!
     @IBOutlet var labelButtonCollection: [UIButton]!
     
-    let hiddenContainerView = UIView()
-    
     func setupComponents() {
         milestoneLabel.isHidden = true
         milestoneLabel.isUserInteractionEnabled = false
@@ -42,10 +40,5 @@ class IssueListCollectionViewCell: UICollectionViewCell {
         let luminance = backgroundUIColor.redValue * 0.299 + backgroundUIColor.greenValue * 0.587 + backgroundUIColor.blueValue * 0.114
         if luminance < 0.5 { label.setTitleColor(.white, for: .normal) }
         else { label.setTitleColor(.black, for: .normal) }
-    }
-    
-    override func updateConfiguration(using state: UICellConfigurationState) {
-        contentView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-        contentView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
     }
 }
