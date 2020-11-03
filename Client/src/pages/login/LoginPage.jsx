@@ -1,5 +1,8 @@
 import React, { useState, Component } from 'react';
+
 import './LoginPage.scss';
+import * as config from '../../config';
+
 export default function LoginPage() {
   return (
       <div class="container">
@@ -23,7 +26,7 @@ export default function LoginPage() {
             <a href="">회원가입</a>
           </div>
 
-          <a href="http://127.0.0.1:8080/auth/github/">
+          <a href={config.BASE_URL + "auth/github/"}>
             <div class="github-login">
               <p>Sign in with GitHub</p>
               <img src="/images/github.svg"></img>
