@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1F2F677E0B17EDFEC252EA13 /* Pods_IssueTracker_IssueTrackerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04B913ACEA472A6ED4C2AAAA /* Pods_IssueTracker_IssueTrackerUITests.framework */; };
+		29EC91AA25511E1B007B59A0 /* IssueFilterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC91A925511E1B007B59A0 /* IssueFilterModels.swift */; };
+		29EC91AC25511E29007B59A0 /* IssueFilterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC91AB25511E29007B59A0 /* IssueFilterRouter.swift */; };
 		800666CA2547D24200B42428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666C92547D24200B42428 /* AppDelegate.swift */; };
 		800666CC2547D24200B42428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666CB2547D24200B42428 /* SceneDelegate.swift */; };
 		800666CE2547D24200B42428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666CD2547D24200B42428 /* ViewController.swift */; };
@@ -73,6 +75,8 @@
 /* Begin PBXFileReference section */
 		04B913ACEA472A6ED4C2AAAA /* Pods_IssueTracker_IssueTrackerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTracker_IssueTrackerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F1CE59EA9157BA9DFBC2777 /* Pods-IssueTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker.release.xcconfig"; path = "Target Support Files/Pods-IssueTracker/Pods-IssueTracker.release.xcconfig"; sourceTree = "<group>"; };
+		29EC91A925511E1B007B59A0 /* IssueFilterModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterModels.swift; sourceTree = "<group>"; };
+		29EC91AB25511E29007B59A0 /* IssueFilterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterRouter.swift; sourceTree = "<group>"; };
 		4F983C8476DEF87744EFC079 /* Pods-IssueTrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTrackerTests.debug.xcconfig"; path = "Target Support Files/Pods-IssueTrackerTests/Pods-IssueTrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5A9FC34F6955FD30A256E27B /* Pods-IssueTracker-IssueTrackerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker-IssueTrackerUITests.release.xcconfig"; path = "Target Support Files/Pods-IssueTracker-IssueTrackerUITests/Pods-IssueTracker-IssueTrackerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7527E0FFD543E83A2E889933 /* Pods-IssueTrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTrackerTests.release.xcconfig"; path = "Target Support Files/Pods-IssueTrackerTests/Pods-IssueTrackerTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -351,6 +355,8 @@
 			isa = PBXGroup;
 			children = (
 				BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */,
+				29EC91A925511E1B007B59A0 /* IssueFilterModels.swift */,
+				29EC91AB25511E29007B59A0 /* IssueFilterRouter.swift */,
 			);
 			path = IssueFilter;
 			sourceTree = "<group>";
@@ -597,6 +603,7 @@
 				BD5D411E254FD6D5008BCB36 /* LabelListModels.swift in Sources */,
 				8042B7F9254BAC3D00910C6F /* SignInViewController.swift in Sources */,
 				BD5D4157254FDD06008BCB36 /* LabelCollectionReusableView.swift in Sources */,
+				29EC91AC25511E29007B59A0 /* IssueFilterRouter.swift in Sources */,
 				BD5D4131254FDA85008BCB36 /* MilestoneListWorker.swift in Sources */,
 				80163C73255009450073AAD5 /* CustomAddButton.swift in Sources */,
 				80AA070D2549F0A700086F5F /* IssueListPresenter.swift in Sources */,
@@ -619,6 +626,7 @@
 				BD5D4158254FDD06008BCB36 /* LabelCollectionViewCell.swift in Sources */,
 				80163C6E254FF5070073AAD5 /* NetworkService.swift in Sources */,
 				BD5D412F254FDA85008BCB36 /* MilestoneCollectionViewController.swift in Sources */,
+				29EC91AA25511E1B007B59A0 /* IssueFilterModels.swift in Sources */,
 				80AA07082549F08300086F5F /* IssueListInteractor.swift in Sources */,
 				BD5D414D254FDCFA008BCB36 /* LabelLsitPresenter.swift in Sources */,
 				80AA07122549F0C100086F5F /* IssueListModels.swift in Sources */,
