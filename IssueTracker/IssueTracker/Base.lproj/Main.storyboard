@@ -78,7 +78,7 @@
         <!--Issue List View Controller-->
         <scene sceneID="4UL-XK-ttX">
             <objects>
-                <viewController storyboardIdentifier="IssueList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jDf-vm-7BY" customClass="IssueListViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="IssueList" id="jDf-vm-7BY" customClass="IssueListViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4dH-4G-Hoa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -96,8 +96,8 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wUV-Ux-NXD">
                                 <rect key="frame" x="0.0" y="213" width="414" height="600"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9XL-dP-VLK">
-                                    <size key="itemSize" width="414" height="88"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="Obe-ob-ODF">
+                                    <size key="itemSize" width="414" height="81"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -174,15 +174,15 @@
                                                 <constraint firstItem="oPh-3h-8G7" firstAttribute="leading" secondItem="eEB-Uu-9JN" secondAttribute="leading" constant="10" id="7yb-bv-2VA"/>
                                                 <constraint firstItem="Tvg-oR-LBi" firstAttribute="leading" secondItem="eEB-Uu-9JN" secondAttribute="leading" constant="16" id="ABN-HR-gJ2"/>
                                                 <constraint firstAttribute="trailing" secondItem="oPh-3h-8G7" secondAttribute="trailing" constant="10" id="BfW-X1-UiW"/>
-                                                <constraint firstItem="oPh-3h-8G7" firstAttribute="top" secondItem="Tt6-ER-Otg" secondAttribute="bottom" constant="10" id="Fg8-Jw-yKA"/>
+                                                <constraint firstItem="oPh-3h-8G7" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ynL-Je-cwR" secondAttribute="bottom" constant="15" id="KsG-sF-UPc"/>
                                                 <constraint firstAttribute="bottom" secondItem="oPh-3h-8G7" secondAttribute="bottom" id="MjS-v2-Ibe"/>
                                                 <constraint firstItem="Tt6-ER-Otg" firstAttribute="top" secondItem="W1T-5h-JpC" secondAttribute="bottom" constant="3" id="Ney-Qe-p2u"/>
                                                 <constraint firstItem="Tvg-oR-LBi" firstAttribute="top" secondItem="eEB-Uu-9JN" secondAttribute="top" constant="15" id="P1r-VK-aQ9"/>
                                                 <constraint firstItem="ynL-Je-cwR" firstAttribute="leading" secondItem="eEB-Uu-9JN" secondAttribute="leading" constant="16" id="PrE-Oi-U9H"/>
                                                 <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Tvg-oR-LBi" secondAttribute="trailing" constant="253.5" id="Z86-9V-ggF"/>
                                                 <constraint firstAttribute="trailing" secondItem="W1T-5h-JpC" secondAttribute="trailing" constant="16" id="cAy-0W-1yN"/>
+                                                <constraint firstItem="oPh-3h-8G7" firstAttribute="top" secondItem="Tt6-ER-Otg" secondAttribute="bottom" constant="10" id="iVu-u6-ESq"/>
                                                 <constraint firstItem="W1T-5h-JpC" firstAttribute="top" secondItem="eEB-Uu-9JN" secondAttribute="top" constant="15" id="yCu-ca-9rZ"/>
-                                                <constraint firstItem="oPh-3h-8G7" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ynL-Je-cwR" secondAttribute="bottom" constant="15" id="zLg-LA-viT"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="414" height="88"/>
@@ -201,9 +201,18 @@
                                     <outlet property="delegate" destination="jDf-vm-7BY" id="v3w-eT-hkh"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k5o-Gz-RoK">
-                                <rect key="frame" x="358" y="758" width="31" height="30"/>
-                                <state key="normal" title="New"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k5o-Gz-RoK" customClass="CustomAddButton" customModule="IssueTracker" customModuleProvider="target">
+                                <rect key="frame" x="339" y="738" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.85098039219999999" green="0.89411764709999997" blue="0.86666666670000003" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="PzC-Ie-k4x"/>
+                                    <constraint firstAttribute="width" constant="50" id="yvJ-xB-D6C"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="plus" catalog="system">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                </state>
                                 <connections>
                                     <segue destination="Bzc-QL-d6q" kind="show" id="br4-7g-5eE"/>
                                 </connections>
@@ -243,12 +252,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HHI-Js-1Mc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1810.144927536232" y="2209.8214285714284"/>
+            <point key="canvasLocation" x="-2754" y="2210"/>
         </scene>
         <!--Issue Filter Table View Controller-->
         <scene sceneID="yUX-c4-VL5">
             <objects>
-                <tableViewController storyboardIdentifier="IssueFilter" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ule-O3-Ok4" customClass="IssueFilterTableViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="Ule-O3-Ok4" customClass="IssueFilterTableViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ESU-5d-Wzl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -294,7 +303,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Done"/>
                                 <connections>
-                                    <action selector="btnChangeFilterData:" destination="Ule-O3-Ok4" eventType="touchUpInside" id="0Fq-Xb-GVe"/>
+                                    <action selector="btnChangeFilterData:" destination="Ule-O3-Ok4" eventType="touchUpInside" id="LnF-Pm-5aw"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -302,7 +311,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hPn-az-3gl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2500" y="2926"/>
+            <point key="canvasLocation" x="-3443" y="2926"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="0Ki-L2-PyV">
@@ -428,12 +437,15 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Edit"/>
                             </button>
+                            <connections>
+                                <segue destination="Bzc-QL-d6q" kind="show" id="f38-h2-dX7"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wkb-6v-ChG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1810" y="2926"/>
+            <point key="canvasLocation" x="-2754" y="2926"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Wee-gF-XcW">
@@ -471,9 +483,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WJl-88-DAz">
                                 <rect key="frame" x="351" y="108" width="49" height="30"/>
                                 <state key="normal" title="Setting"/>
-                                <connections>
-                                    <segue destination="KJU-Q3-nuF" kind="presentation" id="h9B-lV-zMV"/>
-                                </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" text="코멘트는 여기에 작성하세요" translatesAutoresizingMaskIntoConstraints="NO" id="aXk-cK-LsE">
                                 <rect key="frame" x="20" y="284" width="374" height="515"/>
@@ -512,7 +521,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lxK-iN-XNV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1126.0869565217392" y="2925.6696428571427"/>
+            <point key="canvasLocation" x="-1693" y="2926"/>
         </scene>
         <!--Test View Controller-->
         <scene sceneID="Lqr-HF-ZUX">
@@ -656,30 +665,6 @@
             </objects>
             <point key="canvasLocation" x="19" y="2926"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="7hI-hw-0sj">
-            <objects>
-                <viewController id="KJU-Q3-nuF" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="OUQ-B7-c52">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="이 화면 : 이슈 생성 또는 수정 시 담당자, 레이블 등을 설정할 수 있는 화면" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Wt-A7-CRD">
-                                <rect key="frame" x="20" y="39" width="386" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="rFq-8m-g0w"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="S4O-y9-1HU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1126" y="3607"/>
-        </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="jmc-En-fhE">
             <objects>
@@ -808,7 +793,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qf5-Ig-GBb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1126" y="1484"/>
+            <point key="canvasLocation" x="-2070" y="1484"/>
         </scene>
         <!--Label-->
         <scene sceneID="k25-wU-Rad">
@@ -979,6 +964,9 @@
             <point key="canvasLocation" x="1352" y="1484"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="br4-7g-5eE"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="1.circle.fill" catalog="system" width="128" height="121"/>
         <image name="2.circle.fill" catalog="system" width="128" height="121"/>
@@ -986,6 +974,7 @@
         <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="exclamationmark.circle" catalog="system" width="128" height="121"/>
         <image name="logo" width="768" height="768"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

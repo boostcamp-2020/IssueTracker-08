@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1F2F677E0B17EDFEC252EA13 /* Pods_IssueTracker_IssueTrackerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04B913ACEA472A6ED4C2AAAA /* Pods_IssueTracker_IssueTrackerUITests.framework */; };
+		29EC91AA25511E1B007B59A0 /* IssueFilterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC91A925511E1B007B59A0 /* IssueFilterModels.swift */; };
+		29EC91AC25511E29007B59A0 /* IssueFilterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC91AB25511E29007B59A0 /* IssueFilterRouter.swift */; };
 		800666CA2547D24200B42428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666C92547D24200B42428 /* AppDelegate.swift */; };
 		800666CC2547D24200B42428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666CB2547D24200B42428 /* SceneDelegate.swift */; };
 		800666CE2547D24200B42428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666CD2547D24200B42428 /* ViewController.swift */; };
@@ -16,6 +18,8 @@
 		800666D62547D24300B42428 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 800666D42547D24300B42428 /* LaunchScreen.storyboard */; };
 		800666E12547D24300B42428 /* IssueTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666E02547D24300B42428 /* IssueTrackerTests.swift */; };
 		800666EC2547D24300B42428 /* IssueTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666EB2547D24300B42428 /* IssueTrackerUITests.swift */; };
+		80163C6E254FF5070073AAD5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80163C6D254FF5070073AAD5 /* NetworkService.swift */; };
+		80163C73255009450073AAD5 /* CustomAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80163C72255009450073AAD5 /* CustomAddButton.swift */; };
 		8042B7E7254BA1C700910C6F /* UIColor+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7E6254BA1C700910C6F /* UIColor+HexString.swift */; };
 		8042B7F9254BAC3D00910C6F /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7F8254BAC3D00910C6F /* SignInViewController.swift */; };
 		8042B7FE254BAD7A00910C6F /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7FD254BAD7A00910C6F /* RootCoordinator.swift */; };
@@ -49,8 +53,6 @@
 		BD5D4157254FDD06008BCB36 /* LabelCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4155254FDD06008BCB36 /* LabelCollectionReusableView.swift */; };
 		BD5D4158254FDD06008BCB36 /* LabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4156254FDD06008BCB36 /* LabelCollectionViewCell.swift */; };
 		BD5D4164254FDE4D008BCB36 /* IssueFilterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */; };
-		BD5D416E254FEDB0008BCB36 /* IssueFilterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D416D254FEDB0008BCB36 /* IssueFilterModels.swift */; };
-		BD5D4176254FF38C008BCB36 /* IssueFilterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4175254FF38C008BCB36 /* IssueFilterRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 /* Begin PBXFileReference section */
 		04B913ACEA472A6ED4C2AAAA /* Pods_IssueTracker_IssueTrackerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTracker_IssueTrackerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F1CE59EA9157BA9DFBC2777 /* Pods-IssueTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker.release.xcconfig"; path = "Target Support Files/Pods-IssueTracker/Pods-IssueTracker.release.xcconfig"; sourceTree = "<group>"; };
+		29EC91A925511E1B007B59A0 /* IssueFilterModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterModels.swift; sourceTree = "<group>"; };
+		29EC91AB25511E29007B59A0 /* IssueFilterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterRouter.swift; sourceTree = "<group>"; };
 		4F983C8476DEF87744EFC079 /* Pods-IssueTrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTrackerTests.debug.xcconfig"; path = "Target Support Files/Pods-IssueTrackerTests/Pods-IssueTrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5A9FC34F6955FD30A256E27B /* Pods-IssueTracker-IssueTrackerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker-IssueTrackerUITests.release.xcconfig"; path = "Target Support Files/Pods-IssueTracker-IssueTrackerUITests/Pods-IssueTracker-IssueTrackerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7527E0FFD543E83A2E889933 /* Pods-IssueTrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTrackerTests.release.xcconfig"; path = "Target Support Files/Pods-IssueTrackerTests/Pods-IssueTrackerTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -90,6 +94,8 @@
 		800666E72547D24300B42428 /* IssueTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IssueTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		800666EB2547D24300B42428 /* IssueTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTrackerUITests.swift; sourceTree = "<group>"; };
 		800666ED2547D24300B42428 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		80163C6D254FF5070073AAD5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		80163C72255009450073AAD5 /* CustomAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAddButton.swift; sourceTree = "<group>"; };
 		8042B7E6254BA1C700910C6F /* UIColor+HexString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexString.swift"; sourceTree = "<group>"; };
 		8042B7F8254BAC3D00910C6F /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		8042B7FD254BAD7A00910C6F /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
@@ -122,8 +128,6 @@
 		BD5D4155254FDD06008BCB36 /* LabelCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCollectionReusableView.swift; sourceTree = "<group>"; };
 		BD5D4156254FDD06008BCB36 /* LabelCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCollectionViewCell.swift; sourceTree = "<group>"; };
 		BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueFilterTableViewController.swift; sourceTree = "<group>"; };
-		BD5D416D254FEDB0008BCB36 /* IssueFilterModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterModels.swift; sourceTree = "<group>"; };
-		BD5D4175254FF38C008BCB36 /* IssueFilterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterRouter.swift; sourceTree = "<group>"; };
 		D018D0CA68C57EEA8CB7F764 /* Pods_IssueTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB7C5D95BB108BDD81533688 /* Pods-IssueTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker.debug.xcconfig"; path = "Target Support Files/Pods-IssueTracker/Pods-IssueTracker.debug.xcconfig"; sourceTree = "<group>"; };
 		E914C3F312B834FAB1DC2FDC /* Pods_IssueTrackerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTrackerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,6 +209,7 @@
 		800666C82547D24200B42428 /* IssueTracker */ = {
 			isa = PBXGroup;
 			children = (
+				80AA0720254A871500086F5F /* Services */,
 				8042B7E5254BA19500910C6F /* Extensions */,
 				80AA06F42549D07E00086F5F /* Scenes */,
 				800666C92547D24200B42428 /* AppDelegate.swift */,
@@ -261,7 +266,6 @@
 				BD5D4127254FDA59008BCB36 /* MilestoneList */,
 				BD5D411C254FD611008BCB36 /* LabelList */,
 				8042B7F7254BAC1F00910C6F /* SignIn */,
-				80AA0720254A871500086F5F /* Services */,
 				80AA06F52549D08900086F5F /* IssueList */,
 			);
 			path = Scenes;
@@ -288,6 +292,7 @@
 				80AA0722254A88DF00086F5F /* IssueDataManager.swift */,
 				BD5D4122254FD70F008BCB36 /* OAuthNetworkManager.swift */,
 				BD5D413D254FDAF3008BCB36 /* MilestoneDataManager.swift */,
+				80163C6D254FF5070073AAD5 /* NetworkService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -296,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				80AA07022549ED4700086F5F /* IssueListCollectionViewCell.swift */,
+				80163C72255009450073AAD5 /* CustomAddButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -349,8 +355,8 @@
 			isa = PBXGroup;
 			children = (
 				BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */,
-				BD5D416D254FEDB0008BCB36 /* IssueFilterModels.swift */,
-				BD5D4175254FF38C008BCB36 /* IssueFilterRouter.swift */,
+				29EC91A925511E1B007B59A0 /* IssueFilterModels.swift */,
+				29EC91AB25511E29007B59A0 /* IssueFilterRouter.swift */,
 			);
 			path = IssueFilter;
 			sourceTree = "<group>";
@@ -597,9 +603,9 @@
 				BD5D411E254FD6D5008BCB36 /* LabelListModels.swift in Sources */,
 				8042B7F9254BAC3D00910C6F /* SignInViewController.swift in Sources */,
 				BD5D4157254FDD06008BCB36 /* LabelCollectionReusableView.swift in Sources */,
-				BD5D4176254FF38C008BCB36 /* IssueFilterRouter.swift in Sources */,
-				BD5D416E254FEDB0008BCB36 /* IssueFilterModels.swift in Sources */,
+				29EC91AC25511E29007B59A0 /* IssueFilterRouter.swift in Sources */,
 				BD5D4131254FDA85008BCB36 /* MilestoneListWorker.swift in Sources */,
+				80163C73255009450073AAD5 /* CustomAddButton.swift in Sources */,
 				80AA070D2549F0A700086F5F /* IssueListPresenter.swift in Sources */,
 				8042B7E7254BA1C700910C6F /* UIColor+HexString.swift in Sources */,
 				BD5D414E254FDCFA008BCB36 /* LabelCollectionViewController.swift in Sources */,
@@ -618,7 +624,9 @@
 				BD5D414F254FDCFA008BCB36 /* LabelListWorker.swift in Sources */,
 				80AA06F72549D09F00086F5F /* IssueListViewController.swift in Sources */,
 				BD5D4158254FDD06008BCB36 /* LabelCollectionViewCell.swift in Sources */,
+				80163C6E254FF5070073AAD5 /* NetworkService.swift in Sources */,
 				BD5D412F254FDA85008BCB36 /* MilestoneCollectionViewController.swift in Sources */,
+				29EC91AA25511E1B007B59A0 /* IssueFilterModels.swift in Sources */,
 				80AA07082549F08300086F5F /* IssueListInteractor.swift in Sources */,
 				BD5D414D254FDCFA008BCB36 /* LabelLsitPresenter.swift in Sources */,
 				80AA07122549F0C100086F5F /* IssueListModels.swift in Sources */,

@@ -14,6 +14,4 @@ class LabelCollectionViewCell: UICollectionViewCell {
     func setupComponents() {
         titleLabel.isUserInteractionEnabled = false
     }
-    
-
 }

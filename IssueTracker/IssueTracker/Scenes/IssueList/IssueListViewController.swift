@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 protocol IssueListDisplayLogic: class {
     func displayFetchedOrders(viewModel: ListIssues.FetchLists.ViewModel)
 }
@@ -45,20 +46,7 @@ class IssueListViewController: UIViewController {
         router.filterData = filterData
     }
     
-    // MARK:- Routing
-        // TODO : implement routing
-    
-    // MARK:- View Lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.tabBarController?.tabBar.isHidden = false
-        filterData = (router?.filterData)!
-        fetchIssues()
+    func setupCollectionview() {
         var config = UICollectionLayoutListConfiguration(appearance: .plain)
         config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
             let action1 = UIContextualAction(style: .normal, title: "Action 1") { (action, view, completion) in
@@ -68,24 +56,34 @@ class IssueListViewController: UIViewController {
             let action2 = UIContextualAction(style: .normal, title: "Action 2") { (action, view, completion) in
                 completion(true)
             }
-            action2.backgroundColor = .systemPink
-            return UISwipeActionsConfiguration(actions: [action2, action1])
-        }
-        
+                action2.backgroundColor = .systemPink
+                return UISwipeActionsConfiguration(actions: [action2, action1])
+            }
+                
         let layout = UICollectionViewCompositionalLayout.list(using: config)
         issueListCollectionView.collectionViewLayout = layout
         issueListCollectionView.delegate = self
         issueListCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
+    // MARK:- Routing
+        // TODO : implement routing
+    
+    // MARK:- View Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupCollectionview()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
+        filterData = (router?.filterData)!
+        fetchIssues()
+        print(filterData)
+    }
+    
 }
 
 extension IssueListViewController: IssueListDisplayLogic {
@@ -98,6 +96,15 @@ extension IssueListViewController: IssueListDisplayLogic {
     func displayFetchedOrders(viewModel: ListIssues.FetchLists.ViewModel) {
         displayedIssues = viewModel.displayedIssues
         issueListCollectionView.reloadData()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let scene = segue.identifier {
+            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
+            if let router = router, router.responds(to: selector) {
+                router.perform(selector, with: segue)
+            }
+        }
     }
 }
 
@@ -116,6 +123,7 @@ extension IssueListViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         cell.setupComponents()
+        
         let displayedIssue = displayedIssues[indexPath.item]
         cell.titleLabel.text = displayedIssue.title
         cell.descriptionLabel.text = displayedIssue.content
@@ -131,6 +139,7 @@ extension IssueListViewController: UICollectionViewDataSource {
             cell.milestoneLabel.setTitle(milestoneText, for: .normal)
             cell.configureMilestone()
         }
+        
         return cell
     }
     
@@ -142,7 +151,11 @@ extension IssueListViewController: UICollectionViewDataSource {
 extension IssueListViewController: UICollectionViewDelegate { }
 
 extension IssueListViewController: UICollectionViewDelegateFlowLayout {
-
-    // MARK: - UICollectionViewDelegateFlowLayout
-
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemsPerRow: CGFloat = 1
+        let sectionInsets = UIEdgeInsets(top: 0, left: 5.0, bottom: 0, right: 5.0)
+        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
+        let widthPerItem = UIScreen.main.bounds.width - paddingSpace
+        return CGSize(width: widthPerItem, height: widthPerItem * 0.25)
+    }
 }

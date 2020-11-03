@@ -25,7 +25,7 @@ class IssueListInteractor {
 
 extension IssueListInteractor: IssueListBusinessLogic {
     func fetchIssues(request: ListIssues.FetchLists.Request) {
-        issueWorker.fetchIssues(completion: { (issues) -> Void in
+        issueWorker.fetchIssues(completion: { issues in
             self.issues = issues
             let response = ListIssues.FetchLists.Response(issues: issues)
             self.presenter?.presentFetchedIssues(response: response)

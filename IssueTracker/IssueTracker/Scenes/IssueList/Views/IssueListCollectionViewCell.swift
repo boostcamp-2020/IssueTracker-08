@@ -8,6 +8,7 @@
 import UIKit
 
 class IssueListCollectionViewCell: UICollectionViewCell {
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var milestoneLabel: UIButton!
@@ -41,4 +42,5 @@ class IssueListCollectionViewCell: UICollectionViewCell {
         if luminance < 0.5 { label.setTitleColor(.white, for: .normal) }
         else { label.setTitleColor(.black, for: .normal) }
     }
+    
 }
