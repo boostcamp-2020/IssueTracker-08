@@ -12,12 +12,23 @@ protocol IssueListDisplayLogic: class {
     func displayFetchedOrders(viewModel: ListIssues.FetchLists.ViewModel)
 }
 
-class IssueListViewController: UIViewController {
+final class IssueListViewController: UIViewController {
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var newIssueButton: CustomAddButton!
+    
     var filterData = ListFilter.IssueFilterData()
     var interactor: IssueListBusinessLogic?
     var router: (NSObjectProtocol & IssueListRoutingLogic & IssueListDataPassing)?
     var displayedIssues: [ListIssues.FetchLists.ViewModel.DisplayedIssue] = []
     let identifier = "issueCell"
+    
+    override var isEditing: Bool {
+        willSet {
+            if newValue == true { setupEditMode() }
+            else { setupNormalMode() }
+        }
+    }
     
     @IBOutlet weak var issueListCollectionView: UICollectionView!
     
@@ -47,57 +58,51 @@ class IssueListViewController: UIViewController {
     }
     
     func setupCollectionview() {
+        issueListCollectionView.allowsMultipleSelection = true
+        issueListCollectionView.allowsMultipleSelectionDuringEditing = true
+        
         var config = UICollectionLayoutListConfiguration(appearance: .plain)
         config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
-            let action1 = UIContextualAction(style: .normal, title: "Action 1") { (action, view, completion) in
+            let close = UIContextualAction(style: .normal, title: "Close") { (action, view, completion) in
                 completion(true)
             }
-            action1.backgroundColor = .systemGreen
-            let action2 = UIContextualAction(style: .normal, title: "Action 2") { (action, view, completion) in
+            close.backgroundColor = .systemGreen
+            let delete = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
                 completion(true)
             }
-                action2.backgroundColor = .systemPink
-                return UISwipeActionsConfiguration(actions: [action2, action1])
-            }
-                
+            delete.backgroundColor = .systemPink
+            return UISwipeActionsConfiguration(actions: [close, delete])
+        }
+
         let layout = UICollectionViewCompositionalLayout.list(using: config)
         issueListCollectionView.collectionViewLayout = layout
         issueListCollectionView.delegate = self
         issueListCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
-    // MARK:- Routing
-        // TODO : implement routing
-    
-    // MARK:- View Lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupCollectionview()
+    private func setupNormalMode() {
+        tabBarController?.tabBar.isHidden = false
+        titleLabel.text = "Issue"
+        navigationItem.rightBarButtonItem?.title = "Edit"
+        navigationItem.leftBarButtonItem?.title = "Filter"
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.tabBarController?.tabBar.isHidden = false
-        filterData = (router?.filterData)!
-        fetchIssues()
-        print(filterData)
+    private func setupEditMode() {
+        tabBarController?.tabBar.isHidden = true
+        newIssueButton.isHidden = true
+        titleLabel.text = "0 Selected"
+        navigationItem.rightBarButtonItem?.title = "Cancel"
+        navigationItem.leftBarButtonItem?.title = "Select All"
     }
     
-}
+    @IBAction func onEditButtonPressed(_ sender: Any) {
+        print(isEditing)
+        issueListCollectionView.isEditing = isEditing
+        isEditing = !isEditing
+    }
 
-extension IssueListViewController: IssueListDisplayLogic {
     
-    func fetchIssues() {
-        let request = ListIssues.FetchLists.Request()
-        interactor?.fetchIssues(request: request)
-    }
-    
-    func displayFetchedOrders(viewModel: ListIssues.FetchLists.ViewModel) {
-        displayedIssues = viewModel.displayedIssues
-        issueListCollectionView.reloadData()
-    }
-    
+    // MARK:- Routing
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let scene = segue.identifier {
             let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
@@ -105,6 +110,45 @@ extension IssueListViewController: IssueListDisplayLogic {
                 router.perform(selector, with: segue)
             }
         }
+    }
+    
+    // MARK:- View Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupCollectionview()
+        setupNormalMode()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        filterData = (router?.filterData)!
+        fetchIssues()
+    }
+    
+    // MARK:- Editing mode
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: true)
+        issueListCollectionView.isEditing = isEditing
+        if isEditing {
+            
+            
+        } else {
+            
+        }
+    }
+    
+}
+
+extension IssueListViewController: IssueListDisplayLogic {
+    func fetchIssues() {
+        let request = ListIssues.FetchLists.Request()
+        interactor?.fetchIssues(request: request)
+    }
+    func displayFetchedOrders(viewModel: ListIssues.FetchLists.ViewModel) {
+        displayedIssues = viewModel.displayedIssues
+        issueListCollectionView.reloadData()
     }
 }
 
@@ -122,6 +166,8 @@ extension IssueListViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? IssueListCollectionViewCell else {
             return UICollectionViewCell()
         }
+        
+        // configure
         cell.setupComponents()
         
         let displayedIssue = displayedIssues[indexPath.item]
@@ -140,22 +186,17 @@ extension IssueListViewController: UICollectionViewDataSource {
             cell.configureMilestone()
         }
         
+        cell.accessories = [.multiselect(displayed: .whenEditing, options: .init()) ]
+        
         return cell
     }
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(displayedIssues[indexPath.row].issueId) // tag
     }
+
 }
 
 extension IssueListViewController: UICollectionViewDelegate { }
-
-extension IssueListViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemsPerRow: CGFloat = 1
-        let sectionInsets = UIEdgeInsets(top: 0, left: 5.0, bottom: 0, right: 5.0)
-        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-        let widthPerItem = UIScreen.main.bounds.width - paddingSpace
-        return CGSize(width: widthPerItem, height: widthPerItem * 0.25)
-    }
-}
