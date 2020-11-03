@@ -9,6 +9,6 @@ const signinApiRouter = require('../api/signin/signin.router');
 router.use('/api/users', userApiRouter);
 router.use('/api/issues', issueApiRouter);
 router.use('/api/milestones', milestoneApiRouter);
-router.use('/auth/github', signinApiRouter);
+router.use('/auth', signinApiRouter);
 
 module.exports = router;
