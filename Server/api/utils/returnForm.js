@@ -12,4 +12,11 @@ module.exports = {
       data: data,
     };
   },
+
+  tokenResponse(token) {
+    return {
+      status: 'success',
+      token: token,
+    };
+  },
 };
