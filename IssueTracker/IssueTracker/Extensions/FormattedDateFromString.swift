@@ -20,3 +20,17 @@ func FormattedDateFromString(dueDate: String) -> String {
     if outputDate.isEmpty { return "" }
     return outputDate + "까지"
 }
+
+func FormattedEditDateString(dueDate: String) -> String {
+    let inputFormatter = DateFormatter()
+    let outputFormatter = DateFormatter()
+    inputFormatter.dateFormat = "yyyy년 MM월 dd일까지"
+    var outputDate: String = ""
+    
+    if let date = inputFormatter.date(from: dueDate) {
+        outputFormatter.dateFormat = "yyyy-MM-dd"
+        outputDate = outputFormatter.string(from: date)
+    }
+    
+    return outputDate
+}

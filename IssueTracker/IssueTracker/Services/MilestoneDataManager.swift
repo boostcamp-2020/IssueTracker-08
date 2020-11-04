@@ -15,6 +15,7 @@ struct MilestoneListResponse: Decodable {
 protocol MilestoneDataManagerProtocol {
     func fetchMilestones(completion: @escaping ([Milestone]) -> Void)
     func postMilestones(request: CreateMilestones.CreateMilestone.Request)
+    func deleteMilestones(request: DeleteMilestones.DeleteMilestone.Request)
 }
 
 final class MilestoneDataManager: MilestoneDataManagerProtocol {
@@ -37,5 +38,11 @@ final class MilestoneDataManager: MilestoneDataManagerProtocol {
         let jsonData = try? JSONEncoder().encode(responseData)
         
         NetworkService.shared.postData(url: EndPoint.milestones, jsonData: jsonData!)
+    }
+    
+    func deleteMilestones(request: DeleteMilestones.DeleteMilestone.Request) {
+        let issueId = request.milestone.milestoneId
+        let url = EndPoint.milestones + "/\(issueId)"
+        NetworkService.shared.deleteData(url: url)
     }
 }

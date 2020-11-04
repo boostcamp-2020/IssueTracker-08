@@ -22,4 +22,8 @@ class MilestoneListWorker {
     func postMilestone(request: CreateMilestones.CreateMilestone.Request) {
         dataManager.postMilestones(request: request)
     }
+    
+    func deleteMilestone(request: DeleteMilestones.DeleteMilestone.Request) {
+        dataManager.deleteMilestones(request: request)
+    }
 }

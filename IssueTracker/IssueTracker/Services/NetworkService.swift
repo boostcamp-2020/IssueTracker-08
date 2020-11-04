@@ -50,4 +50,19 @@ final class NetworkService {
             }
         }.resume()
     }
+    
+    func deleteData(url: String) {
+        guard let requestURL = URL(string: url) else {
+            return // completion으로 경우 넘겨 주어야 함
+        }
+        
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "DELETE"
+        
+        defaultSession.dataTask(with: request) { (data, response, error) in
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                return // completion으로 경우 넘겨 주어야 함
+            }
+        }.resume()
+    }
 }

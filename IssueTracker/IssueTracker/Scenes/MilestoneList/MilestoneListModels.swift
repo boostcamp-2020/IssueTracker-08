@@ -17,12 +17,14 @@ struct Milestone: Decodable {
 
 enum ListMilestones {
     enum FetchLists {
-        struct Request { }
+        struct Request {
+        }
         struct Response {
             var milestones: [Milestone]
         }
         struct ViewModel {
             struct DisplayedMilestone {
+                var id: Int
                 var title: String
                 var dueDate: String?
                 var content: String
@@ -33,7 +35,7 @@ enum ListMilestones {
 }
 
 enum CreateMilestones {
-    struct MilestoneFormField: Codable {
+    struct MilestoneFormField: Encodable {
         var title: String
         var dueDate: String?
         var content: String?
@@ -48,6 +50,18 @@ enum CreateMilestones {
     enum EditMilestone {
         struct Request { var milestoneFormFileds: MilestoneFormField }
         struct Response { var milestone: MilestoneFormField? }
+        struct ViewModel { var milestone: MilestoneFormField? }
+    }
+}
+
+enum DeleteMilestones {
+    struct MilestoneFormField {
+        var milestoneId: Int
+    }
+    
+    enum DeleteMilestone {
+        struct Request { var milestone: MilestoneFormField }
+        struct Response { var milestone: MilestoneFormField }
         struct ViewModel { var milestone: MilestoneFormField? }
     }
 }

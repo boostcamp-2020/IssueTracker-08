@@ -15,5 +15,7 @@ enum PopupItem {
     }
     struct MilestoneItem {
         let title: String
+        let dueDate: String?
+        let content: String?
     }
 }

@@ -10,11 +10,18 @@ import UIKit
 enum PopupMode {
     case Label
     case Milestone
+    case EditLabel
+    case EditMilestone
 }
 
-protocol PopupViewControllerDelegate: class {
-    func popupViewControllerDidCancel(_ controller: PopUpViewController)
-    func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem)
+protocol PopupLabelViewControllerDelegate: class {
+    func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.LabelItem)
+    func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.LabelItem)
+}
+
+protocol PopupMilestoneViewControllerDelegate: class {
+    func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.MilestoneItem)
+    func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.MilestoneItem)
 }
 
 class PopUpViewController: UIViewController {
@@ -40,26 +47,50 @@ class PopUpViewController: UIViewController {
     
     // MARK:- Properties
     var mode: PopupMode = .Label
-    weak var delegate: PopupViewControllerDelegate?
-    
-    
+    var router: (PopUpDataPassing)?
+    weak var labelDelegate: PopupLabelViewControllerDelegate?
+    weak var milestoneDelegate: PopupMilestoneViewControllerDelegate?
+        
     // MARK:- View LifeCycle
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        setupMode()
     }
     
     // MARK:- Setup by Mode
     private func setup() {
-        if mode == .Label { setupLabelMode() }
-        else { setupMilestoneMode() }
         contentSizeInPopup = CGSize(width: 300, height: 280)
         landscapeContentSizeInPopup = CGSize(width: 300, height: 200)
+        let viewController = self
+        let router = PopUpRouter()
+        viewController.router = router
+        router.viewController = viewController
+    }
+    
+    private func setupMode() {
+        if mode == .Label || mode == .EditLabel { setupLabelMode() }
+        else { setupMilestoneMode() }
     }
     
     private func setupLabelMode() {
         totalLabel[2].text = "색상"
         descriptionTextField.isHidden = true
+        
+        if mode == .EditLabel {
+            titleTextField.text = router?.editLabelData.first?.name
+            detailTestField.text = router?.editLabelData.first?.description
+            labelColorField.text = router?.editLabelData.first?.color
+        }
     }
     
     private func setupMilestoneMode() {
@@ -70,6 +101,12 @@ class PopUpViewController: UIViewController {
         reloadButton.isHidden = true
         labelColorField.isHidden = true
         colorHexLabel.isHidden = true
+        
+        if mode == .EditMilestone {
+            titleTextField.text = router?.editMilestoneData.first?.title
+            detailTestField.text = FormattedEditDateString(dueDate: (router?.editMilestoneData.first?.dueDate)!)
+            descriptionTextField.text = router?.editMilestoneData.first?.content
+        }
     }
     
     //MARK:- IBActions
@@ -90,6 +127,35 @@ class PopUpViewController: UIViewController {
         titleTextField.text = ""
         detailTestField.text = ""
         descriptionTextField.text = ""
+    }
+    
+    @IBAction func onSaveButtonPressed(_ sender: UIButton) {
+        // 제목이 비어있을 때 error 처리 해주어야 함.
+            // ex : firstresponder 넘겨줘서 입력 가능하게
+        if mode == .Label || mode == .EditLabel {
+            let newLabel = PopupItem.LabelItem(
+                title: titleTextField.text!,
+                description: descriptionTextField.text ?? nil,
+                color: labelColorField.text!
+            )
+            if mode == .Label {
+                labelDelegate?.popupViewController(self, didFinishAdding: newLabel)
+            } else {
+                labelDelegate?.popupViewController(self, didFinishEditing: newLabel)
+            }
+        } else {
+            let newLabel = PopupItem.MilestoneItem(
+                title: titleTextField.text!,
+                dueDate:detailTestField.text!,
+                content: descriptionTextField.text!
+            )
+            if mode == .Milestone {
+                milestoneDelegate?.popupViewController(self, didFinishAdding: newLabel)
+            } else {
+                milestoneDelegate?.popupViewController(self, didFinishEditing: newLabel)
+            }
+        }
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

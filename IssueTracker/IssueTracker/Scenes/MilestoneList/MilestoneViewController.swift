@@ -12,11 +12,13 @@ protocol MilestoneListDisplayLogic: class {
     func displayFetchedOrders(viewModel: ListMilestones.FetchLists.ViewModel)
 }
 
-class MilestoneCollectionViewController: UICollectionViewController {
+class MilestoneViewController: UIViewController {
     private var interactor: MilestoneListBusinessLogic?
     private var displayedMilestones: [ListMilestones.FetchLists.ViewModel.DisplayedMilestone] = []
     private let reuseIdentifier = "milestoneCell"
+    var router: (MilestoneListDataPassing)?
     
+    @IBOutlet weak var milestoneCollectionView: UICollectionView!
     // MARK:- Object Lifecycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -33,15 +35,19 @@ class MilestoneCollectionViewController: UICollectionViewController {
         let viewController = self
         let interactor = MilestoneListInteractor()
         let presenter = MilestoneListPresenter()
+        let router = MilestoneListRouter()
         viewController.interactor = interactor
         interactor.presenter = presenter
         presenter.viewController = viewController
+        viewController.router = router
+        router.viewController = viewController
     }
     
     func setupCollectionview() {
         var config = UICollectionLayoutListConfiguration(appearance: .plain)
         config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
             let delete = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
+                handleSwipe(for: action, path: indexPath)
                 completion(true)
             }
             delete.backgroundColor = .systemPink
@@ -49,9 +55,10 @@ class MilestoneCollectionViewController: UICollectionViewController {
         }
 
         let layout = UICollectionViewCompositionalLayout.list(using: config)
-        self.collectionView.collectionViewLayout = layout
-        self.collectionView.delegate = self
-        self.collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        milestoneCollectionView.collectionViewLayout = layout
+        milestoneCollectionView.delegate = self
+        milestoneCollectionView.dataSource = self
+        milestoneCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
     override func viewDidLoad() {
@@ -70,21 +77,39 @@ class MilestoneCollectionViewController: UICollectionViewController {
         let popupController = STPopupController(rootViewController: destinationVC)
         if segue.identifier == "MilestonePopup" {
             destinationVC.mode = .Milestone
-        } else {
-            destinationVC.mode = .EditMilestone
+            destinationVC.milestoneDelegate = self
+            popupController.present(in: self)
         }
-        destinationVC.milestoneDelegate = self
-        popupController.present(in: self)
+    }
+    
+    func handleSwipe(for action: UIContextualAction, path: IndexPath) {
+        let alert = UIAlertController(title: action.title,
+                                    message: "정말로 삭제하시겠습니까?",
+                                    preferredStyle: .alert)
+            
+        let okAction = UIAlertAction(title:"OK", style: .default, handler: { [self] (action) in
+            let issueId = displayedMilestones[path.item].id
+            let request = DeleteMilestones.DeleteMilestone.Request(milestone: DeleteMilestones.MilestoneFormField(milestoneId: issueId))
+            interactor?.deleteMilestone(request: request)
+            
+            let reRequest = ListMilestones.FetchLists.Request()
+            interactor?.fetchIssues(request: reRequest)
+        })
+        let cancleAction = UIAlertAction(title:"Cancle", style: .default, handler: { (_) in })
+        alert.addAction(okAction)
+        alert.addAction(cancleAction)
+        
+        present(alert, animated: true, completion:nil)
     }
 }
 
-extension MilestoneCollectionViewController {
+extension MilestoneViewController: UICollectionViewDataSource {
 
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return displayedMilestones.count
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? MilestoneCollectionViewCell else {
             return UICollectionViewCell()
         }
@@ -98,9 +123,18 @@ extension MilestoneCollectionViewController {
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let pushVC = self.storyboard?.instantiateViewController(withIdentifier: "reuseNewAdd") as! PopUpViewController
+        pushVC.mode = .EditMilestone
+        
+        router?.editMilestoneData.removeAll()
+        router?.editMilestoneData.append(displayedMilestones[indexPath.item])
+        router?.routeToNewAdd(pushVC: pushVC)
+    }
 }
 
-extension MilestoneCollectionViewController: MilestoneListDisplayLogic {
+extension MilestoneViewController: MilestoneListDisplayLogic {
     func fetchMilestones() {
         let request = ListMilestones.FetchLists.Request()
         interactor?.fetchIssues(request: request)
@@ -108,28 +142,22 @@ extension MilestoneCollectionViewController: MilestoneListDisplayLogic {
     
     func displayFetchedOrders(viewModel: ListMilestones.FetchLists.ViewModel) {
         displayedMilestones = viewModel.displayedMilestones
-        self.collectionView?.reloadData()
+        milestoneCollectionView.reloadData()
     }
 }
 
-extension MilestoneCollectionViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemsPerRow: CGFloat = 1
-        let sectionInsets = UIEdgeInsets(top: 0, left: 5.0, bottom: 0, right: 5.0)
-        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-        let widthPerItem = UIScreen.main.bounds.width - paddingSpace
-        return CGSize(width: widthPerItem, height: widthPerItem * 0.25)
-    }
-}
-
-extension MilestoneCollectionViewController: PopupMilestoneViewControllerDelegate {
+extension MilestoneViewController: PopupMilestoneViewControllerDelegate {
     func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.MilestoneItem) {
         let request = CreateMilestones.CreateMilestone.Request.init(milestone:  CreateMilestones.MilestoneFormField(title: item.title, dueDate: item.dueDate, content: item.content))
         interactor?.createMilestone(request: request)
+        
+        let reRequest = ListMilestones.FetchLists.Request()
+        interactor?.fetchIssues(request: reRequest)
     }
     
     func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.MilestoneItem) {
-        print(2)
+        // router로 보냈으니 router로 보내렴
     }
-    
 }
+
+extension MilestoneViewController: UICollectionViewDelegate { }

@@ -10,6 +10,7 @@ import Foundation
 protocol MilestoneListBusinessLogic {
     func fetchIssues(request: ListMilestones.FetchLists.Request)
     func createMilestone(request: CreateMilestones.CreateMilestone.Request)
+    func deleteMilestone(request: DeleteMilestones.DeleteMilestone.Request)
 }
 
 protocol MilestoneListDataSource {
@@ -31,8 +32,16 @@ extension MilestoneListInteractor: MilestoneListBusinessLogic {
         })
     }
     
+    func fetchMilestone(request:ListMilestones.FetchLists.Request) {
+        
+    }
+    
     func createMilestone(request: CreateMilestones.CreateMilestone.Request) {
         milestoneWorker.postMilestone(request: request)
+    }
+    
+    func deleteMilestone(request: DeleteMilestones.DeleteMilestone.Request) {
+        milestoneWorker.deleteMilestone(request: request)
     }
 }
 

@@ -23,6 +23,7 @@ extension MilestoneListPresenter: MilestoneListPresentationLogic {
             if description.isEmpty { description = "No description provided" }
             let dueDate = FormattedDateFromString(dueDate: milestone.dueDate ?? "")
             let displayedMilestone = ListMilestones.FetchLists.ViewModel.DisplayedMilestone(
+                id: milestone.id,
                 title: milestone.title,
                 dueDate: dueDate,
                 content: description

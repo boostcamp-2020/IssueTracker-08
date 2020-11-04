@@ -22,6 +22,7 @@ enum ListLabels {
         }
         struct ViewModel {
             struct DisplayedLabel {
+                var id: Int // wnt
                 var name: String
                 var color: String
                 var description: String?

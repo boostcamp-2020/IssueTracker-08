@@ -12,7 +12,7 @@ protocol LabelListDisplayLogic: class {
     func displayFetchedOrders(viewModel: ListLabels.FetchLists.ViewModel)
 }
 
-class LabelViewController: UIViewController {
+class LabelListViewController: UIViewController {
     
     private var interactor: LabelListBusinessLogic?
     private var displayedLabels: [ListLabels.FetchLists.ViewModel.DisplayedLabel] = []
@@ -53,6 +53,7 @@ class LabelViewController: UIViewController {
         let layout = UICollectionViewCompositionalLayout.list(using: config)
         LabelCollectionView.collectionViewLayout = layout
         LabelCollectionView.delegate = self
+        LabelCollectionView.dataSource = self
         LabelCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
@@ -79,18 +80,8 @@ class LabelViewController: UIViewController {
         // 해당 코드 마일스톤에서도 똑같이구현해주기
     }
 }
-/*
-extension LabelViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemsPerRow: CGFloat = 1
-        let sectionInsets = UIEdgeInsets(top: 0, left: 5.0, bottom: 0, right: 5.0)
-        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-        let widthPerItem = UIScreen.main.bounds.width - paddingSpace
-        return CGSize(width: widthPerItem, height: widthPerItem * 0.18)
-    }
-}
-*/
-extension LabelViewController: UICollectionViewDataSource {
+
+extension LabelListViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -120,7 +111,7 @@ extension LabelViewController: UICollectionViewDataSource {
     }
 }
 
-extension LabelViewController: LabelListDisplayLogic {
+extension LabelListViewController: LabelListDisplayLogic {
     func fetchLabels() {
         let request = ListLabels.FetchLists.Request()
         interactor?.fetchIssues(request: request)
@@ -132,7 +123,7 @@ extension LabelViewController: LabelListDisplayLogic {
     }
 }
 
-extension LabelViewController: PopupLabelViewControllerDelegate {
+extension LabelListViewController: PopupLabelViewControllerDelegate {
     func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.LabelItem) {
         
     }
@@ -142,4 +133,4 @@ extension LabelViewController: PopupLabelViewControllerDelegate {
     }
 }
 
-extension LabelViewController: UICollectionViewDelegate { }
+extension LabelListViewController: UICollectionViewDelegate { }

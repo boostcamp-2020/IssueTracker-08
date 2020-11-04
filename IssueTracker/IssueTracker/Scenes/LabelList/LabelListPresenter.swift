@@ -25,6 +25,7 @@ extension LabelListPresenter: LabelListPresentationLogic {
             }
             
             let displayedLabel = ListLabels.FetchLists.ViewModel.DisplayedLabel(
+                id: Label.id,
                 name: Label.name,
                 color: Label.color,
                 description: description
