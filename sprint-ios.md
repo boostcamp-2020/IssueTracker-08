@@ -1,3 +1,105 @@
+## **`Sprint #2 - Day3`**
+
+### 결과화면
+| Label Add, Color Picker  | Label Delete |
+| -------- | -------- |
+| <img width = 380, src = https://user-images.githubusercontent.com/34840140/98127191-c2462900-1ef9-11eb-92f2-7a4d735ba5e2.gif> | <img width = 380, src = "https://user-images.githubusercontent.com/34840140/98127196-c3775600-1ef9-11eb-9dfd-7b1a1d3e5e4d.gif"> |
+
+| Milestone Add  | Milestone Delete |
+| -------- | -------- |
+| <img width = 380, src = https://i.imgur.com/vXwvWqI.gif> | <img width = 380, src = "https://i.imgur.com/M3S2dyK.gif"> |
+
+
+
+### Modern Collection List View
+
+* Label List, Milestone List 적용
+    * 기존 UICollectionView에서 UIControllerView로 변경
+    * 변경 후 Modern Collection Layout 적용
+
+
+### VIP 패턴을 적용한 Add, Delete
+#### Add (ex. Milestone)
+
+* Encodable 채택된 Struct 구조체 제작
+    ```swift
+    struct MilestoneFormField: Encodable {
+        var title: String
+        var dueDate: String?
+        var content: String?
+    }
+    ```
+    
+* reponse 받는 Data 형식은 Success 관련 Status로 가정하여 Complection 제거
+    * Interactor에서 바로 Worker한테 Request 전송
+
+* NetworkService 에서 Json Data 제작
+    * request method = POST 지정
+    * forHTTPHeaderField 지정
+        * application/json을 Accept, Content-Type 지정
+
+    * 데이터를 Json Encoder 통해 인코딩 후 Post 전송
+    ```swift
+    let responseData = request.milestone
+    let jsonData = try? JSONEncoder().encode(responseData)
+    
+    guard let requestURL = URL(string: url) else {
+        return // completion으로 경우 넘겨 주어야 함
+    }
+        
+    var request = URLRequest(url: requestURL)
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Accept")
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+    request.httpBody = jsonData
+    ```
+    
+
+#### Delete (ex. Label)
+   ```swift
+    func deleteData(url: String, completion: @escaping FetchResult) {
+        guard let requestURL = URL(string: url) else {
+            return // completion으로 경우 넘겨 주어야 함
+        }
+        
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "DELETE"
+        
+        defaultSession.dataTask(with: request) { (data, response, error) in
+            guard let data = data,
+                  let response = response as? HTTPURLResponse,
+                  response.statusCode == 200 else {
+                return // completion으로 경우 넘겨 주어야 함
+            }
+            DispatchQueue.main.async {
+                completion(data)
+            }
+            
+        }.resume()
+    }
+   ```
+1. LabelListViewController에서 UISwipeActionsConfiguration를 통해 delete action 발생
+2. LabelListInteractor에서 labelWorker를 통해 delete request를 함
+3. LabelListWorker에서 dataManger에게 delete request를 함
+4. DataManager는 NetworkService의 deleteData를 통해 delte 요청을 한 후 response를 받아 옴
+5. 받아온 response는 completion handler를 통해 interactor에게 전해짐
+6. interactor가 받은 response를 presenter에게 전달.
+7. presenter는 받은 response에 맞게 alert를 띄울 때 쓸 ViewModel을 만들고 viewcontroller에게 전함
+8. LabelListViewController는 상황에 알맞은 alert를 띄워줌
+
+
+
+* 추후 Label과 Milestone에서 작업한 NetworkService 내용을 조율할 예정
+
+### ColorPicker
+     
+
+| Text Input → Color  | Random Color | Color Picker |
+| -------- | -------- | -------- |
+| <img width = 330, src = https://i.imgur.com/V3VTsof.gif> | <img width = 330, src = "https://i.imgur.com/7c1YyVs.gif"> | <img width = 330, src = "https://i.imgur.com/GawhnPM.gif"> |
+
+
 ## **`Sprint #2 - Day2`**
 
 ### Modern Collection List View
