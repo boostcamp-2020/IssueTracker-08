@@ -563,3 +563,4 @@ iOSInjectionProject/
 # custom
 .env
 dist
+config.js
