@@ -7,15 +7,19 @@
 
 import UIKit
 
+enum PopupMode {
+    case Label
+    case Milestone
+}
+
+protocol PopupViewControllerDelegate: class {
+    func popupViewControllerDidCancel(_ controller: PopUpViewController)
+    func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem)
+}
+
 class PopUpViewController: UIViewController {
-    var coordinator: String = "" {
-        willSet {
-            if newValue == "Label" { setupLabelMode() }
-            else { setupMilestoneMode() }
-        }
-    }
-    var router: (PopUpDataPassing)?
-    
+     
+    // MARK:- IBOutlets
     @IBOutlet var totalLabel: [UILabel]!
     @IBOutlet weak var colorHexLabel: UILabel!
     @IBOutlet weak var labelColorField: UITextField! {
@@ -34,21 +38,23 @@ class PopUpViewController: UIViewController {
     @IBOutlet weak var colorPickerButton: UIButton!
     @IBOutlet weak var reloadButton: UIButton!
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        setup()
-    }
-      
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    // MARK:- Properties
+    var mode: PopupMode = .Label
+    weak var delegate: PopupViewControllerDelegate?
+    
+    
+    // MARK:- View LifeCycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
         setup()
     }
     
+    // MARK:- Setup by Mode
     private func setup() {
-        let viewController = self
-        let router = PopUpRouter()
-        viewController.router = router
-        router.viewController = viewController
+        if mode == .Label { setupLabelMode() }
+        else { setupMilestoneMode() }
+        contentSizeInPopup = CGSize(width: 300, height: 280)
+        landscapeContentSizeInPopup = CGSize(width: 300, height: 200)
     }
     
     private func setupLabelMode() {
@@ -66,13 +72,7 @@ class PopUpViewController: UIViewController {
         colorHexLabel.isHidden = true
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.contentSizeInPopup = CGSize(width: 300, height: 280)
-        self.landscapeContentSizeInPopup = CGSize(width: 300, height: 200)
-        coordinator = router!.coordinator
-    }
-    
+    //MARK:- IBActions
     @IBAction func btnClickReload(_ sender: Any) {
         let reloadColor = randomColor()
         colorPickerButton.backgroundColor = reloadColor
@@ -117,10 +117,10 @@ extension PopUpViewController: UITextFieldDelegate {
         else if identifier == "titleText" {
             detailTestField.becomeFirstResponder()
         }
-        else {
-            if coordinator == "Label" { labelColorField.becomeFirstResponder() }
-            else { descriptionTextField.becomeFirstResponder() }
-        }
+//        else {
+//            if coordinator == "Label" { labelColorField.becomeFirstResponder() }
+//            else { descriptionTextField.becomeFirstResponder() }
+//        }
         return true
     }
     
