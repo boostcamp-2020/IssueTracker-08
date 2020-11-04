@@ -14,6 +14,12 @@ struct Label: Decodable {
     var description: String?
 }
 
+struct PostLabel: Encodable {
+    var name: String
+    var color: String
+    var description: String?
+}
+
 enum ListLabels {
     enum FetchLists {
         struct Request { }
@@ -31,3 +37,18 @@ enum ListLabels {
     }
 }
 
+enum CreateLabels {
+    enum CreateLabel {
+        struct Request {
+            var newLabel: PostLabel
+        }
+        struct Response { }
+    }
+    
+    enum EditLabel {
+        struct Request {
+            var editLabel: PostLabel
+        }
+        struct Response { }
+    }
+}
