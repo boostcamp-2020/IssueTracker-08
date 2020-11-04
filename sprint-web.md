@@ -9,6 +9,40 @@
 
 -----
 
+## `💻 Sprint #2 - Day3`
+### 📌 [FE] React-router를 적용하여 프로젝트 구조 변경
+* `react-router-dom`은 웹에서 쓰이는 컴포넌트이고, `react-router-native`는 react-native를 활용한 앱개발에 쓰이는 컴포넌트를 포함하고 있다. `react-router`는 이 둘을 합친 패키지이다.
+* https://velopert.com/3417 를 참고하여 진행하였다.
+* `react-router-dom`만 설치하기로 했다.
+```bash
+npm install -d react-router-dom
+```
+* 디렉토리 구조 설계
+    * 기존
+        * src/components: 컴포넌트들이 위치하는 디렉토리
+        * src/pages: 각 라우트들이 위치하는 디렉토리
+
+    * 추가된 디렉토리
+        * src/utils: 자주 사용되는 함수들을 모아놓은 디렉토리
+        * src/shared: 서버와 클라이언트에서 공용으로 사용되는 컴포넌트 App.js 가 여기에 위치함
+        * src/client: 브라우저 측에서 사용할 최상위 컴포넌트
+* url로 직접 router에 접근하니 동작하지 않고 404 error가 발생했다.😥
+    * 버튼(Link)을 클릭해서 넘어가는 라우팅 이벤트는 무사히 동작하였다.
+* pages라는 디렉토리 네이밍도 아직 와닿지 않고(views 많이 썼었는데,,) shared도,, client도.. 진짜 생소한 게 많아서 리액트에 아직 정이 안갑니다 ^^7
+
+### 📌 [FE] CSS-in-JS 적용하기
+* 과제 요구사항을 읽어보니 CSS-in-JS를 적용해야함을 알게 되어 수정하였다.
+```bash
+npm install -d styled-components
+```
+* SCSS로 적용하고 싶었는데 너무 아쉽네요 8ㅅ8😂
+
+### 📌 [BE] 로그인 callback...
+* 구현한 OAuth Login의 결과 값을 어떻게 FE와 iOS에 전달할 수 있을지 많은 고민을 하였다. 🤔
+* [redirect의 url로 token을 넘겨주는 방법](https://stackoverflow.com/questions/47599087/how-to-send-jwt-to-react-client-from-a-callback)은 아닌 것 같고...
+* githubOAuth로 로그인하면 발급되는 code와 client_id, client_secret을 이용하여 post요청으로 access_token을 발급하려고 할 수 있는 모든 방법을 시도해 보았으나 무슨 이유에서인지 에러가 발생했다.. 나중에 다시 시도해야겠다.
+  [참조링크](https://devhyun.com/blog/post/15)
+
 ## `💻 Sprint #2 - Day2`
 ### 📌 [BE] npm 명령어 실종...!
 * 서버에서 npm 명령어를 쳤을 때 command not found 조차 뜨지 않았다.
@@ -16,7 +50,7 @@
 * 새로 clone하고 npm과 node, pm2를 재설치했다.
 * 말을 안듣는 서버...
 
-### 📌 [FE] 
+### 📌 [FE] 프론트엔드 환경변수 설정 및 scss 색깔 규칙 설정
 * 프론트에서는 .env 대신 src 아래에 config.js 파일을 생성하여 환경변수를 설정하였다.
   [참조링크](https://hello-bryan.tistory.com/134)
 * scss파일 재사용을 위해 Client 아래에 scss폴더를 만들고 _color.js 와 같이 만들어서
