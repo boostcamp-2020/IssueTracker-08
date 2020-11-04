@@ -14,11 +14,10 @@ class MilestoneCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var issueStatusLabel: UILabel!
     @IBOutlet weak var issuePercentLabel: UILabel!
     
-    func configure() {
+    func setupComponents() {
         titleLabel.layer.cornerRadius = 5
         titleLabel.layer.borderWidth = 1
         titleLabel.layer.borderColor = UIColor.lightGray.cgColor
-        
-        titleLabel.widthAnchor.constraint(equalToConstant: titleLabel.frame.width + 10).isActive = true
+        titleLabel.contentEdgeInsets = .init(top: 0, left: 10, bottom: 0, right: 10)
     }
 }
