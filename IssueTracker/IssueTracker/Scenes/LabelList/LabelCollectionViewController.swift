@@ -10,13 +10,16 @@ import STPopup
 
 protocol LabelListDisplayLogic: class {
     func displayFetchedOrders(viewModel: ListLabels.FetchLists.ViewModel)
+    func displayAlert(viewModel: CreateLabels.CreateLabel.ViewModel)
 }
 
-class LabelViewController: UICollectionViewController {
+class LabelListViewController: UIViewController {
     
     private var interactor: LabelListBusinessLogic?
     private var displayedLabels: [ListLabels.FetchLists.ViewModel.DisplayedLabel] = []
-    private let identifier = "labelCell"
+    let identifier = "labelCell"
+    
+    @IBOutlet weak var LabelCollectionView: UICollectionView!
     
     // MARK:- Object Lifecycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -29,6 +32,17 @@ class LabelViewController: UICollectionViewController {
         setup()
     }
     
+    // MARK:- View Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupCollectionview()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        fetchLabels()
+    }
+    
     // MARK:- Setup
     private func setup() {
         let viewController = self
@@ -39,14 +53,21 @@ class LabelViewController: UICollectionViewController {
         presenter.viewController = viewController
     }
     
-    // MARK:- View Life Cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        fetchLabels()
+    func setupCollectionview() {
+        var config = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
+        config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
+            let delete = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
+                completion(true)
+            }
+            delete.backgroundColor = .systemPink
+            return UISwipeActionsConfiguration(actions: [delete])
+        }
+
+        let layout = UICollectionViewCompositionalLayout.list(using: config)
+        LabelCollectionView.collectionViewLayout = layout
+        LabelCollectionView.delegate = self
+        LabelCollectionView.dataSource = self
+        LabelCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
     // MARK:- Prepare for segue
@@ -55,38 +76,25 @@ class LabelViewController: UICollectionViewController {
             let destinationVC = segue.destination as! PopUpViewController
             let popupController = STPopupController(rootViewController: destinationVC)
             destinationVC.mode = .Label
+            destinationVC.delegate = self
             popupController.present(in: self)
         }
         // 해당 코드 마일스톤에서도 똑같이구현해주기
     }
 }
 
-extension LabelViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemsPerRow: CGFloat = 1
-        let sectionInsets = UIEdgeInsets(top: 0, left: 5.0, bottom: 0, right: 5.0)
-        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-        let widthPerItem = UIScreen.main.bounds.width - paddingSpace
-        return CGSize(width: widthPerItem, height: widthPerItem * 0.18)
-    }
-}
 
-extension LabelViewController {
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+extension LabelListViewController: UICollectionViewDataSource {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerLabel", for: indexPath)
-        return headerView
-    }
-
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return displayedLabels.count
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? LabelCollectionViewCell else {
             return UICollectionViewCell()
         }
@@ -101,12 +109,12 @@ extension LabelViewController {
         return cell
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // did select item at
     }
 }
 
-extension LabelViewController: LabelListDisplayLogic {
+extension LabelListViewController: LabelListDisplayLogic {
     func fetchLabels() {
         let request = ListLabels.FetchLists.Request()
         interactor?.fetchLabels(request: request)
@@ -114,18 +122,49 @@ extension LabelViewController: LabelListDisplayLogic {
     
     func displayFetchedOrders(viewModel: ListLabels.FetchLists.ViewModel) {
         displayedLabels = viewModel.displayedLabels
-        self.collectionView?.reloadData()
+        LabelCollectionView.reloadData()
+    }
+    
+    func displayAlert(viewModel: CreateLabels.CreateLabel.ViewModel) {
+        let displayedAlert = viewModel.displayedAlert
+        let alert = UIAlertController(
+            title: displayedAlert.title,
+            message: displayedAlert.message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [unowned self] _ in
+            self.fetchLabels()
+        }))
+        present(alert, animated: true)
     }
 }
 
-extension LabelViewController: PopupViewControllerDelegate {
+extension LabelListViewController: PopupViewControllerDelegate {
+    
     func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.MilestoneItem) {
         // unrelated
     }
     
     func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.LabelItem) {
-        <#code#>
+        let newLabel = CreateLabels.CreateLabel.Request(
+            newLabel: PostLabel(
+                name: item.title,
+                color: item.color,
+                description: item.description
+            )
+        )
+        interactor?.createNewLabel(request: newLabel)
     }
     
+    func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.LabelItem) {
+        
+    }
     
 }
+
+extension LabelListViewController: UICollectionViewDelegate { }
+
+
+
+
+

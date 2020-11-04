@@ -42,13 +42,32 @@ enum CreateLabels {
         struct Request {
             var newLabel: PostLabel
         }
-        struct Response { }
+        struct Response {
+            var status: String
+        }
+        struct ViewModel {
+            struct DisplayedAlert {
+                var title: String
+                var message: String
+            }
+            var displayedAlert: DisplayedAlert
+        }
+        
     }
     
     enum EditLabel {
         struct Request {
             var editLabel: PostLabel
         }
-        struct Response { }
+        struct Response {
+            var status: String
+        }
+        struct ViewModel {
+            struct DisplayedAlert {
+                var title: String
+                var message: String
+            }
+            var displayedAlert: DisplayedAlert
+        }
     }
 }

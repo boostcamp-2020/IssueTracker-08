@@ -8,7 +8,9 @@
 import Foundation
 
 class LabelListWorker {
+    
     var dataManager: LabelDataManagerProtocol
+    
     init(dataManager: LabelDataManagerProtocol) {
         self.dataManager = dataManager
     }
@@ -16,6 +18,12 @@ class LabelListWorker {
     func fetchLabels(completion: @escaping ([Label]) -> Void) {
         dataManager.fetchLabels(completion: { Labels in
             completion(Labels)
+        })
+    }
+    
+    func createNewLabel(request: CreateLabels.CreateLabel.Request, completion: @escaping (String) -> Void) {
+        dataManager.postNewLabel(request: request, completion: { result in
+            completion(result)
         })
     }
     

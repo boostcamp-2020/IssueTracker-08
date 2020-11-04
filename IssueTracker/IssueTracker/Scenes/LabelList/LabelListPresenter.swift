@@ -9,6 +9,7 @@ import Foundation
 
 protocol LabelListPresentationLogic {
     func presentFetchedLabels(response: ListLabels.FetchLists.Response)
+    func presentPostResult(response: CreateLabels.CreateLabel.Response)
 }
 
 class LabelListPresenter {
@@ -16,6 +17,7 @@ class LabelListPresenter {
 }
 
 extension LabelListPresenter: LabelListPresentationLogic {
+    
     func presentFetchedLabels(response: ListLabels.FetchLists.Response) {
         var displayedLabels: [ListLabels.FetchLists.ViewModel.DisplayedLabel] = []
         for Label in response.labels {
@@ -34,4 +36,24 @@ extension LabelListPresenter: LabelListPresentationLogic {
         let viewModel = ListLabels.FetchLists.ViewModel(displayedLabels: displayedLabels)
         viewController?.displayFetchedOrders(viewModel: viewModel)
     }
+    
+    func presentPostResult(response: CreateLabels.CreateLabel.Response) {
+        if response.status == "success" {
+            let displayedAlert = CreateLabels.CreateLabel.ViewModel.DisplayedAlert(
+                title: response.status.uppercased(),
+                message: "Successfully added a new label"
+            )
+            let viewModel = CreateLabels.CreateLabel.ViewModel(displayedAlert: displayedAlert)
+            viewController?.displayAlert(viewModel: viewModel)
+        } else {
+            let displayedAlert = CreateLabels.CreateLabel.ViewModel.DisplayedAlert(
+                title: "Fail",
+                message: "Failed to add a new label"
+            )
+            let viewModel = CreateLabels.CreateLabel.ViewModel(displayedAlert: displayedAlert)
+            viewController?.displayAlert(viewModel: viewModel)
+        }
+
+    }
+    
 }
