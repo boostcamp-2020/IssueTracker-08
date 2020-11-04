@@ -1,11 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #24292f;
+  height: 80px;
+`;
+
+const Title = styled.p`
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+`;
 
 const Header = () => {
   return (
-    <div>
-      <p>헤더입니다</p>
-    </div>
+    <Wrapper>
+      <Title>🐼ISSUES</Title>
+    </Wrapper>
   );
 };
 
