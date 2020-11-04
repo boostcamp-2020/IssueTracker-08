@@ -9,7 +9,8 @@ import Foundation
 
 protocol LabelListPresentationLogic {
     func presentFetchedLabels(response: ListLabels.FetchLists.Response)
-    func presentPostResult(response: CreateLabels.CreateLabel.Response)
+    func presentPostResult(response: ListLabels.CreateLabel.Response)
+    func presentPostResult(response: ListLabels.DeleteLabel.Response)
 }
 
 class LabelListPresenter {
@@ -27,6 +28,7 @@ extension LabelListPresenter: LabelListPresentationLogic {
             }
             
             let displayedLabel = ListLabels.FetchLists.ViewModel.DisplayedLabel(
+                id: Label.id,
                 name: Label.name,
                 color: Label.color,
                 description: description
@@ -37,23 +39,39 @@ extension LabelListPresenter: LabelListPresentationLogic {
         viewController?.displayFetchedOrders(viewModel: viewModel)
     }
     
-    func presentPostResult(response: CreateLabels.CreateLabel.Response) {
+    func presentPostResult(response: ListLabels.CreateLabel.Response) {
+        var title: String = ""
+        var message: String = ""
         if response.status == "success" {
-            let displayedAlert = CreateLabels.CreateLabel.ViewModel.DisplayedAlert(
-                title: response.status.uppercased(),
-                message: "Successfully added a new label"
-            )
-            let viewModel = CreateLabels.CreateLabel.ViewModel(displayedAlert: displayedAlert)
-            viewController?.displayAlert(viewModel: viewModel)
+            title = "Successfully Added!"
+            message = "Successfully added the new label"
         } else {
-            let displayedAlert = CreateLabels.CreateLabel.ViewModel.DisplayedAlert(
-                title: "Fail",
-                message: "Failed to add a new label"
-            )
-            let viewModel = CreateLabels.CreateLabel.ViewModel(displayedAlert: displayedAlert)
-            viewController?.displayAlert(viewModel: viewModel)
+            title = "Failed to Add!"
+            message = "Failed to add the new label"
         }
-
+        
+        let alert = ListLabels.CreateLabel.ViewModel.DisplayedAlert(
+            title: title,
+            message: message)
+        let viewModel = ListLabels.CreateLabel.ViewModel(displayedAlert: alert)
+        viewController?.displayAlert(viewModel: viewModel)
+    }
+    
+    func presentPostResult(response: ListLabels.DeleteLabel.Response) {
+        var title: String = ""
+        var message: String = ""
+        if response.status == "success" {
+            title = "Successfully Deleted!"
+            message = "Successfully deleted the label"
+        } else {
+            title = "Failed to delete!"
+            message = "Failed to delete the label"
+        }
+        let alert = ListLabels.DeleteLabel.ViewModel.DisplayedAlert(
+            title: title,
+            message: message)
+        let viewModel = ListLabels.DeleteLabel.ViewModel(displayedAlert: alert)
+        viewController?.displayAlert(viewModel: viewModel)
     }
     
 }

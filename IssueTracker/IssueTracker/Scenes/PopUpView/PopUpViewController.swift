@@ -15,6 +15,7 @@ enum PopupMode {
 protocol PopupViewControllerDelegate: class {
     func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.MilestoneItem)
     func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.LabelItem)
+    func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.LabelItem)
 }
 
 class PopUpViewController: UIViewController {
@@ -98,10 +99,12 @@ class PopUpViewController: UIViewController {
         
         let newLabel = PopupItem.LabelItem(
             title: titleTextField.text!,
-            description: descriptionTextField.text ?? nil,
-            color: labelColorField.text!
+            description: detailTestField.text!,
+            color: "#\(labelColorField.text!)"
         )
-        delegate?.popupViewController(self, didFinishAdding: newLabel)
+        dismiss(animated: true, completion: {
+            self.delegate?.popupViewController(self, didFinishAdding: newLabel)
+        })
     }
     
     

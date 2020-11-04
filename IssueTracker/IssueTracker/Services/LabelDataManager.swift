@@ -12,7 +12,10 @@ struct LabelListResponse: Decodable {
     var data: [Label]
 }
 
-struct CreateLabelResultResponse: Decodable {
+struct CUDResponse: Decodable {
+    var status: String
+    var data : ResponseData?
+    
     struct ResponseData: Decodable {
         var fieldCount: Int
         var affectedRows: Int
@@ -21,13 +24,12 @@ struct CreateLabelResultResponse: Decodable {
         var serverStatus: Int
         var warningStatus: Int
     }
-    var status: String
-    var data : ResponseData?
 }
 
 protocol LabelDataManagerProtocol {
     func fetchLabels(completion: @escaping ([Label]) -> Void)
-    func postNewLabel(request: CreateLabels.CreateLabel.Request, completion: @escaping (String) -> Void)
+    func postNewLabel(request: ListLabels.CreateLabel.Request, completion: @escaping (String) -> Void)
+    func deleteLabel(request: ListLabels.DeleteLabel.Request, completion: @escaping (String) -> Void)
 }
 
 final class LabelDataManager: LabelDataManagerProtocol {
@@ -44,17 +46,28 @@ final class LabelDataManager: LabelDataManagerProtocol {
         })
     }
     
-    func postNewLabel(request: CreateLabels.CreateLabel.Request, completion: @escaping (String) -> Void) {
+    func postNewLabel(request: ListLabels.CreateLabel.Request, completion: @escaping (String) -> Void) {
         let requestData = request.newLabel
         let jsonData = try? JSONEncoder().encode(requestData)
         // force unwrapping 처리
         NetworkService.shared.postData(url: EndPoint.labels, jsonData: jsonData!, completion: { data in
-            guard let receivedData = try? JSONDecoder().decode(CreateLabelResultResponse.self, from: data) else {
+            guard let receivedData = try? JSONDecoder().decode(CUDResponse.self, from: data) else {
                 return
             }
             let result: String = receivedData.status
             completion(result)
         })
         
+    }
+    
+    func deleteLabel(request: ListLabels.DeleteLabel.Request, completion: @escaping (String) -> Void) {
+        let deleteURL = "\(EndPoint.labels)/\(request.id)/"
+        NetworkService.shared.deleteData(url: deleteURL, completion: { data in
+            guard let receivedData = try? JSONDecoder().decode(CUDResponse.self, from: data) else {
+                return
+            }
+            let result: String = receivedData.status
+            completion(result)
+        })
     }
 }

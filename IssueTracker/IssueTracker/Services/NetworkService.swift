@@ -55,4 +55,26 @@ final class NetworkService {
             }
         }.resume()
     }
+    
+    func deleteData(url: String, completion: @escaping FetchResult) {
+        guard let requestURL = URL(string: url) else {
+            return // completion으로 경우 넘겨 주어야 함
+        }
+        
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "DELETE"
+        
+        defaultSession.dataTask(with: request) { (data, response, error) in
+            guard let data = data,
+                  let response = response as? HTTPURLResponse,
+                  response.statusCode == 200 else {
+                return // completion으로 경우 넘겨 주어야 함
+            }
+            DispatchQueue.main.async {
+                completion(data)
+            }
+            
+        }.resume()
+    }
+    
 }

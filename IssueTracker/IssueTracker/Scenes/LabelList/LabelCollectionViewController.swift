@@ -10,7 +10,8 @@ import STPopup
 
 protocol LabelListDisplayLogic: class {
     func displayFetchedOrders(viewModel: ListLabels.FetchLists.ViewModel)
-    func displayAlert(viewModel: CreateLabels.CreateLabel.ViewModel)
+    func displayAlert(viewModel: ListLabels.CreateLabel.ViewModel)
+    func displayAlert(viewModel: ListLabels.DeleteLabel.ViewModel)
 }
 
 class LabelListViewController: UIViewController {
@@ -57,6 +58,7 @@ class LabelListViewController: UIViewController {
         var config = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
         config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
             let delete = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
+                deleteLabel(at: indexPath)
                 completion(true)
             }
             delete.backgroundColor = .systemPink
@@ -68,6 +70,11 @@ class LabelListViewController: UIViewController {
         LabelCollectionView.delegate = self
         LabelCollectionView.dataSource = self
         LabelCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    }
+    
+    private func deleteLabel(at indexPath: IndexPath) {
+        let labelId = displayedLabels[indexPath.item].id
+        interactor?.deleteLabel(request: ListLabels.DeleteLabel.Request(id: labelId))
     }
     
     // MARK:- Prepare for segue
@@ -125,7 +132,20 @@ extension LabelListViewController: LabelListDisplayLogic {
         LabelCollectionView.reloadData()
     }
     
-    func displayAlert(viewModel: CreateLabels.CreateLabel.ViewModel) {
+    func displayAlert(viewModel: ListLabels.CreateLabel.ViewModel) {
+        let displayedAlert = viewModel.displayedAlert
+        let alert = UIAlertController(
+            title: displayedAlert.title,
+            message: displayedAlert.message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [unowned self] _ in
+            self.fetchLabels()
+        }))
+        present(alert, animated: true)
+    }
+    
+    func displayAlert(viewModel: ListLabels.DeleteLabel.ViewModel) {
         let displayedAlert = viewModel.displayedAlert
         let alert = UIAlertController(
             title: displayedAlert.title,
@@ -146,7 +166,7 @@ extension LabelListViewController: PopupViewControllerDelegate {
     }
     
     func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.LabelItem) {
-        let newLabel = CreateLabels.CreateLabel.Request(
+        let newLabel = ListLabels.CreateLabel.Request(
             newLabel: PostLabel(
                 name: item.title,
                 color: item.color,

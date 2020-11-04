@@ -9,7 +9,8 @@ import Foundation
 
 protocol LabelListBusinessLogic {
     func fetchLabels(request: ListLabels.FetchLists.Request)
-    func createNewLabel(request: CreateLabels.CreateLabel.Request)
+    func createNewLabel(request: ListLabels.CreateLabel.Request)
+    func deleteLabel(request: ListLabels.DeleteLabel.Request)
 }
 
 protocol LabelListDataSource {
@@ -18,16 +19,15 @@ protocol LabelListDataSource {
 
 class LabelListInteractor {
     var presenter: LabelListPresentationLogic?
-    var LabelWorker = LabelListWorker(dataManager: LabelDataManager())
+    var labelWorker = LabelListWorker(dataManager: LabelDataManager())
     var labels: [Label]?
-    var createResult: String! // Status
-    var editResult: String! // Status
+    var responseStatus: String!
 }
 
 extension LabelListInteractor: LabelListBusinessLogic {
     
     func fetchLabels(request: ListLabels.FetchLists.Request) {
-        LabelWorker.fetchLabels(completion: { [unowned self] (Labels) -> Void in
+        labelWorker.fetchLabels(completion: { [unowned self] (Labels) -> Void in
             self.labels = Labels
             let response = ListLabels.FetchLists.Response(labels: Labels)
             self.presenter?.presentFetchedLabels(response: response)
@@ -35,10 +35,18 @@ extension LabelListInteractor: LabelListBusinessLogic {
     }
     
     // LabelWorker.createNewLabel 에 completion 추가하고 싶어 죽을 것 같아....
-    func createNewLabel(request: CreateLabels.CreateLabel.Request) {
-        LabelWorker.createNewLabel(request: request, completion: { [unowned self] (result) -> Void in
-            self.createResult = result
-            let response = CreateLabels.CreateLabel.Response(status: result)
+    func createNewLabel(request: ListLabels.CreateLabel.Request) {
+        labelWorker.createNewLabel(request: request, completion: { [unowned self] (result) -> Void in
+            self.responseStatus = result
+            let response = ListLabels.CreateLabel.Response(status: result)
+            self.presenter?.presentPostResult(response: response)
+        })
+    }
+    
+    func deleteLabel(request: ListLabels.DeleteLabel.Request) {
+        labelWorker.deleteLabel(request: request, completion: { [unowned self] (result) -> Void in
+            self.responseStatus = result
+            let response = ListLabels.DeleteLabel.Response(status: result)
             self.presenter?.presentPostResult(response: response)
         })
     }

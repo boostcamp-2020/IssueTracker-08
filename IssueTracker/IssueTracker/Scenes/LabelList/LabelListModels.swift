@@ -23,11 +23,10 @@ struct PostLabel: Encodable {
 enum ListLabels {
     enum FetchLists {
         struct Request { }
-        struct Response {
-            var labels: [Label]
-        }
+        struct Response { var labels: [Label] }
         struct ViewModel {
             struct DisplayedLabel {
+                var id: Int
                 var name: String
                 var color: String
                 var description: String?
@@ -35,16 +34,9 @@ enum ListLabels {
             var displayedLabels: [DisplayedLabel]
         }
     }
-}
-
-enum CreateLabels {
     enum CreateLabel {
-        struct Request {
-            var newLabel: PostLabel
-        }
-        struct Response {
-            var status: String
-        }
+        struct Request { var newLabel: PostLabel}
+        struct Response { var status: String }
         struct ViewModel {
             struct DisplayedAlert {
                 var title: String
@@ -52,16 +44,15 @@ enum CreateLabels {
             }
             var displayedAlert: DisplayedAlert
         }
-        
     }
     
     enum EditLabel {
-        struct Request {
-            var editLabel: PostLabel
-        }
-        struct Response {
-            var status: String
-        }
+        
+    }
+    
+    enum DeleteLabel {
+        struct Request { var id: Int }
+        struct Response { var status: String}
         struct ViewModel {
             struct DisplayedAlert {
                 var title: String
@@ -71,3 +62,4 @@ enum CreateLabels {
         }
     }
 }
+
