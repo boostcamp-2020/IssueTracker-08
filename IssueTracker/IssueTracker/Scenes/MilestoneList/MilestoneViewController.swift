@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import STPopup
 
 protocol MilestoneListDisplayLogic: class {
     func displayFetchedOrders(viewModel: ListMilestones.FetchLists.ViewModel)
@@ -15,7 +16,6 @@ class MilestoneCollectionViewController: UICollectionViewController {
     private var interactor: MilestoneListBusinessLogic?
     private var displayedMilestones: [ListMilestones.FetchLists.ViewModel.DisplayedMilestone] = []
     private let reuseIdentifier = "milestoneCell"
-    var router: (MilestoneListDataPassing)?
     
     // MARK:- Object Lifecycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -33,16 +33,30 @@ class MilestoneCollectionViewController: UICollectionViewController {
         let viewController = self
         let interactor = MilestoneListInteractor()
         let presenter = MilestoneListPresenter()
-        let router = MilestoneListRouter()
         viewController.interactor = interactor
         interactor.presenter = presenter
-        viewController.router = router
         presenter.viewController = viewController
-        router.viewController = viewController
+    }
+    
+    func setupCollectionview() {
+        var config = UICollectionLayoutListConfiguration(appearance: .plain)
+        config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
+            let delete = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
+                completion(true)
+            }
+            delete.backgroundColor = .systemPink
+            return UISwipeActionsConfiguration(actions: [delete])
+        }
+
+        let layout = UICollectionViewCompositionalLayout.list(using: config)
+        self.collectionView.collectionViewLayout = layout
+        self.collectionView.delegate = self
+        self.collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupCollectionview()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -50,22 +64,21 @@ class MilestoneCollectionViewController: UICollectionViewController {
         fetchMilestones()
     }
     
-    @IBAction func reuseNewButton(_ sender: Any) {
-        let request = CreateMilestones.CreateMilestone.Request.init(milestone:  CreateMilestones.MilestoneFormField(title: "IOS", dueDate: "2020-08-18", content: "IOS GOOD"))
-        interactor?.createMilestone(request: request)
-        //router?.routeToNewAdd()
+    // MARK:- Prepare for segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! PopUpViewController
+        let popupController = STPopupController(rootViewController: destinationVC)
+        if segue.identifier == "MilestonePopup" {
+            destinationVC.mode = .Milestone
+        } else {
+            destinationVC.mode = .EditMilestone
+        }
+        destinationVC.milestoneDelegate = self
+        popupController.present(in: self)
     }
 }
 
 extension MilestoneCollectionViewController {
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "milestoneheader", for: indexPath)
-        return headerView
-    }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return displayedMilestones.count
@@ -107,4 +120,16 @@ extension MilestoneCollectionViewController: UICollectionViewDelegateFlowLayout 
         let widthPerItem = UIScreen.main.bounds.width - paddingSpace
         return CGSize(width: widthPerItem, height: widthPerItem * 0.25)
     }
+}
+
+extension MilestoneCollectionViewController: PopupMilestoneViewControllerDelegate {
+    func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.MilestoneItem) {
+        let request = CreateMilestones.CreateMilestone.Request.init(milestone:  CreateMilestones.MilestoneFormField(title: item.title, dueDate: item.dueDate, content: item.content))
+        interactor?.createMilestone(request: request)
+    }
+    
+    func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.MilestoneItem) {
+        print(2)
+    }
+    
 }

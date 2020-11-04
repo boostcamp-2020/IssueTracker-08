@@ -12,12 +12,13 @@ protocol LabelListDisplayLogic: class {
     func displayFetchedOrders(viewModel: ListLabels.FetchLists.ViewModel)
 }
 
-class LabelViewController: UICollectionViewController {
+class LabelViewController: UIViewController {
     
     private var interactor: LabelListBusinessLogic?
     private var displayedLabels: [ListLabels.FetchLists.ViewModel.DisplayedLabel] = []
-    private let identifier = "labelCell"
+    let identifier = "labelCell"
     
+    @IBOutlet weak var LabelCollectionView: UICollectionView!
     // MARK:- Object Lifecycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -39,9 +40,26 @@ class LabelViewController: UICollectionViewController {
         presenter.viewController = viewController
     }
     
+    func setupCollectionview() {
+        var config = UICollectionLayoutListConfiguration(appearance: .plain)
+        config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
+            let delete = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
+                completion(true)
+            }
+            delete.backgroundColor = .systemPink
+            return UISwipeActionsConfiguration(actions: [delete])
+        }
+
+        let layout = UICollectionViewCompositionalLayout.list(using: config)
+        LabelCollectionView.collectionViewLayout = layout
+        LabelCollectionView.delegate = self
+        LabelCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    }
+    
     // MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupCollectionview()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,12 +73,13 @@ class LabelViewController: UICollectionViewController {
             let destinationVC = segue.destination as! PopUpViewController
             let popupController = STPopupController(rootViewController: destinationVC)
             destinationVC.mode = .Label
+            destinationVC.labelDelegate = self
             popupController.present(in: self)
         }
         // 해당 코드 마일스톤에서도 똑같이구현해주기
     }
 }
-
+/*
 extension LabelViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let itemsPerRow: CGFloat = 1
@@ -70,23 +89,18 @@ extension LabelViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: widthPerItem, height: widthPerItem * 0.18)
     }
 }
+*/
+extension LabelViewController: UICollectionViewDataSource {
 
-extension LabelViewController {
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerLabel", for: indexPath)
-        return headerView
-    }
-
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return displayedLabels.count
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? LabelCollectionViewCell else {
             return UICollectionViewCell()
         }
@@ -101,7 +115,7 @@ extension LabelViewController {
         return cell
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // did select item at
     }
 }
@@ -114,6 +128,18 @@ extension LabelViewController: LabelListDisplayLogic {
     
     func displayFetchedOrders(viewModel: ListLabels.FetchLists.ViewModel) {
         displayedLabels = viewModel.displayedLabels
-        self.collectionView?.reloadData()
+        LabelCollectionView.reloadData()
     }
 }
+
+extension LabelViewController: PopupLabelViewControllerDelegate {
+    func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.LabelItem) {
+        
+    }
+    
+    func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.LabelItem) {
+        
+    }
+}
+
+extension LabelViewController: UICollectionViewDelegate { }
