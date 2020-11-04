@@ -109,11 +109,23 @@ extension LabelViewController {
 extension LabelViewController: LabelListDisplayLogic {
     func fetchLabels() {
         let request = ListLabels.FetchLists.Request()
-        interactor?.fetchIssues(request: request)
+        interactor?.fetchLabels(request: request)
     }
     
     func displayFetchedOrders(viewModel: ListLabels.FetchLists.ViewModel) {
         displayedLabels = viewModel.displayedLabels
         self.collectionView?.reloadData()
     }
+}
+
+extension LabelViewController: PopupViewControllerDelegate {
+    func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.MilestoneItem) {
+        // unrelated
+    }
+    
+    func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.LabelItem) {
+        <#code#>
+    }
+    
+    
 }

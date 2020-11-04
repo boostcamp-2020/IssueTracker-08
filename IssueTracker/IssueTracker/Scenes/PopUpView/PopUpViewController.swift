@@ -13,8 +13,8 @@ enum PopupMode {
 }
 
 protocol PopupViewControllerDelegate: class {
-    func popupViewControllerDidCancel(_ controller: PopUpViewController)
-    func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem)
+    func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.MilestoneItem)
+    func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.LabelItem)
 }
 
 class PopUpViewController: UIViewController {
@@ -91,6 +91,20 @@ class PopUpViewController: UIViewController {
         detailTestField.text = ""
         descriptionTextField.text = ""
     }
+    
+    @IBAction func onSaveButtonPressed(_ sender: UIButton) {
+        // 제목이 비어있을 때 error 처리 해주어야 함.
+            // ex : firstresponder 넘겨줘서 입력 가능하게
+        
+        let newLabel = PopupItem.LabelItem(
+            title: titleTextField.text!,
+            description: descriptionTextField.text ?? nil,
+            color: labelColorField.text!
+        )
+        delegate?.popupViewController(self, didFinishAdding: newLabel)
+    }
+    
+    
 }
 
 extension PopUpViewController: UIColorPickerViewControllerDelegate {
