@@ -18,6 +18,7 @@
 		800666D62547D24300B42428 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 800666D42547D24300B42428 /* LaunchScreen.storyboard */; };
 		800666E12547D24300B42428 /* IssueTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666E02547D24300B42428 /* IssueTrackerTests.swift */; };
 		800666EC2547D24300B42428 /* IssueTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666EB2547D24300B42428 /* IssueTrackerUITests.swift */; };
+		80112647255282B90016B381 /* PopupItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80112646255282B90016B381 /* PopupItem.swift */; };
 		80163C6E254FF5070073AAD5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80163C6D254FF5070073AAD5 /* NetworkService.swift */; };
 		80163C73255009450073AAD5 /* CustomAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80163C72255009450073AAD5 /* CustomAddButton.swift */; };
 		8042B7E7254BA1C700910C6F /* UIColor+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7E6254BA1C700910C6F /* UIColor+HexString.swift */; };
@@ -49,13 +50,11 @@
 		BD5D414D254FDCFA008BCB36 /* LabelListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4148254FDCF9008BCB36 /* LabelListPresenter.swift */; };
 		BD5D414E254FDCFA008BCB36 /* LabelCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4149254FDCFA008BCB36 /* LabelCollectionViewController.swift */; };
 		BD5D414F254FDCFA008BCB36 /* LabelListWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D414A254FDCFA008BCB36 /* LabelListWorker.swift */; };
-		BD5D4150254FDCFA008BCB36 /* LabelListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D414B254FDCFA008BCB36 /* LabelListRouter.swift */; };
 		BD5D4151254FDCFA008BCB36 /* LabelListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D414C254FDCFA008BCB36 /* LabelListInteractor.swift */; };
 		BD5D4157254FDD06008BCB36 /* LabelCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4155254FDD06008BCB36 /* LabelCollectionReusableView.swift */; };
 		BD5D4158254FDD06008BCB36 /* LabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4156254FDD06008BCB36 /* LabelCollectionViewCell.swift */; };
 		BD5D4164254FDE4D008BCB36 /* IssueFilterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */; };
 		BD71231E25519FA000D5D195 /* LabelDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD71231D25519FA000D5D195 /* LabelDataManager.swift */; };
-		BD7123302551AB5E00D5D195 /* PopUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD71232F2551AB5E00D5D195 /* PopUpRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +96,7 @@
 		800666E72547D24300B42428 /* IssueTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IssueTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		800666EB2547D24300B42428 /* IssueTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTrackerUITests.swift; sourceTree = "<group>"; };
 		800666ED2547D24300B42428 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		80112646255282B90016B381 /* PopupItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupItem.swift; sourceTree = "<group>"; };
 		80163C6D254FF5070073AAD5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		80163C72255009450073AAD5 /* CustomAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAddButton.swift; sourceTree = "<group>"; };
 		8042B7E6254BA1C700910C6F /* UIColor+HexString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexString.swift"; sourceTree = "<group>"; };
@@ -127,13 +127,11 @@
 		BD5D4148254FDCF9008BCB36 /* LabelListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListPresenter.swift; sourceTree = "<group>"; };
 		BD5D4149254FDCFA008BCB36 /* LabelCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCollectionViewController.swift; sourceTree = "<group>"; };
 		BD5D414A254FDCFA008BCB36 /* LabelListWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListWorker.swift; sourceTree = "<group>"; };
-		BD5D414B254FDCFA008BCB36 /* LabelListRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListRouter.swift; sourceTree = "<group>"; };
 		BD5D414C254FDCFA008BCB36 /* LabelListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListInteractor.swift; sourceTree = "<group>"; };
 		BD5D4155254FDD06008BCB36 /* LabelCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCollectionReusableView.swift; sourceTree = "<group>"; };
 		BD5D4156254FDD06008BCB36 /* LabelCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCollectionViewCell.swift; sourceTree = "<group>"; };
 		BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueFilterTableViewController.swift; sourceTree = "<group>"; };
 		BD71231D25519FA000D5D195 /* LabelDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelDataManager.swift; sourceTree = "<group>"; };
-		BD71232F2551AB5E00D5D195 /* PopUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpRouter.swift; sourceTree = "<group>"; };
 		D018D0CA68C57EEA8CB7F764 /* Pods_IssueTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB7C5D95BB108BDD81533688 /* Pods-IssueTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker.debug.xcconfig"; path = "Target Support Files/Pods-IssueTracker/Pods-IssueTracker.debug.xcconfig"; sourceTree = "<group>"; };
 		E914C3F312B834FAB1DC2FDC /* Pods_IssueTrackerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTrackerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -322,7 +320,6 @@
 				BD5D414C254FDCFA008BCB36 /* LabelListInteractor.swift */,
 				BD5D414A254FDCFA008BCB36 /* LabelListWorker.swift */,
 				BD5D4148254FDCF9008BCB36 /* LabelListPresenter.swift */,
-				BD5D414B254FDCFA008BCB36 /* LabelListRouter.swift */,
 			);
 			path = LabelList;
 			sourceTree = "<group>";
@@ -373,7 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				800666CD2547D24200B42428 /* PopUpViewController.swift */,
-				BD71232F2551AB5E00D5D195 /* PopUpRouter.swift */,
+				80112646255282B90016B381 /* PopupItem.swift */,
 			);
 			path = PopUpView;
 			sourceTree = "<group>";
@@ -625,7 +622,6 @@
 				80163C73255009450073AAD5 /* CustomAddButton.swift in Sources */,
 				BD71231E25519FA000D5D195 /* LabelDataManager.swift in Sources */,
 				80AA070D2549F0A700086F5F /* IssueListPresenter.swift in Sources */,
-				BD7123302551AB5E00D5D195 /* PopUpRouter.swift in Sources */,
 				8042B7E7254BA1C700910C6F /* UIColor+HexString.swift in Sources */,
 				BD5D414E254FDCFA008BCB36 /* LabelCollectionViewController.swift in Sources */,
 				BD5D4151254FDCFA008BCB36 /* LabelListInteractor.swift in Sources */,
@@ -636,6 +632,7 @@
 				800666CE2547D24200B42428 /* PopUpViewController.swift in Sources */,
 				BD5D4139254FDAAA008BCB36 /* MilestoneCollectionReusableView.swift in Sources */,
 				BD5D4130254FDA85008BCB36 /* MilestoneListPresenter.swift in Sources */,
+				80112647255282B90016B381 /* PopupItem.swift in Sources */,
 				BD5D4164254FDE4D008BCB36 /* IssueFilterTableViewController.swift in Sources */,
 				8042B7FE254BAD7A00910C6F /* RootCoordinator.swift in Sources */,
 				BD5D4123254FD70F008BCB36 /* OAuthNetworkManager.swift in Sources */,
@@ -656,7 +653,6 @@
 				800666CC2547D24200B42428 /* SceneDelegate.swift in Sources */,
 				80AA0723254A88DF00086F5F /* IssueDataManager.swift in Sources */,
 				BD5D4143254FDBD1008BCB36 /* FormattedDateFromString.swift in Sources */,
-				BD5D4150254FDCFA008BCB36 /* LabelListRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

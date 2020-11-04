@@ -13,10 +13,10 @@ protocol LabelListDisplayLogic: class {
 }
 
 class LabelViewController: UICollectionViewController {
+    
     private var interactor: LabelListBusinessLogic?
     private var displayedLabels: [ListLabels.FetchLists.ViewModel.DisplayedLabel] = []
     private let identifier = "labelCell"
-    var router: (LabelListDataPassing)?
     
     // MARK:- Object Lifecycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -34,14 +34,12 @@ class LabelViewController: UICollectionViewController {
         let viewController = self
         let interactor = LabelListInteractor()
         let presenter = LabelListPresenter()
-        let router = LabelListRouter()
         viewController.interactor = interactor
         interactor.presenter = presenter
         presenter.viewController = viewController
-        viewController.router = router
-        router.viewController = viewController
     }
     
+    // MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -51,8 +49,15 @@ class LabelViewController: UICollectionViewController {
         fetchLabels()
     }
     
-    @IBAction func reuseNewButton(_ sender: Any) {
-        router?.routeToNewAdd()
+    // MARK:- Prepare for segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "LabelPopup" {
+            let destinationVC = segue.destination as! PopUpViewController
+            let popupController = STPopupController(rootViewController: destinationVC)
+            destinationVC.mode = .Label
+            popupController.present(in: self)
+        }
+        // 해당 코드 마일스톤에서도 똑같이구현해주기
     }
 }
 
@@ -97,7 +102,7 @@ extension LabelViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        router?.routeToNewAdd()
+        // did select item at
     }
 }
 
