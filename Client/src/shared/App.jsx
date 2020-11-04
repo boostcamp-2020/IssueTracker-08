@@ -1,7 +1,14 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Home, About } from '../pages';
-import Menu from '../components/Menu';
+import {
+  Issue,
+  IssueDetail,
+  IssuePost,
+  Label,
+  Milestone,
+  MilestonePost,
+} from '../pages';
+import Header from '../components/Header';
 import LoginPage from '../pages/login/LoginPage';
 
 const App = () => {
@@ -9,11 +16,14 @@ const App = () => {
   if (isLoggedIn) {
     return (
       <div>
-        <Menu></Menu>
-        <Route exact path="/" component={Home} />
+        <Header></Header>
+        <Route exact path="/" component={Issue} />
         <Switch>
-          <Route path="/about/:name" component={About} />
-          <Route path="/about" component={About} />
+          <Route path="/issue/post" component={IssuePost} />
+          <Route path="/issue/:issueId" component={IssueDetail} />
+          <Route path="/label" component={Label} />
+          <Route path="/milestone/post" component={MilestonePost} />
+          <Route path="/milestone" component={Milestone} />
         </Switch>
       </div>
     );
