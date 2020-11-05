@@ -16,6 +16,8 @@ module.exports = {
       const assigneeList = [];
 
       for (let assign of assigneeResults.data[0]) {
+        assigneeList.push(assign.userId);
+        assigneeList.push(assign.imageUrl);
         assigneeList.push(assign.name);
       }
 

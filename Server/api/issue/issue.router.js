@@ -6,6 +6,7 @@ const {
   updateIssue,
   openIssue,
   closeIssue,
+  deleteIssue,
   createAssignee,
   deleteAssignee,
   createMilestone,
@@ -44,6 +45,7 @@ router.get('/comment/count/:issue_id', getCommentsCount);
 router.post('/comment', createComment);
 router.post('/comment/update', updateComment);
 
+router.delete('/', deleteIssue);
 router.delete('/comment', deleteComment);
 
 module.exports = router;

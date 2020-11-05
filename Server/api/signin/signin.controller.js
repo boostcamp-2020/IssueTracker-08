@@ -10,6 +10,7 @@ const {
 } = require('./signin.service');
 const { createJWT } = require('../utils/auth.token');
 const { user } = require('../../config/database.config');
+const { successResponse } = require('../utils/returnForm');
 
 module.exports = {
   githubSignIn: (req, res) => {
@@ -22,6 +23,10 @@ module.exports = {
     console.log('received callback');
 
     return githubOAuth.callback(req, res);
+  },
+
+  isLogin: (req, res) => {
+    return res.status(200).json(successResponse({}));
   },
 };
 

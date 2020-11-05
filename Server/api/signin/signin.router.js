@@ -1,6 +1,12 @@
-const { githubSignIn, githubCallback } = require('./signin.controller');
 const router = require('express').Router();
+const {
+  githubSignIn,
+  githubCallback,
+  isLogin,
+} = require('./signin.controller');
+const { checkJWTAuthorization } = require('../utils/auth.token');
 
+router.get('/', checkJWTAuthorization, isLogin);
 router.get('/github', githubSignIn);
 router.get('/github/callback', githubCallback);
 
