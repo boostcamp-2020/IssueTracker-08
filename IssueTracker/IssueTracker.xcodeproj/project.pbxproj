@@ -34,6 +34,10 @@
 		80AA072B254A8A0600086F5F /* issue.json in Resources */ = {isa = PBXBuildFile; fileRef = 80AA072A254A8A0600086F5F /* issue.json */; };
 		82AEAB5DE534EAD2DDF13B50 /* Pods_IssueTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E914C3F312B834FAB1DC2FDC /* Pods_IssueTrackerTests.framework */; };
 		A199FF356F7D518199628888 /* Pods_IssueTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D018D0CA68C57EEA8CB7F764 /* Pods_IssueTracker.framework */; };
+		BD5C86912553EEA300813389 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C868F2553EEA300813389 /* CardViewController.swift */; };
+		BD5C86922553EEA300813389 /* CardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD5C86902553EEA300813389 /* CardViewController.xib */; };
+		BD5C86972553EF1E00813389 /* IssueDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C86962553EF1E00813389 /* IssueDetailViewController.swift */; };
+		BD5C869D2553F6CC00813389 /* IssueDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C869C2553F6CC00813389 /* IssueDetailCollectionViewCell.swift */; };
 		BD5D411E254FD6D5008BCB36 /* LabelListModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D411D254FD6D5008BCB36 /* LabelListModels.swift */; };
 		BD5D4123254FD70F008BCB36 /* OAuthNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4122254FD70F008BCB36 /* OAuthNetworkManager.swift */; };
 		BD5D412D254FDA85008BCB36 /* MilestoneListModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4128254FDA85008BCB36 /* MilestoneListModels.swift */; };
@@ -109,6 +113,10 @@
 		80AA0722254A88DF00086F5F /* IssueDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDataManager.swift; sourceTree = "<group>"; };
 		80AA072A254A8A0600086F5F /* issue.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = issue.json; sourceTree = "<group>"; };
 		8B3831EA6FDFCB7AA038395F /* Pods-IssueTracker-IssueTrackerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker-IssueTrackerUITests.debug.xcconfig"; path = "Target Support Files/Pods-IssueTracker-IssueTrackerUITests/Pods-IssueTracker-IssueTrackerUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		BD5C868F2553EEA300813389 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
+		BD5C86902553EEA300813389 /* CardViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardViewController.xib; sourceTree = "<group>"; };
+		BD5C86962553EF1E00813389 /* IssueDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailViewController.swift; sourceTree = "<group>"; };
+		BD5C869C2553F6CC00813389 /* IssueDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		BD5D411D254FD6D5008BCB36 /* LabelListModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListModels.swift; sourceTree = "<group>"; };
 		BD5D4122254FD70F008BCB36 /* OAuthNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthNetworkManager.swift; sourceTree = "<group>"; };
 		BD5D4128254FDA85008BCB36 /* MilestoneListModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneListModels.swift; sourceTree = "<group>"; };
@@ -262,6 +270,7 @@
 		80AA06F42549D07E00086F5F /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				BD5C868B2553EE1000813389 /* IssueDetail */,
 				BD5D415F254FDE2D008BCB36 /* IssueFilter */,
 				BD5D4127254FDA59008BCB36 /* MilestoneList */,
 				BD5D411C254FD611008BCB36 /* LabelList */,
@@ -302,6 +311,25 @@
 			children = (
 				80AA07022549ED4700086F5F /* IssueListCollectionViewCell.swift */,
 				80163C72255009450073AAD5 /* CustomAddButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BD5C868B2553EE1000813389 /* IssueDetail */ = {
+			isa = PBXGroup;
+			children = (
+				BD5C869B2553F6B400813389 /* Views */,
+				BD5C868F2553EEA300813389 /* CardViewController.swift */,
+				BD5C86902553EEA300813389 /* CardViewController.xib */,
+				BD5C86962553EF1E00813389 /* IssueDetailViewController.swift */,
+			);
+			path = IssueDetail;
+			sourceTree = "<group>";
+		};
+		BD5C869B2553F6B400813389 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BD5C869C2553F6CC00813389 /* IssueDetailCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -472,6 +500,7 @@
 				800666D62547D24300B42428 /* LaunchScreen.storyboard in Resources */,
 				800666D32547D24300B42428 /* Assets.xcassets in Resources */,
 				800666D12547D24200B42428 /* Main.storyboard in Resources */,
+				BD5C86922553EEA300813389 /* CardViewController.xib in Resources */,
 				80AA072B254A8A0600086F5F /* issue.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -601,6 +630,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD5D411E254FD6D5008BCB36 /* LabelListModels.swift in Sources */,
+				BD5C869D2553F6CC00813389 /* IssueDetailCollectionViewCell.swift in Sources */,
 				8042B7F9254BAC3D00910C6F /* SignInViewController.swift in Sources */,
 				BD5D4157254FDD06008BCB36 /* LabelCollectionReusableView.swift in Sources */,
 				29EC91AC25511E29007B59A0 /* IssueFilterRouter.swift in Sources */,
@@ -617,11 +647,13 @@
 				800666CE2547D24200B42428 /* ViewController.swift in Sources */,
 				BD5D4139254FDAAA008BCB36 /* MilestoneCollectionReusableView.swift in Sources */,
 				BD5D4130254FDA85008BCB36 /* MilestoneListPresenter.swift in Sources */,
+				BD5C86972553EF1E00813389 /* IssueDetailViewController.swift in Sources */,
 				BD5D4164254FDE4D008BCB36 /* IssueFilterTableViewController.swift in Sources */,
 				8042B7FE254BAD7A00910C6F /* RootCoordinator.swift in Sources */,
 				BD5D4123254FD70F008BCB36 /* OAuthNetworkManager.swift in Sources */,
 				80AA07172549F0F800086F5F /* IssueListRouter.swift in Sources */,
 				BD5D414F254FDCFA008BCB36 /* LabelListWorker.swift in Sources */,
+				BD5C86912553EEA300813389 /* CardViewController.swift in Sources */,
 				80AA06F72549D09F00086F5F /* IssueListViewController.swift in Sources */,
 				BD5D4158254FDD06008BCB36 /* LabelCollectionViewCell.swift in Sources */,
 				80163C6E254FF5070073AAD5 /* NetworkService.swift in Sources */,

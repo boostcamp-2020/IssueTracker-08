@@ -20,7 +20,7 @@ final class IssueListViewController: UIViewController {
     @IBOutlet weak var newIssueButton: CustomAddButton!
     @IBOutlet weak var issueListCollectionView: UICollectionView!
     @IBOutlet weak var closeIssueButton: UIButton!
-    
+   
     // MARK:- Properties
     var filterData = ListFilter.IssueFilterData()
     var interactor: IssueListBusinessLogic?
@@ -100,14 +100,14 @@ final class IssueListViewController: UIViewController {
             // destinationVC.router?.filterData? = filterData : 영렬님과 상의
         }
     }
-    
+  
     @IBAction func onCloseIssueButtonPressed(_ sender: Any) {
         guard let selectedItemsIndexPath = issueListCollectionView.indexPathsForSelectedItems else { return }
         selectedItemsIndexPath.forEach({ indexPath in
             closeIssue(at: indexPath)
         })
     }
-    
+
     private func selectAllItems() {
         let numberOfItems = issueListCollectionView.numberOfItems(inSection: 0)
         for cellPos in 0..<numberOfItems {
@@ -165,16 +165,16 @@ extension IssueListViewController {
     
     private func setupNormalMode() {
         selectedItems = 0
-        let tabbarHeight = tabBarController?.tabBar.frame.height
-        tabBarController?.tabBar.frame.origin.y = view.frame.height - tabbarHeight!
+        let tabbarHeight = self.tabBarController!.tabBar.frame.height
+        self.tabBarController!.tabBar.frame.origin.y = view.frame.height - tabbarHeight
         titleLabel.text = "Issue"
         navigationItem.rightBarButtonItem?.title = "Edit"
         navigationItem.leftBarButtonItem?.title = "Filter"
     }
     
     private func setupEditMode() {
-        let tabbarHeight = tabBarController?.tabBar.frame.height
-        tabBarController?.tabBar.frame.origin.y = view.frame.height + tabbarHeight!
+        let tabbarHeight = self.tabBarController!.tabBar.frame.height
+        self.tabBarController!.tabBar.frame.origin.y = view.frame.height + tabbarHeight
         newIssueButton.isHidden = true
         closeIssueButton.isEnabled = false
         titleLabel.text = "0 Selected"
@@ -250,7 +250,6 @@ extension IssueListViewController: UICollectionViewDataSource {
         }
         
         cell.accessories = [.multiselect(displayed: .whenEditing, options: .init()) ]
-        
         return cell
     }
     
@@ -258,6 +257,9 @@ extension IssueListViewController: UICollectionViewDataSource {
         //print(displayedIssues[indexPath.row].issueId) // tag
         if isEditing {
             selectedItems += 1
+        } else {
+            let pushVC = self.storyboard?.instantiateViewController(withIdentifier: "IssueDetail") as! IssueDetailViewController
+            self.navigationController?.pushViewController(pushVC, animated: true)
         }
     }
     
