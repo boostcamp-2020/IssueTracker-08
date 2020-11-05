@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function LoginPage() {
+export default function LabelPage() {
   return (
     <div class="container">
-      <p>로그인 페이지 입니다.</p>
+      <p>라벨 페이지 입니다.</p>
     </div>
   );
 }
