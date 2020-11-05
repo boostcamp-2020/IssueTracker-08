@@ -10,6 +10,7 @@ import Foundation
 protocol LabelListBusinessLogic {
     func fetchLabels(request: ListLabels.FetchLists.Request)
     func createNewLabel(request: ListLabels.CreateLabel.Request)
+    func editLabel(request: ListLabels.EditLabel.Request)
     func deleteLabel(request: ListLabels.DeleteLabel.Request)
 }
 
@@ -34,11 +35,18 @@ extension LabelListInteractor: LabelListBusinessLogic {
         })
     }
     
-    // LabelWorker.createNewLabel 에 completion 추가하고 싶어 죽을 것 같아....
     func createNewLabel(request: ListLabels.CreateLabel.Request) {
         labelWorker.createNewLabel(request: request, completion: { [unowned self] (result) -> Void in
             self.responseStatus = result
             let response = ListLabels.CreateLabel.Response(status: result)
+            self.presenter?.presentPostResult(response: response)
+        })
+    }
+    
+    func editLabel(request: ListLabels.EditLabel.Request) {
+        labelWorker.editLabel(request: request, completion: { [unowned self] (result) -> Void in
+            self.responseStatus = result
+            let response = ListLabels.EditLabel.Response(status: result)
             self.presenter?.presentPostResult(response: response)
         })
     }

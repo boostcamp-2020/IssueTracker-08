@@ -992,6 +992,7 @@
                                         <connections>
                                             <outlet property="descriptionLabel" destination="HN1-Jg-Iro" id="m2W-hk-VE8"/>
                                             <outlet property="titleLabel" destination="r6I-AY-hAr" id="RVJ-m1-1TI"/>
+                                            <segue destination="MHu-k1-5Mv" kind="show" identifier="EditLabelPopup" id="tJY-cD-bkx"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -1021,12 +1022,12 @@
                     <navigationItem key="navigationItem" id="yjJ-zQ-qoz">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ybs-9H-Nu5">
                             <connections>
-                                <segue destination="MHu-k1-5Mv" kind="show" identifier="LabelPopup" id="rY1-fW-ssD"/>
+                                <segue destination="MHu-k1-5Mv" kind="show" identifier="CreateLabelPopup" id="rY1-fW-ssD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="LabelCollectionView" destination="UeR-XM-NDr" id="2ti-Jn-TMK"/>
+                        <outlet property="labelCollectionView" destination="UeR-XM-NDr" id="2ti-Jn-TMK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CCC-yk-w0n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1073,7 +1074,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="rY1-fW-ssD"/>
+        <segue reference="tJY-cD-bkx"/>
         <segue reference="br4-7g-5eE"/>
     </inferredMetricsTieBreakers>
     <resources>

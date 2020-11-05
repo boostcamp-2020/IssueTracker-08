@@ -27,6 +27,12 @@ class LabelListWorker {
         })
     }
     
+    func editLabel(request: ListLabels.EditLabel.Request, completion: @escaping (String) -> Void) {
+        dataManager.postEditLabel(request: request, completion: { result in
+            completion(result)
+        })
+    }
+    
     func deleteLabel(request: ListLabels.DeleteLabel.Request, completion: @escaping (String) -> Void) {
         dataManager.deleteLabel(request: request, completion: { result in
             completion(result)

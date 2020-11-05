@@ -8,14 +8,19 @@
 import UIKit
 
 enum PopupMode {
-    case Label
+    case CreateLabel
     case Milestone
+    case EditLabel
 }
 
-protocol PopupViewControllerDelegate: class {
-    func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.MilestoneItem)
+protocol PopupLabelViewControllerDelegate: class {
     func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.LabelItem)
-    func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.LabelItem)
+    func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.EditLabelItem)
+}
+
+protocol PopupMilestoneViewControllerDelegate: class {
+    func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.MilestoneItem)
+    func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.EditMilestoneItem)
 }
 
 class PopUpViewController: UIViewController {
@@ -40,8 +45,11 @@ class PopUpViewController: UIViewController {
     @IBOutlet weak var reloadButton: UIButton!
     
     // MARK:- Properties
-    var mode: PopupMode = .Label
-    weak var delegate: PopupViewControllerDelegate?
+    var mode: PopupMode = .CreateLabel
+    weak var labelDelegate: PopupLabelViewControllerDelegate?
+    weak var milestoneDelegate: PopupMilestoneViewControllerDelegate?
+    var displayedLabel: ListLabels.FetchLists.ViewModel.DisplayedLabel?
+    var displayedMilestone: ListMilestones.FetchLists.ViewModel.DisplayedMilestone?
     
     
     // MARK:- View LifeCycle
@@ -52,8 +60,12 @@ class PopUpViewController: UIViewController {
     
     // MARK:- Setup by Mode
     private func setup() {
-        if mode == .Label { setupLabelMode() }
-        else { setupMilestoneMode() }
+        if mode == .CreateLabel || mode == .EditLabel{
+            setupLabelMode()
+        }
+        else {
+            setupMilestoneMode()
+        }
         contentSizeInPopup = CGSize(width: 300, height: 280)
         landscapeContentSizeInPopup = CGSize(width: 300, height: 200)
     }
@@ -61,6 +73,12 @@ class PopUpViewController: UIViewController {
     private func setupLabelMode() {
         totalLabel[2].text = "색상"
         descriptionTextField.isHidden = true
+        if mode == .EditLabel {
+            titleTextField.text = displayedLabel?.name
+            detailTestField.text = displayedLabel?.description
+            labelColorField.text = displayedLabel?.color.components(separatedBy: "#")[1]
+            colorPickerButton.backgroundColor = UIColor(hexString: labelColorField.text!)
+        }
     }
     
     private func setupMilestoneMode() {
@@ -97,16 +115,28 @@ class PopUpViewController: UIViewController {
         // 제목이 비어있을 때 error 처리 해주어야 함.
             // ex : firstresponder 넘겨줘서 입력 가능하게
         
-        let newLabel = PopupItem.LabelItem(
-            title: titleTextField.text!,
-            description: detailTestField.text!,
-            color: "#\(labelColorField.text!)"
-        )
-        dismiss(animated: true, completion: {
-            self.delegate?.popupViewController(self, didFinishAdding: newLabel)
-        })
+        
+        // force unwrapping 해결하기
+        if mode == .CreateLabel {
+            let newLabel = PopupItem.LabelItem(
+                title: titleTextField.text!,
+                description: detailTestField.text!,
+                color: "#\(labelColorField.text!)"
+            )
+            dismiss(animated: true, completion: {
+                self.labelDelegate?.popupViewController(self, didFinishAdding: newLabel)
+            })
+        } else if mode == .EditLabel {
+            let editLabel = PopupItem.EditLabelItem(
+                id: displayedLabel!.id,
+                title: titleTextField.text!,
+                description: detailTestField.text!,
+                color: "#\(labelColorField.text!)")
+            dismiss(animated: true, completion: {
+                self.labelDelegate?.popupViewController(self, didFinishEditing: editLabel)
+            })
+        }
     }
-    
     
 }
 

@@ -47,7 +47,18 @@ enum ListLabels {
     }
     
     enum EditLabel {
-        
+        struct Request {
+            var id: Int
+            var editLabel: PostLabel
+        }
+        struct Response { var status: String }
+        struct ViewModel {
+            struct DisplayedAlert {
+                var title: String
+                var message: String
+            }
+            var displayedAlert: DisplayedAlert
+        }
     }
     
     enum DeleteLabel {

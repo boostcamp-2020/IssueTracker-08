@@ -51,7 +51,6 @@
 		BD5D414E254FDCFA008BCB36 /* LabelCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4149254FDCFA008BCB36 /* LabelCollectionViewController.swift */; };
 		BD5D414F254FDCFA008BCB36 /* LabelListWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D414A254FDCFA008BCB36 /* LabelListWorker.swift */; };
 		BD5D4151254FDCFA008BCB36 /* LabelListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D414C254FDCFA008BCB36 /* LabelListInteractor.swift */; };
-		BD5D4157254FDD06008BCB36 /* LabelCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4155254FDD06008BCB36 /* LabelCollectionReusableView.swift */; };
 		BD5D4158254FDD06008BCB36 /* LabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4156254FDD06008BCB36 /* LabelCollectionViewCell.swift */; };
 		BD5D4164254FDE4D008BCB36 /* IssueFilterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */; };
 		BD71231E25519FA000D5D195 /* LabelDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD71231D25519FA000D5D195 /* LabelDataManager.swift */; };
@@ -128,7 +127,6 @@
 		BD5D4149254FDCFA008BCB36 /* LabelCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCollectionViewController.swift; sourceTree = "<group>"; };
 		BD5D414A254FDCFA008BCB36 /* LabelListWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListWorker.swift; sourceTree = "<group>"; };
 		BD5D414C254FDCFA008BCB36 /* LabelListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListInteractor.swift; sourceTree = "<group>"; };
-		BD5D4155254FDD06008BCB36 /* LabelCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCollectionReusableView.swift; sourceTree = "<group>"; };
 		BD5D4156254FDD06008BCB36 /* LabelCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCollectionViewCell.swift; sourceTree = "<group>"; };
 		BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueFilterTableViewController.swift; sourceTree = "<group>"; };
 		BD71231D25519FA000D5D195 /* LabelDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelDataManager.swift; sourceTree = "<group>"; };
@@ -350,7 +348,6 @@
 		BD5D4147254FDC97008BCB36 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BD5D4155254FDD06008BCB36 /* LabelCollectionReusableView.swift */,
 				BD5D4156254FDD06008BCB36 /* LabelCollectionViewCell.swift */,
 			);
 			path = Views;
@@ -616,7 +613,6 @@
 			files = (
 				BD5D411E254FD6D5008BCB36 /* LabelListModels.swift in Sources */,
 				8042B7F9254BAC3D00910C6F /* SignInViewController.swift in Sources */,
-				BD5D4157254FDD06008BCB36 /* LabelCollectionReusableView.swift in Sources */,
 				29EC91AC25511E29007B59A0 /* IssueFilterRouter.swift in Sources */,
 				BD5D4131254FDA85008BCB36 /* MilestoneListWorker.swift in Sources */,
 				80163C73255009450073AAD5 /* CustomAddButton.swift in Sources */,

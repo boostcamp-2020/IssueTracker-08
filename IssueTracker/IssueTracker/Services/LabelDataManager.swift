@@ -29,10 +29,12 @@ struct CUDResponse: Decodable {
 protocol LabelDataManagerProtocol {
     func fetchLabels(completion: @escaping ([Label]) -> Void)
     func postNewLabel(request: ListLabels.CreateLabel.Request, completion: @escaping (String) -> Void)
+    func postEditLabel(request: ListLabels.EditLabel.Request, completion: @escaping (String) -> Void)
     func deleteLabel(request: ListLabels.DeleteLabel.Request, completion: @escaping (String) -> Void)
 }
 
 final class LabelDataManager: LabelDataManagerProtocol {
+    
     func fetchLabels(completion: @escaping ([Label]) -> Void) {
         NetworkService.shared.getData(url: EndPoint.labels, completion: {
             data in
@@ -60,6 +62,20 @@ final class LabelDataManager: LabelDataManagerProtocol {
         
     }
     
+    func postEditLabel(request: ListLabels.EditLabel.Request, completion: @escaping (String) -> Void) {
+        let requestData = request.editLabel
+        let jsonData = try? JSONEncoder().encode(requestData)
+        let url = "\(EndPoint.labels)/\(request.id)"
+        // force unwrapping 처리
+        NetworkService.shared.putData(url: url, jsonData: jsonData!, completion: { data in
+            guard let receivedData = try? JSONDecoder().decode(CUDResponse.self, from: data) else {
+                return
+            }
+            let result: String = receivedData.status
+            completion(result)
+        })
+    }
+    
     func deleteLabel(request: ListLabels.DeleteLabel.Request, completion: @escaping (String) -> Void) {
         let deleteURL = "\(EndPoint.labels)/\(request.id)/"
         NetworkService.shared.deleteData(url: deleteURL, completion: { data in
@@ -70,4 +86,5 @@ final class LabelDataManager: LabelDataManagerProtocol {
             completion(result)
         })
     }
+    
 }
