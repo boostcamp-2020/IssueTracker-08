@@ -119,4 +119,5 @@ export default function LoginPage() {
       </Main>
       <GlobalStyle />
     </>
-
+  );
+}

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
-
-import LoginPage from '../pages/login/LoginPage';
 import {
   Issue,
   IssueDetail,
