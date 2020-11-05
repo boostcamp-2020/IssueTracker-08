@@ -38,4 +38,16 @@ enum ListIssues {
             var displayedIssues: [DisplayedIssue]
         }
     }
+    
+    enum CloseIssue {
+        struct Request { var issueId: Int }
+        struct Response { var status: String }
+        struct ViewModel {
+            struct DisplayedAlert {
+                var title: String
+                var message: String
+            }
+            var displayedAlert: DisplayedAlert
+        }
+    }
 }

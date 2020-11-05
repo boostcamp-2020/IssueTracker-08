@@ -9,7 +9,8 @@ import UIKit
 
 
 protocol IssueListDisplayLogic: class {
-    func displayOpenIssues(viewModel: ListIssues.FetchLists.ViewModel) // 원래 FetchedOrders 적혀 있었음
+    func displayOpenIssues(viewModel: ListIssues.FetchLists.ViewModel)
+    func successfullyClosedIssue() // 함수명 임의로 지정함
 }
 
 final class IssueListViewController: UIViewController {
@@ -18,6 +19,7 @@ final class IssueListViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var newIssueButton: CustomAddButton!
     @IBOutlet weak var issueListCollectionView: UICollectionView!
+    @IBOutlet weak var closeIssueButton: UIButton!
     
     // MARK:- Properties
     var filterData = ListFilter.IssueFilterData()
@@ -34,8 +36,10 @@ final class IssueListViewController: UIViewController {
         willSet {
             titleLabel.text = "\(newValue) Selected"
             if newValue > 0 {
+                closeIssueButton.isEnabled = true
                 navigationItem.leftBarButtonItem?.title = "Deselect All"
             } else {
+                closeIssueButton.isEnabled = false
                 navigationItem.leftBarButtonItem?.title = "Select All"
             }
         }
@@ -70,7 +74,7 @@ final class IssueListViewController: UIViewController {
         setupNormalMode()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         filterData = (router?.filterData)!
         fetchIssues()
@@ -96,7 +100,14 @@ final class IssueListViewController: UIViewController {
             // destinationVC.router?.filterData? = filterData : 영렬님과 상의
         }
     }
-  
+    
+    @IBAction func onCloseIssueButtonPressed(_ sender: Any) {
+        guard let selectedItemsIndexPath = issueListCollectionView.indexPathsForSelectedItems else { return }
+        selectedItemsIndexPath.forEach({ indexPath in
+            closeIssue(at: indexPath)
+        })
+    }
+    
     private func selectAllItems() {
         let numberOfItems = issueListCollectionView.numberOfItems(inSection: 0)
         for cellPos in 0..<numberOfItems {
@@ -136,12 +147,11 @@ extension IssueListViewController {
         var config = UICollectionLayoutListConfiguration(appearance: .plain)
         config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
             let close = UIContextualAction(style: .normal, title: "Close") { (action, view, completion) in
-                deleteIssue(at: indexPath)
-                completion(true)
+                closeIssue(at: indexPath)
             }
             close.backgroundColor = .systemGreen
             let delete = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
-                completion(true)
+                deleteIssue(at: indexPath)
             }
             delete.backgroundColor = .systemPink
             return UISwipeActionsConfiguration(actions: [delete, close])
@@ -154,15 +164,19 @@ extension IssueListViewController {
     }
     
     private func setupNormalMode() {
-        tabBarController?.tabBar.isHidden = false
+        selectedItems = 0
+        let tabbarHeight = tabBarController?.tabBar.frame.height
+        tabBarController?.tabBar.frame.origin.y = view.frame.height - tabbarHeight!
         titleLabel.text = "Issue"
         navigationItem.rightBarButtonItem?.title = "Edit"
         navigationItem.leftBarButtonItem?.title = "Filter"
     }
     
     private func setupEditMode() {
-        tabBarController?.tabBar.isHidden = true
+        let tabbarHeight = tabBarController?.tabBar.frame.height
+        tabBarController?.tabBar.frame.origin.y = view.frame.height + tabbarHeight!
         newIssueButton.isHidden = true
+        closeIssueButton.isEnabled = false
         titleLabel.text = "0 Selected"
         navigationItem.rightBarButtonItem?.title = "Cancel"
         navigationItem.leftBarButtonItem?.title = "Select All"
@@ -175,14 +189,18 @@ extension IssueListViewController {
 // MARK:- Implement IssueListDisplayLogic
 extension IssueListViewController: IssueListDisplayLogic {
     
-    private func fetchIssues() {
-        let request = ListIssues.FetchLists.Request()
-        interactor?.fetchIssues(request: request)
-    }
-    
     func displayOpenIssues(viewModel: ListIssues.FetchLists.ViewModel) {
         displayedIssues = viewModel.displayedIssues
         issueListCollectionView.reloadData()
+    }
+    
+    func successfullyClosedIssue() {
+        fetchIssues()
+    }
+    
+    private func fetchIssues() {
+        let request = ListIssues.FetchLists.Request()
+        interactor?.fetchIssues(request: request)
     }
     
     private func deleteIssue(at indexPath: IndexPath) {
@@ -192,9 +210,9 @@ extension IssueListViewController: IssueListDisplayLogic {
     }
     
     private func closeIssue(at indexPath: IndexPath) {
-        // TODO:
-            // close issue 구현
-            // interactor?.closeIssue(request: )
+        selectedItems -= 1
+        let issueId = displayedIssues[indexPath.item].issueId
+        interactor?.closeIssue(request: ListIssues.CloseIssue.Request(issueId: issueId))
     }
     
 }
@@ -214,8 +232,6 @@ extension IssueListViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? IssueListCollectionViewCell else {
             return UICollectionViewCell()
         }
-        
-        // configure
         cell.setupComponents()
         
         let displayedIssue = displayedIssues[indexPath.item]
@@ -234,16 +250,21 @@ extension IssueListViewController: UICollectionViewDataSource {
         }
         
         cell.accessories = [.multiselect(displayed: .whenEditing, options: .init()) ]
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //print(displayedIssues[indexPath.row].issueId) // tag
-        selectedItems += 1
+        if isEditing {
+            selectedItems += 1
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        selectedItems -= 1
+        if isEditing {
+            selectedItems -= 1
+        }
     }
 
 }

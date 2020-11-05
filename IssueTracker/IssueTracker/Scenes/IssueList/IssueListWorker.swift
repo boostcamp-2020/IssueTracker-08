@@ -19,4 +19,10 @@ class IssueListWorker {
             completion(issues)
         })
     }
+    
+    func closeIssue(request: ListIssues.CloseIssue.Request, completion: @escaping (String) -> Void) {
+        dataManager.postCloseIssue(request: request, completion: { result in
+            completion(result)
+        })
+    }
 }
