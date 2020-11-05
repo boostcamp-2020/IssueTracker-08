@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+const FileAttachMsg =
+  'Attach files by dragging & dropping, selecting or pasting them.';
+
 const IssueFormContainer = styled.div`
   width: 70%;
   margin: auto;
@@ -10,7 +13,7 @@ const IssueFormContainer = styled.div`
   border-top-right-radius: 6px !important;
 `;
 
-const IssueTitle = styled.input`
+const IssueTitleInput = styled.input`
   width: 95%;
   margin: 10px;
   padding: 5px 12px;
@@ -96,22 +99,37 @@ const FileAttachContainer = styled.div`
   color: #586069;
 `;
 
+const SubmitButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+`;
+
+const CancelButton = styled.button`
+  border: 0;
+  outline: 0;
+  background: 0;
+  color: #586069;
+  cursor: pointer;
+`;
+
 const IssueForm = () => {
   const [title, setTitle] = useState('');
   const [comment, setComment] = useState('');
 
   return (
     <IssueFormContainer>
-      <IssueTitle placeholder="Title" />
+      <IssueTitleInput placeholder="Title" />
       <WriteTab>Write</WriteTab>
       <PreviewTab>Preview</PreviewTab>
       <Hr />
       <IssueComment placeholder="Leave a comment"></IssueComment>
       <FileAttachContainer>
-        <div>
-          Attach files by dragging & dropping, selecting or pasting them.
-        </div>
+        <div>{FileAttachMsg}</div>
       </FileAttachContainer>
+      <SubmitButton>
+        <CancelButton>Cancel</CancelButton>
+      </SubmitButton>
     </IssueFormContainer>
   );
 };
