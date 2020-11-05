@@ -9,12 +9,12 @@ const GlobalStyle = createGlobalStyle`
     margin: 0px;
     padding: 0px;
   }
-`
+`;
 
 const App = () => {
   return (
     <>
-      <Route path="/login" component={LoginPage}/>
+      <Route path="/login" component={LoginPage} />
       <Redirect from="*" to="/" />
       <GlobalStyle />
     </>
