@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -95,11 +96,17 @@ export default function IssuePage() {
           <FilterInput type="text" placeholder="🔎 Search all issue" />
         </MenuDiv>
         <MenuDiv flex="0">
-          <MoveMenu>Label</MoveMenu>
-          <MoveMenu>Milestones</MoveMenu>
+          <Link to="/label">
+            <MoveMenu>Label</MoveMenu>
+          </Link>
+          <Link to="/milestone">
+            <MoveMenu>Milestones</MoveMenu>
+          </Link>
         </MenuDiv>
         <MenuDiv flex="0">
-          <IssueButton>New issue</IssueButton>
+          <Link to="/issue/post">
+            <IssueButton>New issue</IssueButton>
+          </Link>
         </MenuDiv>
       </IssueMenu>
       <IssueList>
