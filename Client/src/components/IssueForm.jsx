@@ -151,7 +151,7 @@ const IssueForm = () => {
     };
     const options = postOptions(issue);
     fetch(POST_ISSUE, options);
-    history.goBack();
+    history.push('/');
   };
 
   return (
