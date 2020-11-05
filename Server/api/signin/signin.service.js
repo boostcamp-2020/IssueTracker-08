@@ -29,8 +29,8 @@ module.exports = {
   },
 
   updateUserImage: async (data) => {
-    const { avatar_url } = data;
-    const params = [avatar_url];
+    const { avatar_url, login } = data;
+    const params = [avatar_url, login];
     const results = await requestQuery(query.UPDATE_USER_IMAGE, params);
   },
 };
