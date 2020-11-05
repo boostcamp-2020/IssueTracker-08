@@ -35,7 +35,7 @@ extension IssueListPresenter: IssueListPresentationLogic {
             displayedIssues.append(displayedIssue)
         }
         let viewModel = ListIssues.FetchLists.ViewModel(displayedIssues: displayedIssues)
-        viewController?.displayFetchedOrders(viewModel: viewModel)
+        viewController?.displayOpenIssues(viewModel: viewModel)
     }
     
     private func configureDescription(text: String?) -> String {

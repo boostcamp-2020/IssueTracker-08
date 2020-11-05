@@ -26,7 +26,6 @@ class IssueFilterTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tabBarController?.tabBar.isHidden = true
         filterDataDidLoad()
     }
 
