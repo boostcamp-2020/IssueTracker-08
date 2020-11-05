@@ -31,6 +31,7 @@ module.exports = {
   updateUserImage: async (data) => {
     const { avatar_url, login } = data;
     const params = [avatar_url, login];
+    console.log(params);
     const results = await requestQuery(query.UPDATE_USER_IMAGE, params);
   },
 };
