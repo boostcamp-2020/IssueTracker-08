@@ -18,8 +18,8 @@ final class IssueListViewController: UIViewController {
     // MARK:- IBOutlets
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var newIssueButton: CustomAddButton!
-    @IBOutlet weak var issueListCollectionView: UICollectionView!
     @IBOutlet weak var closeIssueButton: UIButton!
+    @IBOutlet weak var issueListCollectionView: UICollectionView!
    
     // MARK:- Properties
     var filterData = ListFilter.IssueFilterData()
@@ -34,13 +34,15 @@ final class IssueListViewController: UIViewController {
     }
     var selectedItems: Int = 0 {
         willSet {
-            titleLabel.text = "\(newValue) Selected"
-            if newValue > 0 {
-                closeIssueButton.isEnabled = true
-                navigationItem.leftBarButtonItem?.title = "Deselect All"
-            } else {
-                closeIssueButton.isEnabled = false
-                navigationItem.leftBarButtonItem?.title = "Select All"
+            if isEditing {
+                titleLabel.text = "\(newValue) Selected"
+                if newValue > 0 {
+                    closeIssueButton.isEnabled = true
+                    navigationItem.leftBarButtonItem?.title = "Deselect All"
+                } else {
+                    closeIssueButton.isEnabled = false
+                    navigationItem.leftBarButtonItem?.title = "Select All"
+                }
             }
         }
     }
@@ -254,7 +256,6 @@ extension IssueListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //print(displayedIssues[indexPath.row].issueId) // tag
         if isEditing {
             selectedItems += 1
         } else {
