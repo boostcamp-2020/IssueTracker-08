@@ -10,17 +10,17 @@
 -----
 
 ## `💻 Sprint #2 - Day4`
-### 📌 [FE] 로그인 여부에 따른 이동 페이지 설정
+### 📌 [FE] 로그인 여부에 따른 이동 페이지 설정 ✨
 - 참고 코드: `/shared/App.jsx`
 <br/>
 
-### 📌 [FE] Prettier Formatter 설정
+### 📌 [FE] Prettier Formatter 설정 ✨
 - 내 vscode에서 prettier가 안될 경우 아래 사이트를 참고해주세요
     - [Prettier로 Default Formatter 설정 방법](https://pusha.tistory.com/entry/Prettier-%EC%A0%80%EC%9E%A5%EC%8B%9C-%EC%97%90%EB%9F%AC-%EC%BD%94%EB%93%9C%EA%B0%80-%EA%B0%84%ED%97%90%EC%A0%81%EC%9C%BC%EB%A1%9C-%EB%82%98%ED%83%80%EB%8A%94-%EC%97%90%EB%9F%AC-settingjson-vscode)
     - **`vscode -> [파일] -> [기본설정] -> [설정] -> editor.default formatter 변경`**
 <br/>
 
-### 📌 [FE] config.js 파일 
+### 📌 [FE] config.js 파일 ✨
 - src 디렉토리 밑에 파일 생성해주기
 ~~~js
 export const BASE_URL = 'http://118.67.131.96:3000/';
