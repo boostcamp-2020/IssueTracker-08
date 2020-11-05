@@ -6,7 +6,6 @@ const issueApiRouter = require('../api/issue/issue.router');
 const milestoneApiRouter = require('../api/milestone/milestone.router');
 const signinApiRouter = require('../api/signin/signin.router');
 const labelApiRouter = require('../api/label/label.router');
-const { checkJWTAuthorization } = require('../api/utils/auth.token');
 
 /* API 요청 */
 // router.use('/api/users', checkJWTAuthorization, userApiRouter);
