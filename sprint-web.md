@@ -9,6 +9,46 @@
 
 -----
 
+## `💻 Sprint #2 - Day4`
+### 📌 [FE] 로그인 여부에 따른 이동 페이지 설정
+- 참고 코드: `/shared/App.jsx`
+<br/>
+
+### 📌 [FE] Prettier Formatter 설정
+- 내 vscode에서 prettier가 안될 경우 아래 사이트를 참고해주세요
+    - [Prettier로 Default Formatter 설정 방법](https://pusha.tistory.com/entry/Prettier-%EC%A0%80%EC%9E%A5%EC%8B%9C-%EC%97%90%EB%9F%AC-%EC%BD%94%EB%93%9C%EA%B0%80-%EA%B0%84%ED%97%90%EC%A0%81%EC%9C%BC%EB%A1%9C-%EB%82%98%ED%83%80%EB%8A%94-%EC%97%90%EB%9F%AC-settingjson-vscode)
+    - **`vscode -> [파일] -> [기본설정] -> [설정] -> editor.default formatter 변경`**
+<br/>
+
+### 📌 [FE] config.js 파일 
+- src 디렉토리 밑에 파일 생성해주기
+~~~js
+export const BASE_URL = 'http://118.67.131.96:3000/';
+~~~
+<br/>
+
+### 📌 [BE] API enhancement ✨
+> 구현 내용 및 작업 했던 내역
+
+- [x] [Backend] 이슈에 할당된 Assignee 이름 외에 추가 정보 반환해주기
+    -  userId, imageUrl 정보를 추가해줬습니다.
+- [x] [Backend] 이슈에 Comment 사용자의 이름 외에 이미지 url, id 추가 반환해주기
+- [x] [Backend] 모든 사용자(Assignee) 반환해주는 API 제작하기
+- [x] [Backend] milestone get API 수정하기
+- [X] [Backend] status -> fail인 경우 status 값만 넘기기
+    - 모든 API 전부 다 고치기
+- [x] [Backend] 이슈 삭제하기
+- [x] [Backend] Github 가입시 새로운 user 생성시 imageURL 문제 고치기
+- [x] [Backend] 로그인 여부 반환하는 API 만들기
+- [x] [Backend] label get API 만들기
+<br/>
+
+### 📌 [BE] Cors 설정 추가 ✨
+- fetch 요청 시, cors 옵션 추가해줬음
+- Backend app.js cors 설정 추가해줬음
+-----
+<br/>
+
 ## `💻 Sprint #2 - Day3`
 ### 📌 [FE] React-router를 적용하여 프로젝트 구조 변경
 * `react-router-dom`은 웹에서 쓰이는 컴포넌트이고, `react-router-native`는 react-native를 활용한 앱개발에 쓰이는 컴포넌트를 포함하고 있다. `react-router`는 이 둘을 합친 패키지이다.
@@ -42,6 +82,7 @@ npm install -d styled-components
 * [redirect의 url로 token을 넘겨주는 방법](https://stackoverflow.com/questions/47599087/how-to-send-jwt-to-react-client-from-a-callback)은 아닌 것 같고...
 * githubOAuth로 로그인하면 발급되는 code와 client_id, client_secret을 이용하여 post요청으로 access_token을 발급하려고 할 수 있는 모든 방법을 시도해 보았으나 무슨 이유에서인지 에러가 발생했다.. 나중에 다시 시도해야겠다.
   [참조링크](https://devhyun.com/blog/post/15)
+<br/>
 
 ## `💻 Sprint #2 - Day2`
 ### 📌 [BE] npm 명령어 실종...!
@@ -64,6 +105,7 @@ npm install -d styled-components
   // 낮은 숫자일수록 연한 색이고 높은 숫자일수록 어두운 색을 의미한다. 
   ```
   * 100 ~ 999 사이의 숫자를 색깔 뒤에 붙여 사용하기로 했다.
+<br/>
 
 ## `💻 Sprint #2 - Day1`
 ### 📌 [FE] Client 프로젝트 생성
@@ -91,6 +133,7 @@ npm install -d styled-components
                         ㄴ LoginPage.jsx
                         ㄴ LoginPage.scss 
         ```
+<br/>
 
 ### 📌 [FE] webpack 버전 관리
 * 최신 버전의 webpack-dev-server/webpack-cli를 사용하니
