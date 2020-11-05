@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const IssueFormContainer = styled.div`
-  width: 100%;
+  width: 70%;
+  margin: auto;
   border: 1px solid #ebecef;
   box-sizing: border-box;
   border-top-left-radius: 6px !important;
   border-top-right-radius: 6px !important;
-  margin-right: 1.5rem;
 `;
 
 const IssueTitle = styled.input`
@@ -64,6 +64,7 @@ const IssueComment = styled.textarea`
   margin: 10px;
   margin-bottom: 0;
   padding: 8px;
+  padding-bottom: 0;
   font-size: 14px;
   font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
   line-height: 20px;
@@ -81,8 +82,8 @@ const IssueComment = styled.textarea`
 const FileAttachContainer = styled.div`
   width: 95%;
   font-size: 14px;
+  vertical-align: middle;
   font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  line-height: 1.4285em;
   border: 1px solid #e1e4e8;
   border-top: none;
   border-radius: 0 0 6px 6px;
@@ -91,6 +92,7 @@ const FileAttachContainer = styled.div`
   margin: 10px;
   margin-top: 0;
   padding: 8px;
+  padding-top: 0;
   color: #586069;
 `;
 
@@ -106,7 +108,9 @@ const IssueForm = () => {
       <Hr />
       <IssueComment placeholder="Leave a comment"></IssueComment>
       <FileAttachContainer>
-        <div>Attach files by selecting here</div>
+        <div>
+          Attach files by dragging & dropping, selecting or pasting them.
+        </div>
       </FileAttachContainer>
     </IssueFormContainer>
   );
