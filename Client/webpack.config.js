@@ -42,6 +42,7 @@ module.exports = {
     publicPath: 'http://localhost:3000/dist/',
     // devserver 에서만 핫로딩 가능하게
     hotOnly: true,
+    historyApiFallback: true,
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
