@@ -8,6 +8,7 @@
 import UIKit
 
 class LabelCollectionViewCell: UICollectionViewCell {
+    
     @IBOutlet weak var titleLabel: UIButton!
     @IBOutlet weak var descriptionLabel: UILabel!
     
@@ -26,4 +27,5 @@ class LabelCollectionViewCell: UICollectionViewCell {
         if luminance < 0.5 { label.setTitleColor(.white, for: .normal) }
         else { label.setTitleColor(.black, for: .normal) }
     }
+    
 }
