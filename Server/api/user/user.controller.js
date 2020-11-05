@@ -1,4 +1,4 @@
-const { getUserProfile } = require('./user.service');
+const { getUserProfile, getAllUsers } = require('./user.service');
 const { failResponse, successResponse } = require('../utils/returnForm');
 
 module.exports = {
@@ -13,6 +13,18 @@ module.exports = {
 
       if (results.length === 0) {
         return res.status(400).json(failResponse(failMessageById));
+      }
+
+      return res.status(200).json(successResponse(results));
+    });
+  },
+
+  getAllUsers: (req, res) => {
+    getAllUsers(req.body, (err, results) => {
+      const failMessage = 'user 목록을 불러오는데 실패했습니다.';
+
+      if (err) {
+        return res.status(400).json(failResponse(failMessage));
       }
 
       return res.status(200).json(successResponse(results));

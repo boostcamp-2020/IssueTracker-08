@@ -13,4 +13,14 @@ module.exports = {
 
     return callBack(results.data);
   },
+
+  getAllUsers: async (req, callBack) => {
+    const results = await requestQuery(query.GET_ALL_USERS);
+
+    if (results.status === 'success') {
+      return callBack(null, results.data[0]);
+    }
+
+    return callBack(results.data);
+  },
 };
