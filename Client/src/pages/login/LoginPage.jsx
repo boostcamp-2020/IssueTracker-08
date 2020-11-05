@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import * as config from '../config';
+import * as config from '../../config';
 
 const GlobalStyle = createGlobalStyle`
   body {
