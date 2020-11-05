@@ -5,19 +5,19 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 60px 30px;
+  width: 80%;
+  max-width: 1400px;
+  margin: auto;
 `;
 
 const IssueMenu = styled.div`
   display: flex;
   justify-content: space-between;
-  min-width: 800px;
-  max-width: 1200px;
 `;
 
 const IssueList = styled.div`
   display: flex;
-  min-width: 800px;
-  max-width: 1200px;
+  width: 100%;
   border: 1px solid #ebecef;
   border-radius: 4px;
   padding: 10px;
