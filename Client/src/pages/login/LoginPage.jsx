@@ -30,7 +30,7 @@ const LoginForm = styled.div`
   border-radius: 5px;
   font-weight: bold;
   font-size: 14px;
-  padding: 10px 18px 22px 18px;
+  padding: 10px 19px 22px 19px;
 `;
 
 const Input = styled.input`
@@ -119,5 +119,4 @@ export default function LoginPage() {
       </Main>
       <GlobalStyle />
     </>
-  );
-}
+
