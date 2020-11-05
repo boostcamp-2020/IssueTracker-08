@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
+import { createGlobalStyle } from 'styled-components';
+
 import LoginPage from '../pages/login/LoginPage';
 import {
   Issue,
@@ -8,8 +10,16 @@ import {
   Label,
   Milestone,
   MilestonePost,
+  LoginPage,
 } from '../pages';
 import Header from '../components/Header';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0px;
+    padding: 0px;
+  }
+`;
 
 const App = () => {
   const isLoggedIn = true; // TODO : setLoginState
@@ -26,10 +36,17 @@ const App = () => {
           <Route path="/milestone" component={Milestone} />
           <Redirect from="*" to="/" />
         </Switch>
+        <GlobalStyle />
       </>
     );
   }
-  return <LoginPage />;
+  return (
+    <>
+      <Route path="/" component={LoginPage} />
+      <Redirect from="*" to="/" />
+      <GlobalStyle />
+    </>
+  );
 };
 
 export default App;
