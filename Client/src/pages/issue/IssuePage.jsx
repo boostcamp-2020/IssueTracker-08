@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import MenuButton from '../../components/MenuButton';
 
 const Container = styled.div`
   display: flex;
@@ -27,20 +29,6 @@ const IssueList = styled.div`
 const MenuDiv = styled.div`
   display: flex;
   flex: ${(props) => props.flex};
-`;
-
-const MoveMenu = styled.button`
-  width: 140px;
-  background-color: white;
-  border-radius: 3px;
-  border: 1px solid #dcdcdc;
-  cursor: pointer;
-  color: #666666;
-  font-size: 15px;
-  font-weight: bold;
-  padding: 10px;
-  text-decoration: none;
-  text-shadow: 0px 1px 0px #ffffff;
 `;
 
 const IssueButton = styled.button`
@@ -95,11 +83,21 @@ export default function IssuePage() {
           <FilterInput type="text" placeholder="🔎 Search all issue" />
         </MenuDiv>
         <MenuDiv flex="0">
-          <MoveMenu>Label</MoveMenu>
-          <MoveMenu>Milestones</MoveMenu>
+          <MenuButton
+            link="/label"
+            name="Label"
+            img="/images/label.svg"
+          ></MenuButton>
+          <MenuButton
+            link="/milestone"
+            name="Milestones"
+            img="/images/milestone.svg"
+          ></MenuButton>
         </MenuDiv>
         <MenuDiv flex="0">
-          <IssueButton>New issue</IssueButton>
+          <Link to="/issue/post">
+            <IssueButton>New issue</IssueButton>
+          </Link>
         </MenuDiv>
       </IssueMenu>
       <IssueList>
