@@ -1,3 +1,93 @@
+## **`Sprint #2 - Day4`**
+
+### 결과화면
+
+
+| Issue close 및 다중 선택 화면 | Dragable Card View | Label 수정 |
+| -------- | -------- | -------- |
+| <img width = 350, src = "https://user-images.githubusercontent.com/34840140/98288655-82ab3a00-1fea-11eb-985c-1b3692e791b8.gif">    | <img width = 380, src = "https://i.imgur.com/mdi7T2R.gif">     | <img width = 350, src = "https://user-images.githubusercontent.com/34840140/98289760-00237a00-1fec-11eb-8616-cc7243c3aa45.gif">     |
+
+### 다중 선택 화면
+* 하나의 ViewController에 목록을 나열하는 것 뿐만 아니라 선택 화면 및 search 까지 구현해야 하니 ViewController가 너무 커짐
+* 다중 선택 화면으로 넘어갈 시 tab bar가 사라지는 것 처럼 구현
+   * tab bar의 높이를 통해 조정 : view.frame.height + tabbarHeight로 y 좌표를 바꾸면 결국 view.frame 화면의 끝 쪽
+```swift
+// 
+let tabbarHeight = self.tabBarController!.tabBar.frame.height
+self.tabBarController!.tabBar.frame.origin.y = view.frame.height + tabbarHeight
+```
+
+### Milestone Post, Put, Delete Response 변경
+
+* Completion 이 필요없다 생각하여 처음에 배제
+    * 해당 네트워크 통신 성공, 실패 판단을 해야하므로 구조 변경
+    * 성공할 때의 형식에 맞춰 response 결과 값 받기
+    
+    ```json
+    {
+      "status": "success",
+      "data": {
+        "fieldCount": 0,
+        "affectedRows": 1,
+        "insertId": 0,
+        "info": "Rows matched: 1  Changed: 1  Warnings: 0",
+        "serverStatus": 2,
+        "warningStatus": 0,
+        "changedRows": 1
+    }
+    ```
+
+### Card View 제작
+
+* 하단 메뉴를 잡아서 끌어올려 이용할 수 있는 View 제작
+    * CardView Xib 화면
+
+        <img width = 200, src = "https://i.imgur.com/wmnzmp7.png">
+        
+    * 열렸을 때와 닫혔을 때를 비교하여 (expanded, collapsed) 기능 분리
+        * handle Tap, Pan 기능으로 크게 나눔
+        * Tap : 끝까지 열렸을 때와 닫혔을 때를 비교하여 정해준 height 만큼 이동
+        ```swift
+        @objc func handleCardTap(recognzier: UITapGestureRecognizer) {
+            switch recognzier.state {
+            case .ended:
+                animateTransitionIfNeeded(state: nextState, duration: 0.9)
+            default:
+                break
+            }
+        }
+        ```
+        * Pan : 시작지점과 끝지점, 변경지점을 나눠 translation을 변경
+        ```swift
+        @objc func handleCardPan(recognzier: UIPanGestureRecognizer) {
+            switch recognzier.state {
+            case .began:
+                startInteractiveTransition(state: nextState, duration: 0.9)
+            case .changed:
+                let translation = recognzier.translation(in: self.cardViewController.handleArea)
+                var fractionComplete = translation.y / cardHeight
+                fractionComplete = cardVisible ? fractionComplete : -fractionComplete
+                updateInteractiveTransition(fractionCompleted: fractionComplete)
+            case .ended:
+                continueInteractiveTransition()
+            default:
+                break
+            }
+        }
+        ```
+
+* 필요한 레이아웃 추가
+    * 기능을 위한 버튼 및 Progress 추가
+    * 현재 레이아웃만 설정
+
+* 해당 이슈에 대한 Data Get
+    * Request에 tag값을 추가한 후, 해당 url에 Get 요청
+    * 요청하여 받은 데이터 중, 처음 content 값은 indexpath[0, 0]에 넣어 출력
+    * 현재 comment get을 요청하지 않아 cell 개수가 1개
+        * API 수정 및 comment 요청을 추가로 할 경우 cell 갯수는 1 + comment.count로 설정할 예정
+
+
+
 ## **`Sprint #2 - Day3`**
 
 ### 결과화면
