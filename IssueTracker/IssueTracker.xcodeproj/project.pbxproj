@@ -297,11 +297,11 @@
 		80AA0720254A871500086F5F /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				80AA072A254A8A0600086F5F /* issue.json */,
 				80AA0722254A88DF00086F5F /* IssueDataManager.swift */,
 				BD5D4122254FD70F008BCB36 /* OAuthNetworkManager.swift */,
 				BD5D413D254FDAF3008BCB36 /* MilestoneDataManager.swift */,
 				80163C6D254FF5070073AAD5 /* NetworkService.swift */,
+				80AA072A254A8A0600086F5F /* issue.json */,
 			);
 			path = Services;
 			sourceTree = "<group>";

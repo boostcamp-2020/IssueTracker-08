@@ -10,6 +10,7 @@ import Foundation
 
 protocol IssueListPresentationLogic {
     func presentFetchedIssues(response: ListIssues.FetchLists.Response)
+    func presentPostResult(response: ListIssues.CloseIssue.Response)
 }
 
 class IssueListPresenter {
@@ -37,6 +38,18 @@ extension IssueListPresenter: IssueListPresentationLogic {
         let viewModel = ListIssues.FetchLists.ViewModel(displayedIssues: displayedIssues)
         viewController?.displayOpenIssues(viewModel: viewModel)
     }
+    
+    func presentPostResult(response: ListIssues.CloseIssue.Response) {
+        if response.status == "success" {
+            viewController?.successfullyClosedIssue()
+        } else {
+            
+        }
+    }
+    
+}
+
+extension IssueListPresenter {
     
     private func configureDescription(text: String?) -> String {
         if let description = text {
