@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { POST_ISSUE } from '../utils/api';
+import { postOptions } from '../utils/fetchOptions';
 
 const FileAttachMsg =
   'Attach files by dragging & dropping, selecting or pasting them.';
@@ -99,9 +103,10 @@ const FileAttachContainer = styled.div`
   color: #586069;
 `;
 
-const SubmitButton = styled.div`
+const SubmitDiv = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: 10px;
 `;
 
@@ -111,25 +116,63 @@ const CancelButton = styled.button`
   background: 0;
   color: #586069;
   cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+`;
+
+const SubmitButton = styled.button`
+  width: 160px;
+  box-shadow: 0px 1px 0px 0px #3dc21b;
+  background: linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+  background-color: #44c767;
+  border-radius: 6px;
+  border: 1px solid #18ab29;
+  display: inline-block;
+  cursor: pointer;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 10px;
+  text-decoration: none;
+  text-shadow: 0px -1px 0px #2f6627;
 `;
 
 const IssueForm = () => {
-  const [title, setTitle] = useState('');
-  const [comment, setComment] = useState('');
+  const history = useHistory();
+  const titleRef = useRef(false);
+  const commentRef = useRef(false);
+
+  const createIssueData = (e) => {
+    const issue = {
+      userId: 1,
+      milestoneId: null,
+      title: titleRef.current.value,
+      content: commentRef.current.value,
+    };
+    const options = postOptions(issue);
+    fetch(POST_ISSUE, options);
+    history.push('/');
+  };
 
   return (
     <IssueFormContainer>
-      <IssueTitleInput placeholder="Title" />
+      <IssueTitleInput placeholder="Title" ref={titleRef} />
       <WriteTab>Write</WriteTab>
       <PreviewTab>Preview</PreviewTab>
       <Hr />
-      <IssueComment placeholder="Leave a comment"></IssueComment>
+      <IssueComment
+        placeholder="Leave a comment"
+        ref={commentRef}
+      ></IssueComment>
       <FileAttachContainer>
         <div>{FileAttachMsg}</div>
       </FileAttachContainer>
-      <SubmitButton>
-        <CancelButton>Cancel</CancelButton>
-      </SubmitButton>
+      <SubmitDiv>
+        <Link to="/">
+          <CancelButton>Cancel</CancelButton>
+        </Link>
+        <SubmitButton onClick={createIssueData}>Submit new issue</SubmitButton>
+      </SubmitDiv>
     </IssueFormContainer>
   );
 };

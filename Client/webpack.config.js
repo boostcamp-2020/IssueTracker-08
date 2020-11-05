@@ -37,9 +37,9 @@ module.exports = {
   devServer: {
     // 정적 파일 경로 설정
     contentBase: path.join(__dirname, 'public/'),
-    port: 3000,
+    port: 8000,
     // 번들된 코드가 실제로 어디 있는지 서버에게 알려주는 거임
-    publicPath: 'http://localhost:3000/dist/',
+    publicPath: 'http://localhost:8000/dist/',
     // devserver 에서만 핫로딩 가능하게
     hotOnly: true,
     historyApiFallback: true,
