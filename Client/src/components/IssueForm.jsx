@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const FileAttachMsg =
@@ -99,7 +100,7 @@ const FileAttachContainer = styled.div`
   color: #586069;
 `;
 
-const SubmitButton = styled.div`
+const SubmitDiv = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 10px;
@@ -127,9 +128,11 @@ const IssueForm = () => {
       <FileAttachContainer>
         <div>{FileAttachMsg}</div>
       </FileAttachContainer>
-      <SubmitButton>
-        <CancelButton>Cancel</CancelButton>
-      </SubmitButton>
+      <SubmitDiv>
+        <Link to="/">
+          <CancelButton>Cancel</CancelButton>
+        </Link>
+      </SubmitDiv>
     </IssueFormContainer>
   );
 };
