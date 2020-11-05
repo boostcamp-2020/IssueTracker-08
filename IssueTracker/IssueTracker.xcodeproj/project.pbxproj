@@ -39,10 +39,11 @@
 		BD5D4123254FD70F008BCB36 /* OAuthNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4122254FD70F008BCB36 /* OAuthNetworkManager.swift */; };
 		BD5D412D254FDA85008BCB36 /* MilestoneListModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4128254FDA85008BCB36 /* MilestoneListModels.swift */; };
 		BD5D412E254FDA85008BCB36 /* MilestoneListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4129254FDA85008BCB36 /* MilestoneListInteractor.swift */; };
-		BD5D412F254FDA85008BCB36 /* MilestoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D412A254FDA85008BCB36 /* MilestoneViewController.swift */; };
+		BD5D412F254FDA85008BCB36 /* MilestoneListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D412A254FDA85008BCB36 /* MilestoneListViewController.swift */; };
 		BD5D4130254FDA85008BCB36 /* MilestoneListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D412B254FDA85008BCB36 /* MilestoneListPresenter.swift */; };
 		BD5D4131254FDA85008BCB36 /* MilestoneListWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D412C254FDA85008BCB36 /* MilestoneListWorker.swift */; };
 		BD5D4138254FDAAA008BCB36 /* MilestoneCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4136254FDAAA008BCB36 /* MilestoneCollectionViewCell.swift */; };
+		BD5D4139254FDAAA008BCB36 /* MilestoneCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4137254FDAAA008BCB36 /* MilestoneCollectionReusableView.swift */; };
 		BD5D413E254FDAF3008BCB36 /* MilestoneDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D413D254FDAF3008BCB36 /* MilestoneDataManager.swift */; };
 		BD5D4143254FDBD1008BCB36 /* FormattedDateFromString.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4142254FDBD1008BCB36 /* FormattedDateFromString.swift */; };
 		BD5D414D254FDCFA008BCB36 /* LabelListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4148254FDCF9008BCB36 /* LabelListPresenter.swift */; };
@@ -52,8 +53,6 @@
 		BD5D4158254FDD06008BCB36 /* LabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4156254FDD06008BCB36 /* LabelCollectionViewCell.swift */; };
 		BD5D4164254FDE4D008BCB36 /* IssueFilterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */; };
 		BD71231E25519FA000D5D195 /* LabelDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD71231D25519FA000D5D195 /* LabelDataManager.swift */; };
-		BD72758D2552E49C00DB5134 /* PopUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD72758C2552E49C00DB5134 /* PopUpRouter.swift */; };
-		BD7275922552EA6900DB5134 /* MilestoneListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7275912552EA6900DB5134 /* MilestoneListRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,10 +114,11 @@
 		BD5D4122254FD70F008BCB36 /* OAuthNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthNetworkManager.swift; sourceTree = "<group>"; };
 		BD5D4128254FDA85008BCB36 /* MilestoneListModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneListModels.swift; sourceTree = "<group>"; };
 		BD5D4129254FDA85008BCB36 /* MilestoneListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneListInteractor.swift; sourceTree = "<group>"; };
-		BD5D412A254FDA85008BCB36 /* MilestoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneViewController.swift; sourceTree = "<group>"; };
+		BD5D412A254FDA85008BCB36 /* MilestoneListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneListViewController.swift; sourceTree = "<group>"; };
 		BD5D412B254FDA85008BCB36 /* MilestoneListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneListPresenter.swift; sourceTree = "<group>"; };
 		BD5D412C254FDA85008BCB36 /* MilestoneListWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneListWorker.swift; sourceTree = "<group>"; };
 		BD5D4136254FDAAA008BCB36 /* MilestoneCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneCollectionViewCell.swift; sourceTree = "<group>"; };
+		BD5D4137254FDAAA008BCB36 /* MilestoneCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneCollectionReusableView.swift; sourceTree = "<group>"; };
 		BD5D413D254FDAF3008BCB36 /* MilestoneDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneDataManager.swift; sourceTree = "<group>"; };
 		BD5D4142254FDBD1008BCB36 /* FormattedDateFromString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormattedDateFromString.swift; sourceTree = "<group>"; };
 		BD5D4148254FDCF9008BCB36 /* LabelListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListPresenter.swift; sourceTree = "<group>"; };
@@ -128,8 +128,6 @@
 		BD5D4156254FDD06008BCB36 /* LabelCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCollectionViewCell.swift; sourceTree = "<group>"; };
 		BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueFilterTableViewController.swift; sourceTree = "<group>"; };
 		BD71231D25519FA000D5D195 /* LabelDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelDataManager.swift; sourceTree = "<group>"; };
-		BD72758C2552E49C00DB5134 /* PopUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpRouter.swift; sourceTree = "<group>"; };
-		BD7275912552EA6900DB5134 /* MilestoneListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneListRouter.swift; sourceTree = "<group>"; };
 		D018D0CA68C57EEA8CB7F764 /* Pods_IssueTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB7C5D95BB108BDD81533688 /* Pods-IssueTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker.debug.xcconfig"; path = "Target Support Files/Pods-IssueTracker/Pods-IssueTracker.debug.xcconfig"; sourceTree = "<group>"; };
 		E914C3F312B834FAB1DC2FDC /* Pods_IssueTrackerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTrackerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -326,12 +324,11 @@
 			isa = PBXGroup;
 			children = (
 				BD5D4135254FDA8A008BCB36 /* Views */,
-				BD5D412A254FDA85008BCB36 /* MilestoneViewController.swift */,
+				BD5D412A254FDA85008BCB36 /* MilestoneListViewController.swift */,
 				BD5D4129254FDA85008BCB36 /* MilestoneListInteractor.swift */,
 				BD5D4128254FDA85008BCB36 /* MilestoneListModels.swift */,
 				BD5D412B254FDA85008BCB36 /* MilestoneListPresenter.swift */,
 				BD5D412C254FDA85008BCB36 /* MilestoneListWorker.swift */,
-				BD7275912552EA6900DB5134 /* MilestoneListRouter.swift */,
 			);
 			path = MilestoneList;
 			sourceTree = "<group>";
@@ -339,6 +336,7 @@
 		BD5D4135254FDA8A008BCB36 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BD5D4137254FDAAA008BCB36 /* MilestoneCollectionReusableView.swift */,
 				BD5D4136254FDAAA008BCB36 /* MilestoneCollectionViewCell.swift */,
 			);
 			path = Views;
@@ -367,7 +365,6 @@
 			children = (
 				800666CD2547D24200B42428 /* PopUpViewController.swift */,
 				80112646255282B90016B381 /* PopupItem.swift */,
-				BD72758C2552E49C00DB5134 /* PopUpRouter.swift */,
 			);
 			path = PopUpView;
 			sourceTree = "<group>";
@@ -618,7 +615,6 @@
 				80163C73255009450073AAD5 /* CustomAddButton.swift in Sources */,
 				BD71231E25519FA000D5D195 /* LabelDataManager.swift in Sources */,
 				80AA070D2549F0A700086F5F /* IssueListPresenter.swift in Sources */,
-				BD7275922552EA6900DB5134 /* MilestoneListRouter.swift in Sources */,
 				8042B7E7254BA1C700910C6F /* UIColor+HexString.swift in Sources */,
 				BD5D414E254FDCFA008BCB36 /* LabelListViewController.swift in Sources */,
 				BD5D4151254FDCFA008BCB36 /* LabelListInteractor.swift in Sources */,
@@ -627,18 +623,18 @@
 				80AA07032549ED4700086F5F /* IssueListCollectionViewCell.swift in Sources */,
 				80AA071C254A846800086F5F /* IssueListWorker.swift in Sources */,
 				800666CE2547D24200B42428 /* PopUpViewController.swift in Sources */,
+				BD5D4139254FDAAA008BCB36 /* MilestoneCollectionReusableView.swift in Sources */,
 				BD5D4130254FDA85008BCB36 /* MilestoneListPresenter.swift in Sources */,
 				80112647255282B90016B381 /* PopupItem.swift in Sources */,
 				BD5D4164254FDE4D008BCB36 /* IssueFilterTableViewController.swift in Sources */,
 				8042B7FE254BAD7A00910C6F /* RootCoordinator.swift in Sources */,
 				BD5D4123254FD70F008BCB36 /* OAuthNetworkManager.swift in Sources */,
 				80AA07172549F0F800086F5F /* IssueListRouter.swift in Sources */,
-				BD72758D2552E49C00DB5134 /* PopUpRouter.swift in Sources */,
 				BD5D414F254FDCFA008BCB36 /* LabelListWorker.swift in Sources */,
 				80AA06F72549D09F00086F5F /* IssueListViewController.swift in Sources */,
 				BD5D4158254FDD06008BCB36 /* LabelCollectionViewCell.swift in Sources */,
 				80163C6E254FF5070073AAD5 /* NetworkService.swift in Sources */,
-				BD5D412F254FDA85008BCB36 /* MilestoneViewController.swift in Sources */,
+				BD5D412F254FDA85008BCB36 /* MilestoneListViewController.swift in Sources */,
 				29EC91AA25511E1B007B59A0 /* IssueFilterModels.swift in Sources */,
 				80AA07082549F08300086F5F /* IssueListInteractor.swift in Sources */,
 				BD5D414D254FDCFA008BCB36 /* LabelListPresenter.swift in Sources */,

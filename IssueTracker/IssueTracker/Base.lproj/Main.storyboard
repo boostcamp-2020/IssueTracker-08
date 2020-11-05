@@ -317,7 +317,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hPn-az-3gl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3443" y="2926"/>
+            <point key="canvasLocation" x="-3514" y="2926"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="0Ki-L2-PyV">
@@ -713,13 +713,13 @@
                             <constraint firstAttribute="trailingMargin" secondItem="AUQ-7R-83e" secondAttribute="trailing" constant="10" id="B0y-MD-S6I"/>
                             <constraint firstItem="JJz-1g-XdA" firstAttribute="leading" secondItem="weL-iy-gfx" secondAttribute="leadingMargin" constant="10" id="Hmr-2r-4hC"/>
                             <constraint firstItem="h58-U6-Uew" firstAttribute="top" secondItem="JJz-1g-XdA" secondAttribute="bottom" constant="19" id="Imx-ee-GUW"/>
+                            <constraint firstItem="C7W-2y-TiL" firstAttribute="top" secondItem="WCN-hX-n7K" secondAttribute="bottom" constant="32" id="JQ4-hG-jAA"/>
                             <constraint firstItem="WCN-hX-n7K" firstAttribute="top" secondItem="Anp-VE-Csp" secondAttribute="bottom" constant="12.5" id="NtC-WX-fUK"/>
                             <constraint firstItem="mGT-T5-3UX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bhb-K7-Go2" secondAttribute="trailing" constant="8" symbolic="YES" id="RUb-8i-SqR"/>
                             <constraint firstItem="BE3-JC-vvH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="LSk-Nu-syA" secondAttribute="trailing" constant="8" symbolic="YES" id="UGI-qr-1Hh"/>
                             <constraint firstItem="C7W-2y-TiL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="suR-ZL-chF" secondAttribute="trailing" constant="8" symbolic="YES" id="VdC-dz-V28"/>
                             <constraint firstItem="LSk-Nu-syA" firstAttribute="leading" secondItem="YIB-5t-KMn" secondAttribute="leading" constant="35" id="WKH-3u-GdA"/>
                             <constraint firstItem="h58-U6-Uew" firstAttribute="leading" secondItem="a1r-Hw-cE1" secondAttribute="trailing" constant="1" id="XJQ-Te-i6W"/>
-                            <constraint firstItem="C7W-2y-TiL" firstAttribute="top" secondItem="WCN-hX-n7K" secondAttribute="bottom" constant="32" id="Xjm-Ga-Mw7"/>
                             <constraint firstItem="WCN-hX-n7K" firstAttribute="leading" secondItem="weL-iy-gfx" secondAttribute="leadingMargin" constant="10" id="Yue-Kk-YZQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WCN-hX-n7K" secondAttribute="trailing" constant="10" id="cIz-V3-qVc"/>
                             <constraint firstItem="AUQ-7R-83e" firstAttribute="top" secondItem="BE3-JC-vvH" secondAttribute="bottom" constant="6" id="dZQ-Me-3Ip"/>
@@ -898,17 +898,11 @@
                                             <outlet property="issuePercentLabel" destination="zqw-Ad-bTc" id="Uam-0g-bzE"/>
                                             <outlet property="issueStatusLabel" destination="s8Q-fo-3WX" id="RPU-Ge-Yax"/>
                                             <outlet property="titleLabel" destination="U3x-Ze-zO2" id="QUz-q4-vyz"/>
+                                            <segue destination="MHu-k1-5Mv" kind="show" identifier="MilestoneEditPopup" id="xqJ-AT-Fb8"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QgG-pd-YXB">
-                                <rect key="frame" x="0.0" y="156" width="414" height="1"/>
-                                <color key="backgroundColor" systemColor="systemGray5Color"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="N5R-y7-RAX"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="yp3-yg-oSF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -916,11 +910,8 @@
                             <constraint firstItem="d7f-ib-Vx9" firstAttribute="leading" secondItem="yp3-yg-oSF" secondAttribute="leading" constant="14" id="4Lq-aV-W8k"/>
                             <constraint firstItem="t0I-qC-pe4" firstAttribute="trailing" secondItem="yp3-yg-oSF" secondAttribute="trailing" id="JQO-Dc-pBB"/>
                             <constraint firstItem="d7f-ib-Vx9" firstAttribute="top" secondItem="yp3-yg-oSF" secondAttribute="top" constant="14" id="Vys-B4-Gum"/>
-                            <constraint firstItem="yp3-yg-oSF" firstAttribute="trailing" secondItem="QgG-pd-YXB" secondAttribute="trailing" id="c17-t2-uav"/>
-                            <constraint firstItem="t0I-qC-pe4" firstAttribute="top" secondItem="QgG-pd-YXB" secondAttribute="bottom" id="d8B-Yf-zIQ"/>
                             <constraint firstItem="t0I-qC-pe4" firstAttribute="top" secondItem="d7f-ib-Vx9" secondAttribute="bottom" constant="14" id="nrA-2h-HhO"/>
                             <constraint firstItem="t0I-qC-pe4" firstAttribute="leading" secondItem="yp3-yg-oSF" secondAttribute="leading" id="vjB-nO-o9z"/>
-                            <constraint firstItem="QgG-pd-YXB" firstAttribute="leading" secondItem="yp3-yg-oSF" secondAttribute="leading" id="wmB-gs-jSM"/>
                             <constraint firstItem="t0I-qC-pe4" firstAttribute="bottom" secondItem="yp3-yg-oSF" secondAttribute="bottom" id="x5r-h2-25L"/>
                         </constraints>
                     </view>
@@ -976,12 +967,11 @@
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r6I-AY-hAr">
-                                                    <rect key="frame" x="16" y="9" width="37" height="24"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r6I-AY-hAr">
+                                                    <rect key="frame" x="16" y="9" width="44" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="24" id="XB7-Bz-MeI"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                     <state key="normal" title="Label">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
@@ -1002,6 +992,7 @@
                                         <connections>
                                             <outlet property="descriptionLabel" destination="HN1-Jg-Iro" id="m2W-hk-VE8"/>
                                             <outlet property="titleLabel" destination="r6I-AY-hAr" id="RVJ-m1-1TI"/>
+                                            <segue destination="MHu-k1-5Mv" kind="show" identifier="EditLabelPopup" id="tJY-cD-bkx"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -1031,12 +1022,12 @@
                     <navigationItem key="navigationItem" id="yjJ-zQ-qoz">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ybs-9H-Nu5">
                             <connections>
-                                <segue destination="MHu-k1-5Mv" kind="show" identifier="LabelPopup" id="rY1-fW-ssD"/>
+                                <segue destination="MHu-k1-5Mv" kind="show" identifier="CreateLabelPopup" id="rY1-fW-ssD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="LabelCollectionView" destination="UeR-XM-NDr" id="2ti-Jn-TMK"/>
+                        <outlet property="labelCollectionView" destination="UeR-XM-NDr" id="2ti-Jn-TMK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CCC-yk-w0n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1083,7 +1074,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="D1B-Vo-CcB"/>
+        <segue reference="xqJ-AT-Fb8"/>
         <segue reference="br4-7g-5eE"/>
     </inferredMetricsTieBreakers>
     <resources>

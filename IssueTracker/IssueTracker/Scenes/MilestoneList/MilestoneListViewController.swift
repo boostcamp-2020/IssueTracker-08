@@ -10,13 +10,15 @@ import STPopup
 
 protocol MilestoneListDisplayLogic: class {
     func displayFetchedOrders(viewModel: ListMilestones.FetchLists.ViewModel)
+    func displayAlert(viewModel: CreateMilestones.CreateMilestone.ViewModel)
+    func displayAlert(viewModel: CreateMilestones.EditMilestone.ViewModel)
+    func displayAlert(viewModel: DeleteMilestones.DeleteMilestone.ViewModel)
 }
 
 class MilestoneViewController: UIViewController {
     private var interactor: MilestoneListBusinessLogic?
     private var displayedMilestones: [ListMilestones.FetchLists.ViewModel.DisplayedMilestone] = []
     private let reuseIdentifier = "milestoneCell"
-    var router: (MilestoneListDataPassing)?
     
     @IBOutlet weak var milestoneCollectionView: UICollectionView!
     // MARK:- Object Lifecycle
@@ -35,16 +37,13 @@ class MilestoneViewController: UIViewController {
         let viewController = self
         let interactor = MilestoneListInteractor()
         let presenter = MilestoneListPresenter()
-        let router = MilestoneListRouter()
         viewController.interactor = interactor
         interactor.presenter = presenter
         presenter.viewController = viewController
-        viewController.router = router
-        router.viewController = viewController
     }
     
     func setupCollectionview() {
-        var config = UICollectionLayoutListConfiguration(appearance: .plain)
+        var config = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
         config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
             let delete = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
                 handleSwipe(for: action, path: indexPath)
@@ -76,10 +75,15 @@ class MilestoneViewController: UIViewController {
         let destinationVC = segue.destination as! PopUpViewController
         let popupController = STPopupController(rootViewController: destinationVC)
         if segue.identifier == "MilestonePopup" {
-            destinationVC.mode = .Milestone
-            destinationVC.milestoneDelegate = self
-            popupController.present(in: self)
+            destinationVC.mode = .CreateMilestone
+        } else {
+            destinationVC.mode = .EditMilestone
+            let cell = sender as! MilestoneCollectionViewCell
+            let indexPaths = self.milestoneCollectionView.indexPath(for: cell)
+            destinationVC.displayedMilestone = displayedMilestones[indexPaths!.item]
         }
+        destinationVC.milestoneDelegate = self
+        popupController.present(in: self)
     }
     
     func handleSwipe(for action: UIContextualAction, path: IndexPath) {
@@ -88,12 +92,13 @@ class MilestoneViewController: UIViewController {
                                     preferredStyle: .alert)
             
         let okAction = UIAlertAction(title:"OK", style: .default, handler: { [self] (action) in
-            let issueId = displayedMilestones[path.item].id
-            let request = DeleteMilestones.DeleteMilestone.Request(milestone: DeleteMilestones.MilestoneFormField(milestoneId: issueId))
-            interactor?.deleteMilestone(request: request)
-            
-            let reRequest = ListMilestones.FetchLists.Request()
-            interactor?.fetchIssues(request: reRequest)
+            let milestoneId = displayedMilestones[path.item].id
+            interactor?.deleteMilestone(
+                request: DeleteMilestones.DeleteMilestone.Request(
+                    milestone: DeleteMilestones.MilestoneFormField(
+                        milestoneId: milestoneId)
+                )
+            )
         })
         let cancleAction = UIAlertAction(title:"Cancle", style: .default, handler: { (_) in })
         alert.addAction(okAction)
@@ -123,15 +128,6 @@ extension MilestoneViewController: UICollectionViewDataSource {
         
         return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let pushVC = self.storyboard?.instantiateViewController(withIdentifier: "reuseNewAdd") as! PopUpViewController
-        pushVC.mode = .EditMilestone
-        
-        router?.editMilestoneData.removeAll()
-        router?.editMilestoneData.append(displayedMilestones[indexPath.item])
-        router?.routeToNewAdd(pushVC: pushVC)
-    }
 }
 
 extension MilestoneViewController: MilestoneListDisplayLogic {
@@ -144,19 +140,70 @@ extension MilestoneViewController: MilestoneListDisplayLogic {
         displayedMilestones = viewModel.displayedMilestones
         milestoneCollectionView.reloadData()
     }
+    
+    func displayAlert(viewModel: CreateMilestones.CreateMilestone.ViewModel) {
+        let displayedAlert = viewModel.displayedAlert
+        let alert = UIAlertController(
+            title: displayedAlert.title,
+            message: displayedAlert.message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [unowned self] _ in
+            self.fetchMilestones()
+        }))
+        present(alert, animated: true)
+    }
+    
+    func displayAlert(viewModel: CreateMilestones.EditMilestone.ViewModel) {
+        let displayedAlert = viewModel.displayedAlert
+        let alert = UIAlertController(
+            title: displayedAlert.title,
+            message: displayedAlert.message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [unowned self] _ in
+            self.fetchMilestones()
+        }))
+        present(alert, animated: true)
+    }
+    
+    func displayAlert(viewModel: DeleteMilestones.DeleteMilestone.ViewModel) {
+        let displayedAlert = viewModel.displayedAlert
+        let alert = UIAlertController(
+            title: displayedAlert.title,
+            message: displayedAlert.message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [unowned self] _ in
+            self.fetchMilestones()
+        }))
+        present(alert, animated: true)
+    }
 }
 
 extension MilestoneViewController: PopupMilestoneViewControllerDelegate {
     func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.MilestoneItem) {
-        let request = CreateMilestones.CreateMilestone.Request.init(milestone:  CreateMilestones.MilestoneFormField(title: item.title, dueDate: item.dueDate, content: item.content))
-        interactor?.createMilestone(request: request)
-        
-        let reRequest = ListMilestones.FetchLists.Request()
-        interactor?.fetchIssues(request: reRequest)
+        let newLabel = CreateMilestones.CreateMilestone.Request(
+            milestone: CreateMilestones.MilestoneFormField(
+                title: item.title,
+                dueDate: item.dueDate,
+                content: item.content
+            )
+        )
+        interactor?.createNewMilestone(request: newLabel)
     }
     
-    func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.MilestoneItem) {
-        // router로 보냈으니 router로 보내렴
+    func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.EditMilestoneItem) {
+        let newLabel = CreateMilestones.EditMilestone.Request(
+            index: item.id,
+            milestoneFormFileds: CreateMilestones.MilestoneFormField(
+                title: item.title,
+                dueDate: item.dueDate,
+                content: item.content
+            )
+        )
+        
+        interactor?.editMilestone(request: newLabel)
     }
 }
 

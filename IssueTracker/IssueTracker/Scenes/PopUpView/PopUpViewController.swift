@@ -8,20 +8,20 @@
 import UIKit
 
 enum PopupMode {
-    case Label
-    case Milestone
+    case CreateLabel
+    case CreateMilestone
     case EditLabel
     case EditMilestone
 }
 
 protocol PopupLabelViewControllerDelegate: class {
     func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.LabelItem)
-    func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.LabelItem)
+    func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.EditLabelItem)
 }
 
 protocol PopupMilestoneViewControllerDelegate: class {
     func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.MilestoneItem)
-    func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.MilestoneItem)
+    func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.EditMilestoneItem)
 }
 
 class PopUpViewController: UIViewController {
@@ -46,50 +46,39 @@ class PopUpViewController: UIViewController {
     @IBOutlet weak var reloadButton: UIButton!
     
     // MARK:- Properties
-    var mode: PopupMode = .Label
-    var router: (PopUpDataPassing)?
+    var mode: PopupMode = .CreateLabel
     weak var labelDelegate: PopupLabelViewControllerDelegate?
     weak var milestoneDelegate: PopupMilestoneViewControllerDelegate?
-        
-    // MARK:- View LifeCycle
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        setup()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
+    var displayedLabel: ListLabels.FetchLists.ViewModel.DisplayedLabel?
+    var displayedMilestone: ListMilestones.FetchLists.ViewModel.DisplayedMilestone?
     
+    
+    // MARK:- View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupMode()
+        setup()
     }
     
     // MARK:- Setup by Mode
     private func setup() {
+        if mode == .CreateLabel || mode == .EditLabel{
+            setupLabelMode()
+        }
+        else {
+            setupMilestoneMode()
+        }
         contentSizeInPopup = CGSize(width: 300, height: 280)
         landscapeContentSizeInPopup = CGSize(width: 300, height: 200)
-        let viewController = self
-        let router = PopUpRouter()
-        viewController.router = router
-        router.viewController = viewController
-    }
-    
-    private func setupMode() {
-        if mode == .Label || mode == .EditLabel { setupLabelMode() }
-        else { setupMilestoneMode() }
     }
     
     private func setupLabelMode() {
         totalLabel[2].text = "색상"
         descriptionTextField.isHidden = true
-        
         if mode == .EditLabel {
-            titleTextField.text = router?.editLabelData.first?.name
-            detailTestField.text = router?.editLabelData.first?.description
-            labelColorField.text = router?.editLabelData.first?.color
+            titleTextField.text = displayedLabel?.name
+            detailTestField.text = displayedLabel?.description
+            labelColorField.text = displayedLabel?.color.components(separatedBy: "#")[1]
+            colorPickerButton.backgroundColor = UIColor(hexString: labelColorField.text!)
         }
     }
     
@@ -101,12 +90,77 @@ class PopUpViewController: UIViewController {
         reloadButton.isHidden = true
         labelColorField.isHidden = true
         colorHexLabel.isHidden = true
-        
         if mode == .EditMilestone {
-            titleTextField.text = router?.editMilestoneData.first?.title
-            detailTestField.text = FormattedEditDateString(dueDate: (router?.editMilestoneData.first?.dueDate)!)
-            descriptionTextField.text = router?.editMilestoneData.first?.content
+            titleTextField.text = displayedMilestone?.title
+            detailTestField.text = FormattedEditDateString(dueDate: (displayedMilestone?.dueDate)!)
+            descriptionTextField.text = displayedMilestone?.content
         }
+    }
+    
+    private func disMissLabel() {
+        if mode == .CreateLabel {
+            let newLabel = PopupItem.LabelItem(
+                title: titleTextField.text!,
+                description: detailTestField.text ?? nil,
+                color: "#\(labelColorField.text!)"
+            )
+            labelDelegate?.popupViewController(self, didFinishAdding: newLabel)
+        } else {
+            let newLabel = PopupItem.EditLabelItem(
+                id: displayedLabel!.id,
+                title: titleTextField.text!,
+                description: detailTestField.text ?? nil,
+                color: "#\(labelColorField.text!)"
+            )
+            labelDelegate?.popupViewController(self, didFinishEditing: newLabel)
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    private func disMissMilestone() {
+        if mode == .CreateMilestone {
+            let newLabel = PopupItem.MilestoneItem(
+                title: titleTextField.text!,
+                dueDate: detailTestField.text!,
+                content: descriptionTextField.text!
+            )
+            milestoneDelegate?.popupViewController(self, didFinishAdding: newLabel)
+        } else {
+            let newLabel = PopupItem.EditMilestoneItem(
+                id: displayedMilestone!.id,
+                title: titleTextField.text!,
+                dueDate:detailTestField.text!,
+                content: descriptionTextField.text!
+            )
+            milestoneDelegate?.popupViewController(self, didFinishEditing: newLabel)
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    private func checkLabel() -> Bool {
+        if titleTextField.text!.isEmpty || labelColorField.text!.isEmpty {
+            warningAlert()
+            return false
+        }
+        return true
+    }
+    
+    private func checkMilestone() -> Bool {
+        if titleTextField.text!.isEmpty {
+            warningAlert()
+            return false
+        }
+        return true
+    }
+    
+    private func warningAlert() {
+        let alert = UIAlertController(title: "경고",
+                                    message: "입력하지 않은 목록이 있습니다.",
+                                    preferredStyle: .alert)
+        
+        let cancleAction = UIAlertAction(title:"Cancle", style: .default, handler: { (_) in })
+        alert.addAction(cancleAction)
+        present(alert, animated: true, completion:nil)
     }
     
     //MARK:- IBActions
@@ -130,33 +184,13 @@ class PopUpViewController: UIViewController {
     }
     
     @IBAction func onSaveButtonPressed(_ sender: UIButton) {
-        // 제목이 비어있을 때 error 처리 해주어야 함.
-            // ex : firstresponder 넘겨줘서 입력 가능하게
-        if mode == .Label || mode == .EditLabel {
-            let newLabel = PopupItem.LabelItem(
-                title: titleTextField.text!,
-                description: descriptionTextField.text ?? nil,
-                color: labelColorField.text!
-            )
-            if mode == .Label {
-                labelDelegate?.popupViewController(self, didFinishAdding: newLabel)
-            } else {
-                labelDelegate?.popupViewController(self, didFinishEditing: newLabel)
-            }
+        if mode == .CreateLabel || mode == .EditLabel {
+            if checkLabel() { disMissLabel() }
         } else {
-            let newLabel = PopupItem.MilestoneItem(
-                title: titleTextField.text!,
-                dueDate:detailTestField.text!,
-                content: descriptionTextField.text!
-            )
-            if mode == .Milestone {
-                milestoneDelegate?.popupViewController(self, didFinishAdding: newLabel)
-            } else {
-                milestoneDelegate?.popupViewController(self, didFinishEditing: newLabel)
-            }
+            if checkMilestone() { disMissMilestone() }
         }
-        self.dismiss(animated: true, completion: nil)
     }
+    
 }
 
 extension PopUpViewController: UIColorPickerViewControllerDelegate {

@@ -14,8 +14,9 @@ struct MilestoneListResponse: Decodable {
 
 protocol MilestoneDataManagerProtocol {
     func fetchMilestones(completion: @escaping ([Milestone]) -> Void)
-    func postMilestones(request: CreateMilestones.CreateMilestone.Request)
-    func deleteMilestones(request: DeleteMilestones.DeleteMilestone.Request)
+    func postNewMilestone(request: CreateMilestones.CreateMilestone.Request, completion: @escaping (String) -> Void)
+    func postEditMilestone(request: CreateMilestones.EditMilestone.Request, completion: @escaping (String) -> Void)
+    func deleteMilestone(request: DeleteMilestones.DeleteMilestone.Request, completion: @escaping (String) -> Void)
 }
 
 final class MilestoneDataManager: MilestoneDataManagerProtocol {
@@ -32,17 +33,41 @@ final class MilestoneDataManager: MilestoneDataManagerProtocol {
         })
     }
     
-    func postMilestones(request: CreateMilestones.CreateMilestone.Request) {
-        
-        let responseData = request.milestone
-        let jsonData = try? JSONEncoder().encode(responseData)
-        
-        NetworkService.shared.postData(url: EndPoint.milestones, jsonData: jsonData!)
+    func postNewMilestone(request: CreateMilestones.CreateMilestone.Request, completion: @escaping (String) -> Void) {
+        let requestData = request.milestone
+        let jsonData = try? JSONEncoder().encode(requestData)
+        // force unwrapping 처리
+        NetworkService.shared.postData(url: EndPoint.milestones, jsonData: jsonData!, completion: { data in
+            guard let receivedData = try? JSONDecoder().decode(CUDResponse.self, from: data) else {
+                return
+            }
+            let result: String = receivedData.status
+            completion(result)
+        })
     }
     
-    func deleteMilestones(request: DeleteMilestones.DeleteMilestone.Request) {
-        let issueId = request.milestone.milestoneId
-        let url = EndPoint.milestones + "/\(issueId)"
-        NetworkService.shared.deleteData(url: url)
+    func postEditMilestone(request: CreateMilestones.EditMilestone.Request, completion: @escaping (String) -> Void) {
+        let requestData = request.milestoneFormFileds
+        let jsonData = try? JSONEncoder().encode(requestData)
+        let url = "\(EndPoint.milestones)/\(request.index)"
+        // force unwrapping 처리
+        NetworkService.shared.putData(url: url, jsonData: jsonData!, completion: { data in
+            guard let receivedData = try? JSONDecoder().decode(CUDResponse.self, from: data) else {
+                return
+            }
+            let result: String = receivedData.status
+            completion(result)
+        })
+    }
+    
+    func deleteMilestone(request: DeleteMilestones.DeleteMilestone.Request, completion: @escaping (String) -> Void) {
+        let deleteURL = "\(EndPoint.milestones)/\(request.milestone.milestoneId)/"
+        NetworkService.shared.deleteData(url: deleteURL, completion: { data in
+            guard let receivedData = try? JSONDecoder().decode(CUDResponse.self, from: data) else {
+                return
+            }
+            let result: String = receivedData.status
+            completion(result)
+        })
     }
 }

@@ -11,14 +11,13 @@ struct Milestone: Decodable {
     var id: Int
     var title: String
     var dueDate: String?
-    var content: String
+    var content: String?
     var isOpen: Int
 }
 
 enum ListMilestones {
     enum FetchLists {
-        struct Request {
-        }
+        struct Request { }
         struct Response {
             var milestones: [Milestone]
         }
@@ -43,14 +42,29 @@ enum CreateMilestones {
     
     enum CreateMilestone {
         struct Request { var milestone: MilestoneFormField }
-        struct Response { var milestone: MilestoneFormField }
-        struct ViewModel { var milestone: MilestoneFormField? }
+        struct Response { var status: String }
+        struct ViewModel {
+            struct DisplayedAlert {
+                var title: String
+                var message: String
+            }
+            var displayedAlert: DisplayedAlert
+        }
     }
     
     enum EditMilestone {
-        struct Request { var milestoneFormFileds: MilestoneFormField }
-        struct Response { var milestone: MilestoneFormField? }
-        struct ViewModel { var milestone: MilestoneFormField? }
+        struct Request {
+            var index: Int
+            var milestoneFormFileds: MilestoneFormField
+        }
+        struct Response { var status: String }
+        struct ViewModel {
+            struct DisplayedAlert {
+                var title: String
+                var message: String
+            }
+            var displayedAlert: DisplayedAlert
+        }
     }
 }
 
@@ -61,7 +75,13 @@ enum DeleteMilestones {
     
     enum DeleteMilestone {
         struct Request { var milestone: MilestoneFormField }
-        struct Response { var milestone: MilestoneFormField }
-        struct ViewModel { var milestone: MilestoneFormField? }
+        struct Response { var status: String }
+        struct ViewModel {
+            struct DisplayedAlert {
+                var title: String
+                var message: String
+            }
+            var displayedAlert: DisplayedAlert
+        }
     }
 }
