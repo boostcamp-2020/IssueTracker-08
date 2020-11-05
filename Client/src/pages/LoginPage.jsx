@@ -1,8 +1,8 @@
 import React, { useState, Component } from 'react';
 import styled from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
+import { Link } from 'react-router-dom';
 
-import './LoginPage.scss';
 import * as config from '../config';
 
 const GlobalStyle = createGlobalStyle`
@@ -24,6 +24,61 @@ const Title = styled.div`
   text-align: center;
 `
 
+const Login = styled.div`
+  background-color: white;
+  border: solid 1px #dce1e5;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 10px 18px 22px 18px;
+`
+
+const Input = styled.div`
+  border: solid 2px #e4e6ea;
+  border-radius: 3px;
+  box-shadow: 3px;
+  width: 230px;
+  height: 25px;
+`
+
+const Routes = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+`
+
+const StyledLink = styled(Link)`
+  color: #126fd8;
+  &:focus, &:hover, &:visited, &:link, &:active {
+    text-decoration: none;
+  }
+`
+
+const GithubLink = styled.a`
+  text-decoration: none;
+`
+
+const GithubLogin = styled.div`
+  display: flex;
+  text-align: center;
+  background-color: #a0a0a0;
+  border: solid 1px #989898;
+  border-radius: 5px;
+  height: 35px;
+  margin-top: 20px;
+`
+const GithubContent = styled.p`
+  color: white;
+  font-weight: bold;
+  margin: auto;
+  margin-top: 8px;
+  margin-left: 40px;
+`
+
+const GithubImage = styled.img`
+  padding-right: 30px;
+`
+
 export default function LoginPage() {
   return (
     <>
@@ -33,29 +88,29 @@ export default function LoginPage() {
             <h1>이슈 트래커</h1>
           </Title>
 
-          <div class="login">
-            <div class="id">
+          <Login>
+            <div>
               <p>아이디</p>
-              <input type="text"></input>
+              <Input type="text"></Input>
             </div>
 
-            <div class="password">
+            <div>
               <p>비밀번호</p>
-              <input type="password"></input>
+              <Input type="password"></Input>
             </div>
 
-            <div class="routes">
-              <a href="">로그인</a>
-              <a href="">회원가입</a>
-            </div>
+            <Routes>
+              <StyledLink to="/login">로그인</StyledLink>
+              <StyledLink to="/login">회원가입</StyledLink>
+            </Routes>
 
-            <a href={config.BASE_URL + "auth/github/"}>
-              <div class="github-login">
-                <p>Sign in with GitHub</p>
-                <img src="/images/github.svg"></img>
-              </div>
-            </a>
-          </div>
+            <GithubLink href={config.BASE_URL + "auth/github/"}>
+              <GithubLogin>
+                <GithubContent>Sign in with GitHub</GithubContent>
+                <GithubImage src="/images/github.svg"></GithubImage>
+              </GithubLogin>
+            </GithubLink>
+            </Login>
         </Container>
       </Main>
     <GlobalStyle />
