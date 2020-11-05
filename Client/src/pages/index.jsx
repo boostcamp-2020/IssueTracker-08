@@ -1,3 +1,4 @@
+export { default as LoginPage } from './login/LoginPage';
 export { default as Issue } from './issue/IssuePage';
 export { default as IssueDetail } from './issue/IssueDetailPage';
 export { default as IssuePost } from './issue/IssuePostPage';
