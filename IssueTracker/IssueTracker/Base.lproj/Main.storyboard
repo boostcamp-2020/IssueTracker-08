@@ -396,7 +396,7 @@
                                                     <color key="textColor" red="0.38823529411764707" green="0.38823529411764707" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="510-69-n9T">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="510-69-n9T">
                                                     <rect key="frame" x="20" y="60" width="374" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
@@ -550,6 +550,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="IssueDetailCollectionView" destination="IVS-is-GqM" id="xkG-GB-7Tx"/>
+                        <outlet property="issueTag" destination="7k3-TI-y7l" id="EKB-2f-5mJ"/>
+                        <outlet property="titleLabel" destination="dpx-y4-Qn1" id="hf3-XG-nZZ"/>
+                        <outlet property="userIdLabel" destination="pqu-BY-HGz" id="Vbq-Hi-1GT"/>
+                        <outletCollection property="openStatus" destination="xYD-LS-3p2" collectionClass="NSMutableArray" id="AzM-wI-Tjk"/>
+                        <outletCollection property="openStatus" destination="FK7-ky-flM" collectionClass="NSMutableArray" id="3zM-W1-RSe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wkb-6v-ChG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1101,6 +1106,9 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

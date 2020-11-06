@@ -13,5 +13,6 @@ enum EndPoint {
     static let githubOAuth: String = "\(Self.baseURL)/auth/github/callback"
     static let githubURLScheme: String = "oauthLogin"
     static let issues: String = "\(Self.baseURL)/api/issues/open"
+    static let issueDetail: String = "\(Self.baseURL)/api/issues"
     static let milestones: String = "\(Self.baseURL)/api/milestones/"
 }

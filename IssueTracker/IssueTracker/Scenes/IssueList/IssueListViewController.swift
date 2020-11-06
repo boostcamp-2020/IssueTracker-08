@@ -24,7 +24,7 @@ final class IssueListViewController: UIViewController {
     // MARK:- Properties
     var filterData = ListFilter.IssueFilterData()
     var interactor: IssueListBusinessLogic?
-    var router: (NSObjectProtocol & IssueListRoutingLogic & IssueListDataPassing)?
+    var router: (NSObjectProtocol & IssueListRoutingLogic & IssueListDataPassing & IssueDetailDataPassing)?
     var displayedIssues: [ListIssues.FetchLists.ViewModel.DisplayedIssue] = []
     override var isEditing: Bool {
         willSet {
@@ -254,11 +254,12 @@ extension IssueListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //print(displayedIssues[indexPath.row].issueId) // tag
         if isEditing {
             selectedItems += 1
         } else {
             let pushVC = self.storyboard?.instantiateViewController(withIdentifier: "IssueDetail") as! IssueDetailViewController
+            router?.issueDetailData = displayedIssues[indexPath.row].issueId
+            router?.routeToIssue(destinationVC: pushVC)
             self.navigationController?.pushViewController(pushVC, animated: true)
         }
     }
