@@ -7,6 +7,18 @@
 
 import Foundation
 
+struct IssueLabel: Decodable {
+    var labelName: String
+    var labelColor: String
+    var labelDescription: String?
+}
+
+struct IssueAssign: Decodable {
+    var userId: Int
+    var imageUrl: String
+    var name: String
+}
+
 struct Issue: Decodable {
     var issueId: Int
     var email: String
@@ -17,9 +29,10 @@ struct Issue: Decodable {
     var isOpen: Int
     var createAt: String
     var closeAt: String
-    var label: [Label]?
-    var assign: [String]?
+    var label: [IssueLabel]?
+    var assign: [IssueAssign]?
 }
+
 
 enum ListIssues {
     enum FetchLists {
@@ -33,7 +46,7 @@ enum ListIssues {
                 var title: String
                 var content: String
                 var milestone: String?
-                var label: [Label]?
+                var label: [IssueLabel]?
             }
             var displayedIssues: [DisplayedIssue]
         }

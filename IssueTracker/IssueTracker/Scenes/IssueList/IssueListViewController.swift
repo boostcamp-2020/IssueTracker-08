@@ -88,7 +88,7 @@ final class IssueListViewController: UIViewController {
         issueListCollectionView.isEditing = isEditing
     }
     
-    @IBAction func onNavigationLeftBarButtonPressed(_ sender: Any) {
+    @IBAction func onNavigationLeftBarBtnPressed(_ sender: Any) {
         if isEditing {
             // left bar button = Select all / Deselect all
             if selectedItems > 0 { deselectAllItems() }
@@ -102,14 +102,14 @@ final class IssueListViewController: UIViewController {
             // destinationVC.router?.filterData? = filterData : 영렬님과 상의
         }
     }
-  
-    @IBAction func onCloseIssueButtonPressed(_ sender: Any) {
+    
+    @IBAction func selectedClosebutton(_ sender: Any) {
         guard let selectedItemsIndexPath = issueListCollectionView.indexPathsForSelectedItems else { return }
         selectedItemsIndexPath.forEach({ indexPath in
             closeIssue(at: indexPath)
         })
     }
-
+    
     private func selectAllItems() {
         let numberOfItems = issueListCollectionView.numberOfItems(inSection: 0)
         for cellPos in 0..<numberOfItems {
@@ -239,7 +239,7 @@ extension IssueListViewController: UICollectionViewDataSource {
         let displayedIssue = displayedIssues[indexPath.item]
         cell.titleLabel.text = displayedIssue.title
         cell.descriptionLabel.text = displayedIssue.content
-        if let labels: [Label] = displayedIssue.label {
+        if let labels: [IssueLabel] = displayedIssue.label {
             labels.enumerated().forEach({ (idx, labelData) in
                 let projectLabel: UIButton = cell.labelButtonCollection[idx]
                 projectLabel.setTitle(labelData.labelName, for: .normal)

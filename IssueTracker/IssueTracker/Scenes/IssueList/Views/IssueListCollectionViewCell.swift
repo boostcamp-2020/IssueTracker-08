@@ -43,5 +43,4 @@ class IssueListCollectionViewCell: UICollectionViewListCell {
         if luminance < 0.5 { label.setTitleColor(.white, for: .normal) }
         else { label.setTitleColor(.black, for: .normal) }
     }
-    
 }

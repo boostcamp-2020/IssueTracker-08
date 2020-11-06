@@ -24,7 +24,7 @@ final class NetworkService {
         }
         defaultSession.dataTask(with: requestURL) { data, response, error in
             guard let data = data,
-                  let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+               let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                 return // completion으로 경우 넘겨 주어야 함
             }
             DispatchQueue.main.async {
@@ -46,14 +46,12 @@ final class NetworkService {
         if let jsonDataExists = jsonData {
             request.httpBody = jsonDataExists
         }
-        request.httpBody = jsonData
         
         defaultSession.dataTask(with: request) { (data, response, error) in
             guard let data = data,
                   let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                 return // completion으로 경우 넘겨 주어야 함
             }
-            
             DispatchQueue.main.async {
                 completion(data)
             }
@@ -104,4 +102,5 @@ final class NetworkService {
             
         }.resume()
     }
+    
 }

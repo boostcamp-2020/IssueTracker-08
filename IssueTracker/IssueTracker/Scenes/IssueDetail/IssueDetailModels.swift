@@ -18,8 +18,8 @@ struct IssueDetail: Decodable {
     var isOpen: Int
     var createAt: String
     var closeAt: String
-    var label: [Label]?
-    var assign: [String]?
+    var label: [IssueLabel]?
+    var assign: [IssueAssign]?
 }
 
 enum ListIssueDetail {

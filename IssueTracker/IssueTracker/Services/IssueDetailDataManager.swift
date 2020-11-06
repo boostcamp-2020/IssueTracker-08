@@ -21,7 +21,6 @@ class IssueDetailDataManager: IssueDetailDataManagerProtocol {
         let url = EndPoint.issueDetail + "/\(request.issueId)"
         NetworkService.shared.getData(url: url, completion: { data in
             guard let receivedData = try? JSONDecoder().decode(IssueDetailResponse.self, from: data) else {
-                print(2)
                 return // completion으로 경우 넘겨 주어야 함
             }
             let issueDetail = receivedData.data

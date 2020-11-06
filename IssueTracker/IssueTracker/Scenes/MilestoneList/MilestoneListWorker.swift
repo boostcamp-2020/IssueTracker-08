@@ -19,4 +19,21 @@ class MilestoneListWorker {
         })
     }
     
+    func createNewMilestone(request: CreateMilestones.CreateMilestone.Request, completion: @escaping (String) -> Void) {
+        dataManager.postNewMilestone(request: request, completion: { result in
+            completion(result)
+        })
+    }
+    
+    func editMilestone(request: CreateMilestones.EditMilestone.Request, completion: @escaping (String) -> Void) {
+        dataManager.postEditMilestone(request: request, completion: { result in
+            completion(result)
+        })
+    }
+    
+    func deleteMilestone(request: DeleteMilestones.DeleteMilestone.Request, completion: @escaping (String) -> Void) {
+        dataManager.deleteMilestone(request: request, completion: { result in
+            completion(result)
+        })
+    }
 }
