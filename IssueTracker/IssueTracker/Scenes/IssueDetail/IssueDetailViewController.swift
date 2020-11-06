@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol IssueDetailDisplayLogic: class {
+    func displayOpenIssue(viewModel: ListIssueDetail.FetchDetail.ViewModel)
+}
+
 class IssueDetailViewController: UIViewController {
     // MARK:- CardView Variable
     enum CardState {
@@ -30,15 +34,38 @@ class IssueDetailViewController: UIViewController {
     
     // MARK:- Other Variable
     
+    @IBOutlet weak var userIdLabel: UILabel!
+    @IBOutlet weak var issueTag: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet var openStatus: [UIButton]!
+    
+    var interactor: IssueDetailBusinessLogic?
+    var router: (IssueDetailDataReceiving)?
+    var displayIssue: ListIssueDetail.FetchDetail.ViewModel?
     @IBOutlet weak var IssueDetailCollectionView: UICollectionView!
     
     // MARK:- View Lifecycle
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCard()
         setupCollectionview()
         tabbarSetup(AccessType: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        fetchIssue()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -49,6 +76,18 @@ class IssueDetailViewController: UIViewController {
 
 // MARK:- Setup
 extension IssueDetailViewController {
+    func setup() {
+        let viewController = self
+        let interactor = IssueDetailInteractor()
+        let presenter = IssueDetailPresenter()
+        let router = IssueDetailRouter()
+        viewController.interactor = interactor
+        viewController.router = router
+        interactor.presenter = presenter
+        presenter.viewController = viewController
+        router.viewController = viewController
+    }
+    
     func setupCollectionview() {
         let config = UICollectionLayoutListConfiguration(appearance: .plain)
         let layout = UICollectionViewCompositionalLayout.list(using: config)
@@ -65,6 +104,16 @@ extension IssueDetailViewController {
             self.tabBarController!.tabBar.frame.origin.y = view.frame.height + tabberHeight
         } else {
             self.tabBarController!.tabBar.frame.origin.y = view.frame.height - tabberHeight
+        }
+    }
+    
+    private func viewSetup() {
+        userIdLabel.text = displayIssue!.displayedDetail.name
+        issueTag.text = "#\(displayIssue!.displayedDetail.issueId)"
+        titleLabel.text = displayIssue!.displayedDetail.title
+        if displayIssue!.displayedDetail.isOpen != 1 {
+            openStatus[0].isHidden = true
+            openStatus[1].isHidden = false
         }
     }
 }
@@ -182,17 +231,41 @@ extension IssueDetailViewController {
     }
 }
 
+// MARK:- Implement IssueDetailDisplayLogic
+
+extension IssueDetailViewController: IssueDetailDisplayLogic {
+    func displayOpenIssue(viewModel: ListIssueDetail.FetchDetail.ViewModel) {
+        displayIssue = viewModel
+        viewSetup()
+        IssueDetailCollectionView.reloadData()
+    }
+    
+    private func fetchIssue() {
+        let request = ListIssueDetail.FetchDetail.Request(issueId: router!.issueDetailData!)
+        interactor?.fetchIssue(request: request)
+    }
+}
+
+
 // MARK:- Collection View
 
 extension IssueDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let identifier = "detailCell"
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? IssueDetailCollectionViewCell else {
             return UICollectionViewCell()
+        }
+        
+        if indexPath.item == 0 && displayIssue != nil {
+            cell.userID.text = displayIssue!.displayedDetail.name
+            cell.timeDifference.text = FormattedDifferenceDateString(dueDate: displayIssue!.displayedDetail.createAt)
+            cell.content.text = displayIssue!.displayedDetail.content
+        } else {
+            
         }
         
         return cell

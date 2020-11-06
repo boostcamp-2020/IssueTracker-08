@@ -216,23 +216,50 @@
                                     <segue destination="Bzc-QL-d6q" kind="show" identifier="" id="br4-7g-5eE"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OgT-T1-dRX">
+                                <rect key="frame" x="0.0" y="813" width="414" height="0.0"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dae-pN-Qjc">
+                                <rect key="frame" x="0.0" y="813" width="414" height="83"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gPW-s6-qJk">
+                                        <rect key="frame" x="230" y="25" width="159" height="33"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="Close Selected Issue"/>
+                                        <connections>
+                                            <action selector="onCloseIssueButtonPressed:" destination="jDf-vm-7BY" eventType="touchUpInside" id="f6o-fp-Idi"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="gPW-s6-qJk" secondAttribute="trailing" constant="25" id="T33-wE-Esd"/>
+                                    <constraint firstItem="gPW-s6-qJk" firstAttribute="centerY" secondItem="dae-pN-Qjc" secondAttribute="centerY" id="vxA-aW-Ovg"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="3wS-rd-Ogv"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="pw1-el-ISE" firstAttribute="top" secondItem="zY4-gg-arA" secondAttribute="bottom" constant="14" id="0ZY-HP-uvm"/>
                             <constraint firstItem="wUV-Ux-NXD" firstAttribute="bottom" secondItem="3wS-rd-Ogv" secondAttribute="bottom" id="1TV-FZ-17r"/>
+                            <constraint firstAttribute="trailing" secondItem="dae-pN-Qjc" secondAttribute="trailing" id="1yZ-XR-foA"/>
                             <constraint firstItem="wUV-Ux-NXD" firstAttribute="trailing" secondItem="3wS-rd-Ogv" secondAttribute="trailing" id="2S7-c2-OgB"/>
                             <constraint firstItem="wUV-Ux-NXD" firstAttribute="trailing" secondItem="3wS-rd-Ogv" secondAttribute="trailing" id="AGe-88-6OS"/>
                             <constraint firstItem="wUV-Ux-NXD" firstAttribute="bottom" secondItem="3wS-rd-Ogv" secondAttribute="bottom" id="E3P-BN-69x"/>
                             <constraint firstItem="wUV-Ux-NXD" firstAttribute="top" secondItem="pw1-el-ISE" secondAttribute="bottom" id="Het-DM-CEB"/>
                             <constraint firstItem="wUV-Ux-NXD" firstAttribute="top" secondItem="pw1-el-ISE" secondAttribute="bottom" id="ISb-zY-X9V"/>
                             <constraint firstItem="3wS-rd-Ogv" firstAttribute="bottom" secondItem="k5o-Gz-RoK" secondAttribute="bottom" constant="25" id="J4I-Za-dqe"/>
+                            <constraint firstItem="dae-pN-Qjc" firstAttribute="top" secondItem="wUV-Ux-NXD" secondAttribute="bottom" id="Je2-Ou-V3q"/>
                             <constraint firstItem="wUV-Ux-NXD" firstAttribute="leading" secondItem="3wS-rd-Ogv" secondAttribute="leading" id="LtB-aZ-HVa"/>
                             <constraint firstItem="pw1-el-ISE" firstAttribute="leading" secondItem="3wS-rd-Ogv" secondAttribute="leading" id="SqV-Av-nKC"/>
                             <constraint firstItem="3wS-rd-Ogv" firstAttribute="trailing" secondItem="k5o-Gz-RoK" secondAttribute="trailing" constant="25" id="UUH-Ml-dTo"/>
+                            <constraint firstAttribute="bottom" secondItem="dae-pN-Qjc" secondAttribute="bottom" id="WQT-g5-z9i"/>
                             <constraint firstItem="zY4-gg-arA" firstAttribute="top" secondItem="3wS-rd-Ogv" secondAttribute="top" constant="14" id="Wrh-6t-hrj"/>
                             <constraint firstItem="zY4-gg-arA" firstAttribute="leading" secondItem="3wS-rd-Ogv" secondAttribute="leading" constant="14" id="YSE-jT-RD8"/>
+                            <constraint firstItem="dae-pN-Qjc" firstAttribute="leading" secondItem="4dH-4G-Hoa" secondAttribute="leading" id="cd5-t5-DEG"/>
                             <constraint firstItem="wUV-Ux-NXD" firstAttribute="leading" secondItem="3wS-rd-Ogv" secondAttribute="leading" id="iPa-M6-XdK"/>
                             <constraint firstItem="pw1-el-ISE" firstAttribute="trailing" secondItem="3wS-rd-Ogv" secondAttribute="trailing" id="lUq-47-T3D"/>
                         </constraints>
@@ -250,6 +277,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="closeIssueButton" destination="gPW-s6-qJk" id="zbX-Us-ga8"/>
                         <outlet property="issueListCollectionView" destination="wUV-Ux-NXD" id="GZI-YQ-oGf"/>
                         <outlet property="newIssueButton" destination="k5o-Gz-RoK" id="U1W-lj-OP2"/>
                         <outlet property="titleLabel" destination="zY4-gg-arA" id="hav-d8-kKC"/>
@@ -368,7 +396,7 @@
                                                     <color key="textColor" red="0.38823529411764707" green="0.38823529411764707" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="510-69-n9T">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="510-69-n9T">
                                                     <rect key="frame" x="20" y="60" width="374" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
@@ -522,6 +550,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="IssueDetailCollectionView" destination="IVS-is-GqM" id="xkG-GB-7Tx"/>
+                        <outlet property="issueTag" destination="7k3-TI-y7l" id="EKB-2f-5mJ"/>
+                        <outlet property="titleLabel" destination="dpx-y4-Qn1" id="hf3-XG-nZZ"/>
+                        <outlet property="userIdLabel" destination="pqu-BY-HGz" id="Vbq-Hi-1GT"/>
+                        <outletCollection property="openStatus" destination="xYD-LS-3p2" collectionClass="NSMutableArray" id="AzM-wI-Tjk"/>
+                        <outletCollection property="openStatus" destination="FK7-ky-flM" collectionClass="NSMutableArray" id="3zM-W1-RSe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wkb-6v-ChG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1073,6 +1106,9 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

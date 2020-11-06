@@ -10,14 +10,20 @@ import UIKit
 
 @objc protocol IssueListRoutingLogic {
     func routeToFilter(segue: UIStoryboardSegue?)
+    func routeToIssue(destinationVC: IssueDetailViewController)
 }
 
 protocol IssueListDataPassing {
     var filterData: ListFilter.IssueFilterData? { get set }
 }
 
-class IssueListRouter: NSObject, IssueListRoutingLogic, IssueListDataPassing {
+protocol IssueDetailDataPassing {
+    var issueDetailData: Int? { get set }
+}
+
+class IssueListRouter: NSObject, IssueListRoutingLogic, IssueListDataPassing, IssueDetailDataPassing {
     var filterData: ListFilter.IssueFilterData?
+    var issueDetailData: Int?
     weak var viewController: IssueListViewController?
     
     func routeToFilter(segue: UIStoryboardSegue?) {
@@ -29,6 +35,10 @@ class IssueListRouter: NSObject, IssueListRoutingLogic, IssueListDataPassing {
             let destinationVC = viewController?.storyboard?.instantiateViewController(withIdentifier: "IssueFilter") as! IssueFilterTableViewController
             destinationVC.router?.filterData? = filterData!
         }
+    }
+    
+    func routeToIssue(destinationVC: IssueDetailViewController) {
+        destinationVC.router?.issueDetailData = issueDetailData
     }
 }
 
