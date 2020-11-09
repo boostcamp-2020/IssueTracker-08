@@ -18,4 +18,7 @@ enum EndPoint {
     static let labels: String = "\(Self.baseURL)/api/labels"
     static let issueDetail: String = "\(Self.baseURL)/api/issues"
     static let comments: String = "\(Self.issueDetail)/comment"
+    
+    static let client_id: String = "1edc44dc04e002d49258" // token
+    static let client_secret: String = "4833cbbcfa271a8db4e92f246776bae5afba46f0"
 }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,6 +21,10 @@
 		80112647255282B90016B381 /* PopupItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80112646255282B90016B381 /* PopupItem.swift */; };
 		80163C6E254FF5070073AAD5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80163C6D254FF5070073AAD5 /* NetworkService.swift */; };
 		80163C73255009450073AAD5 /* CustomAddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80163C72255009450073AAD5 /* CustomAddButton.swift */; };
+		80245255255910240029AB25 /* OctoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 80245254255910240029AB25 /* OctoKit */; };
+		80245274255988BB0029AB25 /* SignInModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80245273255988BB0029AB25 /* SignInModel.swift */; };
+		8024527925598D210029AB25 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8024527825598D210029AB25 /* EndPoint.swift */; };
+		8024528125598EF70029AB25 /* OAuthGithubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8024528025598EF70029AB25 /* OAuthGithubManager.swift */; };
 		8042B7E7254BA1C700910C6F /* UIColor+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7E6254BA1C700910C6F /* UIColor+HexString.swift */; };
 		8042B7F9254BAC3D00910C6F /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7F8254BAC3D00910C6F /* SignInViewController.swift */; };
 		8042B7FE254BAD7A00910C6F /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7FD254BAD7A00910C6F /* RootCoordinator.swift */; };
@@ -38,7 +42,6 @@
 		BD5B1FF62557AB5200642483 /* IssueEnrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B1FF52557AB5200642483 /* IssueEnrollViewController.swift */; };
 		BD5B1FFE2557ACFE00642483 /* CALayer+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B1FFD2557ACFE00642483 /* CALayer+Border.swift */; };
 		BD5D411E254FD6D5008BCB36 /* LabelListModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D411D254FD6D5008BCB36 /* LabelListModels.swift */; };
-		BD5D4123254FD70F008BCB36 /* OAuthNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4122254FD70F008BCB36 /* OAuthNetworkManager.swift */; };
 		BD5D412D254FDA85008BCB36 /* MilestoneListModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4128254FDA85008BCB36 /* MilestoneListModels.swift */; };
 		BD5D412E254FDA85008BCB36 /* MilestoneListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4129254FDA85008BCB36 /* MilestoneListInteractor.swift */; };
 		BD5D412F254FDA85008BCB36 /* MilestoneCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D412A254FDA85008BCB36 /* MilestoneCollectionViewController.swift */; };
@@ -108,6 +111,9 @@
 		80112646255282B90016B381 /* PopupItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupItem.swift; sourceTree = "<group>"; };
 		80163C6D254FF5070073AAD5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		80163C72255009450073AAD5 /* CustomAddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAddButton.swift; sourceTree = "<group>"; };
+		80245273255988BB0029AB25 /* SignInModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInModel.swift; sourceTree = "<group>"; };
+		8024527825598D210029AB25 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
+		8024528025598EF70029AB25 /* OAuthGithubManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthGithubManager.swift; sourceTree = "<group>"; };
 		8042B7E6254BA1C700910C6F /* UIColor+HexString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexString.swift"; sourceTree = "<group>"; };
 		8042B7F8254BAC3D00910C6F /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		8042B7FD254BAD7A00910C6F /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
@@ -124,7 +130,6 @@
 		BD5B1FF52557AB5200642483 /* IssueEnrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueEnrollViewController.swift; sourceTree = "<group>"; };
 		BD5B1FFD2557ACFE00642483 /* CALayer+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Border.swift"; sourceTree = "<group>"; };
 		BD5D411D254FD6D5008BCB36 /* LabelListModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListModels.swift; sourceTree = "<group>"; };
-		BD5D4122254FD70F008BCB36 /* OAuthNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthNetworkManager.swift; sourceTree = "<group>"; };
 		BD5D4128254FDA85008BCB36 /* MilestoneListModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneListModels.swift; sourceTree = "<group>"; };
 		BD5D4129254FDA85008BCB36 /* MilestoneListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneListInteractor.swift; sourceTree = "<group>"; };
 		BD5D412A254FDA85008BCB36 /* MilestoneCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneCollectionViewController.swift; sourceTree = "<group>"; };
@@ -160,6 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80245255255910240029AB25 /* OctoKit in Frameworks */,
 				A199FF356F7D518199628888 /* Pods_IssueTracker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -277,6 +283,7 @@
 			children = (
 				8042B7F8254BAC3D00910C6F /* SignInViewController.swift */,
 				8042B7FD254BAD7A00910C6F /* RootCoordinator.swift */,
+				80245273255988BB0029AB25 /* SignInModel.swift */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -314,12 +321,13 @@
 			isa = PBXGroup;
 			children = (
 				80AA072A254A8A0600086F5F /* issue.json */,
-				BD5D4122254FD70F008BCB36 /* OAuthNetworkManager.swift */,
 				80AA0722254A88DF00086F5F /* IssueDataManager.swift */,
 				BD5D413D254FDAF3008BCB36 /* MilestoneDataManager.swift */,
 				80163C6D254FF5070073AAD5 /* NetworkService.swift */,
 				BD71231D25519FA000D5D195 /* LabelDataManager.swift */,
 				BDCC5DD62554F538003C9607 /* IssueDetailDataManager.swift */,
+				8024527825598D210029AB25 /* EndPoint.swift */,
+				8024528025598EF70029AB25 /* OAuthGithubManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -444,6 +452,9 @@
 			dependencies = (
 			);
 			name = IssueTracker;
+			packageProductDependencies = (
+				80245254255910240029AB25 /* OctoKit */,
+			);
 			productName = IssueTracker;
 			productReference = 800666C62547D24200B42428 /* IssueTracker.app */;
 			productType = "com.apple.product-type.application";
@@ -518,6 +529,9 @@
 				Base,
 			);
 			mainGroup = 800666BD2547D24200B42428;
+			packageReferences = (
+				80245253255910240029AB25 /* XCRemoteSwiftPackageReference "octokit" */,
+			);
 			productRefGroup = 800666C72547D24200B42428 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -671,6 +685,8 @@
 				BDCC5DE62554F632003C9607 /* IssueDetailModels.swift in Sources */,
 				8042B7F9254BAC3D00910C6F /* SignInViewController.swift in Sources */,
 				29EC91AC25511E29007B59A0 /* IssueFilterRouter.swift in Sources */,
+				8024527925598D210029AB25 /* EndPoint.swift in Sources */,
+				80245274255988BB0029AB25 /* SignInModel.swift in Sources */,
 				BD5D4131254FDA85008BCB36 /* MilestoneListWorker.swift in Sources */,
 				BDCC5DE72554F632003C9607 /* IssueDetailPresenter.swift in Sources */,
 				80163C73255009450073AAD5 /* CustomAddButton.swift in Sources */,
@@ -686,12 +702,12 @@
 				80AA07032549ED4700086F5F /* IssueListCollectionViewCell.swift in Sources */,
 				80AA071C254A846800086F5F /* IssueListWorker.swift in Sources */,
 				800666CE2547D24200B42428 /* PopUpViewController.swift in Sources */,
+				8024528125598EF70029AB25 /* OAuthGithubManager.swift in Sources */,
 				BD5D4130254FDA85008BCB36 /* MilestoneListPresenter.swift in Sources */,
 				80112647255282B90016B381 /* PopupItem.swift in Sources */,
 				BD5D4164254FDE4D008BCB36 /* IssueFilterTableViewController.swift in Sources */,
 				8042B7FE254BAD7A00910C6F /* RootCoordinator.swift in Sources */,
 				BDCC5DE92554F632003C9607 /* CardViewController.swift in Sources */,
-				BD5D4123254FD70F008BCB36 /* OAuthNetworkManager.swift in Sources */,
 				80AA07172549F0F800086F5F /* IssueListRouter.swift in Sources */,
 				BD5D414F254FDCFA008BCB36 /* LabelListWorker.swift in Sources */,
 				80AA06F72549D09F00086F5F /* IssueListViewController.swift in Sources */,
@@ -1051,6 +1067,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		80245253255910240029AB25 /* XCRemoteSwiftPackageReference "octokit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nerdishbynature/octokit.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		80245254255910240029AB25 /* OctoKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80245253255910240029AB25 /* XCRemoteSwiftPackageReference "octokit" */;
+			productName = OctoKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 800666BE2547D24200B42428 /* Project object */;
 }
