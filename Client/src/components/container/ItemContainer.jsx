@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Container = styled.table`
-  display: flex;
+const Container = styled.div`
   width: 100%;
-  border: 1px solid #ebecef;
+  border: 0px solid #ebecef;
   border-radius: 4px;
+  padding: 0px;
   margin-top: 30px;
 `;
 

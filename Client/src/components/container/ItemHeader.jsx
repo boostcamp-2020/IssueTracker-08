@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Header = styled.th`
+const Header = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
-  height: 50px;
+  height: 40px;
   border: 1px solid #ebecef;
-  background: #ebecef;
+  background: #f6f8fa;
   padding: 10px;
 `;
 
