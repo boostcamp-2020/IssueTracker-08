@@ -9,6 +9,30 @@
 
 -----
 
+## `💻 Sprint #2 - Day5`
+
+### 📌 [FE] Sprint 2에서 개발한 feature branch -> Dev-Client로 Merge 진행
+- [dev-client <- feat-issue-create-ui](https://github.com/boostcamp-2020/IssueTracker-08/pull/189)
+- [dev-client <- feat-issue-detail-ui](https://github.com/boostcamp-2020/IssueTracker-08/pull/190)
+- [dev-client <- feat-issue-ui](https://github.com/boostcamp-2020/IssueTracker-08/pull/192)
+<br/>
+
+### 📌 JS tag 적용 내역
+* [FE] Client 프로젝트 구축
+   - [AS-IS] github 로그인 페이지, Main 페이지, 이슈 상세 페이지, 이슈 등록 기능 가능
+* [BE] API Cors 설정 적용
+* [BE] API 기능 추가 및 개선
+   - [AS-IS] Issue & Comment Assignee 정보 추가 반환
+   - [AS-IS] status가 fail인 경우 status 값만 넘기도록 수정
+   - [AS-IS] Github 가입시 새로운 user 생성시 imageURL 문제 수정
+   - [AS-IS] 모든 사용자(Assignee)를 반환해주는 API 추가 
+   - [AS-IS] Milestone 정보 반환 API 추가
+   - [AS-IS] Issue 삭제 API 추가
+   - [AS-IS] 로그인 여부 반환하는 API 추가
+   - [AS-IS] label get API 추가
+<br/>
+
+
 ## `💻 Sprint #2 - Day4`
 ### 📌 [FE] 로그인 여부에 따른 이동 페이지 설정 ✨
 - 참고 코드: `/shared/App.jsx`
