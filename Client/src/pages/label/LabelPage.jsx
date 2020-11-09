@@ -4,6 +4,7 @@ import ItemContainer from '../../components/container/ItemContainer';
 import ItemHeader from '../../components/container/ItemHeader';
 import Title from '../../components/text/Title';
 import Menu from '../../components/Menu';
+import LabelContainer from '../../components/container/LabelContainer';
 
 export default function LabelPage() {
   return (
@@ -11,8 +12,13 @@ export default function LabelPage() {
       <Menu name="label" link="/label"></Menu>
       <ItemContainer>
         <ItemHeader>
-          <Title text="labels" />
+          <Title text={'labels'} />
         </ItemHeader>
+        <LabelContainer
+          name="라벨 이름"
+          color="#123456"
+          description="라벨 설명"
+        ></LabelContainer>
       </ItemContainer>
     </Container>
   );
