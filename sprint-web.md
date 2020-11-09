@@ -9,6 +9,25 @@
 
 -----
 
+## `💻 Sprint #3 - Day1`
+### 📌 [FE] 스프린트3 역할 분배 및 이슈 생성
+- [역할 분배 참조](https://docs.google.com/spreadsheets/d/19wkM--KlfBSZAe7_RBzZKZ5Rq0YNnLkuxhtWNhTGxDA/edit#gid=0)
+<br/>
+
+### 📌[FE] 구현 사항
+- [Header Link 추가](https://github.com/boostcamp-2020/IssueTracker-08/commit/849318da139dba939b482645f30449f9d219f835)
+- [babel-polyfill 적용](https://github.com/boostcamp-2020/IssueTracker-08/commit/ada3c7dc01d24fa4b1cd178ea90bba413ef880de)
+  - runtime에 babel 문법 변환이 일어나도록 babel-polyfill을 적용
+  - babel-polyfill을 적용하지 않는 경우, chrome에서 regeneratorRuntime 에러가 발생하여 적용
+- [이슈 내용 작성 시 현재 입력된 글자 수 표현 기능 구현](https://github.com/boostcamp-2020/IssueTracker-08/commit/712055e06dcdb25f7ef8e27b60f2003fc437ca2a)
+   - 요구사항은 2초 간격이었지만, 텀이 너무 긴 것 같아 0.5초 간격으로 글자 수를 체킹하도록 구현
+<br/>
+
+### 📌 [FE] github 로그인 기능 구현 중
+<br/>
+
+<hr />
+
 ## `💻 Sprint #2 - Day5`
 
 ### 📌 [FE] Sprint 2에서 개발한 feature branch -> Dev-Client로 Merge 진행
@@ -31,7 +50,6 @@
    - [AS-IS] 로그인 여부 반환하는 API 추가
    - [AS-IS] label get API 추가
 <br/>
-
 
 ## `💻 Sprint #2 - Day4`
 ### 📌 [FE] 로그인 여부에 따른 이동 페이지 설정 ✨
