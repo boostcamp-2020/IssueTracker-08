@@ -20,12 +20,16 @@ const Button = styled.button`
   margin-left: 20px;
 `;
 
+const StyledLink = styled(Link)`
+  margin-left: auto;
+`;
+
 const NewButton = (props) => {
   return (
     <>
-      <Link to={props.link}>
+      <StyledLink to={props.link}>
         <Button>{'New ' + props.name}</Button>
-      </Link>
+      </StyledLink>
     </>
   );
 };

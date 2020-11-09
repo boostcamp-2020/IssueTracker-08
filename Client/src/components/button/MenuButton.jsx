@@ -1,21 +1,31 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const ButtonContainer = styled.button`
   display: flex;
   justify-content: center;
   width: 140px;
-  background-color: white;
   border-radius: 3px;
   border: 1px solid #dcdcdc;
   cursor: pointer;
-  color: #666666;
   font-size: 15px;
   font-weight: bold;
   padding: 10px;
   text-decoration: none;
-  text-shadow: 0px 1px 0px #ffffff;
+  background: white;
+  ${(props) =>
+    props.colorType === 'white' &&
+    css`
+      background: white;
+      color: #666666;
+    `};
+  ${(props) =>
+    props.colorType === 'blue' &&
+    css`
+      background: #1066d6;
+      color: white;
+    `};
 `;
 
 const ButtonIcon = styled.img`
@@ -38,7 +48,7 @@ const MenuButton = (props) => {
   return (
     <>
       <StyledLink to={props.link}>
-        <ButtonContainer>
+        <ButtonContainer colorType={props.color}>
           <ButtonIcon src={props.img} />
           {props.name}
         </ButtonContainer>
