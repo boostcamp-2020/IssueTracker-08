@@ -5,21 +5,30 @@
 //  Created by 김영렬 on 2020/10/26.
 //
 import UIKit
+import OctoKit
 import AuthenticationServices
 
+
 class SignInViewController: UIViewController {
+    
+    // MARK:- IBOutlets
     @IBOutlet var AuthSignInStackView: UIStackView!
+    
+    // MARK:- Properties
+    var githubManager: GithubManager?
+    let appleSignInButton = ASAuthorizationAppleIDButton()
+    let githubSignInButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSignInButton()
+        githubManager = OAuthGithubManager()
+        githubManager?.viewController = self
     }
 
     private func setupSignInButton() {
-        // view로 이동
-        let appleSignInButton = ASAuthorizationAppleIDButton()
-        let githubSignInButton = UIButton()
-        appleSignInButton.addTarget(self, action: #selector(handleSignInPress), for: .touchUpInside)
+        appleSignInButton.addTarget(self, action: #selector(handleAppleSignInPress), for: .touchUpInside)
+        githubSignInButton.addTarget(self, action: #selector(handleGithubSignInPress), for: .touchUpInside)
         appleSignInButton.translatesAutoresizingMaskIntoConstraints = false
         appleSignInButton.widthAnchor.constraint(equalToConstant: 300).isActive = true
         appleSignInButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -33,7 +42,7 @@ class SignInViewController: UIViewController {
         AuthSignInStackView.addArrangedSubview(appleSignInButton)
     }
     
-    @objc func handleSignInPress() {
+    @objc func handleAppleSignInPress() {
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -43,6 +52,11 @@ class SignInViewController: UIViewController {
         controller.presentationContextProvider = self
         controller.performRequests()
     }
+    
+    @objc func handleGithubSignInPress() {
+        githubManager?.signInWithGithub()
+    }
+    
 }
 
 extension SignInViewController: ASAuthorizationControllerDelegate {
@@ -58,12 +72,21 @@ extension SignInViewController: ASAuthorizationControllerDelegate {
     }
   
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("error")
+        //print("error")
     }
 }
 
-extension SignInViewController: ASAuthorizationControllerPresentationContextProviding {
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return self.view.window!
+// Github
+extension SignInViewController: ASWebAuthenticationPresentationContextProviding {
+    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        return self.view.window ?? ASPresentationAnchor()
     }
 }
+
+// Apple
+extension SignInViewController: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window ?? ASPresentationAnchor()
+    }
+}
+
