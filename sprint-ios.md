@@ -1,3 +1,88 @@
+## **`Sprint #3 - Day1`**
+
+### 결과화면
+
+| Issue List Search | MarkDown View | Date-Time Picker |
+| -------- | -------- | -------- |
+| <img width = 350, src = "https://i.imgur.com/ZqezevL.gif">    | <img width = 350, src = "https://i.imgur.com/PhoJEUD.gif">     | <img width = 350, src = "https://i.imgur.com/qypX8Yw.gif"> 
+
+| Github OAuth Response Data Example|
+| -------- | 
+| <img width = 700, src = "https://i.imgur.com/IbBRgoj.png"> 
+
+
+### Github SignIn
+* OctoKit의 authorize를 통해 apiEndpoint와 accessToken 값을 구함
+* 두 값과 URLSession을 이용해 user의 정보를 response 로 받아 옴
+* 알고 있는 정보들을 server에게 전송하여 JWT Token을 발급 받을 예정
+
+
+### Search
+* search bar가 비었는지, 작성 중인지 판단하여 search 기능을 쓰고 있으면 검색 진행
+* search controller를 사용
+* UISearchResultUpdating 구현
+    ```swift
+    extension IssueListViewController: UISearchResultsUpdating {
+
+        func updateSearchResults(for searchController: UISearchController) {
+            let searchBar = searchController.searchBar
+            filterContentForSearchText(searchBar.text!)
+        }
+
+        func filterContentForSearchText(_ searchText: String) {
+            filteredIssues = displayedIssues.filter({ (issue: IssueViewModel) -> Bool in
+                return issue.title.lowercased().contains(searchText.lowercased()) || issue.content.lowercased().contains(searchText.lowercased())
+            })
+            issueListCollectionView.reloadData()
+        }
+
+    }
+    ```
+
+
+### IssueEnroll Controller 
+* 제약 조건 추가
+    * 기존에 주어지지 않았던 제약조건 추가
+    * 입력할 수 있는 TextView 크기는 협의 예정
+
+* MarkDownView Pod
+    * 입력한 결과를 Preview Segment에서 MarkDown 확인 기능 추가
+    * 링크를 들어갈 수 있도록 SafariServices import
+    
+    ```swift
+    markdownView.onTouchLink = { [weak self] request in
+        guard let url = request.url else { return false }
+
+        if url.scheme == "file" {
+            return true
+        } else if url.scheme == "https" {
+        let safari = SFSafariViewController(url: url)
+        self?.present(safari, animated: true, completion: nil)
+            return false
+        } else {
+            return false
+        }
+    }
+                
+    markdownView.load(markdown: textDescription.text, enableImage: true)
+    ```
+
+* TextView Field
+    * UITextViewDelegate를 채택하여 placeHolder 추가
+
+### PopUpView
+* Color Error 수정
+    * 크기가 6이 아닐 경우 Alert
+    * 000000~FFFFFF값이 아닐 경우 Alert
+
+* Date-Time Picker
+    * 정확한 시간을 보내줄 수 있도록 Picker 이용
+    * 배경색을 바꿔주기 위해 subview에 들어가 변경
+    ```swift
+    datePicker.subviews[0].subviews[0].backgroundColor = .white
+    datePicker.subviews[0].subviews[1].backgroundColor = .white    
+    ```
+
 ## **`Sprint #2 - Day4`**
 
 ### 결과화면
