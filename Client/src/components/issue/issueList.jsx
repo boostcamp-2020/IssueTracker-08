@@ -27,9 +27,9 @@ const IssueList = () => {
           <IssueTemplate key={issue.issueId} issue={issue} />
         ))
       ) : (
-        <Style.NoResultsBox>
+        <Style.NoIssueResult>
           <span>No results matched your search.</span>
-        </Style.NoResultsBox>
+        </Style.NoIssueResult>
       )}
     </div>
   );

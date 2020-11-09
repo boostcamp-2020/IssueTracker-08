@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export default {
-  NoResultsBox: styled.div`
+  NoIssueResult: styled.div`
     height: 300px;
     display: flex;
     font-size: 25px;
