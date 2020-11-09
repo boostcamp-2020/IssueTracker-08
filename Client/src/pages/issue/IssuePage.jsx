@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+
 import MenuButton from '../../components/MenuButton';
+import IssueListInfo from '../../components/issue/issueMain';
 
 const Container = styled.div`
   display: flex;
@@ -15,15 +17,6 @@ const Container = styled.div`
 const IssueMenu = styled.div`
   display: flex;
   justify-content: space-between;
-`;
-
-const IssueList = styled.div`
-  display: flex;
-  width: 100%;
-  border: 1px solid #ebecef;
-  border-radius: 4px;
-  padding: 10px;
-  margin-top: 30px;
 `;
 
 const MenuDiv = styled.div`
@@ -100,9 +93,7 @@ export default function IssuePage() {
           </Link>
         </MenuDiv>
       </IssueMenu>
-      <IssueList>
-        <div>TODO : 이슈 목록 코드를 구현해주세요.</div>
-      </IssueList>
+      <IssueListInfo />
     </Container>
   );
 }
