@@ -58,7 +58,7 @@ extension IssueListPresenter {
         return "No description provided"
     }
     
-    private func configureLabel(labels: [Label]?) -> [Label]? {
+    private func configureLabel(labels: [IssueLabel]?) -> [IssueLabel]? {
         if let labels = labels {
             if labels.count > 2 { return [labels[0], labels[1]] }
             else { return labels }

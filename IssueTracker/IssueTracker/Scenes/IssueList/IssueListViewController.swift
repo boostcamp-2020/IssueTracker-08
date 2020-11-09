@@ -18,14 +18,18 @@ final class IssueListViewController: UIViewController {
     // MARK:- IBOutlets
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var newIssueButton: CustomAddButton!
-    @IBOutlet weak var issueListCollectionView: UICollectionView!
     @IBOutlet weak var closeIssueButton: UIButton!
+    @IBOutlet weak var issueListCollectionView: UICollectionView!
+   
+    let searchController = UISearchController(searchResultsController: nil)
    
     // MARK:- Properties
+    typealias IssueViewModel = ListIssues.FetchLists.ViewModel.DisplayedIssue
     var filterData = ListFilter.IssueFilterData()
     var interactor: IssueListBusinessLogic?
     var router: (NSObjectProtocol & IssueListRoutingLogic & IssueListDataPassing & IssueDetailDataPassing)?
-    var displayedIssues: [ListIssues.FetchLists.ViewModel.DisplayedIssue] = []
+    var displayedIssues: [IssueViewModel] = []
+    var filteredIssues: [IssueViewModel] = []
     override var isEditing: Bool {
         willSet {
             if newValue { setupEditMode() }
@@ -34,15 +38,23 @@ final class IssueListViewController: UIViewController {
     }
     var selectedItems: Int = 0 {
         willSet {
-            titleLabel.text = "\(newValue) Selected"
-            if newValue > 0 {
-                closeIssueButton.isEnabled = true
-                navigationItem.leftBarButtonItem?.title = "Deselect All"
-            } else {
-                closeIssueButton.isEnabled = false
-                navigationItem.leftBarButtonItem?.title = "Select All"
+            if isEditing {
+                titleLabel.text = "\(newValue) Selected"
+                if newValue > 0 {
+                    closeIssueButton.isEnabled = true
+                    navigationItem.leftBarButtonItem?.title = "Deselect All"
+                } else {
+                    closeIssueButton.isEnabled = false
+                    navigationItem.leftBarButtonItem?.title = "Select All"
+                }
             }
         }
+    }
+    var isSearchBarEmpty: Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    var isFiltering: Bool {
+        return searchController.isActive && !isSearchBarEmpty
     }
     
     // MARK:- Object Lifecycle
@@ -70,6 +82,7 @@ final class IssueListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupSearchController()
         setupCollectionview()
         setupNormalMode()
     }
@@ -86,7 +99,7 @@ final class IssueListViewController: UIViewController {
         issueListCollectionView.isEditing = isEditing
     }
     
-    @IBAction func onNavigationLeftBarButtonPressed(_ sender: Any) {
+    @IBAction func onNavigationLeftBarBtnPressed(_ sender: Any) {
         if isEditing {
             // left bar button = Select all / Deselect all
             if selectedItems > 0 { deselectAllItems() }
@@ -100,14 +113,14 @@ final class IssueListViewController: UIViewController {
             // destinationVC.router?.filterData? = filterData : 영렬님과 상의
         }
     }
-  
-    @IBAction func onCloseIssueButtonPressed(_ sender: Any) {
+    
+    @IBAction func selectedClosebutton(_ sender: Any) {
         guard let selectedItemsIndexPath = issueListCollectionView.indexPathsForSelectedItems else { return }
         selectedItemsIndexPath.forEach({ indexPath in
             closeIssue(at: indexPath)
         })
     }
-
+    
     private func selectAllItems() {
         let numberOfItems = issueListCollectionView.numberOfItems(inSection: 0)
         for cellPos in 0..<numberOfItems {
@@ -143,7 +156,7 @@ extension IssueListViewController {
         router.filterData = filterData
     }
     
-    func setupCollectionview() {
+    private func setupCollectionview() {
         var config = UICollectionLayoutListConfiguration(appearance: .plain)
         config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
             let close = UIContextualAction(style: .normal, title: "Close") { (action, view, completion) in
@@ -184,6 +197,14 @@ extension IssueListViewController {
         issueListCollectionView.allowsSelection = true
     }
     
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Issues"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
+    
 }
 
 // MARK:- Implement IssueListDisplayLogic
@@ -217,6 +238,7 @@ extension IssueListViewController: IssueListDisplayLogic {
     
 }
 
+// MARK:- Data Source
 extension IssueListViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -224,6 +246,9 @@ extension IssueListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if isFiltering {
+            return filteredIssues.count
+        }
         return displayedIssues.count
     }
     
@@ -233,11 +258,12 @@ extension IssueListViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         cell.setupComponents()
-        
-        let displayedIssue = displayedIssues[indexPath.item]
+        var displayedIssue: IssueViewModel
+        if isFiltering { displayedIssue = filteredIssues[indexPath.item] }
+        else { displayedIssue = displayedIssues[indexPath.item] }
         cell.titleLabel.text = displayedIssue.title
         cell.descriptionLabel.text = displayedIssue.content
-        if let labels: [Label] = displayedIssue.label {
+        if let labels: [IssueLabel] = displayedIssue.label {
             labels.enumerated().forEach({ (idx, labelData) in
                 let projectLabel: UIButton = cell.labelButtonCollection[idx]
                 projectLabel.setTitle(labelData.labelName, for: .normal)
@@ -252,6 +278,11 @@ extension IssueListViewController: UICollectionViewDataSource {
         cell.accessories = [.multiselect(displayed: .whenEditing, options: .init()) ]
         return cell
     }
+
+}
+
+// MARK:- UICollectionViewDelegate
+extension IssueListViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if isEditing {
@@ -269,7 +300,22 @@ extension IssueListViewController: UICollectionViewDataSource {
             selectedItems -= 1
         }
     }
-
+    
 }
 
-extension IssueListViewController: UICollectionViewDelegate { }
+// MARK:- UISearchResultUpdating
+extension IssueListViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        filterContentForSearchText(searchBar.text!)
+    }
+    
+    func filterContentForSearchText(_ searchText: String) {
+        filteredIssues = displayedIssues.filter({ (issue: IssueViewModel) -> Bool in
+            return issue.title.lowercased().contains(searchText.lowercased()) || issue.content.lowercased().contains(searchText.lowercased())
+        })
+        issueListCollectionView.reloadData()
+    }
+    
+}

@@ -9,6 +9,7 @@ import Foundation
 
 protocol IssueDetailPresentationLogic {
     func presentFetchedIssue(response: ListIssueDetail.FetchDetail.Response)
+    func presentFetchedComment(response: ListComment.FetchDetail.Response)
 }
 
 class IssueDetailPresenter {
@@ -36,4 +37,20 @@ extension IssueDetailPresenter : IssueDetailPresentationLogic {
         viewController?.displayOpenIssue(viewModel: displayedIssue)
     }
     
+    func presentFetchedComment(response: ListComment.FetchDetail.Response) {
+        var displayedComments: [comment] = []
+        for comments in response.comment {
+            let displayedComment = comment (
+                commentId: comments.commentId,
+                userId: comments.userId,
+                name: comments.name,
+                imageUrl: comments.imageUrl,
+                content: comments.content,
+                createAt: comments.createAt
+            )
+            displayedComments.append(displayedComment)
+        }
+        let viewModel = ListComment.FetchDetail.ViewModel(displayedComment: displayedComments)
+        viewController?.displayComment(viewModel: viewModel)
+    }
 }

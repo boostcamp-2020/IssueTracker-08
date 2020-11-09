@@ -12,10 +12,10 @@ struct IssueListResponse: Decodable {
     var data: [Issue]
 }
 
-struct CUDResponse: Decodable {
-     var status: String
-     var data : String
- }
+struct CURDResponse: Decodable {
+    var status: String
+    var data : String
+}
 
 protocol IssueDataManagerProtocol {
     func fetchIssues(completion: @escaping ([Issue]) -> Void)
@@ -39,7 +39,7 @@ final class IssueDataManager: IssueDataManagerProtocol {
     func postCloseIssue(request: ListIssues.CloseIssue.Request, completion: @escaping (String) -> Void) {
         let closeURL = "http://118.67.131.96:3000/api/issues/close/\(request.issueId)"
         NetworkService.shared.postData(url: closeURL, jsonData: nil, completion: { data in
-            guard let receivedData = try? JSONDecoder().decode(CUDResponse.self, from: data) else {
+            guard let receivedData = try? JSONDecoder().decode(CURDResponse.self, from: data) else {
                 return }
             let result: String = receivedData.status
             completion(result)

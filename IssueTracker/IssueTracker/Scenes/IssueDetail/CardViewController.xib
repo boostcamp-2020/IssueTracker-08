@@ -84,7 +84,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemGray6Color"/>
+                    <color key="backgroundColor" systemColor="systemGray5Color"/>
                     <constraints>
                         <constraint firstItem="ZUL-eS-Tas" firstAttribute="top" secondItem="aCK-WH-yZu" secondAttribute="top" constant="7" id="8yb-t9-RYg"/>
                         <constraint firstItem="VMl-vb-fzm" firstAttribute="leading" secondItem="Vbe-8P-k54" secondAttribute="trailing" constant="3" id="9v6-dX-YYQ"/>
@@ -100,7 +100,7 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aZP-xo-opY">
                     <rect key="frame" x="0.0" y="800" width="414" height="96"/>
-                    <color key="backgroundColor" systemColor="systemGray6Color"/>
+                    <color key="backgroundColor" systemColor="systemGray5Color"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="96" id="EQH-Tj-FJ6"/>
                     </constraints>
@@ -184,7 +184,7 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemGray6Color"/>
+                    <color key="backgroundColor" systemColor="systemGray5Color"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="X5W-Mr-7jx" secondAttribute="trailing" constant="25" id="3eO-7q-DZX"/>
                         <constraint firstAttribute="trailing" secondItem="Bf6-IU-wNT" secondAttribute="trailing" constant="25" id="4RN-95-Q8e"/>
