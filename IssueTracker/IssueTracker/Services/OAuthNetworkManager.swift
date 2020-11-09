@@ -16,4 +16,5 @@ enum EndPoint {
     static let milestones: String = "\(Self.baseURL)/api/milestones/"
     static let labels: String = "\(Self.baseURL)/api/labels"
     static let issueDetail: String = "\(Self.baseURL)/api/issues"
+    static let comments: String = "\(Self.issueDetail)/comment"
 }

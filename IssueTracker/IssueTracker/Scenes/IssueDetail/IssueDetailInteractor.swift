@@ -9,16 +9,19 @@ import Foundation
 
 protocol IssueDetailBusinessLogic {
     func fetchIssue(request: ListIssueDetail.FetchDetail.Request)
+    func fetchComment(request: ListComment.FetchDetail.Request)
 }
 
 protocol IssueDetailDataSource {
     var issue: IssueDetail? { get }
+    var comment: [comment]? { get }
 }
 
 class IssueDetailInteractor {
     var presenter: IssueDetailPresentationLogic?
     var issueWorker = IssueDetailWorker(dataManager: IssueDetailDataManager())
     var issue: IssueDetail?
+    var comment: [comment]?
     var responseStatus: String?
 }
 
@@ -31,4 +34,13 @@ extension IssueDetailInteractor: IssueDetailBusinessLogic {
         })
     }
     
+    func fetchComment(request: ListComment.FetchDetail.Request) {
+        issueWorker.fetchComment(request: request, completion: { comment in
+            self.comment = comment
+            let response = ListComment.FetchDetail.Response(comment: comment)
+            self.presenter?.presentFetchedComment(response: response)
+        })
+    }
 }
+
+extension IssueDetailInteractor: IssueDetailDataSource { }

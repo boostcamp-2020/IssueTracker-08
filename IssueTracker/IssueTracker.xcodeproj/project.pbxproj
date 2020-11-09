@@ -35,6 +35,8 @@
 		80AA072B254A8A0600086F5F /* issue.json in Resources */ = {isa = PBXBuildFile; fileRef = 80AA072A254A8A0600086F5F /* issue.json */; };
 		82AEAB5DE534EAD2DDF13B50 /* Pods_IssueTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E914C3F312B834FAB1DC2FDC /* Pods_IssueTrackerTests.framework */; };
 		A199FF356F7D518199628888 /* Pods_IssueTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D018D0CA68C57EEA8CB7F764 /* Pods_IssueTracker.framework */; };
+		BD5B1FF62557AB5200642483 /* IssueEnrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B1FF52557AB5200642483 /* IssueEnrollViewController.swift */; };
+		BD5B1FFE2557ACFE00642483 /* CALayer+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B1FFD2557ACFE00642483 /* CALayer+Border.swift */; };
 		BD5D411E254FD6D5008BCB36 /* LabelListModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D411D254FD6D5008BCB36 /* LabelListModels.swift */; };
 		BD5D4123254FD70F008BCB36 /* OAuthNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4122254FD70F008BCB36 /* OAuthNetworkManager.swift */; };
 		BD5D412D254FDA85008BCB36 /* MilestoneListModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4128254FDA85008BCB36 /* MilestoneListModels.swift */; };
@@ -119,6 +121,8 @@
 		80AA0722254A88DF00086F5F /* IssueDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDataManager.swift; sourceTree = "<group>"; };
 		80AA072A254A8A0600086F5F /* issue.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = issue.json; sourceTree = "<group>"; };
 		8B3831EA6FDFCB7AA038395F /* Pods-IssueTracker-IssueTrackerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker-IssueTrackerUITests.debug.xcconfig"; path = "Target Support Files/Pods-IssueTracker-IssueTrackerUITests/Pods-IssueTracker-IssueTrackerUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		BD5B1FF52557AB5200642483 /* IssueEnrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueEnrollViewController.swift; sourceTree = "<group>"; };
+		BD5B1FFD2557ACFE00642483 /* CALayer+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Border.swift"; sourceTree = "<group>"; };
 		BD5D411D254FD6D5008BCB36 /* LabelListModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListModels.swift; sourceTree = "<group>"; };
 		BD5D4122254FD70F008BCB36 /* OAuthNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthNetworkManager.swift; sourceTree = "<group>"; };
 		BD5D4128254FDA85008BCB36 /* MilestoneListModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneListModels.swift; sourceTree = "<group>"; };
@@ -263,6 +267,7 @@
 			children = (
 				8042B7E6254BA1C700910C6F /* UIColor+HexString.swift */,
 				BD5D4142254FDBD1008BCB36 /* FormattedDateFromString.swift */,
+				BD5B1FFD2557ACFE00642483 /* CALayer+Border.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -279,6 +284,7 @@
 		80AA06F42549D07E00086F5F /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				BD5B1FF42557AB1A00642483 /* IssueEnroll */,
 				BDCC5DDB2554F60A003C9607 /* IssueDetail */,
 				BD71232B2551AAB900D5D195 /* PopUpView */,
 				BD5D415F254FDE2D008BCB36 /* IssueFilter */,
@@ -325,6 +331,14 @@
 				80163C72255009450073AAD5 /* CustomAddButton.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		BD5B1FF42557AB1A00642483 /* IssueEnroll */ = {
+			isa = PBXGroup;
+			children = (
+				BD5B1FF52557AB5200642483 /* IssueEnrollViewController.swift */,
+			);
+			path = IssueEnroll;
 			sourceTree = "<group>";
 		};
 		BD5D411C254FD611008BCB36 /* LabelList */ = {
@@ -668,6 +682,7 @@
 				BD5D4151254FDCFA008BCB36 /* LabelListInteractor.swift in Sources */,
 				BD5D413E254FDAF3008BCB36 /* MilestoneDataManager.swift in Sources */,
 				BD5D412D254FDA85008BCB36 /* MilestoneListModels.swift in Sources */,
+				BD5B1FF62557AB5200642483 /* IssueEnrollViewController.swift in Sources */,
 				80AA07032549ED4700086F5F /* IssueListCollectionViewCell.swift in Sources */,
 				80AA071C254A846800086F5F /* IssueListWorker.swift in Sources */,
 				800666CE2547D24200B42428 /* PopUpViewController.swift in Sources */,
@@ -697,6 +712,7 @@
 				800666CC2547D24200B42428 /* SceneDelegate.swift in Sources */,
 				80AA0723254A88DF00086F5F /* IssueDataManager.swift in Sources */,
 				BD5D4143254FDBD1008BCB36 /* FormattedDateFromString.swift in Sources */,
+				BD5B1FFE2557ACFE00642483 /* CALayer+Border.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -880,7 +896,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.boostcamp.8.IssueTracker;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.boostcamp.IssueTracker-8";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -900,7 +916,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.boostcamp.8.IssueTracker;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.boostcamp.IssueTracker-8";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

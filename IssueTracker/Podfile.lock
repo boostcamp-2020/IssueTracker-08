@@ -1,16 +1,20 @@
 PODS:
+  - MarkdownView (1.7.1)
   - STPopup (1.8.7)
 
 DEPENDENCIES:
+  - MarkdownView
   - STPopup
 
 SPEC REPOS:
   trunk:
+    - MarkdownView
     - STPopup
 
 SPEC CHECKSUMS:
+  MarkdownView: cf30a97ab39b2bce04406adce541972c882363bd
   STPopup: a9045557bc48a0df51fbb7bf0544447c5fe84d34
 
-PODFILE CHECKSUM: 1162b81712f99a4c31fd8ecbbd9ea454b22d301a
+PODFILE CHECKSUM: 7c435b39e5cf61e186ac5e8e0058f00827ae116c
 
 COCOAPODS: 1.9.3

@@ -124,7 +124,7 @@ extension MilestoneViewController: UICollectionViewDataSource {
         
         cell.titleLabel.setTitle(displayedMilestone.title, for: .normal)
         cell.descriptionLabel.text = displayedMilestone.content
-        cell.dateLabel.text = displayedMilestone.dueDate
+        cell.dateLabel.text = FormattedDateFromString(dueDate: displayedMilestone.dueDate ?? "") + "까지"
         
         return cell
     }
@@ -183,18 +183,18 @@ extension MilestoneViewController: MilestoneListDisplayLogic {
 
 extension MilestoneViewController: PopupMilestoneViewControllerDelegate {
     func popupViewController(_ controller: PopUpViewController, didFinishAdding item: PopupItem.MilestoneItem) {
-        let newLabel = CreateMilestones.CreateMilestone.Request(
+        let newMilestone = CreateMilestones.CreateMilestone.Request(
             milestone: CreateMilestones.MilestoneFormField(
                 title: item.title,
                 dueDate: item.dueDate,
                 content: item.content
             )
         )
-        interactor?.createNewMilestone(request: newLabel)
+        interactor?.createNewMilestone(request: newMilestone)
     }
     
     func popupViewController(_ controller: PopUpViewController, didFinishEditing item: PopupItem.EditMilestoneItem) {
-        let newLabel = CreateMilestones.EditMilestone.Request(
+        let newMilestone = CreateMilestones.EditMilestone.Request(
             index: item.id,
             milestoneFormFileds: CreateMilestones.MilestoneFormField(
                 title: item.title,
@@ -203,7 +203,7 @@ extension MilestoneViewController: PopupMilestoneViewControllerDelegate {
             )
         )
         
-        interactor?.editMilestone(request: newLabel)
+        interactor?.editMilestone(request: newMilestone)
     }
 }
 

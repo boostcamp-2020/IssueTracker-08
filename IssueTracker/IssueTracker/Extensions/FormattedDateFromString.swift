@@ -21,18 +21,18 @@ func FormattedDateFromString(dueDate: String) -> String {
     return outputDate
 }
 
-func FormattedEditDateString(dueDate: String) -> String {
+func FormattedEditDate(dueDate: String) -> Date {
     let inputFormatter = DateFormatter()
     let outputFormatter = DateFormatter()
-    inputFormatter.dateFormat = "yyyy년 MM월 dd일까지"
+    inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     var outputDate: String = ""
     
     if let date = inputFormatter.date(from: dueDate) {
-        outputFormatter.dateFormat = "yyyy-MM-dd"
+        outputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         outputDate = outputFormatter.string(from: date)
     }
     
-    return outputDate
+    return outputFormatter.date(from: outputDate)!
 }
 
 func FormattedDifferenceDateString(dueDate: String) -> String {
@@ -59,4 +59,12 @@ func FormattedDifferenceDateString(dueDate: String) -> String {
     }
     
     return "\(Int(difference)) seconds ago"
+}
+
+func FormattedDateToString(dueDate: Date) -> String {
+    let inputFormatter = DateFormatter()
+    inputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    
+    let outputDate = inputFormatter.string(from: dueDate)
+    return outputDate
 }

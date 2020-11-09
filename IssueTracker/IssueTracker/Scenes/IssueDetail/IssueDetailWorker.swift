@@ -18,4 +18,10 @@ class IssueDetailWorker {
             completion(issue)
         })
     }
+    
+    func fetchComment(request: ListComment.FetchDetail.Request, completion: @escaping ([comment]) -> Void) {
+        dataManager.fetchComment(request: request,completion: { comment in
+            completion(comment)
+        })
+    }
 }
