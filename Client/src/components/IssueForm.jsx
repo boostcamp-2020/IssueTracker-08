@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -9,7 +9,7 @@ const FileAttachMsg =
   'Attach files by dragging & dropping, selecting or pasting them.';
 
 const IssueFormContainer = styled.div`
-  width: 70%;
+  width: 80%;
   margin: auto;
   border: 1px solid #ebecef;
   box-sizing: border-box;
@@ -20,8 +20,10 @@ const IssueFormContainer = styled.div`
 const IssueTitleInput = styled.input`
   width: 95%;
   margin: 10px;
-  padding: 5px 12px;
+  padding: 8px;
+  padding-bottom: 0;
   font-size: 14px;
+  font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
   line-height: 20px;
   background-position: right 8px center;
   background-color: #fafbfc;
@@ -117,7 +119,6 @@ const CancelButton = styled.button`
   color: #586069;
   cursor: pointer;
   font-size: 15px;
-  font-weight: bold;
 `;
 
 const SubmitButton = styled.button`
@@ -137,10 +138,23 @@ const SubmitButton = styled.button`
   text-shadow: 0px -1px 0px #2f6627;
 `;
 
+const CommentDiv = styled.div`
+  display: inline;
+`;
+
+const NumberOfLetters = styled.div`
+  color: #586069;
+  text-align: right;
+  margin: 0 8px;
+  padding-right: 30px;
+`;
+
 const IssueForm = () => {
   const history = useHistory();
   const titleRef = useRef(false);
   const commentRef = useRef(false);
+  const [comment, setComment] = useState('');
+  const [isChange, setIsChange] = useState(false);
 
   const createIssueData = (e) => {
     const issue = {
@@ -154,16 +168,39 @@ const IssueForm = () => {
     history.push('/');
   };
 
+  const commentHandleChange = () => {
+    setIsChange(false);
+    setComment(commentRef.current.value);
+  };
+
+  let countTimer;
+  const commentKeyUp = async () => {
+    clearTimeout(countTimer);
+    if (commentRef) {
+      countTimer = setTimeout(() => {
+        setIsChange(true);
+      }, 500);
+    }
+  };
+
   return (
     <IssueFormContainer>
       <IssueTitleInput placeholder="Title" ref={titleRef} />
       <WriteTab>Write</WriteTab>
       <PreviewTab>Preview</PreviewTab>
       <Hr />
-      <IssueComment
-        placeholder="Leave a comment"
-        ref={commentRef}
-      ></IssueComment>
+      <CommentDiv>
+        <IssueComment
+          placeholder="Leave a comment"
+          ref={commentRef}
+          value={comment}
+          onChange={commentHandleChange}
+          onKeyUp={commentKeyUp}
+        ></IssueComment>
+        <NumberOfLetters>
+          {isChange && `${comment.length} characters`}
+        </NumberOfLetters>
+      </CommentDiv>
       <FileAttachContainer>
         <div>{FileAttachMsg}</div>
       </FileAttachContainer>
