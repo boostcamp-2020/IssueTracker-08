@@ -10,7 +10,7 @@ import {
   MilestonePost,
   LoginPage,
 } from '../pages';
-import Header from '../components/Header';
+import Header from '../components/shared/container/Header';
 
 const GlobalStyle = createGlobalStyle`
   body {
