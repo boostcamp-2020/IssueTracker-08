@@ -9,10 +9,56 @@
 
 -----
 
+## `💻 Sprint #3 - Day2`
+### 📌 [FE] 컴포넌트 폴더 구조 변경
+  - 컴포넌트 폴더에 관리할 파일들이 많아져 회의를 통해 폴더 구조를 구체화하였다.
+      - 폴더 구조 예시
+        ```
+        /components
+         ㄴ /issue
+         ㄴ /milestone
+            ㄴ MilestoneHeader.jsx
+            ㄴ Milestone.jsx
+         ㄴ /shared
+            ㄴ /button
+            ㄴ /container
+                ㄴ MainContainer.jsx
+                ㄴ HeaderContainer.jsx
+        ```
+    - 여러 item에서 재사용이 가능한 컴포넌트들은 `shared`에 넣고 그 외 component들은 자신이 속한 `item(ex. milestone, issue)` 폴더에 넣기로 결정하였다.
+
+### 📌 [FE] 글자 수 동적 처리
+  - useState를 활용해서 글자 수가 변경될 때마다 setTimeiot을 활용해서 0.5초마다 글자 수 체킹을 했다.
+      - useState를 통해 동적으로 화면에 변화시키는 방식을 공부할 수 있었다.
+
+### 📌 [FE] 시간 차이 계산하는 util 구현
+  - 이슈를 보여줄 때, 현재 화면이 렌더링된 시간과 이슈가 생성된 시간의 차를 계산하여 화면에 보이기 위해 함수를 구현했다.
+      - 60초 이하라면 -> 초 단위로 표현 (seconds ago)
+      - 60분 이하라면 -> 분 단위로 표현 (minutes ago)
+      - 60시간 이하라면 -> 시간 단위로 표현 (hours ago)
+      - 그 이상이라면 -> days ago로 표현
+
+### 📌 [FE] 배경 RGB 색깔을 분석하여 글씨색을 결정해주는 util 구현
+- `const result =
+    (redValue * 0.299 + greenValue * 0.587 + blueValue * 0.114) / 255;`
+- 색깔 값에서 R, G, B 값을 뽑아내 위 식에 적용하였다.
+- 결과 값이 0.5 보다 크면 검은 글씨를 0.5 보다 작으면 흰색 글씨를 반환해주었다.
+
+### 📌 [FE] Custom Hook 개발
+  - 이름이 `use`로 시작하고, 안에서 다른 Hook을 호출함을 통해 custom hook을 설계할 수 있다.
+  - get 요청을 보내 데이터를 받기 전까지 loading을 띄우는 부분은 재활용할 수 있을 것 같아 custom hook 으로 분리하였다.
+
+### 📌 [FE] Github Login
+  - 얻은 유저 정보로 JWT Token 생성후 프론트로 반환
+      - 반환 시 json 형태로 리턴해줘야 한다.
+      - axios.post 반환을 .then(res) 형식으로 받아주어야 not found(404) Error를 해결할 수 있다.
+  - 반환된 토큰을 프론트의 localstorage 저장.
+  - `res.json(값)` 에서 값 부분이 잘못되어도 서버에서 별다른 오류를 return 하지 않음을 알게 되었다.
+<br/>
+
 ## `💻 Sprint #3 - Day1`
 ### 📌 [FE] 스프린트3 역할 분배 및 이슈 생성
 - [역할 분배 참조](https://docs.google.com/spreadsheets/d/19wkM--KlfBSZAe7_RBzZKZ5Rq0YNnLkuxhtWNhTGxDA/edit#gid=0)
-<br/>
 
 ### 📌[FE] 구현 사항
 - [Header Link 추가](https://github.com/boostcamp-2020/IssueTracker-08/commit/849318da139dba939b482645f30449f9d219f835)
@@ -21,9 +67,11 @@
   - babel-polyfill을 적용하지 않는 경우, chrome에서 regeneratorRuntime 에러가 발생하여 적용
 - [이슈 내용 작성 시 현재 입력된 글자 수 표현 기능 구현](https://github.com/boostcamp-2020/IssueTracker-08/commit/712055e06dcdb25f7ef8e27b60f2003fc437ca2a)
    - 요구사항은 2초 간격이었지만, 텀이 너무 긴 것 같아 0.5초 간격으로 글자 수를 체킹하도록 구현
-<br/>
 
-### 📌 [FE] github 로그인 기능 구현 중
+### 📌 [FE] github 로그인 기능
+- React에서 useEffect함수를 사용하여 깃헙 OAuth의 CallBack URL을 갖는 컴포넌트를
+  만들어서 URL의 code를 parsing 하여 백엔드로 요청을 보내게 설계.
+- 백엔드에서 이를 받아 access_token을 얻고, 유저 정보를 얻음.
 <br/>
 
 <hr />
