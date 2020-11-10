@@ -117,8 +117,12 @@ const issueListTemplate = ({ issue }) => {
           </div>
           <LabelList>
             {issue.label &&
-              issue.label.map((label) => (
-                <div style={{ background: label.labelColor }} className="label">
+              issue.label.map((label, index) => (
+                <div
+                  style={{ background: label.labelColor }}
+                  key={index}
+                  className="label"
+                >
                   {label.labelName}
                 </div>
               ))}
