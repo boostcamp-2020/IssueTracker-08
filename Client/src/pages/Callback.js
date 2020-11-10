@@ -23,7 +23,7 @@ function Callback({ history, location }) {
             console.log(err);
           });
 
-        history.push('/');
+        window.location.replace('/');
       } catch (error) {
         history.push('/error');
       }

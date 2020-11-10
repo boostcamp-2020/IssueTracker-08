@@ -1,12 +1,10 @@
-// const token = localStorage.getItem('jwt');
-
 export const getOptions = {
   mode: 'cors',
   credentials: 'include',
   method: 'get',
-  //   headers: {
-  //     Authorization: token,
-  //   },
+  headers: {
+    Authorization: localStorage.getItem('jwtToken'),
+  },
 };
 
 export const postOptions = (data) => {
@@ -15,7 +13,7 @@ export const postOptions = (data) => {
     credentials: 'include',
     method: 'POST',
     headers: {
-      // Authorization: token,
+      Authorization: localStorage.getItem('jwtToken'),
       'Content-Type': 'application/json;charset=utf-8',
     },
     body: JSON.stringify(data),
@@ -26,10 +24,16 @@ export const putOptions = {
   mode: 'cors',
   credentials: 'include',
   method: 'put',
+  headers: {
+    Authorization: localStorage.getItem('jwtToken'),
+  },
 };
 
 export const deleteOptions = {
   mode: 'cors',
   credentials: 'include',
   method: 'delete',
+  headers: {
+    Authorization: localStorage.getItem('jwtToken'),
+  },
 };
