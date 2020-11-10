@@ -108,7 +108,14 @@ export default function LoginPage() {
               <StyledLink to="/login">회원가입</StyledLink>
             </Routes>
 
-            <GithubLink href={config.BASE_URL + 'auth/github/'}>
+            <GithubLink
+              href={
+                'https://github.com/login/oauth/authorize?client_id=' +
+                config.CLIENT_ID +
+                '&redirect_uri=' +
+                config.REDIRECT_URI
+              }
+            >
               <GithubLogin>
                 <GithubContent>Sign in with GitHub</GithubContent>
                 <GithubImage src="/images/github.svg"></GithubImage>

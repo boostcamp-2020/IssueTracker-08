@@ -1,7 +1,7 @@
-const fetch = require('node-fetch');
-const githubOAuth = require('../../config/github.oauth');
-const { Headers } = require('node-fetch');
-const { tokenResponse } = require('../utils/returnForm');
+const dotenv = require('dotenv');
+dotenv.config();
+const axios = require('axios');
+
 const {
   isExistUser,
   getUserAllInfo,
@@ -9,37 +9,36 @@ const {
   updateUserImage,
 } = require('./signin.service');
 const { createJWT } = require('../utils/auth.token');
-const { user } = require('../../config/database.config');
+
+const githubClientID = process.env.GITHUB_CLIENT_ID;
+const githubSecret = process.env.GITHUB_SECRET;
 
 module.exports = {
-  githubSignIn: (req, res) => {
-    console.log('started oauth');
-
-    return githubOAuth.login(req, res);
+  isLogin: (req, res) => {
+    return res.status(200).json(successResponse({}));
   },
 
-  githubCallback: (req, res) => {
-    console.log('received callback');
+  githubAuth: async (req, res) => {
+    const { code } = req.body;
+    try {
+      const response = await axios.post(
+        `https://github.com/login/oauth/access_token?client_id=${githubClientID}&client_secret=${githubSecret}&code=${code}`,
+        {
+          headers: {
+            Accept: 'application/json',
+          },
+        }
+      );
 
-    return githubOAuth.callback(req, res);
-  },
-};
+      const result = await response;
+      const token = result.data.split('&')[0].split('access_token=')[1];
 
-githubOAuth.on('error', (err) => {
-  console.error('there was a login error', err);
-});
+      const { data } = await axios.get('https://api.github.com/user', {
+        headers: {
+          Authorization: `token ${token}`,
+        },
+      });
 
-githubOAuth.on('token', (token, res) => {
-  const myHeaders = new Headers();
-
-  myHeaders.append('Authorization', `Bearer ${token.access_token}`);
-  fetch('https://api.github.com/user', {
-    headers: myHeaders,
-  })
-    .then((res) => {
-      return res.json();
-    })
-    .then(async (data) => {
       if (await isExistUser(data)) {
         await updateUserImage(data);
       } else {
@@ -47,8 +46,10 @@ githubOAuth.on('token', (token, res) => {
       }
 
       const user = await getUserAllInfo(data);
-      const token = createJWT(user[0]);
-
-      res.status(200).json(tokenResponse(token));
-    });
-});
+      const jwtToken = createJWT(user[0]);
+      return res.status(200).json({ jwtToken: jwtToken });
+    } catch (err) {
+      return res.status(500);
+    }
+  },
+};

@@ -9,6 +9,7 @@ import {
   Milestone,
   MilestonePost,
   LoginPage,
+  Callback,
 } from '../pages';
 import Header from '../components/Header';
 
@@ -20,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = () => {
-  const isLoggedIn = true; // TODO : setLoginState
+  const isLoggedIn = false; // TODO : setLoginState
   if (isLoggedIn) {
     return (
       <>
@@ -41,6 +42,7 @@ const App = () => {
   return (
     <>
       <Route path="/" component={LoginPage} />
+      <Route path="/auth" component={Callback} />
       <Redirect from="*" to="/" />
       <GlobalStyle />
     </>

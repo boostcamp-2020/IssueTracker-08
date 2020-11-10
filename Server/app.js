@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -15,6 +16,12 @@ app.use(cookieParser());
 app.use(passport.initialize());
 passportConfig();
 
+const corsOptions = {
+  origin: true,
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use('/', indexRouter);
 
 // error handler
