@@ -423,6 +423,7 @@
                         <outlet property="markdownSegment" destination="ykL-mF-fTJ" id="hQg-Dy-moc"/>
                         <outlet property="markdownUIView" destination="mfu-Rk-M1a" id="wfl-w3-fRT"/>
                         <outlet property="textDescription" destination="aXk-cK-LsE" id="K1B-BW-m2E"/>
+                        <outlet property="textViewBottomConstraint" destination="X5G-iE-lXt" id="ptE-Se-uGd"/>
                         <outlet property="titleView" destination="Jio-mC-Fx7" id="7Vu-2F-rA6"/>
                     </connections>
                 </viewController>

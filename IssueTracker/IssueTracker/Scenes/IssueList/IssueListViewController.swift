@@ -33,7 +33,6 @@ final class IssueListViewController: UIViewController {
     let searchController = UISearchController(searchResultsController: nil)
    
     // MARK:- Properties
-    
     var interactor: IssueListBusinessLogic?
     var router: (NSObjectProtocol & IssueListRoutingLogic & IssueDetailDataPassing)?
     var displayedIssues: [IssueViewModel] = []
