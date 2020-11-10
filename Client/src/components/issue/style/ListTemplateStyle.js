@@ -20,6 +20,16 @@ export default {
       border-bottom-left-radius: 6px;
       border-bottom-right-radius: 6px;
     }
+    .issueOpenedIcon {
+      margin-top: 4px;
+      margin-left: 10px;
+      color: #22863a;
+    }
+    .issueClosedIcon {
+      margin-top: 4px;
+      margin-left: 10px;
+      color: #cb2431;
+    }
   `,
   IssueContainer: styled.div`
     padding: 0 8px;
@@ -33,8 +43,8 @@ export default {
   LabelList: styled.div`
     display: flex;
     .label {
-      padding: 0 7px;
-      margin-left: 10px;
+      padding: 2px 10px;
+      margin-left: 7px;
       border: 1px solid transparent;
       color: #fff;
       border-radius: 2rem;
@@ -53,6 +63,20 @@ export default {
     }
     .author:hover {
       color: #0366d6;
+      cursor: pointer;
+    }
+  `,
+  MilestoneContainer: styled.div`
+    display: flex;
+    margin-left: 8px;
+    .milestoneIcon {
+      color: #959da5;
+      vertical-align: bottom;
+    }
+    .milestone {
+      margin-left: 4px;
+    }
+    &:hover {
       cursor: pointer;
     }
   `,
