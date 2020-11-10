@@ -41,15 +41,17 @@ class IssueDetailViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet var openStatus: [UIButton]!
     
+    
     var interactor: IssueDetailBusinessLogic?
     var router: (IssueDetailDataReceiving)?
     var displayIssue: ListIssueDetail.FetchDetail.ViewModel?
     var displayComment: [comment] = []
-    private var markdownView = MarkdownView()
+    
     @IBOutlet weak var IssueDetailCollectionView: UICollectionView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var activityView: UIView!
+    @IBOutlet weak var openCloseSwitch: UISwitch!
     
     // MARK:- View Lifecycle
     
@@ -78,6 +80,7 @@ class IssueDetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         tabbarSetup(AccessType: false)
     }
+    
 }
 
 // MARK:- Setup
@@ -130,6 +133,22 @@ extension IssueDetailViewController {
         if displayIssue!.displayedDetail.isOpen != 1 {
             openStatus[0].isHidden = true
             openStatus[1].isHidden = false
+        }
+    }
+    
+    private func markdownTouchAnction(markdown: MarkdownView) {
+        markdown.onTouchLink = { [weak self] request in
+          guard let url = request.url else { return false }
+
+          if url.scheme == "file" {
+            return true
+          } else if url.scheme == "https" {
+            let safari = SFSafariViewController(url: url)
+            self?.present(safari, animated: true, completion: nil)
+            return false
+          } else {
+            return false
+          }
         }
     }
 }
@@ -274,13 +293,17 @@ extension IssueDetailViewController: UICollectionViewDataSource {
         else if indexPath.item == 0  {
             cell.userID.text = displayIssue!.displayedDetail.name
             cell.timeDifference.text = FormattedDifferenceDateString(dueDate: displayIssue!.displayedDetail.createAt)
+            markdownTouchAnction(markdown: cell.content)
             cell.content.load(markdown: displayIssue!.displayedDetail.content)
+            cell.content.isScrollEnabled = false
         }
         else {
             let displayedComment = displayComment[indexPath.item - 1]
             cell.userID.text = displayedComment.name
             cell.timeDifference.text = FormattedDifferenceDateString(dueDate: displayedComment.createAt)
+            markdownTouchAnction(markdown: cell.content)
             cell.content.load(markdown: displayedComment.content)
+            cell.content.isScrollEnabled = false
         }
         
         if displayComment.count == indexPath.item {

@@ -20,14 +20,14 @@ final class IssueListViewController: UIViewController {
     @IBOutlet weak var newIssueButton: CustomAddButton!
     @IBOutlet weak var closeIssueButton: UIButton!
     @IBOutlet weak var issueListCollectionView: UICollectionView!
-   
+    @IBOutlet weak var openCloseSwitch: UISwitch!
+    
     let searchController = UISearchController(searchResultsController: nil)
    
     // MARK:- Properties
     typealias IssueViewModel = ListIssues.FetchLists.ViewModel.DisplayedIssue
-    var filterData = ListFilter.IssueFilterData()
     var interactor: IssueListBusinessLogic?
-    var router: (NSObjectProtocol & IssueListRoutingLogic & IssueListDataPassing & IssueDetailDataPassing)?
+    var router: (NSObjectProtocol & IssueListRoutingLogic & IssueDetailDataPassing)?
     var displayedIssues: [IssueViewModel] = []
     var filteredIssues: [IssueViewModel] = []
     override var isEditing: Bool {
@@ -89,7 +89,6 @@ final class IssueListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        filterData = (router?.filterData)!
         fetchIssues()
     }
     
@@ -105,12 +104,6 @@ final class IssueListViewController: UIViewController {
             if selectedItems > 0 { deselectAllItems() }
             else { selectAllItems() }
             
-        } else {
-            // left bar button = Filter
-            let destinationVC = self.storyboard?.instantiateViewController(identifier: "IssueFilter") as! IssueFilterTableViewController
-            navigationController?.pushViewController(destinationVC, animated: true)
-            
-            // destinationVC.router?.filterData? = filterData : 영렬님과 상의
         }
     }
     
@@ -153,7 +146,6 @@ extension IssueListViewController {
         interactor.presenter = presenter
         presenter.viewController = viewController
         router.viewController = viewController
-        router.filterData = filterData
     }
     
     private func setupCollectionview() {
@@ -201,10 +193,10 @@ extension IssueListViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Issues"
+        searchController.searchBar.scopeButtonTitles = FilterCategory.allCases.map({ $0.rawValue })
         navigationItem.searchController = searchController
         definesPresentationContext = true
     }
-    
 }
 
 // MARK:- Implement IssueListDisplayLogic
