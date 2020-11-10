@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import MenuButton from '../../components/shared/button/MenuButton';
 import NewButton from '../../components/shared/button/NewButton';
-import IssueListInfo from '../../components/issue/issueMain';
+import IssueListInfo from '../../components/issue/main/issueMain';
 
 const Container = styled.div`
   display: flex;
