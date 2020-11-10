@@ -1,8 +1,8 @@
 import React from 'react';
-import Container from '../../components/container/Container';
-import ItemContainer from '../../components/container/ItemContainer';
-import ItemHeader from '../../components/container/ItemHeader';
-import Menu from '../../components/Menu';
+import Container from '../../components/shared/container/Container';
+import ItemContainer from '../../components/shared/container/ItemContainer';
+import ItemHeader from '../../components/shared/container/ItemHeader';
+import Menu from '../../components/shared/container/Menu';
 
 export default function MilestonePage() {
   return (

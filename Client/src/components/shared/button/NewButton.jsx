@@ -26,11 +26,9 @@ const StyledLink = styled(Link)`
 
 const NewButton = (props) => {
   return (
-    <>
-      <StyledLink to={props.link}>
-        <Button>{'New ' + props.name}</Button>
-      </StyledLink>
-    </>
+    <StyledLink to={props.link}>
+      <Button>{'New ' + props.name}</Button>
+    </StyledLink>
   );
 };
 

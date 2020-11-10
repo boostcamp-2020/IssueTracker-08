@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import NewButton from './button/NewButton';
-import MenuButton from './button/MenuButton';
+import NewButton from '../button/NewButton';
+import MenuButton from '../button/MenuButton';
 
 const MenuDiv = styled.div`
   display: flex;

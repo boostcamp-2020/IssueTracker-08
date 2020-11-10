@@ -1,10 +1,10 @@
 import React from 'react';
-import Container from '../../components/container/Container';
-import ItemContainer from '../../components/container/ItemContainer';
-import ItemHeader from '../../components/container/ItemHeader';
-import Title from '../../components/text/Title';
-import Menu from '../../components/Menu';
-import LabelContainer from '../../components/container/LabelContainer';
+import Container from '../../components/shared/container/Container';
+import ItemContainer from '../../components/shared/container/ItemContainer';
+import ItemHeader from '../../components/shared/container/ItemHeader';
+import Title from '../../components/shared/text/Title';
+import Menu from '../../components/shared/container/Menu';
+import LabelContainer from '../../components/label/LabelContainer';
 
 export default function LabelPage() {
   return (

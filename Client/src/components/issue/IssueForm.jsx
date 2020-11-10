@@ -2,8 +2,8 @@ import React, { useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { POST_ISSUE } from '../utils/api';
-import { postOptions } from '../utils/fetchOptions';
+import { POST_ISSUE } from '../../utils/api';
+import { postOptions } from '../../utils/fetchOptions';
 
 const FileAttachMsg =
   'Attach files by dragging & dropping, selecting or pasting them.';

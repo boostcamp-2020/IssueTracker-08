@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import MenuButton from '../../components/button/MenuButton';
-import NewButton from '../../components/button/NewButton';
+import MenuButton from '../../components/shared/button/MenuButton';
+import NewButton from '../../components/shared/button/NewButton';
 
 const Container = styled.div`
   display: flex;
