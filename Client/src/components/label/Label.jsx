@@ -7,10 +7,11 @@ const Container = styled.div`
   background-color: ${(props) => props.background};
   color: ${(props) => props.color};
   height: 20px;
+  font-size: 12px;
   font-weight: bold;
   text-align: center;
   padding: 4px 8px;
-  border-radius: 4px;
+  border-radius: 10px;
 `;
 
 const Label = (props) => {
