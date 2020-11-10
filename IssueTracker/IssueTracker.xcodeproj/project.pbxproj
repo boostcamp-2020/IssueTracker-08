@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1F2F677E0B17EDFEC252EA13 /* Pods_IssueTracker_IssueTrackerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04B913ACEA472A6ED4C2AAAA /* Pods_IssueTracker_IssueTrackerUITests.framework */; };
-		29EC91AA25511E1B007B59A0 /* IssueFilterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC91A925511E1B007B59A0 /* IssueFilterModels.swift */; };
-		29EC91AC25511E29007B59A0 /* IssueFilterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC91AB25511E29007B59A0 /* IssueFilterRouter.swift */; };
 		800666CA2547D24200B42428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666C92547D24200B42428 /* AppDelegate.swift */; };
 		800666CC2547D24200B42428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666CB2547D24200B42428 /* SceneDelegate.swift */; };
 		800666CE2547D24200B42428 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666CD2547D24200B42428 /* PopUpViewController.swift */; };
@@ -55,7 +53,6 @@
 		BD5D414F254FDCFA008BCB36 /* LabelListWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D414A254FDCFA008BCB36 /* LabelListWorker.swift */; };
 		BD5D4151254FDCFA008BCB36 /* LabelListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D414C254FDCFA008BCB36 /* LabelListInteractor.swift */; };
 		BD5D4158254FDD06008BCB36 /* LabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4156254FDD06008BCB36 /* LabelCollectionViewCell.swift */; };
-		BD5D4164254FDE4D008BCB36 /* IssueFilterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */; };
 		BD71231E25519FA000D5D195 /* LabelDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD71231D25519FA000D5D195 /* LabelDataManager.swift */; };
 		BDCC5DD72554F538003C9607 /* IssueDetailDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCC5DD62554F538003C9607 /* IssueDetailDataManager.swift */; };
 		BDCC5DE32554F632003C9607 /* IssueDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCC5DDC2554F632003C9607 /* IssueDetailViewController.swift */; };
@@ -67,6 +64,7 @@
 		BDCC5DE92554F632003C9607 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCC5DE22554F632003C9607 /* CardViewController.swift */; };
 		BDCC5DEF2554F655003C9607 /* IssueDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCC5DEE2554F655003C9607 /* IssueDetailRouter.swift */; };
 		BDCC5DF42554F65A003C9607 /* IssueDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCC5DF32554F65A003C9607 /* IssueDetailCollectionViewCell.swift */; };
+		BDD4CA48255A901E002242F9 /* UISwitch+OffColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD4CA47255A901E002242F9 /* UISwitch+OffColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,8 +87,6 @@
 /* Begin PBXFileReference section */
 		04B913ACEA472A6ED4C2AAAA /* Pods_IssueTracker_IssueTrackerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTracker_IssueTrackerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F1CE59EA9157BA9DFBC2777 /* Pods-IssueTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker.release.xcconfig"; path = "Target Support Files/Pods-IssueTracker/Pods-IssueTracker.release.xcconfig"; sourceTree = "<group>"; };
-		29EC91A925511E1B007B59A0 /* IssueFilterModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterModels.swift; sourceTree = "<group>"; };
-		29EC91AB25511E29007B59A0 /* IssueFilterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilterRouter.swift; sourceTree = "<group>"; };
 		4F983C8476DEF87744EFC079 /* Pods-IssueTrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTrackerTests.debug.xcconfig"; path = "Target Support Files/Pods-IssueTrackerTests/Pods-IssueTrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5A9FC34F6955FD30A256E27B /* Pods-IssueTracker-IssueTrackerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker-IssueTrackerUITests.release.xcconfig"; path = "Target Support Files/Pods-IssueTracker-IssueTrackerUITests/Pods-IssueTracker-IssueTrackerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7527E0FFD543E83A2E889933 /* Pods-IssueTrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTrackerTests.release.xcconfig"; path = "Target Support Files/Pods-IssueTrackerTests/Pods-IssueTrackerTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -143,7 +139,6 @@
 		BD5D414A254FDCFA008BCB36 /* LabelListWorker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListWorker.swift; sourceTree = "<group>"; };
 		BD5D414C254FDCFA008BCB36 /* LabelListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelListInteractor.swift; sourceTree = "<group>"; };
 		BD5D4156254FDD06008BCB36 /* LabelCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCollectionViewCell.swift; sourceTree = "<group>"; };
-		BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueFilterTableViewController.swift; sourceTree = "<group>"; };
 		BD71231D25519FA000D5D195 /* LabelDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelDataManager.swift; sourceTree = "<group>"; };
 		BDCC5DD62554F538003C9607 /* IssueDetailDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailDataManager.swift; sourceTree = "<group>"; };
 		BDCC5DDC2554F632003C9607 /* IssueDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueDetailViewController.swift; sourceTree = "<group>"; };
@@ -155,6 +150,7 @@
 		BDCC5DE22554F632003C9607 /* CardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		BDCC5DEE2554F655003C9607 /* IssueDetailRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueDetailRouter.swift; sourceTree = "<group>"; };
 		BDCC5DF32554F65A003C9607 /* IssueDetailCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueDetailCollectionViewCell.swift; sourceTree = "<group>"; };
+		BDD4CA47255A901E002242F9 /* UISwitch+OffColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISwitch+OffColor.swift"; sourceTree = "<group>"; };
 		D018D0CA68C57EEA8CB7F764 /* Pods_IssueTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB7C5D95BB108BDD81533688 /* Pods-IssueTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker.debug.xcconfig"; path = "Target Support Files/Pods-IssueTracker/Pods-IssueTracker.debug.xcconfig"; sourceTree = "<group>"; };
 		E914C3F312B834FAB1DC2FDC /* Pods_IssueTrackerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTrackerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -274,6 +270,7 @@
 				8042B7E6254BA1C700910C6F /* UIColor+HexString.swift */,
 				BD5D4142254FDBD1008BCB36 /* FormattedDateFromString.swift */,
 				BD5B1FFD2557ACFE00642483 /* CALayer+Border.swift */,
+				BDD4CA47255A901E002242F9 /* UISwitch+OffColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -294,7 +291,6 @@
 				BD5B1FF42557AB1A00642483 /* IssueEnroll */,
 				BDCC5DDB2554F60A003C9607 /* IssueDetail */,
 				BD71232B2551AAB900D5D195 /* PopUpView */,
-				BD5D415F254FDE2D008BCB36 /* IssueFilter */,
 				BD5D4127254FDA59008BCB36 /* MilestoneList */,
 				BD5D411C254FD611008BCB36 /* LabelList */,
 				8042B7F7254BAC1F00910C6F /* SignIn */,
@@ -389,16 +385,6 @@
 				BD5D4156254FDD06008BCB36 /* LabelCollectionViewCell.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		BD5D415F254FDE2D008BCB36 /* IssueFilter */ = {
-			isa = PBXGroup;
-			children = (
-				BD5D4163254FDE4D008BCB36 /* IssueFilterTableViewController.swift */,
-				29EC91A925511E1B007B59A0 /* IssueFilterModels.swift */,
-				29EC91AB25511E29007B59A0 /* IssueFilterRouter.swift */,
-			);
-			path = IssueFilter;
 			sourceTree = "<group>";
 		};
 		BD71232B2551AAB900D5D195 /* PopUpView */ = {
@@ -684,7 +670,6 @@
 				BDCC5DEF2554F655003C9607 /* IssueDetailRouter.swift in Sources */,
 				BDCC5DE62554F632003C9607 /* IssueDetailModels.swift in Sources */,
 				8042B7F9254BAC3D00910C6F /* SignInViewController.swift in Sources */,
-				29EC91AC25511E29007B59A0 /* IssueFilterRouter.swift in Sources */,
 				8024527925598D210029AB25 /* EndPoint.swift in Sources */,
 				80245274255988BB0029AB25 /* SignInModel.swift in Sources */,
 				BD5D4131254FDA85008BCB36 /* MilestoneListWorker.swift in Sources */,
@@ -705,10 +690,10 @@
 				8024528125598EF70029AB25 /* OAuthGithubManager.swift in Sources */,
 				BD5D4130254FDA85008BCB36 /* MilestoneListPresenter.swift in Sources */,
 				80112647255282B90016B381 /* PopupItem.swift in Sources */,
-				BD5D4164254FDE4D008BCB36 /* IssueFilterTableViewController.swift in Sources */,
 				8042B7FE254BAD7A00910C6F /* RootCoordinator.swift in Sources */,
 				BDCC5DE92554F632003C9607 /* CardViewController.swift in Sources */,
 				80AA07172549F0F800086F5F /* IssueListRouter.swift in Sources */,
+				BDD4CA48255A901E002242F9 /* UISwitch+OffColor.swift in Sources */,
 				BD5D414F254FDCFA008BCB36 /* LabelListWorker.swift in Sources */,
 				80AA06F72549D09F00086F5F /* IssueListViewController.swift in Sources */,
 				BDCC5DF42554F65A003C9607 /* IssueDetailCollectionViewCell.swift in Sources */,
@@ -716,7 +701,6 @@
 				80163C6E254FF5070073AAD5 /* NetworkService.swift in Sources */,
 				BD5D412F254FDA85008BCB36 /* MilestoneCollectionViewController.swift in Sources */,
 				BDCC5DE42554F632003C9607 /* IssueDetailInteractor.swift in Sources */,
-				29EC91AA25511E1B007B59A0 /* IssueFilterModels.swift in Sources */,
 				80AA07082549F08300086F5F /* IssueListInteractor.swift in Sources */,
 				BDCC5DD72554F538003C9607 /* IssueDetailDataManager.swift in Sources */,
 				BD5D414D254FDCFA008BCB36 /* LabelListPresenter.swift in Sources */,

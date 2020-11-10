@@ -234,6 +234,15 @@
                                     <constraint firstItem="xkt-hi-dNR" firstAttribute="centerY" secondItem="Bep-9K-Br8" secondAttribute="centerY" id="nYo-Zt-bkP"/>
                                 </constraints>
                             </view>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1KG-VD-gGv" customClass="UISwitchCustom" customModule="IssueTracker" customModuleProvider="target">
+                                <rect key="frame" x="345" y="107" width="51" height="31"/>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="OffTint">
+                                        <color key="value" systemColor="systemRedColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="3wS-rd-Ogv"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -248,11 +257,14 @@
                             <constraint firstItem="wUV-Ux-NXD" firstAttribute="leading" secondItem="3wS-rd-Ogv" secondAttribute="leading" id="LtB-aZ-HVa"/>
                             <constraint firstItem="3wS-rd-Ogv" firstAttribute="trailing" secondItem="k5o-Gz-RoK" secondAttribute="trailing" constant="25" id="UUH-Ml-dTo"/>
                             <constraint firstItem="zY4-gg-arA" firstAttribute="top" secondItem="3wS-rd-Ogv" secondAttribute="top" constant="14" id="Wrh-6t-hrj"/>
+                            <constraint firstItem="3wS-rd-Ogv" firstAttribute="trailing" secondItem="1KG-VD-gGv" secondAttribute="trailing" constant="20" id="WuP-aS-azp"/>
                             <constraint firstItem="zY4-gg-arA" firstAttribute="leading" secondItem="3wS-rd-Ogv" secondAttribute="leading" constant="14" id="YSE-jT-RD8"/>
                             <constraint firstItem="Bep-9K-Br8" firstAttribute="top" secondItem="k5o-Gz-RoK" secondAttribute="bottom" constant="25" id="hKO-m9-gGk"/>
                             <constraint firstItem="wUV-Ux-NXD" firstAttribute="leading" secondItem="3wS-rd-Ogv" secondAttribute="leading" id="iPa-M6-XdK"/>
                             <constraint firstAttribute="bottom" secondItem="Bep-9K-Br8" secondAttribute="bottom" id="lk7-KH-z7c"/>
                             <constraint firstItem="wUV-Ux-NXD" firstAttribute="top" secondItem="zY4-gg-arA" secondAttribute="bottom" constant="14" id="pr3-jV-tAB"/>
+                            <constraint firstItem="1KG-VD-gGv" firstAttribute="top" secondItem="3wS-rd-Ogv" secondAttribute="top" constant="19" id="wN7-dQ-PWX"/>
+                            <constraint firstItem="wUV-Ux-NXD" firstAttribute="top" secondItem="1KG-VD-gGv" secondAttribute="bottom" constant="19" id="xfF-al-7jB"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="q0k-3q-gvO">
@@ -271,71 +283,13 @@
                         <outlet property="closeIssueButton" destination="xkt-hi-dNR" id="eKo-BH-kRq"/>
                         <outlet property="issueListCollectionView" destination="wUV-Ux-NXD" id="GZI-YQ-oGf"/>
                         <outlet property="newIssueButton" destination="k5o-Gz-RoK" id="U1W-lj-OP2"/>
+                        <outlet property="openCloseSwitch" destination="1KG-VD-gGv" id="qI7-Ef-0e2"/>
                         <outlet property="titleLabel" destination="zY4-gg-arA" id="hav-d8-kKC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HHI-Js-1Mc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2755.072463768116" y="2209.8214285714284"/>
-        </scene>
-        <!--Issue Filter Table View Controller-->
-        <scene sceneID="yUX-c4-VL5">
-            <objects>
-                <tableViewController storyboardIdentifier="IssueFilter" id="Ule-O3-Ok4" customClass="IssueFilterTableViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ESU-5d-Wzl">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="Fe9-RB-PAm">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFf-Dd-ga9">
-                                    <rect key="frame" x="17" y="11" width="60" height="34"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AFf-Dd-ga9" secondAttribute="trailing" constant="20" symbolic="YES" id="2pf-Vu-mu9"/>
-                                <constraint firstItem="AFf-Dd-ga9" firstAttribute="top" secondItem="Fe9-RB-PAm" secondAttribute="top" constant="11" id="C80-aO-w1x"/>
-                                <constraint firstItem="AFf-Dd-ga9" firstAttribute="leading" secondItem="Fe9-RB-PAm" secondAttribute="leading" constant="17" id="QWO-Ob-KBC"/>
-                                <constraint firstAttribute="bottom" secondItem="AFf-Dd-ga9" secondAttribute="bottom" constant="10" id="bjd-Jq-Ji2"/>
-                            </constraints>
-                        </view>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="reuseIdentifier" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="reuseIdentifier" rowHeight="44" id="E4X-am-bqH">
-                                <rect key="frame" x="0.0" y="83" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="E4X-am-bqH" id="PDZ-1z-9wX">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Ule-O3-Ok4" id="wGc-KB-sH7"/>
-                            <outlet property="delegate" destination="Ule-O3-Ok4" id="f3T-pv-yCd"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="r4n-OD-OBj">
-                        <barButtonItem key="rightBarButtonItem" title="Item" style="plain" id="Jb4-5w-IQv">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="zfT-VD-nnH">
-                                <rect key="frame" x="302" y="7" width="92" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Done"/>
-                                <connections>
-                                    <action selector="btnChangeFilterData:" destination="Ule-O3-Ok4" eventType="touchUpInside" id="LnF-Pm-5aw"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hPn-az-3gl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-3567" y="2938"/>
         </scene>
         <!--Issue Enroll View Controller-->
         <scene sceneID="Wee-gF-XcW">
@@ -1238,6 +1192,11 @@
             <point key="canvasLocation" x="-2755.072463768116" y="2925.6696428571427"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="1KG-VD-gGv">
+            <size key="intrinsicContentSize" width="49" height="31"/>
+        </designable>
+    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="tJY-cD-bkx"/>
     </inferredMetricsTieBreakers>
