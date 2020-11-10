@@ -28,12 +28,14 @@ extension MilestoneListPresenter: MilestoneListPresentationLogic {
                 id: milestone.id,
                 title: milestone.title,
                 dueDate: milestone.dueDate,
-                content: description!
+                content: description!,
+                openIssue: milestone.openIssue,
+                closeIssue: milestone.closeIssue
             )
             displayedMilestones.append(displayedMilestone)
         }
         let viewModel = ListMilestones.FetchLists.ViewModel(displayedMilestones: displayedMilestones)
-        viewController?.displayFetchedOrders(viewModel: viewModel)
+        viewController?.displayFetchedMilestone(viewModel: viewModel)
     }
     
     func presentPostResult(response: CreateMilestones.CreateMilestone.Response) {
