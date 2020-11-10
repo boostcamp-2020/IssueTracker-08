@@ -1,3 +1,46 @@
+# iOS Readme
+
+## **`Sprint #3 - Day2`**
+
+### 결과화면
+
+| Issue Detail | Dynamic Textview | Filter(WIP) | Milestone 진행율 | 
+| -------- | -------- | -------- | ------- |
+| <img width = 350, src = "https://i.imgur.com/1t8cea9.gif">    | <img width = 350, src = "https://i.imgur.com/5Rx0UyQ.gif">     | <img width = 350, src = "https://i.imgur.com/Vl784KT.gif"> | <img width = 350, src = "https://i.imgur.com/FwFDJQF.png"> |
+
+
+
+### Issue Detail Controller
+* Issue Content, Comment Randering
+    * 해당 목록에서 마크다운으로 표시
+    * MarkdownView로 표시하기에 랜더링 높이가 나중에 출력되는 현상
+        * 마지막 IndexPath에서 한번 더 레이아웃 변경
+        * 현재 링크를 갔다와 돌아올 때 다시 레이아웃이 변경되는 문제 해결 중..
+    * 렌더링이 되는 순간에는 조작할 수 없도록 하기위해 로딩화면 추가
+        * Indicater를 추가하여 렌더링이 끝날 때 Stop 
+
+### Dynamic TextView
+* 텍스트 뷰를 클릭할 때 키보드에 가려지지 않도록 조정
+    * Keyboard 관련 Notification을 이용하여 움직이는 시점에 post
+        * View 자체의 frame y좌표를 위로 이동
+        * 이후 TextView의 Bottom Constraint를 변경
+            * (keyboard.height - tabbar.height - 움직인 y좌표 거리 + 기존 Bottom Constraint) 로 변경
+            * 텍스트를 모두 작성할 경우 다시 기존 bottom Constraint로 변경
+
+### Filter(WIP)
+* 열린 이슈, 닫힌 이슈는 switch를 통해 load 함
+* Search bar 선택 시 추가적으로 filter 할 수 있는 segment control이 나타남 (실제 Github application 벤치마킹)
+* 추후에 Context Menu를 사용하여 상세 filter 구현 예정
+
+
+### Milestone
+* closedIssue / (openedIssue + closedIssue) * 100
+* 정수형으로 표기되므로 2번의 형변환 거쳐야함
+
+
+
+
+
 ## **`Sprint #3 - Day1`**
 
 ### 결과화면
