@@ -23,6 +23,7 @@ struct Issue: Decodable {
     var issueId: Int
     var email: String
     var name: String
+    var milestoneId: Int?
     var milestone: String?
     var title: String
     var content: String
@@ -33,10 +34,17 @@ struct Issue: Decodable {
     var assign: [IssueAssign]?
 }
 
-
 enum ListIssues {
-    enum FetchLists {
-        struct Request { }
+    
+    enum FetchCategory: String {
+        case Open = "open"
+        case Closed = "closed"
+    }
+    
+    enum FetchIssues {
+        struct Request {
+            var request: FetchCategory
+        }
         struct Response {
             var issues: [Issue]
         }
@@ -63,4 +71,11 @@ enum ListIssues {
             var displayedAlert: DisplayedAlert
         }
     }
+}
+
+enum FilterCategory: String, CaseIterable {
+    case All // 전체 이슈 (open / close)
+    case Created // 내가작성한 이슈
+    case Assigned // 내게 할당된 이슈
+    case Mentioned // 내가 댓글을 남긴 이슈
 }

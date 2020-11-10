@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol IssueListBusinessLogic {
-    func fetchIssues(request: ListIssues.FetchLists.Request)
+    func fetchIssues(request: ListIssues.FetchIssues.Request)
     func closeIssue(request: ListIssues.CloseIssue.Request)
 }
 
@@ -27,11 +27,12 @@ class IssueListInteractor {
 
 extension IssueListInteractor: IssueListBusinessLogic {
     
-    func fetchIssues(request: ListIssues.FetchLists.Request) {
-        issueWorker.fetchIssues(completion: { issues in
+    func fetchIssues(request: ListIssues.FetchIssues.Request) {
+        issueWorker.fetchIssues(request: request, completion: { issues in
             self.issues = issues
-            let response = ListIssues.FetchLists.Response(issues: issues)
+            let response = ListIssues.FetchIssues.Response(issues: issues)
             self.presenter?.presentFetchedIssues(response: response)
+            
         })
     }
     

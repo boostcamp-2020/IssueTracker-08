@@ -8,8 +8,13 @@
 import UIKit
 
 
+import UIKit
+
+//MARK:- Typealias
+typealias IssueViewModel = ListIssues.FetchIssues.ViewModel.DisplayedIssue
+
 protocol IssueListDisplayLogic: class {
-    func displayOpenIssues(viewModel: ListIssues.FetchLists.ViewModel)
+    func displayOpenIssues(viewModel: ListIssues.FetchIssues.ViewModel)
     func successfullyClosedIssue() // 함수명 임의로 지정함
 }
 
@@ -20,14 +25,17 @@ final class IssueListViewController: UIViewController {
     @IBOutlet weak var newIssueButton: CustomAddButton!
     @IBOutlet weak var closeIssueButton: UIButton!
     @IBOutlet weak var issueListCollectionView: UICollectionView!
-   
+    @IBOutlet weak var openCloseSwitch: UISwitch!
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var acitivityView: UIView!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    
     let searchController = UISearchController(searchResultsController: nil)
    
     // MARK:- Properties
-    typealias IssueViewModel = ListIssues.FetchLists.ViewModel.DisplayedIssue
-    var filterData = ListFilter.IssueFilterData()
+    
     var interactor: IssueListBusinessLogic?
-    var router: (NSObjectProtocol & IssueListRoutingLogic & IssueListDataPassing & IssueDetailDataPassing)?
+    var router: (NSObjectProtocol & IssueListRoutingLogic & IssueDetailDataPassing)?
     var displayedIssues: [IssueViewModel] = []
     var filteredIssues: [IssueViewModel] = []
     override var isEditing: Bool {
@@ -36,6 +44,7 @@ final class IssueListViewController: UIViewController {
             else { setupNormalMode() }
         }
     }
+    
     var selectedItems: Int = 0 {
         willSet {
             if isEditing {
@@ -82,6 +91,7 @@ final class IssueListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //startAnimating()
         setupSearchController()
         setupCollectionview()
         setupNormalMode()
@@ -89,8 +99,7 @@ final class IssueListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        filterData = (router?.filterData)!
-        fetchIssues()
+        fetchIssues(request: .Open)
     }
     
     //MARK:- IBActions
@@ -105,12 +114,6 @@ final class IssueListViewController: UIViewController {
             if selectedItems > 0 { deselectAllItems() }
             else { selectAllItems() }
             
-        } else {
-            // left bar button = Filter
-            let destinationVC = self.storyboard?.instantiateViewController(identifier: "IssueFilter") as! IssueFilterTableViewController
-            navigationController?.pushViewController(destinationVC, animated: true)
-            
-            // destinationVC.router?.filterData? = filterData : 영렬님과 상의
         }
     }
     
@@ -119,6 +122,18 @@ final class IssueListViewController: UIViewController {
         selectedItemsIndexPath.forEach({ indexPath in
             closeIssue(at: indexPath)
         })
+    }
+    
+    @IBAction func switchAction(_ sender: UISwitch) {
+        //startAnimating()
+        if openCloseSwitch.isOn { fetchIssues(request: .Open) }
+        else { fetchIssues(request: .Closed) }
+    }
+    
+    private func startAnimating() {
+        loadingView.isHidden = false
+        acitivityView.isHidden = false
+        indicator.startAnimating()
     }
     
     private func selectAllItems() {
@@ -153,7 +168,6 @@ extension IssueListViewController {
         interactor.presenter = presenter
         presenter.viewController = viewController
         router.viewController = viewController
-        router.filterData = filterData
     }
     
     private func setupCollectionview() {
@@ -201,26 +215,26 @@ extension IssueListViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Issues"
+        searchController.searchBar.scopeButtonTitles = FilterCategory.allCases.map({ $0.rawValue })
         navigationItem.searchController = searchController
         definesPresentationContext = true
     }
-    
 }
 
 // MARK:- Implement IssueListDisplayLogic
 extension IssueListViewController: IssueListDisplayLogic {
     
-    func displayOpenIssues(viewModel: ListIssues.FetchLists.ViewModel) {
+    func displayOpenIssues(viewModel: ListIssues.FetchIssues.ViewModel) {
         displayedIssues = viewModel.displayedIssues
         issueListCollectionView.reloadData()
     }
     
     func successfullyClosedIssue() {
-        fetchIssues()
+        fetchIssues(request: .Open)
     }
     
-    private func fetchIssues() {
-        let request = ListIssues.FetchLists.Request()
+    private func fetchIssues(request: ListIssues.FetchCategory) {
+        let request = ListIssues.FetchIssues.Request(request: request)
         interactor?.fetchIssues(request: request)
     }
     
@@ -276,6 +290,13 @@ extension IssueListViewController: UICollectionViewDataSource {
         }
         
         cell.accessories = [.multiselect(displayed: .whenEditing, options: .init()) ]
+        
+        if displayedIssues.count - 1 == indexPath.item {
+            indicator.stopAnimating()
+            loadingView.isHidden = true
+            acitivityView.isHidden = true
+        }
+        
         return cell
     }
 

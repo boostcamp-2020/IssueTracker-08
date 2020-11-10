@@ -18,14 +18,16 @@ struct CURDResponse: Decodable {
 }
 
 protocol IssueDataManagerProtocol {
-    func fetchIssues(completion: @escaping ([Issue]) -> Void)
+    func fetchIssues(request: ListIssues.FetchIssues.Request, completion: @escaping ([Issue]) -> Void)
     func postCloseIssue(request: ListIssues.CloseIssue.Request, completion: @escaping (String) -> Void)
 }
 
 final class IssueDataManager: IssueDataManagerProtocol {
     
-    func fetchIssues(completion: @escaping ([Issue]) -> Void) {
-        NetworkService.shared.getData(url: EndPoint.issues, completion: { data in
+    func fetchIssues(request: ListIssues.FetchIssues.Request, completion: @escaping ([Issue]) -> Void) {
+        let requestURL = EndPoint.issues + request.request.rawValue
+        
+        NetworkService.shared.getData(url: requestURL, completion: { data in
             guard let receivedData = try? JSONDecoder().decode(IssueListResponse.self, from: data) else {
                 return // completion으로 경우 넘겨 주어야 함
             }

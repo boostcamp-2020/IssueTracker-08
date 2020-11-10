@@ -9,7 +9,7 @@ import UIKit
 import STPopup
 
 protocol MilestoneListDisplayLogic: class {
-    func displayFetchedOrders(viewModel: ListMilestones.FetchLists.ViewModel)
+    func displayFetchedMilestone(viewModel: ListMilestones.FetchLists.ViewModel)
     func displayAlert(viewModel: CreateMilestones.CreateMilestone.ViewModel)
     func displayAlert(viewModel: CreateMilestones.EditMilestone.ViewModel)
     func displayAlert(viewModel: DeleteMilestones.DeleteMilestone.ViewModel)
@@ -121,10 +121,20 @@ extension MilestoneViewController: UICollectionViewDataSource {
         cell.setupComponents()
         
         let displayedMilestone = displayedMilestones[indexPath.item]
-        
         cell.titleLabel.setTitle(displayedMilestone.title, for: .normal)
         cell.descriptionLabel.text = displayedMilestone.content
         cell.dateLabel.text = FormattedDateFromString(dueDate: displayedMilestone.dueDate ?? "") + "까지"
+        cell.issueStatusLabel.text = """
+                                    \(displayedMilestone.openIssue) open
+                                    \(displayedMilestone.closeIssue) closed
+                                    """
+        let allIssue = (displayedMilestone.openIssue + displayedMilestone.closeIssue)
+        if allIssue != 0 {
+            let percent = Int((Double(displayedMilestone.closeIssue) / Double(allIssue)) * 100)
+            cell.issuePercentLabel.text = "\(percent)%"
+        } else {
+            cell.issuePercentLabel.text = "0%"
+        }
         
         return cell
     }
@@ -136,7 +146,7 @@ extension MilestoneViewController: MilestoneListDisplayLogic {
         interactor?.fetchIssues(request: request)
     }
     
-    func displayFetchedOrders(viewModel: ListMilestones.FetchLists.ViewModel) {
+    func displayFetchedMilestone(viewModel: ListMilestones.FetchLists.ViewModel) {
         displayedMilestones = viewModel.displayedMilestones
         milestoneCollectionView.reloadData()
     }

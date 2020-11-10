@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol IssueListPresentationLogic {
-    func presentFetchedIssues(response: ListIssues.FetchLists.Response)
+    func presentFetchedIssues(response: ListIssues.FetchIssues.Response)
     func presentPostResult(response: ListIssues.CloseIssue.Response)
 }
 
@@ -21,12 +21,12 @@ class IssueListPresenter {
 
 extension IssueListPresenter: IssueListPresentationLogic {
     
-    func presentFetchedIssues(response: ListIssues.FetchLists.Response) {
-        var displayedIssues: [ListIssues.FetchLists.ViewModel.DisplayedIssue] = []
+    func presentFetchedIssues(response: ListIssues.FetchIssues.Response) {
+        var displayedIssues: [ListIssues.FetchIssues.ViewModel.DisplayedIssue] = []
         for issue in response.issues {
             let description = configureDescription(text: issue.content)
             let labels = configureLabel(labels: issue.label)
-            let displayedIssue = ListIssues.FetchLists.ViewModel.DisplayedIssue(
+            let displayedIssue = ListIssues.FetchIssues.ViewModel.DisplayedIssue(
                 issueId: issue.issueId,
                 title: issue.title,
                 content: description,
@@ -35,7 +35,7 @@ extension IssueListPresenter: IssueListPresentationLogic {
             )
             displayedIssues.append(displayedIssue)
         }
-        let viewModel = ListIssues.FetchLists.ViewModel(displayedIssues: displayedIssues)
+        let viewModel = ListIssues.FetchIssues.ViewModel(displayedIssues: displayedIssues)
         viewController?.displayOpenIssues(viewModel: viewModel)
     }
     

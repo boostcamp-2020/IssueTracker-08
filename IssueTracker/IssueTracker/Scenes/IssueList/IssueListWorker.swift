@@ -14,8 +14,8 @@ class IssueListWorker {
         self.dataManager = dataManager
     }
     
-    func fetchIssues(completion: @escaping ([Issue]) -> Void) {
-        dataManager.fetchIssues(completion: { issues in
+    func fetchIssues(request: ListIssues.FetchIssues.Request, completion: @escaping ([Issue]) -> Void) {
+        dataManager.fetchIssues(request: request, completion: { issues in
             completion(issues)
         })
     }

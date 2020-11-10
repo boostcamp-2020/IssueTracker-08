@@ -41,12 +41,17 @@ class IssueDetailViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet var openStatus: [UIButton]!
     
+    
     var interactor: IssueDetailBusinessLogic?
     var router: (IssueDetailDataReceiving)?
     var displayIssue: ListIssueDetail.FetchDetail.ViewModel?
     var displayComment: [comment] = []
-    private var markdownView = MarkdownView()
+    
     @IBOutlet weak var IssueDetailCollectionView: UICollectionView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var activityView: UIView!
+    @IBOutlet weak var openCloseSwitch: UISwitch!
     
     // MARK:- View Lifecycle
     
@@ -76,11 +81,6 @@ class IssueDetailViewController: UIViewController {
         tabbarSetup(AccessType: false)
     }
     
-    @IBAction func test(_ sender: Any) {
-        print(1)
-       // print(markdownView[0].intrinsicContentSize)
-    }
-    
 }
 
 // MARK:- Setup
@@ -100,11 +100,11 @@ extension IssueDetailViewController {
     func setupCollectionview() {
         let layout: UICollectionViewCompositionalLayout = {
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                  heightDimension: .estimated(50))
+                                                  heightDimension: .estimated(300))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: nil, top: .fixed(10), trailing: nil, bottom: .fixed(10))
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                   heightDimension: .estimated(50))
+                                                   heightDimension: .estimated(300))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
             let layout = UICollectionViewCompositionalLayout(section: section)
@@ -114,8 +114,8 @@ extension IssueDetailViewController {
         IssueDetailCollectionView.collectionViewLayout = layout
         IssueDetailCollectionView.delegate = self
         IssueDetailCollectionView.dataSource = self
-        IssueDetailCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
+    
     
     func tabbarSetup(AccessType: Bool) {
         let tabberHeight = self.tabBarController!.tabBar.frame.height
@@ -136,15 +136,20 @@ extension IssueDetailViewController {
         }
     }
     
-    private func markdownSetup(markdownUIView: UIView) {
-        markdownUIView.addSubview(markdownView)
-        markdownView.translatesAutoresizingMaskIntoConstraints = false
-        markdownView.topAnchor.constraint(equalTo: markdownUIView.topAnchor).isActive = true
-        markdownView.leadingAnchor.constraint(equalTo: markdownUIView.leadingAnchor).isActive = true
-        markdownView.trailingAnchor.constraint(equalTo: markdownUIView.trailingAnchor).isActive = true
-        markdownView.bottomAnchor.constraint(equalTo: markdownUIView.bottomAnchor).isActive = true
-        
-       // markdownView.append(markdown)
+    private func markdownTouchAnction(markdown: MarkdownView) {
+        markdown.onTouchLink = { [weak self] request in
+          guard let url = request.url else { return false }
+
+          if url.scheme == "file" {
+            return true
+          } else if url.scheme == "https" {
+            let safari = SFSafariViewController(url: url)
+            self?.present(safari, animated: true, completion: nil)
+            return false
+          } else {
+            return false
+          }
+        }
     }
 }
 
@@ -288,33 +293,26 @@ extension IssueDetailViewController: UICollectionViewDataSource {
         else if indexPath.item == 0  {
             cell.userID.text = displayIssue!.displayedDetail.name
             cell.timeDifference.text = FormattedDifferenceDateString(dueDate: displayIssue!.displayedDetail.createAt)
-            cell.content.text = displayIssue!.displayedDetail.content
-            
-            markdownSetup(markdownUIView: cell.content)
-            markdownView.onTouchLink = { [weak self] request in
-              guard let url = request.url else { return false }
-
-              if url.scheme == "file" {
-                return true
-              } else if url.scheme == "https" {
-                let safari = SFSafariViewController(url: url)
-                self?.present(safari, animated: true, completion: nil)
-                return false
-              } else {
-                return false
-              }
-            }
-            
-            DispatchQueue.main.async {
-                self.markdownView.load(markdown: self.displayIssue!.displayedDetail.content, enableImage: true)
-            }
-            //cell.content.text = displayIssue!.displayedDetail.content
+            markdownTouchAnction(markdown: cell.content)
+            cell.content.load(markdown: displayIssue!.displayedDetail.content)
+            cell.content.isScrollEnabled = false
         }
         else {
             let displayedComment = displayComment[indexPath.item - 1]
             cell.userID.text = displayedComment.name
             cell.timeDifference.text = FormattedDifferenceDateString(dueDate: displayedComment.createAt)
-            cell.content.text = displayedComment.content
+            markdownTouchAnction(markdown: cell.content)
+            cell.content.load(markdown: displayedComment.content)
+            cell.content.isScrollEnabled = false
+        }
+        
+        if displayComment.count == indexPath.item {
+            cell.content.onRendered = { [self] height in
+                setupCollectionview()
+                activityIndicator.stopAnimating()
+                loadingView.isHidden = true
+                activityView.isHidden = true
+            }
         }
         
         return cell
