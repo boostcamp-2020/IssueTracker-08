@@ -12,6 +12,18 @@ module.exports = {
     return callBack(results.data);
   },
 
+  getLabel: async (req, callBack) => {
+    const id = req.params.label_id;
+    const params = [id];
+    const results = await requestQuery(query.GET_LABEL, params);
+
+    if (results.status === 'success') {
+      return callBack(null, results.data[0]);
+    }
+
+    return callBack(results.data);
+  },
+
   getRandomColor: async (req, callBack) => {
     let randomHex = (Math.random() * 0xfffff * 1000000).toString(16);
     const randomHexColor = '#' + randomHex.slice(0, 6);

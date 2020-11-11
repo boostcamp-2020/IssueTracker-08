@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import IssueCommentForm from '../../components/IssueCommentForm';
+import IssueCommentForm from '../../components/issue/IssueCommentForm';
 
 const Container = styled.div`
   padding: 20px 30px;

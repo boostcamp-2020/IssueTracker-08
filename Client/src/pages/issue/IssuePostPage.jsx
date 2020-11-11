@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import IssueForm from '../../components/IssueForm';
+import IssueForm from '../../components/issue/IssueForm';
 
 const Container = styled.div`
   display: flex;
