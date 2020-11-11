@@ -10,7 +10,6 @@ const {
   updateUserImage,
 } = require('./signin.service');
 const { createJWT } = require('../utils/auth.token');
-
 const githubClientID = process.env.GITHUB_CLIENT_ID;
 const githubSecret = process.env.GITHUB_SECRET;
 

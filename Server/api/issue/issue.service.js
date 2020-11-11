@@ -94,6 +94,18 @@ module.exports = {
     return callBack(results.data);
   },
 
+  deleteIssue: async (req, callBack) => {
+    const { issueId } = req;
+    const params = [issueId];
+    const results = await requestQuery(query.DELETE_ISSUE, params);
+
+    if (results.status === 'success') {
+      return callBack(null, '이슈 delete가 완료되었습니다.');
+    }
+
+    return callBack(results.data);
+  },
+
   createAssignee: async (req, callBack) => {
     const { userId, issueId } = req;
     const params = [userId, issueId];
