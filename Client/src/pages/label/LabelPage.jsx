@@ -13,7 +13,7 @@ export default function LabelPage() {
     <LabelStore>
       <Container>
         <Menu name="label" link="/label"></Menu>
-        <LabelForm initName="" />
+        <LabelForm initName="" initDescription="" />
         <ItemContainer>
           <ItemHeader>
             <LabelTitle />

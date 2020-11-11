@@ -95,8 +95,9 @@ const LabelForm = ({ initName, initDescription, initColor }) => {
     initColor = getRandomColor();
   }
 
-  const colorRef = useRef(false);
   const nameRef = useRef(false);
+  const descriptionRef = useRef(false);
+  const colorRef = useRef(false);
   const [name, setName] = useState(initName);
   const [description, setDescription] = useState(initDescription);
   const [color, setColor] = useState(initColor);
@@ -108,6 +109,10 @@ const LabelForm = ({ initName, initDescription, initColor }) => {
 
   const colorInputChange = () => {
     setColor(colorRef.current.value);
+  };
+
+  const descriptionInputChange = () => {
+    setDescription(descriptionRef.current.value);
   };
 
   const nameInputChange = () => {
@@ -134,7 +139,12 @@ const LabelForm = ({ initName, initDescription, initColor }) => {
         <InputContainer flex="1">
           <InputTitle>Description</InputTitle>
           <InputContent>
-            <Input placeholder="Description (optional)" value={description} />
+            <Input
+              placeholder="Description (optional)"
+              value={description}
+              ref={descriptionRef}
+              onChange={descriptionInputChange}
+            />
           </InputContent>
         </InputContainer>
         <InputContainer>
