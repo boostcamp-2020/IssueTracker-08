@@ -63,10 +63,12 @@ const LabelContainer = ({ id, name, color, description }) => {
   const EditForm = (
     <>
       <LabelForm
+        type="EDIT"
         initName={name}
         initDescription={description}
         initColor={color}
         background="white"
+        callback={setIsOpenTab}
       >
         <Button onClick={deleteLabel}>
           <Text>Delete</Text>

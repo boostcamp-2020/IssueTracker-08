@@ -96,10 +96,12 @@ const ReloadIcon = styled.img`
 `;
 
 const LabelForm = ({
+  type,
   initName,
   initDescription,
   initColor,
   background,
+  callback,
   children,
 }) => {
   const { labelDispatch, newDispatch } = useContext(LabelContext);
@@ -114,6 +116,14 @@ const LabelForm = ({
   const [name, setName] = useState(initName);
   const [description, setDescription] = useState(initDescription);
   const [color, setColor] = useState(initColor);
+  const getSubmitText = () => {
+    if (type === 'NEW') {
+      return 'Create labels';
+    }
+    if (type === 'EDIT') {
+      return 'Save changes';
+    }
+  };
 
   const changeRandomColor = () => {
     const newColor = getRandomColor();
@@ -132,11 +142,16 @@ const LabelForm = ({
     setName(nameRef.current.value);
   };
 
-  const createCancel = (e) => {
-    newDispatch({ type: 'NEW_LABEL_TAB_CLOSE' });
+  const cancelSubmit = (e) => {
+    if (type === 'NEW') {
+      newDispatch({ type: 'NEW_LABEL_TAB_CLOSE' });
+    }
+    if (type === 'EDIT') {
+      callback(false);
+    }
   };
 
-  const createNewLabel = async (e) => {
+  const submitLabel = async (e) => {
     const name = nameRef.current.value;
     const description = descriptionRef.current.value;
     const color = colorRef.current.value;
@@ -155,15 +170,20 @@ const LabelForm = ({
       description: description,
       color: color,
     };
-    const options = postOptions(label);
-    const response = await fetch(POST_LABEL, options);
-    const result = await response.json();
 
-    const id = result.data.insertId;
-    label.id = id;
+    if (type === 'NEW') {
+      const options = postOptions(label);
+      const response = await fetch(POST_LABEL, options);
+      const result = await response.json();
 
-    newDispatch({ type: 'NEW_LABEL_TAB_CLOSE' });
-    labelDispatch({ type: 'NEW_LABEL_ADD', payload: label });
+      const id = result.data.insertId;
+      label.id = id;
+
+      newDispatch({ type: 'NEW_LABEL_TAB_CLOSE' });
+      labelDispatch({ type: 'NEW_LABEL_ADD', payload: label });
+    }
+    if (type === 'EDIT') {
+    }
   };
 
   return (
@@ -212,8 +232,8 @@ const LabelForm = ({
         </InputContainer>
         <InputContainer>
           <InputContent>
-            <CancelButton onClick={createCancel}>Cancel</CancelButton>
-            <SubmitButton onClick={createNewLabel}>Create labels</SubmitButton>
+            <CancelButton onClick={cancelSubmit}>Cancel</CancelButton>
+            <SubmitButton onClick={submitLabel}>{getSubmitText()}</SubmitButton>
           </InputContent>
         </InputContainer>
       </FormContainer>

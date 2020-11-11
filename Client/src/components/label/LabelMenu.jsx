@@ -34,7 +34,11 @@ const LabelMenu = () => {
       <Menu name="label" link="/label">
         <NewButton onClick={openNewLabelTab}>New Label</NewButton>
       </Menu>
-      {isClickNew ? <LabelForm initName="" initDescription="" /> : <></>}
+      {isClickNew ? (
+        <LabelForm type="NEW" initName="" initDescription="" />
+      ) : (
+        <></>
+      )}
     </>
   );
 };
