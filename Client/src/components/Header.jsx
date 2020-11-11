@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,7 +19,9 @@ const Title = styled.p`
 const Header = () => {
   return (
     <Wrapper>
-      <Title>🐼ISSUES</Title>
+      <Link to="/" style={{ textDecoration: 'none' }}>
+        <Title>🐼ISSUES</Title>
+      </Link>
     </Wrapper>
   );
 };
