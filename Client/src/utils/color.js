@@ -7,3 +7,8 @@ export const getFontColor = (color) => {
   if (result >= 0.5) return 'black';
   else return 'white';
 };
+
+export const getRandomColor = () => {
+  const color = `#${Math.round(Math.random() * 0xffffff).toString(16)}`;
+  return color;
+};

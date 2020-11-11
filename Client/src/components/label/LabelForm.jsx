@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Label from './Label';
+import { getRandomColor } from '../../utils/color';
 
 const Form = styled.div`
   display: flex;
@@ -89,36 +90,44 @@ const ReloadIcon = styled.img`
   align-items: center;
 `;
 
-const LabelForm = (props) => {
-  const temp = {
-    color: '#123345',
-    name: '테스트',
+const LabelForm = ({ initName, initDescription, initColor }) => {
+  if (!initColor) {
+    initColor = getRandomColor();
+  }
+  const [name, setName] = useState(initName);
+  const [description, setDescription] = useState(initDescription);
+  const [color, setColor] = useState(initColor);
+
+  const changeRandomColor = () => {
+    const newColor = getRandomColor();
+    setColor(newColor);
   };
+
   return (
     <Form>
       <FormContainer>
-        <Label color={temp.color} name={temp.name} />
+        <Label color={color} name={name} />
       </FormContainer>
       <FormContainer>
         <InputContainer>
           <InputTitle>Label Name</InputTitle>
           <InputContent>
-            <Input placeholder="Label name" />
+            <Input placeholder="Label name" value={name} />
           </InputContent>
         </InputContainer>
         <InputContainer flex="1">
           <InputTitle>Description</InputTitle>
           <InputContent>
-            <Input placeholder="Description (optional)" />
+            <Input placeholder="Description (optional)" value={description} />
           </InputContent>
         </InputContainer>
         <InputContainer>
           <InputTitle>Color</InputTitle>
           <InputContent>
-            <ColorBox color="skyblue">
+            <ColorBox color={color} onClick={changeRandomColor}>
               <ReloadIcon src="/images/reload.svg"></ReloadIcon>
             </ColorBox>
-            <Input placeholder="color" width="60px" />
+            <Input placeholder="color" width="60px" value={color} />
           </InputContent>
         </InputContainer>
         <InputContainer>
