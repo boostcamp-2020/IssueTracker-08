@@ -15,10 +15,6 @@ const LabelStore = (props) => {
 
   const loading = useFetch(setIntiData, GET_LABELS, getOptions);
 
-  useEffect(() => {
-    console.log('새로운 내용이 렌더링됐네요', labels);
-  }, [labels]);
-
   return (
     <LabelContext.Provider value={{ labels, loading, dispatch }}>
       {props.children}
