@@ -5,6 +5,7 @@
   "main": "index.js",
   "proxy": "https://github.com",
   "scripts": {
+    "start": "webpack-dev-server --hot --host 0.0.0.0",
     "dev": "webpack-dev-server --progress --mode development",
     "build": "webpack --progress --mode production",
     "test": "test"
