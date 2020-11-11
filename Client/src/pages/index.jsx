@@ -5,3 +5,4 @@ export { default as IssuePost } from './issue/IssuePostPage';
 export { default as Label } from './label/LabelPage';
 export { default as Milestone } from './milestone/MilestonePage';
 export { default as MilestonePost } from './milestone/MilestonePostPage';
+export { default as Callback } from './Callback';
