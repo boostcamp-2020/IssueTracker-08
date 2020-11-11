@@ -11,34 +11,28 @@ export const IssuesStore = (props) => {
   const [users, setUsers] = useState([]);
 
   const loadUsers = async () => {
-    const response = await fetch(GET_ALL_USERS, getOptions);
+    const response = await fetch(GET_ALL_USERS, getOptions());
     const result = await response.json();
     setUsers(result.data);
   };
 
   const loadOpenIssues = async () => {
-    const response = await fetch(GET_OPEN_ISSUE, getOptions);
+    const response = await fetch(GET_OPEN_ISSUE, getOptions());
     const result = await response.json();
     setOpenIssues(result.data);
   };
 
   const loadClosedIssues = async () => {
-    const response = await fetch(GET_CLOSED_ISSUE, getOptions);
+    const response = await fetch(GET_CLOSED_ISSUE, getOptions());
     const result = await response.json();
     setCloseIssues(result.data);
   };
 
   useEffect(() => {
     loadUsers();
-  }, [users]);
-
-  useEffect(() => {
     loadOpenIssues();
-  }, [openIssues]);
-
-  useEffect(() => {
     loadClosedIssues();
-  }, [closeIssues]);
+  }, []);
 
   return (
     <IssueContext.Provider

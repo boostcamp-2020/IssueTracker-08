@@ -13,7 +13,7 @@ const LabelStore = (props) => {
     dispatch({ type: 'SET_INIT_DATA', payload: initData });
   };
 
-  const loading = useFetch(setIntiData, GET_LABELS, getOptions);
+  const loading = useFetch(setIntiData, GET_LABELS, getOptions());
 
   return (
     <LabelContext.Provider value={{ labels, loading, dispatch }}>

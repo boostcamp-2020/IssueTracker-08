@@ -2,7 +2,7 @@ import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 import LoginStore from '../stores/LoginStore';
-import Header from '../components/Header';
+import Header from '../components/shared/container/Header';
 import MainRouter from '../router/MainRouter';
 import LoginRouter from '../router/LoginRouter';
 

@@ -23,7 +23,7 @@ const IssueList = () => {
   const [issues, setIssues] = useState([]);
 
   const loadOpenIssues = async () => {
-    const response = await fetch(GET_OPEN_ISSUE, getOptions);
+    const response = await fetch(GET_OPEN_ISSUE, getOptions());
     const result = await response.json();
     setIssues(result.data);
     return result.data;

@@ -32,7 +32,7 @@ const Text = styled.p`
 const LabelContainer = ({ id, name, color, description }) => {
   const { dispatch } = useContext(LabelContext);
   const deleteLabelRequest = () => {
-    const options = deleteOptions;
+    const options = deleteOptions();
     fetch(DELETE_LABELS(id), options);
   };
 

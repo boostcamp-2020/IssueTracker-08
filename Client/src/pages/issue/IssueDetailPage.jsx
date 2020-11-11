@@ -135,7 +135,7 @@ export default function IssueDetailPage({ match, location }) {
 
   const getIssueAuthorInfo = async () => {
     const issueId = match.params.issueId;
-    const options = getOptions;
+    const options = getOptions();
     const response = await fetch(GET_ISSUE(issueId), options);
     const responseJSON = await response.json();
     setIssueAuthorInfo(responseJSON.data[0]);
