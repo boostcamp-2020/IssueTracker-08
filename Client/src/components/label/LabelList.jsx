@@ -1,8 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useContext } from 'react';
 import LabelContainer from './LabelContainer';
+import { LabelContext } from '../../stores/LabelStore';
 
-const LabelList = ({ labels, loading }) => {
+const LabelList = () => {
+  const { labels, loading } = useContext(LabelContext);
   let labelList = <div>Loading...</div>;
   if (!loading) {
     labelList = labels.map((label) => (
