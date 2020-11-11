@@ -133,13 +133,16 @@ const SubmitButton = styled.button`
   border-radius: 6px;
   border: 1px solid #18ab29;
   display: inline-block;
-  cursor: pointer;
   color: white;
   font-size: 15px;
   font-weight: bold;
   padding: 10px;
   text-decoration: none;
   text-shadow: 0px -1px 0px #2f6627;
+  :focus {
+    outline: none;
+  }
+  cursor: ${(props) => (props.state ? 'pointer' : 'default')};
   background-color: ${(props) => (props.state ? '#44c767' : '#94d3a2')};
 `;
 
@@ -150,6 +153,10 @@ const IssueCommentForm = ({ issueId, userId }) => {
   const [userImage, setUserImage] = useState('');
 
   const createCommentData = () => {
+    if (commentRef.current.value === '') {
+      return;
+    }
+
     const comment = {
       userId: userId,
       issueId: issueId,
