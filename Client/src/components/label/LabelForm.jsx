@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import Label from './Label';
 import { getRandomColor } from '../../utils/color';
@@ -94,6 +94,8 @@ const LabelForm = ({ initName, initDescription, initColor }) => {
   if (!initColor) {
     initColor = getRandomColor();
   }
+
+  const colorRef = useRef(false);
   const [name, setName] = useState(initName);
   const [description, setDescription] = useState(initDescription);
   const [color, setColor] = useState(initColor);
@@ -101,6 +103,10 @@ const LabelForm = ({ initName, initDescription, initColor }) => {
   const changeRandomColor = () => {
     const newColor = getRandomColor();
     setColor(newColor);
+  };
+
+  const colorInputChange = () => {
+    setColor(colorRef.current.value);
   };
 
   return (
@@ -127,7 +133,13 @@ const LabelForm = ({ initName, initDescription, initColor }) => {
             <ColorBox color={color} onClick={changeRandomColor}>
               <ReloadIcon src="/images/reload.svg"></ReloadIcon>
             </ColorBox>
-            <Input placeholder="color" width="60px" value={color} />
+            <Input
+              placeholder="color"
+              width="60px"
+              value={color}
+              ref={colorRef}
+              onChange={colorInputChange}
+            />
           </InputContent>
         </InputContainer>
         <InputContainer>
