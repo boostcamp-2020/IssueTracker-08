@@ -3,12 +3,7 @@ import styled from 'styled-components';
 
 import IssueCommentForm from '../../components/issue/IssueCommentForm';
 import { GET_ISSUE } from '../../utils/api.js';
-import {
-  getOptions,
-  postOptions,
-  putOptions,
-  deleteOptions,
-} from '../../utils/fetchOptions';
+import { getOptions } from '../../utils/fetchOptions';
 import getDiffTime from '../../utils/getDiffTime';
 import Container from '../../components/shared/container/Container';
 import IssueStateButton from '../../components/issue/IssueStateButton';
@@ -141,7 +136,7 @@ export default function IssueDetailPage({ match, location }) {
   const getIssueAuthorInfo = async () => {
     const issueId = match.params.issueId;
     const options = getOptions;
-    const response = await fetch(GET_ISSUE + '/' + issueId, options);
+    const response = await fetch(GET_ISSUE(issueId), options);
     const responseJSON = await response.json();
     setIssueAuthorInfo(responseJSON.data[0]);
   };

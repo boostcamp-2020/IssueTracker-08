@@ -10,7 +10,7 @@ const StateButton = styled.button`
   height: 35px;
   display: flex;
   align-items: center;
-  background-color: ${(props) => (props.green ? '#28a745' : '#d73a49')};
+  background-color: ${(props) => (props.open ? '#28a745' : '#d73a49')};
 `;
 
 const ExclamIcon = styled.img`
@@ -31,14 +31,14 @@ const State = styled.p`
 function IssueStateButton({ state }) {
   if (state) {
     return (
-      <StateButton green>
+      <StateButton open>
         <ExclamIcon src="/images/exclam_circle.svg" />
         <State>Open</State>
       </StateButton>
     );
   } else {
     return (
-      <StateButton red>
+      <StateButton closed>
         <CloseIcon src="/images/close.svg" />
         <State>Closed</State>
       </StateButton>
