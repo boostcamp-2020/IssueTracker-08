@@ -7,8 +7,7 @@ export const labelReducer = (labels, { type, payload }) => {
       return labels.filter((label) => label.id !== payload);
 
     case 'NEW_LABEL_ADD':
-      // TODO : 등록한 라벨 추가해주기
-      return labels;
+      return [...labels, payload];
 
     default:
       break;

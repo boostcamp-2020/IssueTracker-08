@@ -4,6 +4,9 @@ import Label from './Label';
 import { LabelContext } from '../../stores/LabelStore';
 import { getRandomColor, isValidColor } from '../../utils/color';
 
+import { POST_LABEL } from '../../utils/api';
+import { postOptions } from '../../utils/fetchOptions';
+
 const Form = styled.div`
   display: flex;
   flex-direction: column;
@@ -126,7 +129,7 @@ const LabelForm = ({ initName, initDescription, initColor }) => {
     newDispatch({ type: 'NEW_LABEL_TAB_CLOSE' });
   };
 
-  const createNewLabel = (e) => {
+  const createNewLabel = async (e) => {
     const name = nameRef.current.value;
     const description = descriptionRef.current.value;
     const color = colorRef.current.value;
@@ -145,6 +148,12 @@ const LabelForm = ({ initName, initDescription, initColor }) => {
       description: description,
       color: color,
     };
+    const options = postOptions(label);
+    const response = await fetch(POST_LABEL, options);
+    const result = await response.json();
+
+    const id = result.data.insertId;
+    label.id = id;
 
     newDispatch({ type: 'NEW_LABEL_TAB_CLOSE' });
     labelDispatch({ type: 'NEW_LABEL_ADD', payload: label });
