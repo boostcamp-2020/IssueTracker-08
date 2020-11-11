@@ -18,7 +18,9 @@ protocol IssueListDisplayLogic: class {
     func displayUsers(viewModel: ListUsers.FetchUsers.ViewModel)
     func displayFetchedLabels(viewModel: ListLabels.FetchLists.ViewModel)
     func displayFetchedMilestone(viewModel: ListMilestones.FetchLists.ViewModel)
-    func successfullyClosedIssue() // 함수명 임의로 지정함
+    func didOpenCloseIssue(fetch : ListIssues.FetchCategory)
+    //func successfullyClosedIssue()
+    //func successfullyOpenedIssue()
 }
 
 final class IssueListViewController: UIViewController {
@@ -33,10 +35,7 @@ final class IssueListViewController: UIViewController {
     @IBOutlet weak var acitivityView: UIView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
-    let searchController = UISearchController(searchResultsController: nil)
-   
     // MARK:- Properties
-    
     var interactor: IssueListBusinessLogic?
     var router: (NSObjectProtocol & IssueListRoutingLogic & IssueDetailDataPassing)?
     var displayedIssues: [IssueViewModel] = []
@@ -44,6 +43,9 @@ final class IssueListViewController: UIViewController {
     private var displayedLabels: [ListLabels.FetchLists.ViewModel.DisplayedLabel] = []
     private var displayedMilestones: [ListMilestones.FetchLists.ViewModel.DisplayedMilestone] = []
     var filteredIssues: [IssueViewModel] = []
+    var config = UICollectionLayoutListConfiguration(appearance: .plain)
+    let searchController = UISearchController(searchResultsController: nil)
+
     override var isEditing: Bool {
         willSet {
             if newValue { setupEditMode() }
@@ -94,14 +96,12 @@ final class IssueListViewController: UIViewController {
     }
     
     // MARK:- View Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         startAnimating()
         setupSearchController()
-        setupCollectionview()
+        setupOpenCollectionview()
         setupNormalMode()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -134,8 +134,14 @@ final class IssueListViewController: UIViewController {
     
     @IBAction func switchAction(_ sender: UISwitch) {
         startAnimating()
-        if openCloseSwitch.isOn { fetchIssues(request: .Open) }
-        else { fetchIssues(request: .Closed) }
+        if openCloseSwitch.isOn {
+            fetchIssues(request: .Open)
+            setupOpenCollectionview()
+        }
+        else {
+            fetchIssues(request: .Closed)
+            setupClosedCollectionView()
+        }
     }
     
     private func startAnimating() {
@@ -177,22 +183,31 @@ extension IssueListViewController {
         presenter.viewController = viewController
         router.viewController = viewController
     }
-    
-    private func setupCollectionview() {
-        var config = UICollectionLayoutListConfiguration(appearance: .plain)
 
+    private func setupOpenCollectionview() {
         config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
             let close = UIContextualAction(style: .normal, title: "Close") { (action, view, completion) in
                 closeIssue(at: indexPath)
             }
-            close.backgroundColor = .systemGreen
-            let delete = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
-                deleteIssue(at: indexPath)
-            }
-            delete.backgroundColor = .systemPink
-            return UISwipeActionsConfiguration(actions: [delete, close])
+            close.backgroundColor = .systemPink
+            return UISwipeActionsConfiguration(actions: [close])
         }
-        
+
+        let layout = UICollectionViewCompositionalLayout.list(using: config)
+        issueListCollectionView.collectionViewLayout = layout
+        issueListCollectionView.delegate = self
+        issueListCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    }
+
+    private func setupClosedCollectionView() {
+        config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
+            let open = UIContextualAction(style: .normal, title: "Open") { (action, view, completion) in
+                openIssue(at: indexPath)
+            }
+            open.backgroundColor = .systemGreen
+            return UISwipeActionsConfiguration(actions: [open])
+        }
+
         let layout = UICollectionViewCompositionalLayout.list(using: config)
         issueListCollectionView.collectionViewLayout = layout
         issueListCollectionView.delegate = self
@@ -200,6 +215,7 @@ extension IssueListViewController {
     }
     
     private func setupNormalMode() {
+        
         selectedItems = 0
         let tabbarHeight = tabBarController?.tabBar.frame.height ?? 0
         tabBarController?.tabBar.frame.origin.y = view.frame.height - tabbarHeight
@@ -249,9 +265,13 @@ extension IssueListViewController: IssueListDisplayLogic {
         print(displayedMilestones)
     }
     
-    func successfullyClosedIssue() {
-        fetchIssues(request: .Open)
+    func didOpenCloseIssue(fetch : ListIssues.FetchCategory) {
+        fetchIssues(request: fetch)
     }
+    
+//    func successfullyClosedIssue() {
+//        fetchIssues(request: .Open)
+//    }
     
     private func fetchUsers() {
         let request = ListUsers.FetchUsers.Request()
@@ -288,6 +308,11 @@ extension IssueListViewController: IssueListDisplayLogic {
         selectedItems -= 1
         let issueId = displayedIssues[indexPath.item].issueId
         interactor?.closeIssue(request: ListIssues.CloseIssue.Request(issueId: issueId))
+    }
+    
+    private func openIssue(at indexPath: IndexPath) {
+        let issueId = displayedIssues[indexPath.item].issueId
+        interactor?.openIssue(request: ListIssues.OpenIssue.Request(issueId: issueId))
     }
     
 }

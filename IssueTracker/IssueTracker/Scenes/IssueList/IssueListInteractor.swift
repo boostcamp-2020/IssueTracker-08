@@ -11,6 +11,7 @@ import Foundation
 protocol IssueListBusinessLogic {
     func fetchIssues(request: ListIssues.FetchIssues.Request)
     func closeIssue(request: ListIssues.CloseIssue.Request)
+    func openIssue(request: ListIssues.OpenIssue.Request)
     func fetchUsers(request: ListUsers.FetchUsers.Request)
     func fetchLabels(request: ListLabels.FetchLists.Request)
     func fetchMilestones(request: ListMilestones.FetchLists.Request)
@@ -25,7 +26,7 @@ class IssueListInteractor {
     var presenter: IssueListPresentationLogic?
     var issueWorker = IssueListWorker(dataManager: IssueDataManager())
     var issues: [Issue]?
-    var responseStatus: String?
+    //var responseStatus: String?
     var users: [UserModel]?
     var labels: [Label]?
     var milestones: [Milestone]?
@@ -44,9 +45,17 @@ extension IssueListInteractor: IssueListBusinessLogic {
     
     func closeIssue(request: ListIssues.CloseIssue.Request) {
         issueWorker.closeIssue(request: request, completion: { [unowned self] (result) -> Void in
-            self.responseStatus = result
+            //self.responseStatus = result
             let response = ListIssues.CloseIssue.Response(status: result)
             self.presenter?.presentPostResult(response: response)
+        })
+    }
+    
+    func openIssue(request: ListIssues.OpenIssue.Request) {
+        issueWorker.openIssue(request: request, completion: { [unowned self] (result) -> Void in
+            //self.responseStatus = result
+            let response = ListIssues.OpenIssue.Response(status: result)
+            presenter?.presentPostResult(response: response)
         })
     }
     

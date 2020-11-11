@@ -11,6 +11,7 @@ import Foundation
 protocol IssueListPresentationLogic {
     func presentFetchedIssues(response: ListIssues.FetchIssues.Response)
     func presentPostResult(response: ListIssues.CloseIssue.Response)
+    func presentPostResult(response: ListIssues.OpenIssue.Response)
     func presentFetchedUsers(response: ListUsers.FetchUsers.Response)
     func presentFetchedLabels(response: ListLabels.FetchLists.Response)
     func presentFetchedMilestones(response: ListMilestones.FetchLists.Response)
@@ -44,9 +45,20 @@ extension IssueListPresenter: IssueListPresentationLogic {
     
     func presentPostResult(response: ListIssues.CloseIssue.Response) {
         if response.status == "success" {
-            viewController?.successfullyClosedIssue()
+            viewController?.didOpenCloseIssue(fetch: .Open)
+            //viewController?.successfullyClosedIssue()
         } else {
-            
+            // TODO
+                // if response == fail
+        }
+    }
+    
+    func presentPostResult(response: ListIssues.OpenIssue.Response) {
+        if response.status == "success" {
+            viewController?.didOpenCloseIssue(fetch: .Closed)
+        } else {
+            // TODO
+                // if response == fail
         }
     }
     
