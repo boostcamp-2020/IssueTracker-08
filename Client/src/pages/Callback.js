@@ -20,6 +20,7 @@ function Callback({ history, location }) {
             code,
           })
           .then((res) => {
+            localStorage.setItem('userId', res.data.userId);
             localStorage.setItem('jwtToken', res.data.jwtToken);
             checkValidLogin();
           })
