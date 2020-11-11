@@ -25,7 +25,7 @@
 </div>
 
 ## :link: IssueTracker-8
-WEB RELEASE : http://118.67.131.96:8000/
+WEB RELEASE : http://118.67.131.96:8000/  <br>
 iOS RELEASE : https://kr.object.ncloudstorage.com/release-server/Web/index.html
 
 ## 👨‍👩‍👧‍👦 모쨍이 팀원들 (순서대로)
