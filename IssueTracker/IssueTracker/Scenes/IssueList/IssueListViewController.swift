@@ -101,6 +101,7 @@ final class IssueListViewController: UIViewController {
         setupSearchController()
         setupCollectionview()
         setupNormalMode()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -200,8 +201,8 @@ extension IssueListViewController {
     
     private func setupNormalMode() {
         selectedItems = 0
-        let tabbarHeight = self.tabBarController!.tabBar.frame.height
-        self.tabBarController!.tabBar.frame.origin.y = view.frame.height - tabbarHeight
+        let tabbarHeight = tabBarController?.tabBar.frame.height ?? 0
+        tabBarController?.tabBar.frame.origin.y = view.frame.height - tabbarHeight
         titleLabel.text = "Issue"
         newIssueButton.isHidden = false
         navigationItem.rightBarButtonItem?.title = "Edit"

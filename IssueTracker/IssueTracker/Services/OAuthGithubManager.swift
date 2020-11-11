@@ -40,12 +40,12 @@ class OAuthGithubManager: GithubManager {
                 let accessToken = tokenConfig.accessToken!
                 
                 NetworkService().ouathData(url: apiEndpoint, header: accessToken, completion: { data in
-                    guard let receivedData = try? JSONDecoder().decode(GithubModel.self, from: data) else {
+                    /*guard let receivedData = try? JSONDecoder().decode(GithubModel.self, from: data) else {
                         return
                     }
                     let requestModel = SigninModel.RequestModel(name: receivedData.name, email: receivedData.email)
                     let request = SigninModel.Github.Request(request: requestModel)
-                    postToServer(request: request)
+                    postToServer(request: request)*/
                 })
 
             })

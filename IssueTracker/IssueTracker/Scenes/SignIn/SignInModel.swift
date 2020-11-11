@@ -8,34 +8,29 @@
 import Foundation
 
 
-struct GithubModel: Decodable {
-    var login: String
-    var id: Int
-    var name: String
-    var email: String?
+struct SigninResponse: Decodable {
+    var jwtToken: String
+    var userId: Int
 }
 
-/// Apple model은 임시로 만든 것
-//struct AppleModel: Decodable {
-//    var name: String
-//    var email: String
-//}
+struct appleSignin: Encodable {
+    var name: String
+}
+
+struct githubSignin: Encodable {
+    var code: String
+}
 
 enum SigninModel {
     
-    struct RequestModel {
-        var name: String
-        var email: String?
-    }
-
     enum Github {
-        struct Request { var request: RequestModel }
-        struct Response { var jwtToken: String }
+        struct Request { var code: githubSignin }
+        struct Response { var response: SigninResponse }
     }
     
     enum Apple {
-        struct Request { var request: RequestModel }
-        struct Response { var jwtToken: String }
+        struct Request { var name: appleSignin }
+        struct Response { var response: SigninResponse }
     }
     
 }
