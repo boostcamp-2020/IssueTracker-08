@@ -5,6 +5,7 @@ import MenuButton from '../button/MenuButton';
 
 const MenuDiv = styled.div`
   display: flex;
+  margin-bottom: 20px;
 `;
 
 const Menu = (props) => {
