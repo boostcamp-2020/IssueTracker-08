@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Issue tracker 08 team client project",
   "main": "index.js",
+  "proxy": "https://github.com",
   "scripts": {
     "dev": "webpack-dev-server --progress --mode development",
     "build": "webpack --progress --mode production",
@@ -26,6 +27,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "babel-polyfill": "^6.26.0",
     "clean-webpack-plugin": "^3.0.0",
     "dotenv": "^8.2.0",

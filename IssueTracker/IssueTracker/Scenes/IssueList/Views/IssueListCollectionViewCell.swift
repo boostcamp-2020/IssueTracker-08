@@ -7,7 +7,7 @@
 
 import UIKit
 
-class IssueListCollectionViewCell: UICollectionViewCell {
+class IssueListCollectionViewCell: UICollectionViewListCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -21,6 +21,7 @@ class IssueListCollectionViewCell: UICollectionViewCell {
             label.isHidden = true
             label.isUserInteractionEnabled = false
         })
+        separatorLayoutGuide.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
     }
     
     func configureMilestone() {
@@ -32,10 +33,14 @@ class IssueListCollectionViewCell: UICollectionViewCell {
     }
     
     func configureLabelButton(label: UIButton, hexString: String) {
+        let backgroundUIColor = UIColor(hexString: hexString)
         label.isHidden = false
         label.layer.backgroundColor = UIColor(hexString: hexString).cgColor
         label.layer.cornerRadius = 5
         label.contentEdgeInsets = .init(top: 0, left: 10, bottom: 0, right: 10)
+        
+        let luminance = backgroundUIColor.redValue * 0.299 + backgroundUIColor.greenValue * 0.587 + backgroundUIColor.blueValue * 0.114
+        if luminance < 0.5 { label.setTitleColor(.white, for: .normal) }
+        else { label.setTitleColor(.black, for: .normal) }
     }
-    
 }
