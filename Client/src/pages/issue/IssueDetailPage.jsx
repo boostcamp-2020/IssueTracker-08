@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import IssueCommentForm from '../../components/issue/IssueCommentForm';
-
-const Container = styled.div`
-  padding: 20px 30px;
-`;
+import { GET_ISSUE } from '../../utils/api.js';
+import {
+  getOptions,
+  postOptions,
+  putOptions,
+  deleteOptions,
+} from '../../utils/fetchOptions';
+import getDiffTime from '../../utils/getDiffTime';
+import Container from '../../components/shared/container/Container';
+import IssueStateButton from '../../components/issue/IssueStateButton';
 
 const IssueHeader = styled.div`
   display: flex;
@@ -37,28 +43,6 @@ const IssueInfo = styled.div`
   padding-bottom: 8px;
   border-bottom: 1px solid #e1e4e8;
   margin-bottom: 32px;
-`;
-
-const StateButton = styled.button`
-  color: white;
-  background-color: #28a745;
-  border-radius: 2em;
-  border-color: transparent;
-  margin-right: 8px;
-  padding: 5px 12px;
-  height: 35px;
-  display: flex;
-  align-items: center;
-`;
-
-const ExclamIcon = styled.img`
-  width: 15px;
-  margin-right: 4px;
-`;
-
-const State = styled.p`
-  font-size: 14px;
-  font-weight: bold;
 `;
 
 const IssueAuthor = styled.p`
@@ -151,37 +135,51 @@ const Comment = styled.div`
   padding: 15px;
 `;
 
-export default function IssueDetailPage() {
+export default function IssueDetailPage({ match, location }) {
+  const [issueAuthorInfo, setIssueAuthorInfo] = useState('');
+
+  const getIssueAuthorInfo = async () => {
+    const issueId = match.params.issueId;
+    const options = getOptions;
+    const response = await fetch(GET_ISSUE + '/' + issueId, options);
+    const responseJSON = await response.json();
+    setIssueAuthorInfo(responseJSON.data[0]);
+  };
+
+  useEffect(() => {
+    getIssueAuthorInfo();
+  }, []);
+
   return (
     <>
       <Container>
         <IssueHeader>
-          <IssueTitle>이슈 상세 화면</IssueTitle>
+          <IssueTitle>{issueAuthorInfo.title}</IssueTitle>
           <EditButton>Edit</EditButton>
         </IssueHeader>
         <IssueInfo>
-          <StateButton>
-            <ExclamIcon src="/images/exclam_circle.svg"></ExclamIcon>
-            <State>Open</State>
-          </StateButton>
-          <IssueAuthor>yoonwoo123</IssueAuthor>
-          <IssuedTime>opened this issue 22 hours ago · </IssuedTime>
+          <IssueStateButton state={issueAuthorInfo.isOpen} />
+          <IssueAuthor>{issueAuthorInfo.name}</IssueAuthor>
+          <IssuedTime>
+            opened this issue {getDiffTime(issueAuthorInfo.closeAt)} ago ·
+          </IssuedTime>
           <IssueCommentNum>0 comments</IssueCommentNum>
         </IssueInfo>
         <DiscussionBucket>
           <Discussion>
-            <AuthorImage src="https://avatars0.githubusercontent.com/u/45933675?s=88&u=2d19e9aa698b2fd95bb9a2ca4888b8d52bf1c304&v=4"></AuthorImage>
+            <AuthorImage src={`${issueAuthorInfo.imageUrl}`}></AuthorImage>
             <DiscussionContent>
               <CommentTimeline>
-                <CommentAuthor>yoonwoo123</CommentAuthor>
-                <CommentedTime>commented 22 hours ago</CommentedTime>
+                <CommentAuthor>{issueAuthorInfo.name}</CommentAuthor>
+                <CommentedTime>
+                  commented {getDiffTime(issueAuthorInfo.closeAt)} ago
+                </CommentedTime>
                 <AuthorLevel>Member</AuthorLevel>
                 <Emoticon src="/images/emoticon.svg"></Emoticon>
                 <Menu src="/images/menu.svg"></Menu>
               </CommentTimeline>
               <Comment>
-                <p>이슈 상세 화면입니다!</p>
-                <p>테스트용 아무말</p>
+                <p>{issueAuthorInfo.content}</p>
               </Comment>
             </DiscussionContent>
           </Discussion>
