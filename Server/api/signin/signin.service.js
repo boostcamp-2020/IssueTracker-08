@@ -24,8 +24,14 @@ module.exports = {
 
   createUser: async (data) => {
     const { login, avatar_url } = data;
-    const params = [login, `${login}@github.io`, avatar_url];
+    const params = [login, `${login}@github.com`, avatar_url];
     const results = await requestQuery(query.CREATE_USER, params);
+  },
+
+  createAppleUser: async (data) => {
+    const { login, avatar_url } = data;
+    const params = [login, `${login}@apple.com`, avatar_url];
+    await requestQuery(query.CREATE_USER, params);
   },
 
   updateUserImage: async (data) => {
