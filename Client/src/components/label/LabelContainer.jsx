@@ -30,7 +30,7 @@ const Text = styled.p`
 `;
 
 const LabelContainer = ({ id, name, color, description }) => {
-  const { dispatch } = useContext(LabelContext);
+  const { labelDispatch } = useContext(LabelContext);
   const deleteLabelRequest = () => {
     const options = deleteOptions();
     fetch(DELETE_LABELS(id), options);
@@ -39,7 +39,7 @@ const LabelContainer = ({ id, name, color, description }) => {
   const deleteLabel = (e) => {
     if (confirm(`${name}을 정말로 삭제하시겠습니까?`)) {
       deleteLabelRequest();
-      dispatch({ type: 'DELETE_LABEL', payload: id });
+      labelDispatch({ type: 'DELETE_LABEL', payload: id });
     }
   };
   return (

@@ -10,3 +10,12 @@ export const labelReducer = (labels, { type, payload }) => {
       break;
   }
 };
+
+export const newReducer = (isClickNew, { type }) => {
+  switch (type) {
+    case 'NEW_LABEL_TAB_OPEN':
+      return true;
+    default:
+      break;
+  }
+};

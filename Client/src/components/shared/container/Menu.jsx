@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import NewButton from '../button/NewButton';
 import MenuButton from '../button/MenuButton';
 
 const MenuDiv = styled.div`
@@ -8,7 +7,7 @@ const MenuDiv = styled.div`
   margin-bottom: 20px;
 `;
 
-const Menu = ({ name, link }) => {
+const Menu = ({ name, children }) => {
   return (
     <MenuDiv>
       <MenuButton
@@ -23,7 +22,7 @@ const Menu = ({ name, link }) => {
         img="/images/milestone.svg"
         color={name === 'milestone' ? 'blue' : 'white'}
       ></MenuButton>
-      <NewButton link={link} name={name} />
+      {children}
     </MenuDiv>
   );
 };
