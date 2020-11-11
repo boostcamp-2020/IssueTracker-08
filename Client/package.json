@@ -39,6 +39,8 @@
     "prettier": "^2.1.1",
     "query-string": "^6.13.6",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "semantic-ui-react": "^2.0.1",
+    "@primer/octicons-react": "^11.0.0"
   }
 }
