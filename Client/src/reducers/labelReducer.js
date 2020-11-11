@@ -6,6 +6,10 @@ export const labelReducer = (labels, { type, payload }) => {
     case 'DELETE_LABEL':
       return labels.filter((label) => label.id !== payload);
 
+    case 'NEW_LABEL_ADD':
+      // TODO : 등록한 라벨 추가해주기
+      return labels;
+
     default:
       break;
   }
@@ -17,6 +21,9 @@ export const newReducer = (isClickNew, { type }) => {
       return true;
 
     case 'NEW_LABEL_TAB_CLOSE':
+      return false;
+
+    case 'NEW_LABEL_ADD':
       return false;
 
     default:

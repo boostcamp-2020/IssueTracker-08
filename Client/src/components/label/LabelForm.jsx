@@ -2,7 +2,7 @@ import React, { useState, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import Label from './Label';
 import { LabelContext } from '../../stores/LabelStore';
-import { getRandomColor } from '../../utils/color';
+import { getRandomColor, isValidColor } from '../../utils/color';
 
 const Form = styled.div`
   display: flex;
@@ -92,7 +92,7 @@ const ReloadIcon = styled.img`
 `;
 
 const LabelForm = ({ initName, initDescription, initColor }) => {
-  const { newDispatch } = useContext(LabelContext);
+  const { labelDispatch, newDispatch } = useContext(LabelContext);
 
   if (!initColor) {
     initColor = getRandomColor();
@@ -124,6 +124,30 @@ const LabelForm = ({ initName, initDescription, initColor }) => {
 
   const createCancel = (e) => {
     newDispatch({ type: 'NEW_LABEL_TAB_CLOSE' });
+  };
+
+  const createNewLabel = (e) => {
+    const name = nameRef.current.value;
+    const description = descriptionRef.current.value;
+    const color = colorRef.current.value;
+
+    if (name === '') {
+      alert('이름을 작성해주세요.');
+      return false;
+    }
+    if (!isValidColor(color)) {
+      alert('유효하지 않은 색상 값입니다.');
+      return false;
+    }
+
+    const label = {
+      name: name,
+      description: description,
+      color: color,
+    };
+
+    newDispatch({ type: 'NEW_LABEL_TAB_CLOSE' });
+    labelDispatch({ type: 'NEW_LABEL_ADD', payload: label });
   };
 
   return (
@@ -172,7 +196,7 @@ const LabelForm = ({ initName, initDescription, initColor }) => {
         <InputContainer>
           <InputContent>
             <CancelButton onClick={createCancel}>Cancel</CancelButton>
-            <SubmitButton>Create labels</SubmitButton>
+            <SubmitButton onClick={createNewLabel}>Create labels</SubmitButton>
           </InputContent>
         </InputContainer>
       </FormContainer>
