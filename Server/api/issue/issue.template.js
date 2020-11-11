@@ -16,7 +16,11 @@ module.exports = {
       const assigneeList = [];
 
       for (let assign of assigneeResults.data[0]) {
-        assigneeList.push(assign.name);
+        assigneeList.push({
+          userId: assign.userId,
+          imageUrl: assign.imageUrl,
+          name: assign.name,
+        });
       }
 
       issue.label = labelList.data[0];
