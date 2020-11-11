@@ -7,6 +7,7 @@ const {
   isExistUser,
   getUserAllInfo,
   createUser,
+  createAppleUser,
   updateUserImage,
 } = require('./signin.service');
 const { createJWT } = require('../utils/auth.token');
@@ -52,5 +53,23 @@ module.exports = {
     } catch (err) {
       return res.status(500);
     }
+  },
+
+  appleAuth: async (req, res) => {
+    const data = {
+      login: req.body.name,
+      avatar_url: 'https://avatars2.githubusercontent.com/u/13073517?v=4',
+    };
+
+    if (await isExistUser(data)) {
+      await updateUserImage(data);
+    } else {
+      await createAppleUser(data);
+    }
+
+    const user = await getUserAllInfo(data);
+    const jwtToken = createJWT(user[0]);
+
+    return res.status(200).json({ jwtToken: jwtToken, userId: user[0].id });
   },
 };
