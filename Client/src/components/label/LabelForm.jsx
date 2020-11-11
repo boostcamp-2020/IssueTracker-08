@@ -96,6 +96,7 @@ const LabelForm = ({ initName, initDescription, initColor }) => {
   }
 
   const colorRef = useRef(false);
+  const nameRef = useRef(false);
   const [name, setName] = useState(initName);
   const [description, setDescription] = useState(initDescription);
   const [color, setColor] = useState(initColor);
@@ -109,16 +110,25 @@ const LabelForm = ({ initName, initDescription, initColor }) => {
     setColor(colorRef.current.value);
   };
 
+  const nameInputChange = () => {
+    setName(nameRef.current.value);
+  };
+
   return (
     <Form>
       <FormContainer>
-        <Label color={color} name={name} />
+        <Label color={color} name={name !== '' ? name : 'Label preview'} />
       </FormContainer>
       <FormContainer>
         <InputContainer>
           <InputTitle>Label Name</InputTitle>
           <InputContent>
-            <Input placeholder="Label name" value={name} />
+            <Input
+              placeholder="Label name"
+              value={name}
+              ref={nameRef}
+              onChange={nameInputChange}
+            />
           </InputContent>
         </InputContainer>
         <InputContainer flex="1">

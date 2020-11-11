@@ -12,7 +12,6 @@ const Container = styled.div`
   text-align: center;
   padding: 4px 8px;
   border-radius: 10px;
-  min-width: 30px;
 `;
 
 const Label = (props) => {
