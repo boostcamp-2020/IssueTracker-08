@@ -15,6 +15,10 @@ export const newReducer = (isClickNew, { type }) => {
   switch (type) {
     case 'NEW_LABEL_TAB_OPEN':
       return true;
+
+    case 'NEW_LABEL_TAB_CLOSE':
+      return false;
+
     default:
       break;
   }

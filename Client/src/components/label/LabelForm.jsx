@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import Label from './Label';
+import { LabelContext } from '../../stores/LabelStore';
 import { getRandomColor } from '../../utils/color';
 
 const Form = styled.div`
@@ -91,6 +92,8 @@ const ReloadIcon = styled.img`
 `;
 
 const LabelForm = ({ initName, initDescription, initColor }) => {
+  const { newDispatch } = useContext(LabelContext);
+
   if (!initColor) {
     initColor = getRandomColor();
   }
@@ -107,16 +110,20 @@ const LabelForm = ({ initName, initDescription, initColor }) => {
     setColor(newColor);
   };
 
-  const colorInputChange = () => {
+  const colorInputChange = (e) => {
     setColor(colorRef.current.value);
   };
 
-  const descriptionInputChange = () => {
+  const descriptionInputChange = (e) => {
     setDescription(descriptionRef.current.value);
   };
 
-  const nameInputChange = () => {
+  const nameInputChange = (e) => {
     setName(nameRef.current.value);
+  };
+
+  const createCancel = (e) => {
+    newDispatch({ type: 'NEW_LABEL_TAB_CLOSE' });
   };
 
   return (
@@ -164,7 +171,7 @@ const LabelForm = ({ initName, initDescription, initColor }) => {
         </InputContainer>
         <InputContainer>
           <InputContent>
-            <CancelButton>Cancel</CancelButton>
+            <CancelButton onClick={createCancel}>Cancel</CancelButton>
             <SubmitButton>Create labels</SubmitButton>
           </InputContent>
         </InputContainer>
