@@ -1,13 +1,11 @@
 const router = require('express').Router();
-const {
-  githubSignIn,
-  githubCallback,
-  isLogin,
-} = require('./signin.controller');
+
+const { isLogin, githubAuth, appleAuth } = require('./signin.controller');
 const { checkJWTAuthorization } = require('../utils/auth.token');
 
 router.get('/', checkJWTAuthorization, isLogin);
-router.get('/github', githubSignIn);
-router.get('/github/callback', githubCallback);
+
+router.post('/github', githubAuth);
+router.post('/apple', appleAuth);
 
 module.exports = router;
