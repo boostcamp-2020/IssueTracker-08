@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import IssueList__Header from './issueListHeader';
-import IssueList__List from './issueList';
+import IssueListHeader from './issueListHeader';
+import IssueListList from './issueList';
 import IssuesStore from '../../../context/issueContext';
 
 const Container = styled.div`
@@ -13,8 +13,8 @@ const IssueMain = () => {
   return (
     <IssuesStore>
       <Container>
-        <IssueList__Header />
-        <IssueList__List />
+        <IssueListHeader />
+        <IssueListList />
       </Container>
     </IssuesStore>
   );

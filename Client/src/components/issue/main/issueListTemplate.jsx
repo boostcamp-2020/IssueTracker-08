@@ -21,13 +21,6 @@ const Container = styled.div`
     color: #0366d6;
     cursor: pointer;
   }
-  &:hover {
-    background: #f7f8fa;
-  }
-  &:last-of-type {
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-  }
   .issueOpenedIcon {
     margin-top: 4px;
     margin-left: 10px;
@@ -37,6 +30,13 @@ const Container = styled.div`
     margin-top: 4px;
     margin-left: 10px;
     color: #cb2431;
+  }
+  &:hover {
+    background: #f7f8fa;
+  }
+  &:last-of-type {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
   }
 `;
 
