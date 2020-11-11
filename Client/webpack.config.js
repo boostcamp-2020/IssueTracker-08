@@ -4,6 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
+  // devtool: 컴파일 된 코드를 원래 소스코드로 맵핑을 해주는 역할
+  devtool: 'inline-source-map',
   // entry: 웹팩에게 어플리케이션이 어디서 시작하고 어디서부터 파일들을 묶을건지 시작점을 정해준다.
   entry: ['babel-polyfill', './src/index.js'],
   // 현재 개발 모드에서 작업 중임을 알려줌.
