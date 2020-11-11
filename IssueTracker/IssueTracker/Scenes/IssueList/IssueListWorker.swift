@@ -14,8 +14,8 @@ class IssueListWorker {
         self.dataManager = dataManager
     }
     
-    func fetchIssues(completion: @escaping ([Issue]) -> Void) {
-        dataManager.fetchIssues(completion: { issues in
+    func fetchIssues(request: ListIssues.FetchIssues.Request, completion: @escaping ([Issue]) -> Void) {
+        dataManager.fetchIssues(request: request, completion: { issues in
             completion(issues)
         })
     }
@@ -23,6 +23,24 @@ class IssueListWorker {
     func closeIssue(request: ListIssues.CloseIssue.Request, completion: @escaping (String) -> Void) {
         dataManager.postCloseIssue(request: request, completion: { result in
             completion(result)
+        })
+    }
+    
+    func fetchUsers(request: ListUsers.FetchUsers.Request, completion: @escaping ([UserModel]) -> Void) {
+        dataManager.fetchUsers(request: request, completion: { users in
+            completion(users)
+        })
+    }
+    
+    func fetchLabels(completion: @escaping ([Label]) -> Void) {
+        dataManager.fetchLabels(completion: { Labels in
+            completion(Labels)
+        })
+    }
+    
+    func fetchMilestones(completion: @escaping ([Milestone]) -> Void) {
+        dataManager.fetchMilestones(completion: { milestones in
+            completion(milestones)
         })
     }
 }

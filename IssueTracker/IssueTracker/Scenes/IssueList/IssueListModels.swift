@@ -23,6 +23,7 @@ struct Issue: Decodable {
     var issueId: Int
     var email: String
     var name: String
+    var milestoneId: Int?
     var milestone: String?
     var title: String
     var content: String
@@ -33,10 +34,17 @@ struct Issue: Decodable {
     var assign: [IssueAssign]?
 }
 
-
 enum ListIssues {
-    enum FetchLists {
-        struct Request { }
+    
+    enum FetchCategory: String {
+        case Open = "open"
+        case Closed = "closed"
+    }
+    
+    enum FetchIssues {
+        struct Request {
+            var request: FetchCategory
+        }
         struct Response {
             var issues: [Issue]
         }

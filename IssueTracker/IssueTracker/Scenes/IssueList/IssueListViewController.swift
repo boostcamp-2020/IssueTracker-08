@@ -8,8 +8,16 @@
 import UIKit
 
 
+import UIKit
+
+//MARK:- Typealias
+typealias IssueViewModel = ListIssues.FetchIssues.ViewModel.DisplayedIssue
+
 protocol IssueListDisplayLogic: class {
-    func displayOpenIssues(viewModel: ListIssues.FetchLists.ViewModel)
+    func displayOpenIssues(viewModel: ListIssues.FetchIssues.ViewModel)
+    func displayUsers(viewModel: ListUsers.FetchUsers.ViewModel)
+    func displayFetchedLabels(viewModel: ListLabels.FetchLists.ViewModel)
+    func displayFetchedMilestone(viewModel: ListMilestones.FetchLists.ViewModel)
     func successfullyClosedIssue() // 함수명 임의로 지정함
 }
 
@@ -21,14 +29,20 @@ final class IssueListViewController: UIViewController {
     @IBOutlet weak var closeIssueButton: UIButton!
     @IBOutlet weak var issueListCollectionView: UICollectionView!
     @IBOutlet weak var openCloseSwitch: UISwitch!
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var acitivityView: UIView!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
     
     let searchController = UISearchController(searchResultsController: nil)
    
     // MARK:- Properties
-    typealias IssueViewModel = ListIssues.FetchLists.ViewModel.DisplayedIssue
+    
     var interactor: IssueListBusinessLogic?
     var router: (NSObjectProtocol & IssueListRoutingLogic & IssueDetailDataPassing)?
     var displayedIssues: [IssueViewModel] = []
+    var displayedUsers: [ListUsers.FetchUsers.ViewModel.DisplayedUser] = []
+    private var displayedLabels: [ListLabels.FetchLists.ViewModel.DisplayedLabel] = []
+    private var displayedMilestones: [ListMilestones.FetchLists.ViewModel.DisplayedMilestone] = []
     var filteredIssues: [IssueViewModel] = []
     override var isEditing: Bool {
         willSet {
@@ -36,6 +50,7 @@ final class IssueListViewController: UIViewController {
             else { setupNormalMode() }
         }
     }
+    
     var selectedItems: Int = 0 {
         willSet {
             if isEditing {
@@ -82,14 +97,17 @@ final class IssueListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        startAnimating()
         setupSearchController()
         setupCollectionview()
         setupNormalMode()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        fetchIssues()
+        if openCloseSwitch.isOn { fetchIssues(request: .Open) }
+        else { fetchIssues(request: .Closed) }
     }
     
     //MARK:- IBActions
@@ -112,6 +130,18 @@ final class IssueListViewController: UIViewController {
         selectedItemsIndexPath.forEach({ indexPath in
             closeIssue(at: indexPath)
         })
+    }
+    
+    @IBAction func switchAction(_ sender: UISwitch) {
+        startAnimating()
+        if openCloseSwitch.isOn { fetchIssues(request: .Open) }
+        else { fetchIssues(request: .Closed) }
+    }
+    
+    private func startAnimating() {
+        loadingView.isHidden = false
+        acitivityView.isHidden = false
+        indicator.startAnimating()
     }
     
     private func selectAllItems() {
@@ -150,6 +180,7 @@ extension IssueListViewController {
     
     private func setupCollectionview() {
         var config = UICollectionLayoutListConfiguration(appearance: .plain)
+
         config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
             let close = UIContextualAction(style: .normal, title: "Close") { (action, view, completion) in
                 closeIssue(at: indexPath)
@@ -161,7 +192,7 @@ extension IssueListViewController {
             delete.backgroundColor = .systemPink
             return UISwipeActionsConfiguration(actions: [delete, close])
         }
-
+        
         let layout = UICollectionViewCompositionalLayout.list(using: config)
         issueListCollectionView.collectionViewLayout = layout
         issueListCollectionView.delegate = self
@@ -170,9 +201,10 @@ extension IssueListViewController {
     
     private func setupNormalMode() {
         selectedItems = 0
-        let tabbarHeight = self.tabBarController!.tabBar.frame.height
-        self.tabBarController!.tabBar.frame.origin.y = view.frame.height - tabbarHeight
+        let tabbarHeight = tabBarController?.tabBar.frame.height ?? 0
+        tabBarController?.tabBar.frame.origin.y = view.frame.height - tabbarHeight
         titleLabel.text = "Issue"
+        newIssueButton.isHidden = false
         navigationItem.rightBarButtonItem?.title = "Edit"
         navigationItem.leftBarButtonItem?.title = "Filter"
     }
@@ -202,18 +234,48 @@ extension IssueListViewController {
 // MARK:- Implement IssueListDisplayLogic
 extension IssueListViewController: IssueListDisplayLogic {
     
-    func displayOpenIssues(viewModel: ListIssues.FetchLists.ViewModel) {
+    func displayOpenIssues(viewModel: ListIssues.FetchIssues.ViewModel) {
         displayedIssues = viewModel.displayedIssues
         issueListCollectionView.reloadData()
     }
     
-    func successfullyClosedIssue() {
-        fetchIssues()
+    func displayUsers(viewModel: ListUsers.FetchUsers.ViewModel) {
+        displayedUsers = viewModel.displayedUser
+        print(displayedUsers)
     }
     
-    private func fetchIssues() {
-        let request = ListIssues.FetchLists.Request()
+    func displayFetchedMilestone(viewModel: ListMilestones.FetchLists.ViewModel) {
+        displayedMilestones = viewModel.displayedMilestones
+        print(displayedMilestones)
+    }
+    
+    func successfullyClosedIssue() {
+        fetchIssues(request: .Open)
+    }
+    
+    private func fetchUsers() {
+        let request = ListUsers.FetchUsers.Request()
+        interactor?.fetchUsers(request: request)
+    }
+    
+    func fetchLabels() {
+        let request = ListLabels.FetchLists.Request()
+        interactor?.fetchLabels(request: request)
+    }
+    
+    func fetchMilestones() {
+        let request = ListMilestones.FetchLists.Request()
+        interactor?.fetchMilestones(request: request)
+    }
+    
+    private func fetchIssues(request: ListIssues.FetchCategory) {
+        let request = ListIssues.FetchIssues.Request(request: request)
         interactor?.fetchIssues(request: request)
+    }
+    
+    func displayFetchedLabels(viewModel: ListLabels.FetchLists.ViewModel) {
+        displayedLabels = viewModel.displayedLabels
+        print(displayedLabels)
     }
     
     private func deleteIssue(at indexPath: IndexPath) {
@@ -268,6 +330,13 @@ extension IssueListViewController: UICollectionViewDataSource {
         }
         
         cell.accessories = [.multiselect(displayed: .whenEditing, options: .init()) ]
+        
+        if indexPath.item == 0 {
+            indicator.stopAnimating()
+            loadingView.isHidden = true
+            acitivityView.isHidden = true
+        }
+        
         return cell
     }
 

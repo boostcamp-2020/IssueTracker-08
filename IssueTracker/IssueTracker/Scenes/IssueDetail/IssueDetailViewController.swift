@@ -41,9 +41,10 @@ class IssueDetailViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet var openStatus: [UIButton]!
     
-    
+    var issueId: Int = 0
+    var markdownFlag: Bool = false
     var interactor: IssueDetailBusinessLogic?
-    var router: (IssueDetailDataReceiving)?
+    var router: (IssueDetailDataReceiving & IssueDetailRoutingLogic)?
     var displayIssue: ListIssueDetail.FetchDetail.ViewModel?
     var displayComment: [comment] = []
     
@@ -51,7 +52,7 @@ class IssueDetailViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var activityView: UIView!
-    @IBOutlet weak var openCloseSwitch: UISwitch!
+    
     
     // MARK:- View Lifecycle
     
@@ -67,24 +68,56 @@ class IssueDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCard()
+        setupCardView()
         setupCollectionview()
-        tabbarSetup(AccessType: true)
+        setupTabbar(AccessType: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        markdownFlag = false
+        activityIndicator.startAnimating()
+        loadingView.isHidden = false
+        activityView.isHidden = false
         fetchIssue()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        tabbarSetup(AccessType: false)
+        setupTabbar(AccessType: false)
+    }
+    
+    private func markdownTouchAnction(markdown: MarkdownView) {
+        markdown.onTouchLink = { [weak self] request in
+          guard let url = request.url else { return false }
+
+          if url.scheme == "file" {
+            return true
+          } else if url.scheme == "https" {
+            let safari = SFSafariViewController(url: url)
+            self?.present(safari, animated: true, completion: nil)
+            return false
+          } else {
+            return false
+          }
+        }
+    }
+    
+    @objc private func buttonPressed(_ sender: Any) {
+        let pushVC = self.storyboard?.instantiateViewController(withIdentifier: "issueEnroll") as! IssueEnrollViewController
+        pushVC.mode = .EditIssue
+        router?.issueEditData = DetailRouteData(
+            id: issueId,
+            title: displayIssue!.displayedDetail.title,
+            content: displayIssue!.displayedDetail.content!
+        )
+        router?.routeToEnroll(destinationVC: pushVC)
+        self.navigationController?.pushViewController(pushVC, animated: true)
     }
     
 }
 
 // MARK:- Setup
 extension IssueDetailViewController {
+    
     func setup() {
         let viewController = self
         let interactor = IssueDetailInteractor()
@@ -95,6 +128,9 @@ extension IssueDetailViewController {
         interactor.presenter = presenter
         presenter.viewController = viewController
         router.viewController = viewController
+        
+        let editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(buttonPressed(_:)))
+        self.navigationItem.rightBarButtonItem = editButton
     }
     
     func setupCollectionview() {
@@ -117,7 +153,7 @@ extension IssueDetailViewController {
     }
     
     
-    func tabbarSetup(AccessType: Bool) {
+    func setupTabbar(AccessType: Bool) {
         let tabberHeight = self.tabBarController!.tabBar.frame.height
         if AccessType {
             self.tabBarController!.tabBar.frame.origin.y = view.frame.height + tabberHeight
@@ -126,7 +162,7 @@ extension IssueDetailViewController {
         }
     }
     
-    private func viewSetup() {
+    private func setupView() {
         userIdLabel.text = displayIssue!.displayedDetail.name
         issueTag.text = "#\(displayIssue!.displayedDetail.issueId)"
         titleLabel.text = displayIssue!.displayedDetail.title
@@ -136,30 +172,9 @@ extension IssueDetailViewController {
         }
     }
     
-    private func markdownTouchAnction(markdown: MarkdownView) {
-        markdown.onTouchLink = { [weak self] request in
-          guard let url = request.url else { return false }
-
-          if url.scheme == "file" {
-            return true
-          } else if url.scheme == "https" {
-            let safari = SFSafariViewController(url: url)
-            self?.present(safari, animated: true, completion: nil)
-            return false
-          } else {
-            return false
-          }
-        }
-    }
-}
-
-// MARK:- CardView
-
-extension IssueDetailViewController {
-
-    private func setupCard() {
+    private func setupCardView() {
         cardViewController = CardViewController(nibName: "CardViewController", bundle: nil)
-        
+
         self.addChild(cardViewController)
         self.view.addSubview(cardViewController.view)
         
@@ -177,6 +192,10 @@ extension IssueDetailViewController {
         cardViewController.handleArea.addGestureRecognizer(panGestureRecognizer)
     }
     
+}
+
+// MARK:- CardView
+extension IssueDetailViewController {
     
     // MARK:- HandleAction
     
@@ -257,7 +276,7 @@ extension IssueDetailViewController {
 extension IssueDetailViewController: IssueDetailDisplayLogic {
     func displayOpenIssue(viewModel: ListIssueDetail.FetchDetail.ViewModel) {
         displayIssue = viewModel
-        viewSetup()
+        setupView()
         IssueDetailCollectionView.reloadData()
     }
     
@@ -267,9 +286,9 @@ extension IssueDetailViewController: IssueDetailDisplayLogic {
     }
     
     private func fetchIssue() {
-        let tag = router!.issueDetailData!
-        let issueRequest = ListIssueDetail.FetchDetail.Request(issueId: tag)
-        let commentRequest = ListComment.FetchDetail.Request(issueId: tag)
+        issueId = router!.issueDetailData!
+        let issueRequest = ListIssueDetail.FetchDetail.Request(issueId: issueId)
+        let commentRequest = ListComment.FetchDetail.Request(issueId: issueId)
         interactor?.fetchIssue(request: issueRequest)
         interactor?.fetchComment(request: commentRequest)
     }
@@ -288,12 +307,15 @@ extension IssueDetailViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? IssueDetailCollectionViewCell else {
             return UICollectionViewCell()
         }
-        
         if displayIssue == nil { return cell }
         else if indexPath.item == 0  {
+            if markdownFlag { return cell }
             cell.userID.text = displayIssue!.displayedDetail.name
             cell.timeDifference.text = FormattedDifferenceDateString(dueDate: displayIssue!.displayedDetail.createAt)
             markdownTouchAnction(markdown: cell.content)
+            if cell.content.subviews.count > 0 {
+                cell.content.subviews.forEach { $0.removeFromSuperview() }
+            }
             cell.content.load(markdown: displayIssue!.displayedDetail.content)
             cell.content.isScrollEnabled = false
         }
@@ -301,6 +323,9 @@ extension IssueDetailViewController: UICollectionViewDataSource {
             let displayedComment = displayComment[indexPath.item - 1]
             cell.userID.text = displayedComment.name
             cell.timeDifference.text = FormattedDifferenceDateString(dueDate: displayedComment.createAt)
+            if cell.content.subviews.count > 0 {
+                cell.content.subviews.forEach { $0.removeFromSuperview() }
+            }
             markdownTouchAnction(markdown: cell.content)
             cell.content.load(markdown: displayedComment.content)
             cell.content.isScrollEnabled = false
@@ -312,6 +337,7 @@ extension IssueDetailViewController: UICollectionViewDataSource {
                 activityIndicator.stopAnimating()
                 loadingView.isHidden = true
                 activityView.isHidden = true
+                markdownFlag = true
             }
         }
         

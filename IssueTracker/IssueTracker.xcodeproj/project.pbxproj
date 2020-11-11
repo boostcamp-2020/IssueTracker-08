@@ -39,6 +39,8 @@
 		A199FF356F7D518199628888 /* Pods_IssueTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D018D0CA68C57EEA8CB7F764 /* Pods_IssueTracker.framework */; };
 		BD5B1FF62557AB5200642483 /* IssueEnrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B1FF52557AB5200642483 /* IssueEnrollViewController.swift */; };
 		BD5B1FFE2557ACFE00642483 /* CALayer+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B1FFD2557ACFE00642483 /* CALayer+Border.swift */; };
+		BD5C8CBB255BE19D0092C47F /* OAuthAppleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C8CBA255BE19D0092C47F /* OAuthAppleManager.swift */; };
+		BD5C8CC3255C0CCC0092C47F /* IssueEnrollRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C8CC2255C0CCC0092C47F /* IssueEnrollRouter.swift */; };
 		BD5D411E254FD6D5008BCB36 /* LabelListModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D411D254FD6D5008BCB36 /* LabelListModels.swift */; };
 		BD5D412D254FDA85008BCB36 /* MilestoneListModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4128254FDA85008BCB36 /* MilestoneListModels.swift */; };
 		BD5D412E254FDA85008BCB36 /* MilestoneListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4129254FDA85008BCB36 /* MilestoneListInteractor.swift */; };
@@ -125,6 +127,9 @@
 		8B3831EA6FDFCB7AA038395F /* Pods-IssueTracker-IssueTrackerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker-IssueTrackerUITests.debug.xcconfig"; path = "Target Support Files/Pods-IssueTracker-IssueTrackerUITests/Pods-IssueTracker-IssueTrackerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BD5B1FF52557AB5200642483 /* IssueEnrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueEnrollViewController.swift; sourceTree = "<group>"; };
 		BD5B1FFD2557ACFE00642483 /* CALayer+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Border.swift"; sourceTree = "<group>"; };
+		BD5C8CAA255BD85B0092C47F /* IssueTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IssueTracker.entitlements; sourceTree = "<group>"; };
+		BD5C8CBA255BE19D0092C47F /* OAuthAppleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthAppleManager.swift; sourceTree = "<group>"; };
+		BD5C8CC2255C0CCC0092C47F /* IssueEnrollRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueEnrollRouter.swift; sourceTree = "<group>"; };
 		BD5D411D254FD6D5008BCB36 /* LabelListModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListModels.swift; sourceTree = "<group>"; };
 		BD5D4128254FDA85008BCB36 /* MilestoneListModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneListModels.swift; sourceTree = "<group>"; };
 		BD5D4129254FDA85008BCB36 /* MilestoneListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneListInteractor.swift; sourceTree = "<group>"; };
@@ -233,6 +238,7 @@
 		800666C82547D24200B42428 /* IssueTracker */ = {
 			isa = PBXGroup;
 			children = (
+				BD5C8CAA255BD85B0092C47F /* IssueTracker.entitlements */,
 				80AA0720254A871500086F5F /* Services */,
 				8042B7E5254BA19500910C6F /* Extensions */,
 				80AA06F42549D07E00086F5F /* Scenes */,
@@ -324,6 +330,7 @@
 				BDCC5DD62554F538003C9607 /* IssueDetailDataManager.swift */,
 				8024527825598D210029AB25 /* EndPoint.swift */,
 				8024528025598EF70029AB25 /* OAuthGithubManager.swift */,
+				BD5C8CBA255BE19D0092C47F /* OAuthAppleManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -341,6 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				BD5B1FF52557AB5200642483 /* IssueEnrollViewController.swift */,
+				BD5C8CC2255C0CCC0092C47F /* IssueEnrollRouter.swift */,
 			);
 			path = IssueEnroll;
 			sourceTree = "<group>";
@@ -681,7 +689,9 @@
 				8042B7E7254BA1C700910C6F /* UIColor+HexString.swift in Sources */,
 				BD5D414E254FDCFA008BCB36 /* LabelCollectionViewController.swift in Sources */,
 				BD5D4151254FDCFA008BCB36 /* LabelListInteractor.swift in Sources */,
+				BD5C8CC3255C0CCC0092C47F /* IssueEnrollRouter.swift in Sources */,
 				BD5D413E254FDAF3008BCB36 /* MilestoneDataManager.swift in Sources */,
+				BD5C8CBB255BE19D0092C47F /* OAuthAppleManager.swift in Sources */,
 				BD5D412D254FDA85008BCB36 /* MilestoneListModels.swift in Sources */,
 				BD5B1FF62557AB5200642483 /* IssueEnrollViewController.swift in Sources */,
 				80AA07032549ED4700086F5F /* IssueListCollectionViewCell.swift in Sources */,
@@ -889,6 +899,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = IssueTracker/IssueTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				INFOPLIST_FILE = IssueTracker/Info.plist;
@@ -909,6 +920,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = IssueTracker/IssueTracker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				INFOPLIST_FILE = IssueTracker/Info.plist;
