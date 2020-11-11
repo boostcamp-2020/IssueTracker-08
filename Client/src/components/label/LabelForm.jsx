@@ -11,12 +11,13 @@ const Form = styled.div`
   display: flex;
   flex-direction: column;
   border: 1px solid #ebecef;
-  background: #f6f8fa;
+  background: ${(props) => props.background || '#f6f8fa'};
   padding: 10px;
 `;
 
 const FormContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: flex-end;
   margin: 5px;
 `;
@@ -94,7 +95,13 @@ const ReloadIcon = styled.img`
   align-items: center;
 `;
 
-const LabelForm = ({ initName, initDescription, initColor }) => {
+const LabelForm = ({
+  initName,
+  initDescription,
+  initColor,
+  background,
+  children,
+}) => {
   const { labelDispatch, newDispatch } = useContext(LabelContext);
 
   if (!initColor) {
@@ -160,9 +167,10 @@ const LabelForm = ({ initName, initDescription, initColor }) => {
   };
 
   return (
-    <Form>
+    <Form background={background}>
       <FormContainer>
         <Label color={color} name={name !== '' ? name : 'Label preview'} />
+        {children}
       </FormContainer>
       <FormContainer>
         <InputContainer>
