@@ -6,6 +6,7 @@ const {
   updateIssue,
   openIssue,
   closeIssue,
+  deleteIssue,
   createAssignee,
   deleteAssignee,
   createMilestone,
@@ -106,6 +107,16 @@ module.exports = {
 
       if (err) {
         return res.status(400).json(failResponse(failMessage));
+      }
+
+      return res.status(200).json(successResponse(results));
+    });
+  },
+
+  deleteIssue: (req, res) => {
+    deleteIssue(req.body, (err, results) => {
+      if (err) {
+        return res.status(400).json(failResponse(err));
       }
 
       return res.status(200).json(successResponse(results));
