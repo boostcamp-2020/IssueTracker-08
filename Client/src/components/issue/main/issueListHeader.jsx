@@ -1,10 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Dropdown } from 'semantic-ui-react';
 import { CheckIcon } from '@primer/octicons-react';
 import { IssueOpenedIcon } from '@primer/octicons-react';
 
-import { IssueContext } from '../../../contexts/issueContext';
+import { IssueContext } from '../../../stores/IssueStore';
+import { UserContext } from '../../../stores/UserStore';
+import { GET_OPEN_ISSUE, GET_CLOSED_ISSUE } from '../../../utils/api';
+import { getOptions } from '../../../utils/fetchOptions';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -40,6 +43,7 @@ const DropdownContainer = styled.div`
       min-width: 150px;
     }
     .dropdown-menu {
+      display: none;
       font-size: 15px;
       background: #f7f8fa;
       border: 1px solid #ebecef;
@@ -47,11 +51,12 @@ const DropdownContainer = styled.div`
         background: #f7f8fa;
       }
     }
+
+    .visible {
+      display: inline-block !important;
+    }
+
     .dropdown-header {
-      // height: 10px;
-      // display: flex;
-      // position: relative;
-      // bottom: 5px;
       font-size: 12px;
       display: flex;
       padding: 7px 7px 7px 16px;
@@ -65,6 +70,10 @@ const DropdownContainer = styled.div`
       border: none;
       border-top: 1px solid #e7e8ea;
     }
+
+    .show {
+      display: inline-block !important;
+    }
   }
 `;
 
@@ -72,6 +81,7 @@ const ItemContainer = styled.div`
   display: flex;
   align-items: center;
   img {
+    margin-right: 8px;
     border-radius: 50% !important;
     width: 20px;
     height: 20px;
@@ -82,55 +92,104 @@ const ItemContainer = styled.div`
 const Container = styled.div`
   display: flex;
   .HeaderIcon {
-    margin-top: 2px;
-    margin-left: 10px;
     margin-right: 3px;
   }
 `;
 
-const IssueNumSpan = styled.span`
+const IssueNumBtn = styled.button`
+  cursor: pointer;
   font-size: 14px;
   font-weight: bold;
-  margin-left: 5px;
+  background-color: Transparent;
+  border: none;
+  outline: none;
 `;
 
 const issueListHeader = () => {
-  const { users, openIssues, closeIssues } = useContext(IssueContext);
+  const { openIssues, closeIssues, setIssues } = useContext(IssueContext);
+  const { users } = useContext(UserContext);
+
+  const changeIssue = async (event, status) => {
+    let response = null;
+    let result = null;
+
+    switch (status) {
+      case 'CHANGE_STATUS_OPEN':
+        response = await fetch(GET_OPEN_ISSUE, getOptions());
+        result = await response.json();
+        setIssues(result.data);
+        break;
+
+      case 'CHANGE_STATUS_CLOSED':
+        response = await fetch(GET_CLOSED_ISSUE, getOptions());
+        result = await response.json();
+        setIssues(result.data);
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const clickHandler = (e, className) => {
+    const item = e.target.closest('.dropdown');
+    const menu = item.querySelector('.dropdown-menu');
+    menu.classList.toggle('visible');
+    console.log(menu);
+  };
 
   return (
     <HeaderContainer>
       <Container>
         <input type="checkbox" className="allIssue" />
-        <IssueOpenedIcon className="HeaderIcon" size={16} />
-        <IssueNumSpan>{openIssues.length} Open </IssueNumSpan>
+        <IssueNumBtn
+          onClick={(e) => {
+            changeIssue(e, 'CHANGE_STATUS_OPEN');
+          }}
+        >
+          <IssueOpenedIcon className="HeaderIcon" size={16} />
+          {openIssues.length} Open{' '}
+        </IssueNumBtn>
 
-        <CheckIcon size={16} className="HeaderIcon" />
-        <IssueNumSpan>{closeIssues.length} Closed </IssueNumSpan>
+        <IssueNumBtn
+          onClick={(e) => {
+            changeIssue(e, 'CHANGE_STATUS_CLOSED');
+          }}
+        >
+          <CheckIcon size={16} className="HeaderIcon" />
+          {closeIssues.length} Closed{' '}
+        </IssueNumBtn>
       </Container>
       <FilterList>
         <DropdownContainer>
-          <Dropdown className="author-dropdown dropdown" text="Author">
-            <Dropdown.Menu className="dropdown-menu" direction="left">
+          <Dropdown
+            className="author-dropdown dropdown"
+            text="Author"
+            onClick={(e) => {
+              clickHandler(e, '.author-dropdown-menu');
+            }}
+          >
+            <Dropdown.Menu
+              className="author-dropdown-menu dropdown-menu"
+              direction="left"
+              // style={{ display: 'none' }}
+            >
               <Dropdown.Header
                 className="dropdown-header"
                 content="Filter by author"
               />
               {users &&
                 users.map((item, index) => (
-                  <>
+                  <div key={item.id} value={index}>
                     <hr className="dropdown-divider" />
-                    <Dropdown.Item
-                      className="dropdown-item"
-                      key={item.id}
-                      value={index}
-                    >
+                    <Dropdown.Item className="dropdown-item">
                       <ItemContainer>
                         <CheckIcon size={16} className="check-icon" />
                         <img src={item.imageUrl} />
                         <div>{item.name}</div>
                       </ItemContainer>
                     </Dropdown.Item>
-                  </>
+                  </div>
                 ))}
             </Dropdown.Menu>
           </Dropdown>
