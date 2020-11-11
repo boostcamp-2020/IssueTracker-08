@@ -7,6 +7,7 @@ import IssueListInfo from '../../components/issue/main/issueMain';
 
 import IssuesStore from '../../stores/IssueStore';
 import UserStore from '../../stores/UserStore';
+import LabelStore from '../../stores/LabelStore';
 
 const Container = styled.div`
   display: flex;
@@ -63,7 +64,7 @@ const IssueProvider = ({ contexts, children }) =>
 
 export default function IssuePage() {
   return (
-    <IssueProvider contexts={[IssuesStore, UserStore]}>
+    <IssueProvider contexts={[IssuesStore, UserStore, LabelStore]}>
       <Container>
         <IssueMenu>
           <MenuDiv flex="1">
