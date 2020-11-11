@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { GET_USER, POST_COMMENT } from '../../utils/api';
+import { getOptions, postOptions } from '../../utils/fetchOptions';
 
 const AuthorImage = styled.img`
   border-radius: 50%;
@@ -109,12 +112,6 @@ const FileAttachContainer = styled.div`
   color: #586069;
 `;
 
-const SubmitButton = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 10px;
-`;
-
 const CancelButton = styled.button`
   border: 0;
   outline: 0;
@@ -123,25 +120,85 @@ const CancelButton = styled.button`
   cursor: pointer;
 `;
 
-const IssueCommentForm = () => {
-  const [title, setTitle] = useState('');
+const SubmitDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+`;
+
+const SubmitButton = styled.button`
+  width: 160px;
+  box-shadow: 0px 1px 0px 0px #3dc21b;
+  border-radius: 6px;
+  border: 1px solid #18ab29;
+  display: inline-block;
+  cursor: pointer;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 10px;
+  text-decoration: none;
+  text-shadow: 0px -1px 0px #2f6627;
+  background-color: ${(props) => (props.state ? '#44c767' : '#94d3a2')};
+`;
+
+const IssueCommentForm = ({ issueId, userId }) => {
+  const history = useHistory();
+  const commentRef = useRef(false);
   const [comment, setComment] = useState('');
+  const [userImage, setUserImage] = useState('');
+
+  const createCommentData = () => {
+    const comment = {
+      userId: userId,
+      issueId: issueId,
+      content: commentRef.current.value,
+    };
+
+    const options = postOptions(comment);
+    fetch(POST_COMMENT, options);
+    commentRef.current.value = '';
+    setComment('');
+  };
+
+  const commentHandleChange = () => {
+    setComment(commentRef.current.value);
+  };
+
+  const getUserImage = async () => {
+    const options = getOptions();
+    const response = await fetch(GET_USER(userId), options);
+    const responseJSON = await response.json();
+    setUserImage(responseJSON.data[0].imageUrl);
+  };
+
+  useEffect(() => {
+    getUserImage();
+  }, []);
 
   return (
     <Main>
-      <AuthorImage src="https://avatars0.githubusercontent.com/u/45933675?s=88&u=2d19e9aa698b2fd95bb9a2ca4888b8d52bf1c304&v=4"></AuthorImage>
+      <AuthorImage src={userImage}></AuthorImage>
       <IssueFormContainer>
-        <IssueTitleInput placeholder="Title" />
         <WriteTab>Write</WriteTab>
         <PreviewTab>Preview</PreviewTab>
         <Hr />
-        <IssueComment placeholder="Leave a comment"></IssueComment>
+        <IssueComment
+          placeholder="Leave a comment"
+          ref={commentRef}
+          value={comment}
+          onChange={commentHandleChange}
+        ></IssueComment>
         <FileAttachContainer>
           <div>{FileAttachMsg}</div>
         </FileAttachContainer>
-        <SubmitButton>
+        <SubmitDiv>
           <CancelButton>Cancel</CancelButton>
-        </SubmitButton>
+          <SubmitButton state={comment} onClick={createCommentData}>
+            Comment
+          </SubmitButton>
+        </SubmitDiv>
       </IssueFormContainer>
     </Main>
   );

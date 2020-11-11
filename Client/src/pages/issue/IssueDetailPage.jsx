@@ -132,11 +132,14 @@ const Comment = styled.div`
 
 export default function IssueDetailPage({ match, location }) {
   const [issueAuthorInfo, setIssueAuthorInfo] = useState('');
+  const [issueId, setIssueId] = useState(1);
+  const userId = localStorage.getItem('userId');
 
   const getIssueAuthorInfo = async () => {
-    const issueId = match.params.issueId;
+    const id = match.params.issueId;
+    setIssueId(id);
     const options = getOptions();
-    const response = await fetch(GET_ISSUE(issueId), options);
+    const response = await fetch(GET_ISSUE(id), options);
     const responseJSON = await response.json();
     setIssueAuthorInfo(responseJSON.data[0]);
   };
@@ -179,7 +182,7 @@ export default function IssueDetailPage({ match, location }) {
             </DiscussionContent>
           </Discussion>
         </DiscussionBucket>
-        <IssueCommentForm />
+        <IssueCommentForm issueId={issueId} userId={userId} />
       </Container>
     </>
   );
