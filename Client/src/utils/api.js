@@ -10,6 +10,8 @@ export const GET_LABELS = config.BASE_URL + 'api/labels';
 
 export const POST_LABEL = config.BASE_URL + 'api/labels';
 
+export const PUT_LABEL = (id) => config.BASE_URL + 'api/labels/' + id;
+
 export const DELETE_LABELS = (id) => config.BASE_URL + 'api/labels/' + id;
 
 export const GET_OPEN_ISSUE = config.BASE_URL + 'api/issues/open';

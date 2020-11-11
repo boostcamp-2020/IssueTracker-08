@@ -68,6 +68,7 @@ const LabelContainer = ({ id, name, color, description }) => {
         initDescription={description}
         initColor={color}
         background="white"
+        label_id={id}
         callback={setIsOpenTab}
       >
         <Button onClick={deleteLabel}>

@@ -4,8 +4,8 @@ import Label from './Label';
 import { LabelContext } from '../../stores/LabelStore';
 import { getRandomColor, isValidColor } from '../../utils/color';
 
-import { POST_LABEL } from '../../utils/api';
-import { postOptions } from '../../utils/fetchOptions';
+import { POST_LABEL, PUT_LABEL } from '../../utils/api';
+import { postOptions, putOptions } from '../../utils/fetchOptions';
 
 const Form = styled.div`
   display: flex;
@@ -101,6 +101,7 @@ const LabelForm = ({
   initDescription,
   initColor,
   background,
+  label_id,
   callback,
   children,
 }) => {
@@ -183,6 +184,12 @@ const LabelForm = ({
       labelDispatch({ type: 'NEW_LABEL_ADD', payload: label });
     }
     if (type === 'EDIT') {
+      const options = putOptions(label);
+      await fetch(PUT_LABEL(label_id), options);
+
+      label.id = label_id;
+      labelDispatch({ type: 'PUT_LABEL', payload: label });
+      callback(false);
     }
   };
 

@@ -3,6 +3,14 @@ export const labelReducer = (labels, { type, payload }) => {
     case 'SET_INIT_DATA':
       return payload;
 
+    case 'PUT_LABEL':
+      return labels.map((label) => {
+        if (label.id === payload.id) {
+          label = payload;
+        }
+        return label;
+      });
+
     case 'DELETE_LABEL':
       return labels.filter((label) => label.id !== payload);
 
