@@ -47,7 +47,8 @@ module.exports = {
 
       const user = await getUserAllInfo(data);
       const jwtToken = createJWT(user[0]);
-      return res.status(200).json({ jwtToken: jwtToken });
+
+      return res.status(200).json({ jwtToken: jwtToken, userId: user[0].id });
     } catch (err) {
       return res.status(500);
     }
