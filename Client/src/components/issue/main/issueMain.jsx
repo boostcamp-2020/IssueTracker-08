@@ -11,12 +11,12 @@ const Container = styled.div`
 
 const IssueMain = () => {
   return (
-    // <IssuesStore>
-    <Container>
-      <IssueList__Header />
-      <IssueList__List />
-    </Container>
-    // </IssuesStore>
+    <IssuesStore>
+      <Container>
+        <IssueList__Header />
+        <IssueList__List />
+      </Container>
+    </IssuesStore>
   );
 };
 

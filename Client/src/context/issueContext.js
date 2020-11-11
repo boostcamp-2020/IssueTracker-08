@@ -1,45 +1,59 @@
-import React, { useReducer, createContext, useContext } from 'react';
+import React, { useReducer, createContext, useEffect, useState } from 'react';
 
-import { GET_ALL_USERS, GET_OPEN_ISSUE } from '../utils/api';
+import { GET_ALL_USERS, GET_OPEN_ISSUE, GET_CLOSED_ISSUE } from '../utils/api';
 import { getOptions } from '../utils/fetchOptions';
 
-const IssueContext = createContext(null);
+export const IssueContext = createContext();
 
-export const IssuesStore = async (props) => {
-  const response = await fetch(GET_ALL_USERS, getOptions);
-  const result = await response.json();
-  const users = result.data;
-  console.log(users);
+export const IssuesStore = (props) => {
+  const [openIssues, setOpenIssues] = useState([]);
+  const [closeIssues, setCloseIssues] = useState([]);
+  const [users, setUsers] = useState([]);
+
+  const loadUsers = async () => {
+    const response = await fetch(GET_ALL_USERS, getOptions);
+    const result = await response.json();
+    setUsers(result.data);
+  };
+
+  const loadOpenIssues = async () => {
+    const response = await fetch(GET_OPEN_ISSUE, getOptions);
+    const result = await response.json();
+    setOpenIssues(result.data);
+  };
+
+  const loadClosedIssues = async () => {
+    const response = await fetch(GET_CLOSED_ISSUE, getOptions);
+    const result = await response.json();
+    setCloseIssues(result.data);
+  };
+
+  useEffect(() => {
+    loadUsers();
+  }, [users]);
+
+  useEffect(() => {
+    loadOpenIssues();
+  }, [openIssues]);
+
+  useEffect(() => {
+    loadClosedIssues();
+  }, [closeIssues]);
 
   return (
-    <IssueContext.Provider value={users}>
+    <IssueContext.Provider
+      value={{
+        users,
+        openIssues,
+        closeIssues,
+        loadUsers,
+        loadOpenIssues,
+        loadClosedIssues,
+      }}
+    >
       {props.children}
     </IssueContext.Provider>
   );
 };
 
-export const useIssueState = () => {
-  const state = useContext(IssueContext);
-
-  return state;
-};
-
-export const getIssues = async () => {
-  try {
-    const response = await fetch(GET_OPEN_ISSUE, getOptions);
-    const result = await response.json();
-    return result.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getUsers = async () => {
-  try {
-    const response = await fetch(GET_ALL_USERS, getOptions);
-    const result = await response.json();
-    return result.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+export default IssuesStore;

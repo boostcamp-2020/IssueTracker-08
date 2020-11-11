@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { Dropdown } from 'semantic-ui-react';
 import { CheckIcon } from '@primer/octicons-react';
 import { IssueOpenedIcon } from '@primer/octicons-react';
 
-import { GET_OPEN_ISSUE, GET_ALL_USERS } from '../../../utils/api';
-import { getOptions } from '../../../utils/fetchOptions';
-
-import {
-  useIssueState,
-  getUsers,
-  getIssues,
-} from '../../../context/issueContext';
+import { IssueContext } from '../../../context/issueContext';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -47,10 +40,9 @@ const DropdownContainer = styled.div`
       min-width: 150px;
     }
     .dropdown-menu {
-      padding-top: 7px;
-      padding-bottom: 7px;
       font-size: 15px;
       background: #f7f8fa;
+      border: 1px solid #ebecef;
       .item:hover {
         background: #f7f8fa;
       }
@@ -89,48 +81,31 @@ const ItemContainer = styled.div`
 
 const Container = styled.div`
   display: flex;
-  .issueOpenedIcon {
+  .HeaderIcon {
     margin-top: 2px;
     margin-left: 10px;
     margin-right: 3px;
   }
 `;
 
-const OpenedIssueNum = styled.span`
+const IssueNumSpan = styled.span`
   font-size: 14px;
   font-weight: bold;
   margin-left: 5px;
 `;
 
 const issueListHeader = () => {
-  const [issues, setIssues] = useState([]);
-  const [users, setUsers] = useState([]);
-
-  const loadUsers = async () => {
-    const response = await fetch(GET_ALL_USERS, getOptions);
-    const result = await response.json();
-    setUsers(result.data);
-    return result.data;
-  };
-  const loadOpenIssues = async () => {
-    const response = await fetch(GET_OPEN_ISSUE, getOptions);
-    const result = await response.json();
-    setIssues(result.data);
-    return result.data;
-  };
-
-  useEffect(() => {
-    loadUsers();
-    loadOpenIssues();
-  }, []);
+  const { users, openIssues, closeIssues } = useContext(IssueContext);
 
   return (
     <HeaderContainer>
-      {/* <span>{context.name}</span> */}
       <Container>
         <input type="checkbox" className="allIssue" />
-        <IssueOpenedIcon className="issueOpenedIcon" size={16} />
-        <OpenedIssueNum>{issues.length} Open </OpenedIssueNum>
+        <IssueOpenedIcon className="HeaderIcon" size={16} />
+        <IssueNumSpan>{openIssues.length} Open </IssueNumSpan>
+
+        <CheckIcon size={16} className="HeaderIcon" />
+        <IssueNumSpan>{closeIssues.length} Closed </IssueNumSpan>
       </Container>
       <FilterList>
         <DropdownContainer>
