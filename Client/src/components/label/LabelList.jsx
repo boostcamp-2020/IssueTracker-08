@@ -8,6 +8,7 @@ const LabelList = ({ labels, loading }) => {
     labelList = labels.map((label) => (
       <LabelContainer
         key={label.id}
+        id={label.id}
         name={label.name}
         color={label.color}
         description={label.description}

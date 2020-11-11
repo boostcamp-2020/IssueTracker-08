@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import Label from './Label';
 
+import { DELETE_LABELS } from '../../utils/api';
+import { deleteOptions } from '../../utils/fetchOptions';
+
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -25,19 +28,29 @@ const Text = styled.p`
   color: #91979d;
 `;
 
-const LabelContainer = (props) => {
+const LabelContainer = ({ id, name, color, description }) => {
+  const deleteLabelRequest = () => {
+    const options = deleteOptions;
+    fetch(DELETE_LABELS(id), options);
+  };
+
+  const deleteLabel = (e) => {
+    if (confirm(`${name}을 정말로 삭제하시겠습니까?`)) {
+      deleteLabelRequest();
+    }
+  };
   return (
     <Container>
       <FlexContainer flex="1">
-        <Label name={props.name} color={props.color} />
+        <Label name={name} color={color} />
       </FlexContainer>
       <FlexContainer flex="3">
-        <Text>{props.description}</Text>
+        <Text>{description}</Text>
       </FlexContainer>
       <Button>
         <Text>Edit</Text>
       </Button>
-      <Button>
+      <Button onClick={deleteLabel}>
         <Text>Delete</Text>
       </Button>
     </Container>
