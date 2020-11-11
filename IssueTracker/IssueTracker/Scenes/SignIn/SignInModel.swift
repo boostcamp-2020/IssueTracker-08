@@ -40,3 +40,26 @@ enum SigninModel {
     
 }
 
+struct UserModel: Decodable {
+    var id: Int
+    var email: String
+    var name: String
+    var imageUrl: String
+    var createAt: String
+}
+
+enum ListUsers {
+    enum FetchUsers {
+        struct Request { }
+        struct Response { var users: [UserModel] }
+        struct ViewModel {
+            struct DisplayedUser {
+                var id: Int
+                var email: String
+                var name: String
+                var imageUrl: String
+            }
+            var displayedUser: [DisplayedUser]
+        }
+    }
+}

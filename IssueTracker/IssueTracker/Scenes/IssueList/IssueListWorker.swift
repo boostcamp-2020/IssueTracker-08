@@ -25,4 +25,22 @@ class IssueListWorker {
             completion(result)
         })
     }
+    
+    func fetchUsers(request: ListUsers.FetchUsers.Request, completion: @escaping ([UserModel]) -> Void) {
+        dataManager.fetchUsers(request: request, completion: { users in
+            completion(users)
+        })
+    }
+    
+    func fetchLabels(completion: @escaping ([Label]) -> Void) {
+        dataManager.fetchLabels(completion: { Labels in
+            completion(Labels)
+        })
+    }
+    
+    func fetchMilestones(completion: @escaping ([Milestone]) -> Void) {
+        dataManager.fetchMilestones(completion: { milestones in
+            completion(milestones)
+        })
+    }
 }

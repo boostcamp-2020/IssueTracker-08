@@ -41,7 +41,6 @@ class IssueDetailViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet var openStatus: [UIButton]!
     
-    
     var interactor: IssueDetailBusinessLogic?
     var router: (IssueDetailDataReceiving)?
     var displayIssue: ListIssueDetail.FetchDetail.ViewModel?
@@ -51,7 +50,7 @@ class IssueDetailViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var activityView: UIView!
-    @IBOutlet weak var openCloseSwitch: UISwitch!
+    
     
     // MARK:- View Lifecycle
     
@@ -73,7 +72,6 @@ class IssueDetailViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         fetchIssue()
     }
     
@@ -95,6 +93,9 @@ extension IssueDetailViewController {
         interactor.presenter = presenter
         presenter.viewController = viewController
         router.viewController = viewController
+        
+        let button = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(buttonPressed(_:)))
+        self.navigationItem.rightBarButtonItem = button
     }
     
     func setupCollectionview() {
@@ -150,6 +151,11 @@ extension IssueDetailViewController {
             return false
           }
         }
+    }
+    
+    @objc private func buttonPressed(_ sender: Any) {
+        let pushVC = self.storyboard?.instantiateViewController(withIdentifier: "issueEnroll") as! IssueEnrollViewController
+        self.navigationController?.pushViewController(pushVC, animated: true)
     }
 }
 
@@ -288,12 +294,15 @@ extension IssueDetailViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as? IssueDetailCollectionViewCell else {
             return UICollectionViewCell()
         }
-        
+        print(indexPath.item)
         if displayIssue == nil { return cell }
         else if indexPath.item == 0  {
             cell.userID.text = displayIssue!.displayedDetail.name
             cell.timeDifference.text = FormattedDifferenceDateString(dueDate: displayIssue!.displayedDetail.createAt)
             markdownTouchAnction(markdown: cell.content)
+            if cell.content.subviews.count > 0 {
+                cell.content.subviews.forEach { $0.removeFromSuperview() }
+            }
             cell.content.load(markdown: displayIssue!.displayedDetail.content)
             cell.content.isScrollEnabled = false
         }
@@ -301,6 +310,9 @@ extension IssueDetailViewController: UICollectionViewDataSource {
             let displayedComment = displayComment[indexPath.item - 1]
             cell.userID.text = displayedComment.name
             cell.timeDifference.text = FormattedDifferenceDateString(dueDate: displayedComment.createAt)
+            if cell.content.subviews.count > 0 {
+                cell.content.subviews.forEach { $0.removeFromSuperview() }
+            }
             markdownTouchAnction(markdown: cell.content)
             cell.content.load(markdown: displayedComment.content)
             cell.content.isScrollEnabled = false
