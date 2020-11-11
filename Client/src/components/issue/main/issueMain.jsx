@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import IssueListHeader from './issueListHeader';
 import IssueListList from './issueList';
-import IssuesStore from '../../../context/issueContext';
+import IssuesStore from '../../../contexts/issueContext';
 
 const Container = styled.div`
   margin-top: 20px;

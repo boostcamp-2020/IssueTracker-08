@@ -4,7 +4,7 @@ import { Dropdown } from 'semantic-ui-react';
 import { CheckIcon } from '@primer/octicons-react';
 import { IssueOpenedIcon } from '@primer/octicons-react';
 
-import { IssueContext } from '../../../context/issueContext';
+import { IssueContext } from '../../../contexts/issueContext';
 
 const HeaderContainer = styled.div`
   display: flex;
