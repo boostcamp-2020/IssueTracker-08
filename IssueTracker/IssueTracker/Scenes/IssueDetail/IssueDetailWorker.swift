@@ -25,3 +25,16 @@ class IssueDetailWorker {
         })
     }
 }
+
+class CardViewWorker {
+    var dataManager: CardViewDataManagerProtocol
+    init(dataManager: CardViewDataManagerProtocol) {
+        self.dataManager = dataManager
+    }
+    
+    func fetchMilestone(request: milestoneDetail.FetchLists.Request, completion: @escaping (Milestone) -> Void) {
+        dataManager.fetchMilestone(request: request, completion: { milestone in
+            completion(milestone)
+        })
+    }
+}

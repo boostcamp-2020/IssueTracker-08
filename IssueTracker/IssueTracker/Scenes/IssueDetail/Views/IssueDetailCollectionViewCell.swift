@@ -13,4 +13,5 @@ class IssueDetailCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var userID: UILabel!
     @IBOutlet weak var timeDifference: UILabel!
     @IBOutlet weak var content: MarkdownView!
+    @IBOutlet weak var editButton: UIButton!
 }

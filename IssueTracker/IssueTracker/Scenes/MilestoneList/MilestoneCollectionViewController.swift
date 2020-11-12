@@ -123,7 +123,8 @@ extension MilestoneViewController: UICollectionViewDataSource {
         let displayedMilestone = displayedMilestones[indexPath.item]
         cell.titleLabel.setTitle(displayedMilestone.title, for: .normal)
         cell.descriptionLabel.text = displayedMilestone.content
-        cell.dateLabel.text = FormattedDateFromString(dueDate: displayedMilestone.dueDate ?? "") + "까지"
+        cell.dateLabel.text = FormattedDateFromString(dueDate: displayedMilestone.dueDate ?? "")
+        if cell.dateLabel.text != "" { cell.dateLabel.text! += "까지" }
         cell.issueStatusLabel.text = """
                                     \(displayedMilestone.openIssue) open
                                     \(displayedMilestone.closeIssue) closed

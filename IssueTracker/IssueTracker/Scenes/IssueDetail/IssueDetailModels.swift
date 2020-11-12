@@ -9,6 +9,8 @@ import Foundation
 
 struct IssueDetail: Decodable {
     var issueId: Int
+    var userId: Int
+    var imageUrl: String
     var email: String
     var name: String
     var milestoneId: Int?
@@ -57,4 +59,12 @@ enum ListComment {
             var displayedComment: [comment]
         }
     }
+}
+
+struct bottomModel {
+    var title: String
+    var content: String
+    var label: [IssueLabel]?
+    var assign: [IssueAssign]?
+    var MilestoneId: Int?
 }

@@ -17,6 +17,11 @@ struct CommentResponse: Decodable {
     var data: [comment]
 }
 
+struct MilestoneDetailResponse: Decodable {
+    var status: String
+    var data: [Milestone]
+}
+
 protocol IssueDetailDataManagerProtocol {
     func fetchIssue(request: ListIssueDetail.FetchDetail.Request,completion: @escaping (IssueDetail) -> Void)
     func fetchComment(request: ListComment.FetchDetail.Request,completion: @escaping ([comment]) -> Void)
@@ -44,6 +49,25 @@ class IssueDetailDataManager: IssueDetailDataManagerProtocol {
             var commentData = [comment]()
             comments.forEach({ commentData.append($0) })
             completion(commentData)
+        })
+    }
+}
+
+
+protocol CardViewDataManagerProtocol {
+    func fetchMilestone(request: milestoneDetail.FetchLists.Request,completion: @escaping (Milestone) -> Void)
+}
+
+class CardViewDataManager: CardViewDataManagerProtocol {
+    func fetchMilestone(request: milestoneDetail.FetchLists.Request, completion: @escaping (Milestone) -> Void) {
+        let url = EndPoint.milestones + "\(request.id)"
+        print(url)
+        NetworkService.shared.getData(url: url, completion: { data in
+            guard let receivedData = try? JSONDecoder().decode(MilestoneDetailResponse.self, from: data) else {
+                print(123)
+                return // completion으로 경우 넘겨 주어야 함
+            }
+            completion(receivedData.data[0])
         })
     }
 }
