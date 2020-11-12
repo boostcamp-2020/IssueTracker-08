@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 
+import IssuesStore from '../../../stores/IssueStore';
 import IssueTemplate from './issueListTemplate';
 import { IssueContext } from '../../../stores/IssueStore';
 
@@ -22,17 +23,19 @@ const IssueList = () => {
   const { issues } = useContext(IssueContext);
 
   return (
-    <div className="list-wrapper">
-      {issues.length > 0 ? (
-        issues.map((issue) => (
-          <IssueTemplate key={issue.issueId} issue={issue} />
-        ))
-      ) : (
-        <NoIssueResult>
-          <span>No results matched your search.</span>
-        </NoIssueResult>
-      )}
-    </div>
+    <IssuesStore>
+      <div className="list-wrapper">
+        {issues.length > 0 ? (
+          issues.map((issue) => (
+            <IssueTemplate key={issue.issueId} issue={issue} />
+          ))
+        ) : (
+          <NoIssueResult>
+            <span>No results matched your search.</span>
+          </NoIssueResult>
+        )}
+      </div>
+    </IssuesStore>
   );
 };
 
