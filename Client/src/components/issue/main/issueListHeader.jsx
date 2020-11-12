@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { Dropdown } from 'semantic-ui-react';
 import { CheckIcon } from '@primer/octicons-react';
@@ -124,24 +124,33 @@ const FlexItem = styled.div`
   flex: 1;
   overflow: auto;
 `;
+
 const issueListHeader = () => {
-  const { openIssues, closeIssues, setIssues, milestones } = useContext(
-    IssueContext
-  );
+  const {
+    openIssues,
+    closeIssues,
+    setIssues,
+    milestones,
+    dispatchIssues,
+  } = useContext(IssueContext);
   const { users } = useContext(UserContext);
   const { labels } = useContext(LabelContext);
+  const [issueStatus, setIssueStatus] = useState('open');
+
   const changeIssue = async (event, status) => {
     let response = null;
     let result = null;
 
     switch (status) {
       case 'CHANGE_STATUS_OPEN':
+        setIssueStatus('open');
         response = await fetch(GET_OPEN_ISSUE, getOptions());
         result = await response.json();
         setIssues(result.data);
         break;
 
       case 'CHANGE_STATUS_CLOSED':
+        setIssueStatus('closed');
         response = await fetch(GET_CLOSED_ISSUE, getOptions());
         result = await response.json();
         setIssues(result.data);
@@ -156,6 +165,28 @@ const issueListHeader = () => {
     const item = e.target.closest('.dropdown');
     const menu = item.querySelector('.dropdown-menu');
     menu.classList.toggle('visible');
+  };
+
+  const filterHandler = async (e, type, payload = null) => {
+    try {
+      if (issueStatus === 'open') await changeIssue(e, 'CHANGE_STATUS_OPEN');
+      else await changeIssue(e, 'CHANGE_STATUS_CLOSED');
+
+      switch (type) {
+        case 'FILTER_AUTHOR':
+          dispatchIssues({ type, payload });
+          break;
+
+        case 'FILTER_LABEL':
+          dispatchIssues({ type: 'FILTER_LABEL', payload });
+          break;
+
+        default:
+          break;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -193,10 +224,18 @@ const issueListHeader = () => {
               <Dropdown.Header
                 className="dropdown-header"
                 content="Filter by author"
+                onClick={(e) => {
+                  filterHandler(e, 'ALL');
+                }}
               />
               {users &&
                 users.map((item, index) => (
-                  <div key={item.id} value={index}>
+                  <div
+                    key={item.id}
+                    onClick={(e) => {
+                      filterHandler(e, 'FILTER_AUTHOR', item.id);
+                    }}
+                  >
                     <hr className="dropdown-divider" />
                     <Dropdown.Item className="dropdown-item">
                       <ItemContainer>
