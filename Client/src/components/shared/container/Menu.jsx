@@ -1,28 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
-import NewButton from '../button/NewButton';
 import MenuButton from '../button/MenuButton';
 
 const MenuDiv = styled.div`
   display: flex;
+  margin-bottom: 20px;
 `;
 
-const Menu = (props) => {
+const Menu = ({ name, children }) => {
   return (
     <MenuDiv>
       <MenuButton
         link="/label"
         name="Label"
         img="/images/label.svg"
-        color={props.name === 'label' ? 'blue' : 'white'}
+        color={name === 'label' ? 'blue' : 'white'}
       ></MenuButton>
       <MenuButton
         link="/milestone"
         name="Milestones"
         img="/images/milestone.svg"
-        color={props.name === 'milestone' ? 'blue' : 'white'}
+        color={name === 'milestone' ? 'blue' : 'white'}
       ></MenuButton>
-      <NewButton link={props.link} name={props.name} />
+      {children}
     </MenuDiv>
   );
 };
