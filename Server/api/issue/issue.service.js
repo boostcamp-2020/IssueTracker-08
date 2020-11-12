@@ -44,8 +44,8 @@ module.exports = {
   },
 
   createIssue: async (req, callBack) => {
-    const { userId, milestoneId, title, content } = req;
-    const params = [userId, milestoneId, title, content];
+    const { userId, title, content } = req;
+    const params = [userId, title, content];
     const results = await requestQuery(query.CREATE_ISSUE, params);
 
     if (results.status === 'success') {
