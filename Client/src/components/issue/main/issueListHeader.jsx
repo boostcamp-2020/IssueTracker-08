@@ -229,7 +229,7 @@ const issueListHeader = () => {
                 }}
               />
               {users &&
-                users.map((item, index) => (
+                users.map((item) => (
                   <div
                     key={item.id}
                     onClick={(e) => {
@@ -261,10 +261,18 @@ const issueListHeader = () => {
               <Dropdown.Header
                 className="dropdown-header"
                 content="Filter by label"
+                onClick={(e) => {
+                  filterHandler(e, 'ALL');
+                }}
               />
               {labels &&
-                labels.map((item, index) => (
-                  <div key={item.id} value={index}>
+                labels.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={(e) => {
+                      filterHandler(e, 'FILTER_LABEL', item.name);
+                    }}
+                  >
                     <hr className="dropdown-divider" />
                     <Dropdown.Item className="dropdown-item">
                       <ItemContainer>
@@ -290,10 +298,13 @@ const issueListHeader = () => {
               <Dropdown.Header
                 className="dropdown-header"
                 content="Filter by milestones"
+                onClick={(e) => {
+                  filterHandler(e, 'ALL');
+                }}
               />
               {milestones &&
-                milestones.map((item, index) => (
-                  <div key={item.id} value={index}>
+                milestones.map((item) => (
+                  <div key={item.id}>
                     <hr className="dropdown-divider" />
                     <Dropdown.Item className="dropdown-item">
                       <FlexContainer>
@@ -316,10 +327,13 @@ const issueListHeader = () => {
               <Dropdown.Header
                 className="dropdown-header"
                 content="Filter by who's assigned"
+                onClick={(e) => {
+                  filterHandler(e, 'ALL');
+                }}
               />
               {users &&
-                users.map((item, index) => (
-                  <div key={item.id} value={index}>
+                users.map((item) => (
+                  <div key={item.id}>
                     <hr className="dropdown-divider" />
                     <Dropdown.Item className="dropdown-item">
                       <ItemContainer>
