@@ -334,7 +334,12 @@ const issueListHeader = () => {
               />
               {users &&
                 users.map((item) => (
-                  <div key={item.id}>
+                  <div
+                    key={item.id}
+                    onClick={(e) => {
+                      filterHandler(e, 'FILTER_ASSIGNEE', item.id);
+                    }}
+                  >
                     <hr className="dropdown-divider" />
                     <Dropdown.Item className="dropdown-item">
                       <ItemContainer>

@@ -22,6 +22,19 @@ export const issueReducer = (issues, { type, payload }) => {
     case 'FILTER_MILESTONE':
       return issues.filter((issue) => issue.milestone === payload);
 
+    case 'FILTER_ASSIGNEE':
+      const assignees = [];
+
+      issues.forEach((issue) =>
+        issue['assign'].forEach((assign) => {
+          if (assign.userId === payload) {
+            assignees.push(issue);
+          }
+        })
+      );
+
+      return assignees;
+
     default:
       break;
   }
