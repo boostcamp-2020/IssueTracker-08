@@ -1,7 +1,5 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { Dropdown } from 'semantic-ui-react';
-import { CheckIcon } from '@primer/octicons-react';
 
 import { IssueContext } from '../../../stores/IssueStore';
 import { UserContext } from '../../../stores/UserStore';
@@ -11,6 +9,11 @@ import { getOptions } from '../../../utils/fetchOptions';
 
 import OpenHeaderBtn from './button/openHeaderBtn';
 import ClosedHeaderBtn from './button/closedHeaderBtn';
+
+import AuthorDropdown from './button/authorDropdown';
+import LabelDropdown from './button/labelDropdown';
+import MilestoneDropdown from './button/milestoneDropdown';
+import AssigneeDropdown from './button/assigneeDropdown';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -35,87 +38,11 @@ const FilterList = styled.div`
   }
 `;
 
-const DropdownContainer = styled.div`
-  font-size: 14px;
-  padding-left: 16px;
-  .dropdown {
-    cursor: pointer;
-    .dropdown-menu {
-      display: none;
-      font-size: 17px;
-      background: #f7f8fa;
-      border: 1px solid #ebecef;
-      .item:hover {
-        background: #f7f8fa;
-      }
-      .dropdown-item {
-        padding: 8px;
-        font-weight: 500;
-        font-size: 13.5px;
-        background: white;
-      }
-    }
-    .visible {
-      display: inline-block !important;
-    }
-
-    .dropdown-header {
-      font-size: 12px;
-      display: flex;
-      padding: 7px 7px 7px 16px;
-      align-items: center;
-      border-bottom: 1px solid var(--color-select-menu-border-secondary);
-    }
-
-    .dropdown-divider {
-      margin: 0;
-      border: none;
-      border-top: 1px solid #e7e8ea;
-    }
-
-    .show {
-      display: inline-block !important;
-    }
-  }
-`;
-
-const ItemContainer = styled.div`
-  display: flex;
-  align-items: center;
-  img {
-    margin-left: 10px;
-    margin-right: 8px;
-    border-radius: 50% !important;
-    width: 20px;
-    height: 20px;
-    object-fit: cover;
-  }
-`;
-
 const Container = styled.div`
   display: flex;
   .HeaderIcon {
     margin-right: 3px;
   }
-`;
-
-const LabelColor = styled.div`
-  margin-left: 10px;
-  margin-right: 8px;
-  border-radius: 50% !important;
-  width: 20px;
-  height: 20px;
-  object-fit: cover;
-`;
-
-const FlexContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const FlexItem = styled.div`
-  flex: 1;
-  overflow: auto;
 `;
 
 const issueListHeader = () => {
@@ -194,152 +121,28 @@ const issueListHeader = () => {
           changeIssue={changeIssue}
         />
       </Container>
+
       <FilterList>
-        <DropdownContainer>
-          <Dropdown
-            className="dropdown"
-            text="Author"
-            onClick={(e) => {
-              clickHandler(e);
-            }}
-          >
-            <Dropdown.Menu className="dropdown-menu">
-              <Dropdown.Header
-                className="dropdown-header"
-                content="Filter by author"
-                onClick={(e) => {
-                  filterHandler(e, 'ALL');
-                }}
-              />
-              {users &&
-                users.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={(e) => {
-                      filterHandler(e, 'FILTER_AUTHOR', item.id);
-                    }}
-                  >
-                    <hr className="dropdown-divider" />
-                    <Dropdown.Item className="dropdown-item">
-                      <ItemContainer>
-                        <CheckIcon size={16} className="check-icon" />
-                        <img src={item.imageUrl} />
-                        <div>{item.name}</div>
-                      </ItemContainer>
-                    </Dropdown.Item>
-                  </div>
-                ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </DropdownContainer>
-
-        <DropdownContainer>
-          <Dropdown
-            text="Label"
-            onClick={(e) => {
-              clickHandler(e);
-            }}
-          >
-            <Dropdown.Menu className="dropdown-menu">
-              <Dropdown.Header
-                className="dropdown-header"
-                content="Filter by label"
-                onClick={(e) => {
-                  filterHandler(e, 'ALL');
-                }}
-              />
-              {labels &&
-                labels.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={(e) => {
-                      filterHandler(e, 'FILTER_LABEL', item.name);
-                    }}
-                  >
-                    <hr className="dropdown-divider" />
-                    <Dropdown.Item className="dropdown-item">
-                      <ItemContainer>
-                        <LabelColor style={{ background: item.color }} />
-                        <FlexContainer>
-                          <FlexItem>{item.name} </FlexItem>
-                          <div style={{ color: '#586069' }}>
-                            {' '}
-                            <FlexItem>{item.description} </FlexItem>
-                          </div>
-                        </FlexContainer>
-                      </ItemContainer>
-                    </Dropdown.Item>
-                  </div>
-                ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </DropdownContainer>
-
-        <DropdownContainer>
-          <Dropdown text="Milestones">
-            <Dropdown.Menu className="dropdown-menu">
-              <Dropdown.Header
-                className="dropdown-header"
-                content="Filter by milestones"
-                onClick={(e) => {
-                  filterHandler(e, 'ALL');
-                }}
-              />
-              {milestones &&
-                milestones.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={(e) => {
-                      filterHandler(e, 'FILTER_MILESTONE', item.title);
-                    }}
-                  >
-                    <hr className="dropdown-divider" />
-                    <Dropdown.Item className="dropdown-item">
-                      <FlexContainer>
-                        <FlexItem>{item.title} </FlexItem>
-                        <div style={{ color: '#586069' }}>
-                          {' '}
-                          <FlexItem>{item.content} </FlexItem>
-                        </div>
-                      </FlexContainer>
-                    </Dropdown.Item>
-                  </div>
-                ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </DropdownContainer>
-
-        <DropdownContainer>
-          <Dropdown text="Assignee">
-            <Dropdown.Menu className="dropdown-menu">
-              <Dropdown.Header
-                className="dropdown-header"
-                content="Filter by who's assigned"
-                onClick={(e) => {
-                  filterHandler(e, 'ALL');
-                }}
-              />
-              {users &&
-                users.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={(e) => {
-                      filterHandler(e, 'FILTER_ASSIGNEE', item.id);
-                    }}
-                  >
-                    <hr className="dropdown-divider" />
-                    <Dropdown.Item className="dropdown-item">
-                      <ItemContainer>
-                        <CheckIcon size={16} className="check-icon" />
-                        <img src={item.imageUrl} />
-                        <div>{item.name}</div>
-                      </ItemContainer>
-                    </Dropdown.Item>
-                  </div>
-                ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </DropdownContainer>
+        <AuthorDropdown
+          users={users}
+          clickHandler={clickHandler}
+          filterHandler={filterHandler}
+        />
+        <LabelDropdown
+          labels={labels}
+          clickHandler={clickHandler}
+          filterHandler={filterHandler}
+        />
+        <MilestoneDropdown
+          milestones={milestones}
+          clickHandler={clickHandler}
+          filterHandler={filterHandler}
+        />
+        <AssigneeDropdown
+          users={users}
+          clickHandler={clickHandler}
+          filterHandler={filterHandler}
+        />
       </FilterList>
     </HeaderContainer>
   );
