@@ -1,4 +1,4 @@
-const getDiffTime = (time) => {
+export const getDiffTime = (time) => {
   const createTime = new Date(time);
   const currentTime = new Date();
   const diffSecond = (currentTime.getTime() - createTime.getTime()) / 1000;
@@ -18,4 +18,7 @@ const getDiffTime = (time) => {
   return `${parseInt(diffSecond / 60 / 60 / 24)} days`;
 };
 
-export default getDiffTime;
+export const getTimeString = (time) => {
+  console.log(time);
+  return time;
+};
