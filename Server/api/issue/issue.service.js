@@ -44,8 +44,8 @@ module.exports = {
   },
 
   createIssue: async (req, callBack) => {
-    const { userId, milestoneId, title, content } = req;
-    const params = [userId, milestoneId, title, content];
+    const { userId, title, content } = req;
+    const params = [userId, title, content];
     const results = await requestQuery(query.CREATE_ISSUE, params);
 
     if (results.status === 'success') {
@@ -56,17 +56,12 @@ module.exports = {
   },
 
   updateIssue: async (req, callBack) => {
-    const { userId, milestoneId, title, content, id } = req;
-    const params = [userId, milestoneId, title, content, id];
-    const updatedItem = await requestQuery(query.UPDATE_ISSUE, params);
-
-    if (updatedItem.data[0].affectedRows == 0) {
-      return callBack('수정을 요청하신 컬럼이 존재하지 않습니다.');
-    }
+    const { userId, title, content, id } = req;
+    const params = [userId, title, content, id];
+    await requestQuery(query.UPDATE_ISSUE, params);
 
     const results = {
       userId,
-      milestoneId,
       title,
       content,
     };
@@ -226,8 +221,13 @@ module.exports = {
     const params = [userId, issueId, content];
     const results = await requestQuery(query.CREATE_COMMENT, params);
 
+    const result = {
+      commentId: results.data[0].insertId,
+      createAt: new Date(),
+    };
+
     if (results.status === 'success') {
-      return callBack(null, '요청하신 이슈의 comment 생성이 완료되었습니다.');
+      return callBack(null, result);
     }
 
     return callBack(results.data);
