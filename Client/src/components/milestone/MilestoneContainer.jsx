@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { getMilestonePercent } from '../../utils/number';
 
 const Container = styled.div`
   display: flex;
@@ -63,6 +64,7 @@ const MilestoneContainer = ({
   openIssue,
   closeIssue,
 }) => {
+  const percent = getMilestonePercent(openIssue, openIssue + closeIssue);
   return (
     <Container>
       <MilestoneInfoBox>
@@ -71,11 +73,11 @@ const MilestoneContainer = ({
         <Text>{content}</Text>
       </MilestoneInfoBox>
       <MilestoneInfoBox>
-        <MilestoneGauge open="40%" />
+        <MilestoneGauge open={percent} />
         <RowInfoContainer>
-          <Text>{'33% complete'}</Text>
-          <Text>{'2 open'}</Text>
-          <Text>{'1 closed'}</Text>
+          <Text>{percent + ' complete'}</Text>
+          <Text>{openIssue + ' open'}</Text>
+          <Text>{closeIssue + ' closed'}</Text>
         </RowInfoContainer>
         <RowInfoContainer>
           <ActionButton>Edit</ActionButton>
