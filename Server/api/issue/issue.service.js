@@ -222,7 +222,7 @@ module.exports = {
     const results = await requestQuery(query.CREATE_COMMENT, params);
 
     if (results.status === 'success') {
-      return callBack(null, '요청하신 이슈의 comment 생성이 완료되었습니다.');
+      return callBack(null, results.data);
     }
 
     return callBack(results.data);
