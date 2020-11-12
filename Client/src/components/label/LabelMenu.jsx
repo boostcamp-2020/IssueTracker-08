@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+
 import { LabelContext } from '../../stores/LabelStore';
 import Menu from '../shared/container/Menu';
 import LabelForm from './LabelForm';

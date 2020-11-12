@@ -12,7 +12,7 @@ export default function MilestonePage() {
         <NewButton link="/milestone/post" name="milestone" />
       </Menu>
       <ItemContainer>
-        <ItemHeader></ItemHeader>
+        <ItemHeader />
       </ItemContainer>
     </Container>
   );

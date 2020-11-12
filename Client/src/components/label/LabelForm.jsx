@@ -1,5 +1,6 @@
 import React, { useState, useContext, useRef } from 'react';
 import styled from 'styled-components';
+
 import Label from './Label';
 import { LabelContext } from '../../stores/LabelStore';
 import { getRandomColor, isValidColor } from '../../utils/color';
@@ -183,6 +184,7 @@ const LabelForm = ({
       newDispatch({ type: 'NEW_LABEL_TAB_CLOSE' });
       labelDispatch({ type: 'NEW_LABEL_ADD', payload: label });
     }
+
     if (type === 'EDIT') {
       const options = putOptions(label);
       await fetch(PUT_LABEL(label_id), options);

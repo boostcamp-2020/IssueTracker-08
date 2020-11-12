@@ -8,6 +8,7 @@ export const labelReducer = (labels, { type, payload }) => {
         if (label.id === payload.id) {
           label = payload;
         }
+
         return label;
       });
 
