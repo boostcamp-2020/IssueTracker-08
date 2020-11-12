@@ -37,6 +37,7 @@ const DropdownContainer = styled.div`
   font-size: 14px;
   padding-left: 16px;
   .dropdown {
+    cursor: pointer;
     .dropdown-menu {
       display: none;
       font-size: 17px;
