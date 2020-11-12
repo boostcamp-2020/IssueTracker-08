@@ -8,6 +8,7 @@ import MilestoneList from '../../components/milestone/MilestoneList';
 import Menu from '../../components/shared/container/Menu';
 import NewButton from '../../components/shared/button/NewButton';
 import styled from 'styled-components';
+import MilestoneStore from '../../stores/MilestoneStore';
 
 const MilestoneMenuContainer = styled.div`
   display: flex;
@@ -21,23 +22,25 @@ const Title = styled.p`
 
 export default function MilestonePage() {
   return (
-    <Container>
-      <Menu name="milestone">
-        <NewButton link="/milestone/post" name="milestone" />
-      </Menu>
-      <ItemContainer>
-        <ItemHeader>
-          <MilestoneMenuContainer>
-            <MilestoneIcon />
-            <Title>{0 + ' Open'}</Title>
-          </MilestoneMenuContainer>
-          <MilestoneMenuContainer>
-            <CheckIcon />
-            <Title>{0 + ' Closed'}</Title>
-          </MilestoneMenuContainer>
-        </ItemHeader>
-        <MilestoneList />
-      </ItemContainer>
-    </Container>
+    <MilestoneStore>
+      <Container>
+        <Menu name="milestone">
+          <NewButton link="/milestone/post" name="milestone" />
+        </Menu>
+        <ItemContainer>
+          <ItemHeader>
+            <MilestoneMenuContainer>
+              <MilestoneIcon />
+              <Title>{0 + ' Open'}</Title>
+            </MilestoneMenuContainer>
+            <MilestoneMenuContainer>
+              <CheckIcon />
+              <Title>{0 + ' Closed'}</Title>
+            </MilestoneMenuContainer>
+          </ItemHeader>
+          <MilestoneList />
+        </ItemContainer>
+      </Container>
+    </MilestoneStore>
   );
 }
