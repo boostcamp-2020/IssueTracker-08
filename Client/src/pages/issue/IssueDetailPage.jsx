@@ -183,7 +183,7 @@ export default function IssueDetailPage({ match, location }) {
         </Discussion>
         <CommentStore issueId={issueId}>
           <Comments />
-          <CommentForm issueId={issueId} userId={userId} />
+          <CommentForm userId={userId} />
         </CommentStore>
       </DiscussionBucket>
     </Container>

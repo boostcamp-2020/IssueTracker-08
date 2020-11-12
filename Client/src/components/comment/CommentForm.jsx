@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import { CommentContext } from '../../stores/CommentStore';
 
 import { GET_USER, POST_COMMENT, POST_CLOSE_ISSUE } from '../../utils/api';
 import { getOptions, postOptions } from '../../utils/fetchOptions';
+import { CommentContext } from '../../stores/CommentStore';
 
 const Main = styled.div`
   display: flex;
@@ -162,18 +162,17 @@ const SubmitButton = styled.button`
   background-color: ${(props) => (props.state ? '#44c767' : '#94d3a2')};
 `;
 
-const IssueCommentForm = ({ userId, issueId }) => {
-  const { comments } = useContext(CommentContext);
+const IssueCommentForm = ({ userId }) => {
+  const { issueId, commentDispatch } = useContext(CommentContext);
   const commentRef = useRef(false);
   const [comment, setComment] = useState('');
-  const [userImage, setUserImage] = useState('');
+  const [userInfo, setUserInfo] = useState('');
 
   const createCommentData = async () => {
     if (commentRef.current.value === '') {
       return;
     }
 
-    console.log(userId, issueId);
     const comment = {
       userId: userId,
       issueId: issueId,
@@ -182,20 +181,16 @@ const IssueCommentForm = ({ userId, issueId }) => {
 
     const options = postOptions(comment);
     const response = await fetch(POST_COMMENT, options);
-    await response.json();
-
+    const result = await response.json();
     commentRef.current.value = '';
     setComment('');
 
-    console.log(comments);
-    // commnet 객체에 commentId, name, imageUrl, createAt 추가해야함
-    // JWT 토큰 디코딩해서 유저정보 갖고오자.
-    const commentAuthor = comments.filter(
-      (comment) => comment.userId === userId
-    );
-    console.log(commentAuthor);
+    comment.name = userInfo.name;
+    comment.imageUrl = userInfo.imageUrl;
+    comment.commentId = result.data.commentId;
+    comment.createAt = result.data.createAt;
 
-    // commentDispatch({ type: 'NEW_COMMENT_ADD', payload: comment });
+    commentDispatch({ type: 'NEW_COMMENT_ADD', payload: comment });
   };
 
   const commentHandleChange = () => {
@@ -207,20 +202,20 @@ const IssueCommentForm = ({ userId, issueId }) => {
     fetch(POST_CLOSE_ISSUE(issueId), options);
   };
 
-  const getUserImage = async () => {
+  const getUserInfo = async () => {
     const options = getOptions();
     const response = await fetch(GET_USER(userId), options);
     const responseJSON = await response.json();
-    setUserImage(responseJSON.data[0].imageUrl);
+    setUserInfo(responseJSON.data[0]);
   };
 
   useEffect(() => {
-    getUserImage();
+    getUserInfo();
   }, []);
 
   return (
     <Main>
-      <AuthorImage src={userImage} />
+      <AuthorImage src={userInfo.imageUrl} />
       <IssueFormContainer>
         <WriteTab>Write</WriteTab>
         <PreviewTab>Preview</PreviewTab>
