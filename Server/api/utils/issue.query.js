@@ -34,10 +34,9 @@ const query = {
     (SELECT user.name FROM user WHERE user.id = issue_assignee.userId) as name
     FROM issue JOIN issue_assignee ON issue.id = issue_assignee.issueId
     WHERE issue_assignee.issueId = ?`,
-  CREATE_ISSUE:
-    'INSERT INTO issue (userId, milestoneId, title, content) VALUES(?, ?, ?, ?)',
+  CREATE_ISSUE: 'INSERT INTO issue (userId, title, content) VALUES(?, ?, ?)',
   UPDATE_ISSUE:
-    'UPDATE issue SET userId = ?, milestoneId = ?, title = ?, content = ? WHERE id = ?',
+    'UPDATE issue SET userId = ?, title = ?, content = ? WHERE id = ?',
   DELETE_ISSUE: 'DELETE FROM issue WHERE id = ?',
   OPEN_ISSUE: 'UPDATE issue SET isOpen = 1 WHERE id = ?',
   CLOSE_ISSUE: 'UPDATE issue SET isOpen = 0 WHERE id = ?',
