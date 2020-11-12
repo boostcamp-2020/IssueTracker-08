@@ -24,10 +24,10 @@ const StyledLink = styled(Link)`
   margin-left: auto;
 `;
 
-const NewButton = (props) => {
+const NewButton = ({ link, name }) => {
   return (
-    <StyledLink to={props.link}>
-      <Button>{'New ' + props.name}</Button>
+    <StyledLink to={link}>
+      <Button>{'New ' + name}</Button>
     </StyledLink>
   );
 };

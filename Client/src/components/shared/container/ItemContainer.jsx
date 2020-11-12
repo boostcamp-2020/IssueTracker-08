@@ -6,7 +6,7 @@ const Container = styled.div`
   border: 0px solid #ebecef;
   border-radius: 4px;
   padding: 0px;
-  margin-top: 30px;
+  margin-top: 10px;
 `;
 
 const ItemContainer = (props) => {
