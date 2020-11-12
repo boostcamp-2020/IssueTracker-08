@@ -20,7 +20,7 @@ const ButtonDesign = styled.button`
 `;
 
 const MilestoneButton = styled(ButtonDesign)`
-  border-radius: 4px 0 0 4px;
+  border-radius: 0 4px 4px 0;
   background: #ffffff;
   color: #606060;
   border-right: 1px solid #e0e0e0;
