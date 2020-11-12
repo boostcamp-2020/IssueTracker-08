@@ -15,6 +15,7 @@ protocol IssueListDisplayLogic: class {
     func displayUsers(viewModel: ListUsers.FetchUsers.ViewModel)
     func displayFetchedLabels(viewModel: ListLabels.FetchLists.ViewModel)
     func displayFetchedMilestone(viewModel: ListMilestones.FetchLists.ViewModel)
+    func displayFetchedComment(viewModel: ListComment.FetchDetail.ViewModel)
     func didOpenCloseIssue(fetch : ListIssues.FetchCategory)
 }
 
@@ -32,13 +33,18 @@ final class IssueListViewController: UIViewController {
     @IBOutlet weak var filterButton: CustomAddButton!
     
     // MARK:- Properties
+    private let userId = UserDefaults.standard.object(forKey: "ID") as! Int
     var interactor: IssueListBusinessLogic?
+    var detailWorker = IssueDetailWorker(dataManager: IssueDetailDataManager())
     var router: (NSObjectProtocol & IssueListRoutingLogic & IssueDetailDataPassing)?
-    var displayedIssues: [IssueViewModel] = []
-    var displayedUsers: [ListUsers.FetchUsers.ViewModel.DisplayedUser] = []
+    
+    private var displayedIssues: [IssueViewModel] = []
+    private var filteredIssues: [IssueViewModel] = []
+    
+    private var displayedUsers: [ListUsers.FetchUsers.ViewModel.DisplayedUser] = []
     private var displayedLabels: [ListLabels.FetchLists.ViewModel.DisplayedLabel] = []
     private var displayedMilestones: [ListMilestones.FetchLists.ViewModel.DisplayedMilestone] = []
-    var filteredIssues: [IssueViewModel] = []
+    private var displayedComments: [comment] = []
     var config = UICollectionLayoutListConfiguration(appearance: .plain)
     let searchController = UISearchController(searchResultsController: nil)
 
@@ -68,9 +74,9 @@ final class IssueListViewController: UIViewController {
         return searchController.searchBar.text?.isEmpty ?? true
     }
     var isFiltering: Bool {
-        return searchController.isActive && !isSearchBarEmpty
+        let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
+        return searchController.isActive && (!isSearchBarEmpty || searchBarScopeIsFiltering)
     }
-    
     
     // MARK:- Object Lifecycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -189,11 +195,7 @@ extension IssueListViewController {
             close.backgroundColor = .systemPink
             return UISwipeActionsConfiguration(actions: [close])
         }
-
-        let layout = UICollectionViewCompositionalLayout.list(using: config)
-        issueListCollectionView.collectionViewLayout = layout
-        issueListCollectionView.delegate = self
-        issueListCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        createListLayout()
     }
 
     private func setupClosedCollectionView() {
@@ -204,7 +206,10 @@ extension IssueListViewController {
             open.backgroundColor = .systemGreen
             return UISwipeActionsConfiguration(actions: [open])
         }
-
+        createListLayout()
+    }
+    
+    private func createListLayout() {
         let layout = UICollectionViewCompositionalLayout.list(using: config)
         issueListCollectionView.collectionViewLayout = layout
         issueListCollectionView.delegate = self
@@ -239,9 +244,14 @@ extension IssueListViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Issues"
-        searchController.searchBar.scopeButtonTitles = FilterCategory.allCases.map({ $0.rawValue })
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        
+        searchController.searchBar.scopeButtonTitles = FilterCategory.allCases.map({ $0.rawValue })
+        searchController.searchBar.delegate = self
+        searchController.delegate = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.searchTextField.delegate = self
     }
     
     private func setupInteraction() {
@@ -270,6 +280,10 @@ extension IssueListViewController: IssueListDisplayLogic {
         displayedLabels = viewModel.displayedLabels
     }
     
+    func displayFetchedComment(viewModel: ListComment.FetchDetail.ViewModel) {
+        displayedComments = viewModel.displayedComment
+    }
+    
     func didOpenCloseIssue(fetch : ListIssues.FetchCategory) {
         fetchIssues(request: fetch)
     }
@@ -289,6 +303,11 @@ extension IssueListViewController: IssueListDisplayLogic {
         interactor?.fetchMilestones(request: request)
     }
     
+    private func fetchComments(id: Int) {
+        let request = ListComment.FetchDetail.Request(issueId: id)
+        interactor?.fetchComments(request: request)
+    }
+
     // Fetch, Open, Close, Delete Issue
     private func fetchIssues(request: ListIssues.FetchCategory) {
         let request = ListIssues.FetchIssues.Request(request: request)
@@ -320,26 +339,76 @@ extension IssueListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
         let category = FilterCategory(rawValue: searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
-        filterContentForSearchText(searchBar.text!, category: category ?? .All)
-        // 여기 있을 애들이 아닌데....
-        filterButton.isHidden = !searchController.isActive
-        openCloseSwitch.isHidden = searchController.isActive
+        filterContentForSearchText(searchBar.text!, category: category)
     }
     
-    func filterContentForSearchText(_ searchText: String, category: FilterCategory) {
+    func filterContentForSearchText(_ searchText: String, category: FilterCategory? = nil) {
         filteredIssues = displayedIssues.filter({ (issue: IssueViewModel) -> Bool in
-            // TO DO:
-                // category mathcing 되는 것에 따라 relaodData 되게끔
             let doesCategoryMatch = filterMatchingCategory(issue: issue, category: category)
             if isSearchBarEmpty {
-                return
+                return doesCategoryMatch
             } else {
-                return issue.title.lowercased().contains(searchText.lowercased()) || issue.content.lowercased().contains(searchText.lowercased())
+                return doesCategoryMatch && issue.title.lowercased().contains(searchText.lowercased())
             }
         })
         issueListCollectionView.reloadData()
     }
+    
+    private func filterMatchingCategory(issue: IssueViewModel, category: FilterCategory?) -> Bool {
+        guard let category = category else { return false }
+        switch category {
+        case .All : return true
+        case .Created :
+            
+            if issue.userId == userId {
+                print("\(issue.title)")
+                return true
+            }
+            return false
+        case .Assigned :
+            guard let assign = issue.assign else { return false }
+            for assignee in assign {
+                if assignee.userId == userId { return true }
+                else { return false }
+            }
+            return false
+        case .Commented :
+            for commentDetail in displayedComments {
+                // fetch comment 가 비동기적으로 일어나면서 fetch가 완료되기 전에 if 문이 실행되어버림
+                fetchComments(id: issue.issueId)
+                if commentDetail.userId == userId { return true }
+            }
+            return false
+        }
+    }
 
+}
+
+// MARK:- UISearchControllerDelegate
+extension IssueListViewController: UISearchControllerDelegate {
+    
+    func didPresentSearchController(_ searchController: UISearchController) {
+        filterButton.isHidden = false
+        openCloseSwitch.isHidden = true
+        newIssueButton.isHidden = true
+    }
+    
+    func didDismissSearchController(_ searchController: UISearchController) {
+        filterButton.isHidden = true
+        openCloseSwitch.isHidden = false
+        newIssueButton.isHidden = false
+    }
+}
+
+// MARK:- UISearchBarDelegate
+extension IssueListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        if selectedScope > 0 {
+            searchBar.searchTextField.endEditing(true)
+        }
+        let category = FilterCategory(rawValue: searchBar.scopeButtonTitles![selectedScope])
+        filterContentForSearchText(searchBar.text!, category: category)
+    }
 }
 
 // MARK:- UIContextMenuInteractionDelegate
@@ -420,7 +489,10 @@ extension IssueListViewController: UIContextMenuInteractionDelegate {
     }
     
     func filterAsignee() -> UIMenu {
-        let asignees = ["Yo", "Asignee", "What", "Up"]
+        var asignees = [String]()
+        displayedUsers.forEach({ asignee in
+            asignees.append(asignee.name)
+        })
         let chooseAsignee = asignees.enumerated().map({ (idx, asignee) in
             return UIAction(
                 title: asignee,
@@ -482,7 +554,6 @@ extension IssueListViewController: UICollectionViewDataSource {
             loadingView.isHidden = true
             acitivityView.isHidden = true
         }
-        
         return cell
     }
 
@@ -507,5 +578,9 @@ extension IssueListViewController: UICollectionViewDelegate {
             selectedItems -= 1
         }
     }
+    
+}
+
+extension IssueListViewController: UITextFieldDelegate {
     
 }

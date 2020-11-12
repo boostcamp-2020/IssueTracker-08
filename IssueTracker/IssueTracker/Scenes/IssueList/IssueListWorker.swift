@@ -51,4 +51,10 @@ class IssueListWorker {
             completion(milestones)
         })
     }
+    
+    func fetchComments(request: ListComment.FetchDetail.Request, completion: @escaping ([comment]) -> Void) {
+        dataManager.fetchComment(request: request, completion: { comments in
+            completion(comments)
+        })
+    }
 }

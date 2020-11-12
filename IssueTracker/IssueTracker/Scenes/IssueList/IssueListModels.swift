@@ -57,6 +57,8 @@ enum ListIssues {
                 var content: String
                 var milestone: String?
                 var label: [IssueLabel]?
+                var allLabel: [IssueLabel]?
+                var assign: [IssueAssign]?
             }
             var displayedIssues: [DisplayedIssue]
         }

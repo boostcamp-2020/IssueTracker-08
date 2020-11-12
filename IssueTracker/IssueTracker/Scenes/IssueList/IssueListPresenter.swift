@@ -15,6 +15,7 @@ protocol IssueListPresentationLogic {
     func presentFetchedUsers(response: ListUsers.FetchUsers.Response)
     func presentFetchedLabels(response: ListLabels.FetchLists.Response)
     func presentFetchedMilestones(response: ListMilestones.FetchLists.Response)
+    func presentFetchedComments(response: ListComment.FetchDetail.Response)
 }
 
 class IssueListPresenter {
@@ -36,7 +37,9 @@ extension IssueListPresenter: IssueListPresentationLogic {
                 title: issue.title,
                 content: description,
                 milestone: issue.milestone,
-                label: labels
+                label: labels,
+                allLabel: issue.label,
+                assign: issue.assign
             )
             displayedIssues.append(displayedIssue)
         }
@@ -112,6 +115,23 @@ extension IssueListPresenter: IssueListPresentationLogic {
         }
         let viewModel = ListMilestones.FetchLists.ViewModel(displayedMilestones: displayedMilestones)
         viewController?.displayFetchedMilestone(viewModel: viewModel)
+    }
+    
+    func presentFetchedComments(response: ListComment.FetchDetail.Response) {
+        var displayedComments: [comment] = []
+        for comments in response.comment {
+            let displayedComment = comment (
+                commentId: comments.commentId,
+                userId: comments.userId,
+                name: comments.name,
+                imageUrl: comments.imageUrl,
+                content: comments.content,
+                createAt: comments.createAt
+            )
+            displayedComments.append(displayedComment)
+        }
+        let viewModel = ListComment.FetchDetail.ViewModel(displayedComment: displayedComments)
+        viewController?.displayFetchedComment(viewModel: viewModel)
     }
 }
 
