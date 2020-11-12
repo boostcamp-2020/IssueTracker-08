@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+
 import { getTimeString } from '../../utils/time';
 import { getMilestonePercent } from '../../utils/number';
 
@@ -56,6 +58,17 @@ const ActionButton = styled.button`
   color: ${(props) => props.color || 'blue'};
 `;
 
+const StyledLink = styled(Link)`
+  color: blue;
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+`;
+
 const MilestoneContainer = ({
   id,
   isOpen,
@@ -65,7 +78,9 @@ const MilestoneContainer = ({
   openIssue,
   closeIssue,
 }) => {
+  const history = useHistory();
   const percent = getMilestonePercent(openIssue, openIssue + closeIssue);
+
   return (
     <Container>
       <MilestoneInfoBox>
@@ -81,7 +96,9 @@ const MilestoneContainer = ({
           <Text>{closeIssue + ' closed'}</Text>
         </RowInfoContainer>
         <RowInfoContainer>
-          <ActionButton>Edit</ActionButton>
+          <ActionButton>
+            <StyledLink to={'/milestone/edit/' + id}>Edit</StyledLink>
+          </ActionButton>
           <ActionButton>Close</ActionButton>
           <ActionButton color="red">Delete</ActionButton>
         </RowInfoContainer>
