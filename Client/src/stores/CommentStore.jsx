@@ -8,20 +8,18 @@ export const CommentContext = React.createContext();
 
 const CommentStore = (props) => {
   const [comments, commentDispatch] = useReducer(commentReducer, []);
-  //   const [isClickNew, newDispatch] = useReducer(newReducer, false);
+  const issueId = props.issueId;
 
   const setIntiData = (initData) => {
     commentDispatch({ type: 'SET_INIT_DATA', payload: initData });
   };
 
-  const loading = useFetch(
-    setIntiData,
-    GET_COMMENTS(props.issueId),
-    getOptions()
-  );
+  const loading = useFetch(setIntiData, GET_COMMENTS(issueId), getOptions());
 
   return (
-    <CommentContext.Provider value={{ comments, loading, commentDispatch }}>
+    <CommentContext.Provider
+      value={{ issueId, comments, loading, commentDispatch }}
+    >
       {props.children}
     </CommentContext.Provider>
   );

@@ -59,43 +59,6 @@ const Comment = styled.div`
 `;
 
 const CommentContainer = ({ userId, name, content, imageUrl, createAt }) => {
-  // const [isOpenTab, setIsOpenTab] = useState(false);
-
-  const { commentDispatch } = useContext(CommentContext);
-  // const deleteLabelRequest = () => {
-  //   const options = deleteOptions();
-  //   fetch(DELETE_LABELS(id), options);
-  // };
-
-  // const openEditTab = (e) => {
-  //   setIsOpenTab(true);
-  // };
-
-  // const deleteLabel = (e) => {
-  //   if (confirm(`${name}을 정말로 삭제하시겠습니까?`)) {
-  //     deleteLabelRequest();
-  //     labelDispatch({ type: 'DELETE_LABEL', payload: id });
-  //   }
-  // };
-
-  // const EditForm = (
-  //   <>
-  //     <LabelForm
-  //       type="EDIT"
-  //       initName={name}
-  //       initDescription={description}
-  //       initColor={color}
-  //       background="white"
-  //       label_id={id}
-  //       callback={setIsOpenTab}
-  //     >
-  //       <Button onClick={deleteLabel}>
-  //         <Text>Delete</Text>
-  //       </Button>
-  //     </LabelForm>
-  //   </>
-  // );
-
   const CommentInfo = (
     <Discussion>
       <AuthorImage src={`${imageUrl}`} />

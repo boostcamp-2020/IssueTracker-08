@@ -1,18 +1,19 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
+import { CommentContext } from '../../stores/CommentStore';
 
 import { GET_USER, POST_COMMENT, POST_CLOSE_ISSUE } from '../../utils/api';
 import { getOptions, postOptions } from '../../utils/fetchOptions';
+
+const Main = styled.div`
+  display: flex;
+  margin-top: 40px;
+`;
 
 const AuthorImage = styled.img`
   border-radius: 50%;
   width: 40px;
   height: 40px;
-`;
-
-const Main = styled.div`
-  display: flex;
 `;
 
 const FileAttachMsg =
@@ -25,22 +26,6 @@ const IssueFormContainer = styled.div`
   border-top-left-radius: 6px !important;
   border-top-right-radius: 6px !important;
   margin-left: 20px;
-`;
-
-const IssueTitleInput = styled.input`
-  width: 95%;
-  margin: 10px;
-  padding: 5px 12px;
-  font-size: 14px;
-  line-height: 20px;
-  background-position: right 8px center;
-  background-color: #fafbfc;
-  border: 1px solid #ebecef;
-  border-radius: 6px;
-  outline: none;
-  &:hover {
-    background-color: white;
-  }
 `;
 
 const WriteTab = styled.div`
@@ -177,17 +162,18 @@ const SubmitButton = styled.button`
   background-color: ${(props) => (props.state ? '#44c767' : '#94d3a2')};
 `;
 
-const IssueCommentForm = ({ issueId, userId }) => {
-  const history = useHistory();
+const IssueCommentForm = ({ userId, issueId }) => {
+  const { comments } = useContext(CommentContext);
   const commentRef = useRef(false);
   const [comment, setComment] = useState('');
   const [userImage, setUserImage] = useState('');
 
-  const createCommentData = () => {
+  const createCommentData = async () => {
     if (commentRef.current.value === '') {
       return;
     }
 
+    console.log(userId, issueId);
     const comment = {
       userId: userId,
       issueId: issueId,
@@ -195,9 +181,21 @@ const IssueCommentForm = ({ issueId, userId }) => {
     };
 
     const options = postOptions(comment);
-    fetch(POST_COMMENT, options);
+    const response = await fetch(POST_COMMENT, options);
+    await response.json();
+
     commentRef.current.value = '';
     setComment('');
+
+    console.log(comments);
+    // commnet 객체에 commentId, name, imageUrl, createAt 추가해야함
+    // JWT 토큰 디코딩해서 유저정보 갖고오자.
+    const commentAuthor = comments.filter(
+      (comment) => comment.userId === userId
+    );
+    console.log(commentAuthor);
+
+    // commentDispatch({ type: 'NEW_COMMENT_ADD', payload: comment });
   };
 
   const commentHandleChange = () => {

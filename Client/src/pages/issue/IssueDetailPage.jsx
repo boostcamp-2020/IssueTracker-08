@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import CommentStore from '../../stores/CommentStore';
-import IssueCommentForm from '../../components/issue/IssueCommentForm';
-import IssueComments from '../../components/issue/IssueComments';
+import CommentForm from '../../components/comment/CommentForm';
+import Comments from '../../components/comment/Comments';
 import { GET_ISSUE } from '../../utils/api.js';
 import { getOptions } from '../../utils/fetchOptions';
 import getDiffTime from '../../utils/getDiffTime';
@@ -134,14 +134,12 @@ const Comment = styled.div`
 
 export default function IssueDetailPage({ match, location }) {
   const [issueAuthorInfo, setIssueAuthorInfo] = useState('');
-  const [issueId, setIssueId] = useState(1);
+  const issueId = match.params.issueId;
   const userId = localStorage.getItem('userId');
 
   const getIssueAuthorInfo = async () => {
-    const id = match.params.issueId;
-    setIssueId(id);
     const options = getOptions();
-    const response = await fetch(GET_ISSUE(id), options);
+    const response = await fetch(GET_ISSUE(issueId), options);
     const responseJSON = await response.json();
     setIssueAuthorInfo(responseJSON.data[0]);
   };
@@ -154,6 +152,7 @@ export default function IssueDetailPage({ match, location }) {
     <Container>
       <IssueHeader>
         <IssueTitle>{issueAuthorInfo.title}</IssueTitle>
+        {/* TODO: userId === issueAuthorInfo.userId 랑 같을 때 보여야 함  */}
         <EditButton>Edit</EditButton>
       </IssueHeader>
       <IssueInfo>
@@ -182,12 +181,11 @@ export default function IssueDetailPage({ match, location }) {
             </Comment>
           </DiscussionContent>
         </Discussion>
-        {/* TODO : 코멘트들 받아와서 map으로 뿌려주는 컴포넌트 구현 */}
-        <CommentStore issueId={match.params.issueId}>
-          <IssueComments />
+        <CommentStore issueId={issueId}>
+          <Comments />
+          <CommentForm issueId={issueId} userId={userId} />
         </CommentStore>
       </DiscussionBucket>
-      <IssueCommentForm issueId={issueId} userId={userId} />
     </Container>
   );
 }

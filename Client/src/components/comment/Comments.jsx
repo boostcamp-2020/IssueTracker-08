@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 
-import CommentContainer from '../comment/CommentContainer';
 import { CommentContext } from '../../stores/CommentStore';
+import CommentContainer from './CommentContainer';
 
-const OtherComments = () => {
+const Comments = () => {
   const { comments, loading } = useContext(CommentContext);
 
   let commentList = <div>Loading...</div>;
@@ -22,4 +22,4 @@ const OtherComments = () => {
   return <>{commentList}</>;
 };
 
-export default OtherComments;
+export default Comments;
