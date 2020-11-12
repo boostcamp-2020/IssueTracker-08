@@ -25,14 +25,7 @@ export default function MilestonePostPage() {
         <Title>New Milestone</Title>
         <Text>{description}</Text>
       </MilestonePostHeader>
-      <MilestoneForm
-        type="NEW"
-        link="/milestone"
-        submit="Create milestone"
-        initTitle=""
-        initDate=""
-        initDescription=""
-      />
+      <MilestoneForm type="NEW" submit="Create milestone" />
     </Container>
   );
 }

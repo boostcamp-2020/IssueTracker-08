@@ -1,8 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { POST_MILESTONE } from '../../utils/api';
-import { postOptions } from '../../utils/fetchOptions';
+import { GET_MILESTONE, POST_MILESTONE } from '../../utils/api';
+import { getOptions, postOptions } from '../../utils/fetchOptions';
+import { getFormatDate } from '../../utils/time';
 
 const Container = styled.div`
   display: flex;
@@ -72,23 +73,22 @@ const Submit = styled.button`
         `};
 `;
 
-const MilestoneForm = ({
-  type,
-  initTitle,
-  initDate,
-  initDescription,
-  link,
-  submit,
-  children,
-}) => {
+const initActiveState = (type) => {
+  if (type === 'NEW') {
+    return false;
+  }
+  return true;
+};
+
+const MilestoneForm = ({ type, id, submit, children }) => {
   const history = useHistory();
   const titleRef = useRef(false);
   const dateRef = useRef(false);
   const descriptionRef = useRef(false);
-  const [title, setTitle] = useState(initTitle);
-  const [date, setDate] = useState(initDate);
-  const [description, setDescription] = useState(initDescription);
-  const [isActive, setIsActive] = useState(false);
+  const [title, setTitle] = useState('');
+  const [date, setDate] = useState('');
+  const [description, setDescription] = useState('');
+  const [isActive, setIsActive] = useState(initActiveState(type));
 
   const titleInputChange = (e) => {
     setIsActive(true);
@@ -134,20 +134,46 @@ const MilestoneForm = ({
     history.push('/milestone');
   };
 
+  const getMilestoneInfo = async () => {
+    const response = await fetch(GET_MILESTONE(id), getOptions());
+    const responseJSON = await response.json();
+    const milestone = responseJSON.data[0];
+    const dueDate = getFormatDate(milestone.dueDate);
+    setTitle(milestone.title);
+    setDate(dueDate);
+    setDescription(milestone.content);
+  };
+
+  useEffect(() => {
+    if (type === 'EDIT') {
+      getMilestoneInfo();
+    }
+  }, []);
+
   return (
     <>
       <Container>
         <InputTitle>Title</InputTitle>
-        <Input placeholder="Title" ref={titleRef} onChange={titleInputChange} />
+        <Input
+          placeholder="Title"
+          ref={titleRef}
+          onChange={titleInputChange}
+          value={title}
+        />
         <InputTitle>Due date (optional)</InputTitle>
         <Input
           type="date"
           placeholder="연도. 월. 일."
           ref={dateRef}
           onChange={dateInputChange}
+          value={date}
         />
         <InputTitle>Description (optional)</InputTitle>
-        <TextArea ref={descriptionRef} onChange={descriptionInputChange} />
+        <TextArea
+          ref={descriptionRef}
+          onChange={descriptionInputChange}
+          value={description}
+        />
       </Container>
       <ActionMenu>
         {children}

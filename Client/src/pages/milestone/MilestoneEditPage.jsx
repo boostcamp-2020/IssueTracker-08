@@ -1,9 +1,16 @@
 import React from 'react';
 
-export default function MilestonePostPage() {
+import MilestoneForm from '../../components/milestone/MilestoneForm';
+import MilestonePostHeader from '../../components/milestone/MilestonePostHeader';
+import Container from '../../components/shared/container/Container';
+
+export default function MilestoneEditPage({ match }) {
+  const milestoneId = match.params.milestoneId;
+
   return (
-    <div class="container">
-      <p>마일스톤 수정 페이지 입니다.</p>
-    </div>
+    <Container>
+      <MilestonePostHeader>Edit Milestone</MilestonePostHeader>
+      <MilestoneForm type="EDIT" submit="Save changes" id={milestoneId} />
+    </Container>
   );
 }
