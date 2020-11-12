@@ -4,8 +4,15 @@ import { getOptions } from '../utils/fetchOptions';
 
 export const LoginContext = React.createContext();
 
+const initIsLoggedIn = () => {
+  if (localStorage.getItem('jwtToken')) {
+    return true;
+  }
+  return false;
+};
+
 const LoginStore = (props) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(initIsLoggedIn());
 
   const checkValidLogin = async () => {
     const response = await fetch(GET_AUTH, getOptions());
