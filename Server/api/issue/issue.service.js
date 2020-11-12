@@ -221,8 +221,13 @@ module.exports = {
     const params = [userId, issueId, content];
     const results = await requestQuery(query.CREATE_COMMENT, params);
 
+    const result = {
+      commentId: results.data[0].insertId,
+      createAt: new Date(),
+    };
+
     if (results.status === 'success') {
-      return callBack(null, '요청하신 이슈의 comment 생성이 완료되었습니다.');
+      return callBack(null, result);
     }
 
     return callBack(results.data);
