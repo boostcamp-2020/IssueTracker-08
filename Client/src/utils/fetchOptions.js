@@ -28,7 +28,7 @@ export const postOptions = (data) => {
   };
 };
 
-export const putOptions = () => {
+export const putOptions = (data) => {
   const token = getToken();
   return {
     mode: 'cors',
@@ -36,7 +36,9 @@ export const putOptions = () => {
     method: 'put',
     headers: {
       Authorization: token,
+      'Content-Type': 'application/json;charset=utf-8',
     },
+    body: JSON.stringify(data),
   };
 };
 
