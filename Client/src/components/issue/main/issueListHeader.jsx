@@ -2,13 +2,15 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { Dropdown } from 'semantic-ui-react';
 import { CheckIcon } from '@primer/octicons-react';
-import { IssueOpenedIcon } from '@primer/octicons-react';
 
 import { IssueContext } from '../../../stores/IssueStore';
 import { UserContext } from '../../../stores/UserStore';
 import { LabelContext } from '../../../stores/LabelStore';
 import { GET_OPEN_ISSUE, GET_CLOSED_ISSUE } from '../../../utils/api';
 import { getOptions } from '../../../utils/fetchOptions';
+
+import OpenHeaderBtn from './button/openHeaderBtn';
+import ClosedHeaderBtn from './button/closedHeaderBtn';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -97,15 +99,6 @@ const Container = styled.div`
   }
 `;
 
-const IssueNumBtn = styled.button`
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  background-color: Transparent;
-  border: none;
-  outline: none;
-`;
-
 const LabelColor = styled.div`
   margin-left: 10px;
   margin-right: 8px;
@@ -133,6 +126,7 @@ const issueListHeader = () => {
     milestones,
     dispatchIssues,
   } = useContext(IssueContext);
+
   const { users } = useContext(UserContext);
   const { labels } = useContext(LabelContext);
   const [issueStatus, setIssueStatus] = useState('open');
@@ -189,23 +183,16 @@ const issueListHeader = () => {
     <HeaderContainer>
       <Container>
         <input type="checkbox" className="allIssue" />
-        <IssueNumBtn
-          onClick={(e) => {
-            changeIssue(e, 'CHANGE_STATUS_OPEN');
-          }}
-        >
-          <IssueOpenedIcon className="HeaderIcon" size={16} />
-          {openIssues.length} Open{' '}
-        </IssueNumBtn>
-
-        <IssueNumBtn
-          onClick={(e) => {
-            changeIssue(e, 'CHANGE_STATUS_CLOSED');
-          }}
-        >
-          <CheckIcon size={16} className="HeaderIcon" />
-          {closeIssues.length} Closed{' '}
-        </IssueNumBtn>
+        <OpenHeaderBtn
+          issueStatus={issueStatus}
+          openIssues={openIssues}
+          changeIssue={changeIssue}
+        />
+        <ClosedHeaderBtn
+          issueStatus={issueStatus}
+          closeIssues={closeIssues}
+          changeIssue={changeIssue}
+        />
       </Container>
       <FilterList>
         <DropdownContainer>
