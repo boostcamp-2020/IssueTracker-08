@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import IssueCommentForm from '../../components/issue/IssueCommentForm';
+import IssueComments from '../../components/issue/IssueComments';
 import { GET_ISSUE } from '../../utils/api.js';
 import { getOptions } from '../../utils/fetchOptions';
 import getDiffTime from '../../utils/getDiffTime';
@@ -132,11 +133,14 @@ const Comment = styled.div`
 
 export default function IssueDetailPage({ match, location }) {
   const [issueAuthorInfo, setIssueAuthorInfo] = useState('');
+  const [issueId, setIssueId] = useState(1);
+  const userId = localStorage.getItem('userId');
 
   const getIssueAuthorInfo = async () => {
-    const issueId = match.params.issueId;
+    const id = match.params.issueId;
+    setIssueId(id);
     const options = getOptions();
-    const response = await fetch(GET_ISSUE(issueId), options);
+    const response = await fetch(GET_ISSUE(id), options);
     const responseJSON = await response.json();
     setIssueAuthorInfo(responseJSON.data[0]);
   };
@@ -178,8 +182,10 @@ export default function IssueDetailPage({ match, location }) {
               </Comment>
             </DiscussionContent>
           </Discussion>
+          {/* TODO : 코멘트들 받아와서 map으로 뿌려주는 컴포넌트 구현 */}
+          <IssueComments issueId={issueId} />
         </DiscussionBucket>
-        <IssueCommentForm />
+        <IssueCommentForm issueId={issueId} userId={userId} />
       </Container>
     </>
   );
