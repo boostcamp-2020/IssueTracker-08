@@ -6,7 +6,8 @@ import CommentContainer from './CommentContainer';
 const Comments = () => {
   const { comments, loading } = useContext(CommentContext);
 
-  let commentList = <div>Loading...</div>;
+  let commentList = <div></div>;
+
   if (!loading) {
     commentList = comments.map((comment) => (
       <CommentContainer
