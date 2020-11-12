@@ -40,11 +40,13 @@ final class IssueListViewController: UIViewController {
     
     private var displayedIssues: [IssueViewModel] = []
     private var filteredIssues: [IssueViewModel] = []
-    
     private var displayedUsers: [ListUsers.FetchUsers.ViewModel.DisplayedUser] = []
     private var displayedLabels: [ListLabels.FetchLists.ViewModel.DisplayedLabel] = []
     private var displayedMilestones: [ListMilestones.FetchLists.ViewModel.DisplayedMilestone] = []
     private var displayedComments: [comment] = []
+    
+    private var filterDict = ["Author" : 0, "Label" : 0, "Milestone" : 0, "Assignee" : 0]
+    
     var config = UICollectionLayoutListConfiguration(appearance: .plain)
     let searchController = UISearchController(searchResultsController: nil)
 
@@ -247,7 +249,7 @@ extension IssueListViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
-        searchController.searchBar.scopeButtonTitles = FilterCategory.allCases.map({ $0.rawValue })
+        searchController.searchBar.scopeButtonTitles = FilterScope.allCases.map({ $0.rawValue })
         searchController.searchBar.delegate = self
         searchController.delegate = self
         searchController.searchBar.delegate = self
@@ -338,32 +340,28 @@ extension IssueListViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
-        let category = FilterCategory(rawValue: searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
-        filterContentForSearchText(searchBar.text!, category: category)
+        let scope = FilterScope(rawValue: searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
+        filterContentForSearchText(searchBar.text!, scope: scope)
     }
     
-    func filterContentForSearchText(_ searchText: String, category: FilterCategory? = nil) {
+    func filterContentForSearchText(_ searchText: String, scope: FilterScope? = nil) {
         filteredIssues = displayedIssues.filter({ (issue: IssueViewModel) -> Bool in
-            let doesCategoryMatch = filterMatchingCategory(issue: issue, category: category)
+            let doesScopeMatch = filterMatchingScope(issue: issue, scope: scope)
             if isSearchBarEmpty {
-                return doesCategoryMatch
+                return doesScopeMatch
             } else {
-                return doesCategoryMatch && issue.title.lowercased().contains(searchText.lowercased())
+                return doesScopeMatch && issue.title.lowercased().contains(searchText.lowercased())
             }
         })
         issueListCollectionView.reloadData()
     }
     
-    private func filterMatchingCategory(issue: IssueViewModel, category: FilterCategory?) -> Bool {
-        guard let category = category else { return false }
-        switch category {
+    private func filterMatchingScope(issue: IssueViewModel, scope: FilterScope?) -> Bool {
+        guard let scope = scope else { return false }
+        switch scope {
         case .All : return true
         case .Created :
-            
-            if issue.userId == userId {
-                print("\(issue.title)")
-                return true
-            }
+            if issue.userId == userId { return true }
             return false
         case .Assigned :
             guard let assign = issue.assign else { return false }
@@ -374,7 +372,9 @@ extension IssueListViewController: UISearchResultsUpdating {
             return false
         case .Commented :
             for commentDetail in displayedComments {
-                // fetch comment 가 비동기적으로 일어나면서 fetch가 완료되기 전에 if 문이 실행되어버림
+                // TODO:
+                    // 문제 : fetch가 비동기적으로 일어나면서 완료 이전에 if문 실행되어 모두 false
+                    // 예상해결방법 : ??
                 fetchComments(id: issue.issueId)
                 if commentDetail.userId == userId { return true }
             }
@@ -406,8 +406,8 @@ extension IssueListViewController: UISearchBarDelegate {
         if selectedScope > 0 {
             searchBar.searchTextField.endEditing(true)
         }
-        let category = FilterCategory(rawValue: searchBar.scopeButtonTitles![selectedScope])
-        filterContentForSearchText(searchBar.text!, category: category)
+        let scope = FilterScope(rawValue: searchBar.scopeButtonTitles![selectedScope])
+        filterContentForSearchText(searchBar.text!, scope: scope)
     }
 }
 
@@ -422,22 +422,26 @@ extension IssueListViewController: UIContextMenuInteractionDelegate {
             identifier: nil,
             previewProvider: nil,
             actionProvider: { [unowned self] _ in
-                let children = [filterAuthor(), filterLabel(), filterMilestone(), filterAsignee()]
-                return UIMenu(title: "", children: children)
+                let children = [filterAuthor(), filterLabel(), filterMilestone(), filterAssignee()]
+                return UIMenu(title: "Select Filter Options", children: children)
             }
         )
     }
     
+//    private func filterMenuPressed(type: )
+    
     func filterAuthor() -> UIMenu {
         var authors = [String]()
+        var authorIDs = [Int]()
         displayedUsers.forEach({ user in
             authors.append(user.name)
+            authorIDs.append(user.id)
         })
         let chooseAuthor = authors.enumerated().map({ (idx, author) in
             return UIAction(
                 title: author,
                 image: nil,
-                identifier: UIAction.Identifier(author),
+                identifier: UIAction.Identifier("\(authorIDs[idx])"),
                 handler: { _ in
                     print("Name : \(author)")
                 })
@@ -488,24 +492,24 @@ extension IssueListViewController: UIContextMenuInteractionDelegate {
             children: chooseMilestone)
     }
     
-    func filterAsignee() -> UIMenu {
-        var asignees = [String]()
-        displayedUsers.forEach({ asignee in
-            asignees.append(asignee.name)
+    func filterAssignee() -> UIMenu {
+        var assignees = [String]()
+        displayedUsers.forEach({ assignee in
+            assignees.append(assignee.name)
         })
-        let chooseAsignee = asignees.enumerated().map({ (idx, asignee) in
+        let chooseAssignee = assignees.enumerated().map({ (idx, assignee) in
             return UIAction(
-                title: asignee,
+                title: assignee,
                 image: nil,
-                identifier: UIAction.Identifier(asignee),
+                identifier: UIAction.Identifier(assignee),
                 handler: { _ in
-                    print("Name : \(asignee)")
+                    print("Name : \(assignee)")
                 })
         })
         return UIMenu(
-            title: "Asignee",
+            title: "Assignee",
             image: UIImage(systemName: "chevron.right"),
-            children: chooseAsignee)
+            children: chooseAssignee)
     }
     
 }
@@ -581,6 +585,5 @@ extension IssueListViewController: UICollectionViewDelegate {
     
 }
 
-extension IssueListViewController: UITextFieldDelegate {
-    
-}
+// MARK:- UITextFieldDelegate
+extension IssueListViewController: UITextFieldDelegate { }
