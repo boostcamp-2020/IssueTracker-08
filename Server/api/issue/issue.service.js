@@ -56,17 +56,12 @@ module.exports = {
   },
 
   updateIssue: async (req, callBack) => {
-    const { userId, milestoneId, title, content, id } = req;
-    const params = [userId, milestoneId, title, content, id];
-    const updatedItem = await requestQuery(query.UPDATE_ISSUE, params);
-
-    if (updatedItem.data[0].affectedRows == 0) {
-      return callBack('수정을 요청하신 컬럼이 존재하지 않습니다.');
-    }
+    const { userId, title, content, id } = req;
+    const params = [userId, title, content, id];
+    await requestQuery(query.UPDATE_ISSUE, params);
 
     const results = {
       userId,
-      milestoneId,
       title,
       content,
     };
