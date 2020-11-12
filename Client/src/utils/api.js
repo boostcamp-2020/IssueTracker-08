@@ -26,6 +26,8 @@ export const GET_MILESTONE = (id) => config.BASE_URL + 'api/milestones/' + id;
 
 export const POST_MILESTONE = config.BASE_URL + 'api/milestones';
 
+export const PUT_MILESTONE = (id) => config.BASE_URL + 'api/milestones/' + id;
+
 export const PUT_MILESTONE_STATE = (id) =>
   config.BASE_URL + 'api/milestones/' + id + '/state';
 

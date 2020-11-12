@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { GET_MILESTONE, POST_MILESTONE } from '../../utils/api';
-import { getOptions, postOptions } from '../../utils/fetchOptions';
+import { GET_MILESTONE, POST_MILESTONE, PUT_MILESTONE } from '../../utils/api';
+import { getOptions, postOptions, putOptions } from '../../utils/fetchOptions';
 import { getFormatDate } from '../../utils/time';
 
 const Container = styled.div`
@@ -131,6 +131,11 @@ const MilestoneForm = ({ type, id, submit, children }) => {
       await fetch(POST_MILESTONE, options);
     }
 
+    if (type === 'EDIT') {
+      const options = putOptions(milestone);
+      await fetch(PUT_MILESTONE(id), options);
+    }
+
     history.push('/milestone');
   };
 
@@ -138,10 +143,12 @@ const MilestoneForm = ({ type, id, submit, children }) => {
     const response = await fetch(GET_MILESTONE(id), getOptions());
     const responseJSON = await response.json();
     const milestone = responseJSON.data[0];
+    const title = milestone.title;
     const dueDate = getFormatDate(milestone.dueDate);
-    setTitle(milestone.title);
+    let content = milestone.content ? milestone.content : '';
+    setTitle(title);
     setDate(dueDate);
-    setDescription(milestone.content);
+    setDescription(content);
   };
 
   useEffect(() => {
