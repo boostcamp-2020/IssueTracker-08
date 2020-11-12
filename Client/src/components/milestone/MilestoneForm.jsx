@@ -1,6 +1,8 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import React, { useState, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
+import styled, { css } from 'styled-components';
+import { POST_MILESTONE } from '../../utils/api';
+import { postOptions } from '../../utils/fetchOptions';
 
 const Container = styled.div`
   display: flex;
@@ -42,11 +44,9 @@ const ActionMenu = styled.div`
   justify-content: flex-end;
 `;
 
-const Button = styled.button`
+const Submit = styled.button`
   min-width: 120px;
   box-shadow: 0px 1px 0px 0px #3dc21b;
-  background: linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
-  background-color: #44c767;
   border-radius: 6px;
   border: 1px solid #18ab29;
   display: inline-block;
@@ -58,24 +58,102 @@ const Button = styled.button`
   text-decoration: none;
   text-shadow: 0px -1px 0px #2f6627;
   margin-left: 20px;
+  ${(props) =>
+    props.isValid
+      ? css`
+          background: linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+          background-color: #44c767;
+        `
+      : css`
+          background: linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+          background-color: #77b55a;
+          color: #dedede;
+          pointer-events: none;
+        `};
 `;
 
-const MilestoneForm = ({ link, submit, children }) => {
+const MilestoneForm = ({
+  type,
+  initTitle,
+  initDate,
+  initDescription,
+  link,
+  submit,
+  children,
+}) => {
+  const history = useHistory();
+  const titleRef = useRef(false);
+  const dateRef = useRef(false);
+  const descriptionRef = useRef(false);
+  const [title, setTitle] = useState(initTitle);
+  const [date, setDate] = useState(initDate);
+  const [description, setDescription] = useState(initDescription);
+  const [isActive, setIsActive] = useState(false);
+
+  const titleInputChange = (e) => {
+    setIsActive(true);
+    const currentValue = titleRef.current.value;
+    if (currentValue === '') {
+      setIsActive(false);
+    }
+    setTitle(currentValue);
+  };
+
+  const dateInputChange = (e) => {
+    setDate(dateRef.current.value);
+  };
+
+  const descriptionInputChange = (e) => {
+    setDescription(descriptionRef.current.value);
+  };
+
+  const submitForm = async (e) => {
+    const title = titleRef.current.value;
+    let date = dateRef.current.value;
+    let description = descriptionRef.current.value;
+
+    if (date === '') {
+      date = null;
+    }
+
+    if (description === '') {
+      description = null;
+    }
+
+    const milestone = {
+      title: title,
+      dueDate: date,
+      content: description,
+    };
+
+    if (type === 'NEW') {
+      const options = postOptions(milestone);
+      await fetch(POST_MILESTONE, options);
+    }
+
+    history.push('/milestone');
+  };
+
   return (
     <>
       <Container>
         <InputTitle>Title</InputTitle>
-        <Input placeholder="Title" />
+        <Input placeholder="Title" ref={titleRef} onChange={titleInputChange} />
         <InputTitle>Due date (optional)</InputTitle>
-        <Input type="date" placeholder="연도. 월. 일." />
+        <Input
+          type="date"
+          placeholder="연도. 월. 일."
+          ref={dateRef}
+          onChange={dateInputChange}
+        />
         <InputTitle>Description (optional)</InputTitle>
-        <TextArea />
+        <TextArea ref={descriptionRef} onChange={descriptionInputChange} />
       </Container>
       <ActionMenu>
         {children}
-        <Link to={link}>
-          <Button>{submit}</Button>
-        </Link>
+        <Submit isValid={isActive} onClick={submitForm}>
+          {submit}
+        </Submit>
       </ActionMenu>
     </>
   );
