@@ -1,5 +1,6 @@
 const query = {
   GET_OPEN_ISSUES: `SELECT issue.id as issueId,
+    issue.userId as userId,
     (SELECT user.imageUrl FROM user WHERE user.id = issue.userId) as imageUrl, 
     (SELECT user.email FROM user WHERE user.id = issue.userId) as email, 
     (SELECT user.name FROM user WHERE user.id = issue.userId) as name, milestoneId, 
@@ -8,6 +9,7 @@ const query = {
     FROM issue 
     WHERE issue.isOpen = 1`,
   GET_CLOSE_ISSUES: `SELECT issue.id as issueId,
+    issue.userId as userId,
     (SELECT user.imageUrl FROM user WHERE user.id = issue.userId) as imageUrl,
     (SELECT user.email FROM user WHERE user.id = issue.userId) as email, 
     (SELECT user.name FROM user WHERE user.id = issue.userId) as name, milestoneId, 
@@ -16,6 +18,7 @@ const query = {
     FROM issue 
     WHERE issue.isOpen = 0`,
   GET_ISSUE: `SELECT issue.id as issueId, 
+    issue.userId as userId,
     (SELECT user.imageUrl FROM user WHERE user.id = issue.userId) as imageUrl,
     (SELECT user.email FROM user WHERE user.id = issue.userId) as email, 
     (SELECT user.name FROM user WHERE user.id = issue.userId) as name, 
@@ -31,8 +34,7 @@ const query = {
     (SELECT user.name FROM user WHERE user.id = issue_assignee.userId) as name
     FROM issue JOIN issue_assignee ON issue.id = issue_assignee.issueId
     WHERE issue_assignee.issueId = ?`,
-  CREATE_ISSUE:
-    'INSERT INTO issue (userId, milestoneId, title, content) VALUES(?, ?, ?, ?)',
+  CREATE_ISSUE: 'INSERT INTO issue (userId, title, content) VALUES(?, ?, ?)',
   UPDATE_ISSUE:
     'UPDATE issue SET userId = ?, milestoneId = ?, title = ?, content = ? WHERE id = ?',
   DELETE_ISSUE: 'DELETE FROM issue WHERE id = ?',
