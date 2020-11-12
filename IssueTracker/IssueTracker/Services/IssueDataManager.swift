@@ -25,9 +25,11 @@ struct UserResponse: Decodable {
 protocol IssueDataManagerProtocol {
     func fetchIssues(request: ListIssues.FetchIssues.Request, completion: @escaping ([Issue]) -> Void)
     func postCloseIssue(request: ListIssues.CloseIssue.Request, completion: @escaping (String) -> Void)
+    func postOpenIssue(request: ListIssues.OpenIssue.Request, completion: @escaping (String) -> Void)
     func fetchUsers(request: ListUsers.FetchUsers.Request, completion: @escaping ([UserModel]) -> Void)
     func fetchLabels(completion: @escaping ([Label]) -> Void)
     func fetchMilestones(completion: @escaping ([Milestone]) -> Void)
+    func fetchComment(request: ListComment.FetchDetail.Request, completion: @escaping ([comment]) -> Void)
 }
 
 final class IssueDataManager: IssueDataManagerProtocol {
@@ -47,8 +49,18 @@ final class IssueDataManager: IssueDataManagerProtocol {
     }
     
     func postCloseIssue(request: ListIssues.CloseIssue.Request, completion: @escaping (String) -> Void) {
-        let closeURL = "http://118.67.131.96:3000/api/issues/close/\(request.issueId)"
+        let closeURL = EndPoint.issues + "close/\(request.issueId)"
         NetworkService.shared.postData(url: closeURL, jsonData: nil, completion: { data in
+            guard let receivedData = try? JSONDecoder().decode(CURDResponse.self, from: data) else {
+                return }
+            let result: String = receivedData.status
+            completion(result)
+        })
+    }
+    
+    func postOpenIssue(request: ListIssues.OpenIssue.Request, completion: @escaping (String) -> Void) {
+        let openURL = EndPoint.issues + "open/\(request.issueId)"
+        NetworkService.shared.postData(url: openURL, jsonData: nil, completion: { data in
             guard let receivedData = try? JSONDecoder().decode(CURDResponse.self, from: data) else {
                 return }
             let result: String = receivedData.status
@@ -93,4 +105,18 @@ final class IssueDataManager: IssueDataManagerProtocol {
             completion(milestoneData)
         })
     }
+    
+    func fetchComment(request: ListComment.FetchDetail.Request, completion: @escaping ([comment]) -> Void) {
+        let url = EndPoint.comments + "/\(request.issueId)"
+        NetworkService.shared.getData(url: url, completion: { data in
+            guard let receivedData = try? JSONDecoder().decode(CommentResponse.self, from: data) else {
+                return // completion으로 경우 넘겨 주어야 함
+            }
+            let comments: [comment] = receivedData.data
+            var commentData = [comment]()
+            comments.forEach({ commentData.append($0) })
+            completion(commentData)
+        })
+    }
+    
 }
