@@ -1,3 +1,22 @@
+const getMonthName = function (time) {
+  const index = time.getMonth();
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  return monthNames[index];
+};
+
 export const getDiffTime = (time) => {
   const createTime = new Date(time);
   const currentTime = new Date();
@@ -18,7 +37,21 @@ export const getDiffTime = (time) => {
   return `${parseInt(diffSecond / 60 / 60 / 24)} days`;
 };
 
+export const getDueDate = (time) => {
+  const dueTime = new Date(time);
+  const month = getMonthName(dueTime);
+  const date = dueTime.getDate();
+  const year = dueTime.getFullYear();
+
+  return `${month} ${date}, ${year}`;
+};
+
 export const getTimeString = (time) => {
-  console.log(time);
-  return time;
+  if (time === null) return 'No due date';
+  const createTime = new Date(time);
+  const currentTime = new Date();
+  if (createTime < currentTime) {
+    return `⚡ Past due by ${getDiffTime(time)}`;
+  }
+  return `📅 Due by ${getDueDate(time)}`;
 };

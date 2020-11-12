@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { getTimeString } from '../../utils/time';
 import { getMilestonePercent } from '../../utils/number';
 
 const Container = styled.div`
@@ -69,7 +70,7 @@ const MilestoneContainer = ({
     <Container>
       <MilestoneInfoBox>
         <Title>{title}</Title>
-        <Text>{dueDate}</Text>
+        <Text>{getTimeString(dueDate)}</Text>
         <Text>{content}</Text>
       </MilestoneInfoBox>
       <MilestoneInfoBox>
