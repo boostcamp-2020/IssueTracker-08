@@ -19,6 +19,9 @@ export const issueReducer = (issues, { type, payload }) => {
 
       return filterList;
 
+    case 'FILTER_MILESTONE':
+      return issues.filter((issue) => issue.milestone === payload);
+
     default:
       break;
   }

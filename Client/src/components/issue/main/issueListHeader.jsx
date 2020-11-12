@@ -173,15 +173,11 @@ const issueListHeader = () => {
       else await changeIssue(e, 'CHANGE_STATUS_CLOSED');
 
       switch (type) {
-        case 'FILTER_AUTHOR':
-          dispatchIssues({ type, payload });
-          break;
-
-        case 'FILTER_LABEL':
-          dispatchIssues({ type: 'FILTER_LABEL', payload });
+        case 'ALL':
           break;
 
         default:
+          dispatchIssues({ type, payload });
           break;
       }
     } catch (error) {
@@ -304,7 +300,12 @@ const issueListHeader = () => {
               />
               {milestones &&
                 milestones.map((item) => (
-                  <div key={item.id}>
+                  <div
+                    key={item.id}
+                    onClick={(e) => {
+                      filterHandler(e, 'FILTER_MILESTONE', item.title);
+                    }}
+                  >
                     <hr className="dropdown-divider" />
                     <Dropdown.Item className="dropdown-item">
                       <FlexContainer>
