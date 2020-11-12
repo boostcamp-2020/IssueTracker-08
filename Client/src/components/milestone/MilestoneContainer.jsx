@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { getTimeString } from '../../utils/time';
 import { getMilestonePercent } from '../../utils/number';
 import { MilestoneContext } from '../../stores/MilestoneStore';
-import { putOptions } from '../../utils/fetchOptions';
-import { PUT_MILESTONE_STATE } from '../../utils/api';
+import { deleteOptions, putOptions } from '../../utils/fetchOptions';
+import { DELETE_MILESTONE, PUT_MILESTONE_STATE } from '../../utils/api';
 
 const Container = styled.div`
   display: flex;
@@ -58,6 +58,7 @@ const ActionButton = styled.button`
   background: transparent;
   padding: 0px;
   margin-right: 10px;
+  cursor: pointer;
   color: ${(props) => props.color || 'blue'};
 `;
 
@@ -112,6 +113,19 @@ const MilestoneContainer = ({
     });
   };
 
+  const deleteMilestone = async () => {
+    if (confirm(`${title}을(를) 정말로 삭제하시겠습니까?`)) {
+      const options = deleteOptions();
+      await fetch(DELETE_MILESTONE(id), options);
+
+      milestoneDispatch({
+        type: 'DELETE_MILESTONE',
+        payload: id,
+        update: updateMilestone,
+      });
+    }
+  };
+
   return (
     <Container>
       <MilestoneInfoBox>
@@ -135,7 +149,9 @@ const MilestoneContainer = ({
           ) : (
             <ActionButton onClick={reopenMilestone}>ReOpen</ActionButton>
           )}
-          <ActionButton color="red">Delete</ActionButton>
+          <ActionButton onClick={deleteMilestone} color="red">
+            Delete
+          </ActionButton>
         </RowInfoContainer>
       </MilestoneInfoBox>
     </Container>

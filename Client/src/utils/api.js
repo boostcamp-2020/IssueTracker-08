@@ -24,3 +24,6 @@ export const GET_MILESTONES = config.BASE_URL + 'api/milestones';
 
 export const PUT_MILESTONE_STATE = (id) =>
   config.BASE_URL + 'api/milestones/' + id + '/state';
+
+export const DELETE_MILESTONE = (id) =>
+  config.BASE_URL + 'api/milestones/' + id;
