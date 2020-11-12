@@ -21,6 +21,7 @@ struct IssueAssign: Decodable {
 
 struct Issue: Decodable {
     var issueId: Int
+    var userId: Int
     var email: String
     var name: String
     var milestoneId: Int?
@@ -51,6 +52,7 @@ enum ListIssues {
         struct ViewModel {
             struct DisplayedIssue {
                 var issueId: Int
+                var userId: Int
                 var title: String
                 var content: String
                 var milestone: String?

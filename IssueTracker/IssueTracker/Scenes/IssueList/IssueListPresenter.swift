@@ -32,6 +32,7 @@ extension IssueListPresenter: IssueListPresentationLogic {
             let labels = configureLabel(labels: issue.label)
             let displayedIssue = ListIssues.FetchIssues.ViewModel.DisplayedIssue(
                 issueId: issue.issueId,
+                userId: issue.userId,
                 title: issue.title,
                 content: description,
                 milestone: issue.milestone,
@@ -46,10 +47,8 @@ extension IssueListPresenter: IssueListPresentationLogic {
     func presentPostResult(response: ListIssues.CloseIssue.Response) {
         if response.status == "success" {
             viewController?.didOpenCloseIssue(fetch: .Open)
-            //viewController?.successfullyClosedIssue()
         } else {
-            // TODO
-                // if response == fail
+            // TODO : response가 fail 했을 경우 구현
         }
     }
     
@@ -57,8 +56,7 @@ extension IssueListPresenter: IssueListPresentationLogic {
         if response.status == "success" {
             viewController?.didOpenCloseIssue(fetch: .Closed)
         } else {
-            // TODO
-                // if response == fail
+            // TODO : response가 fail 했을 경우 구현
         }
     }
     

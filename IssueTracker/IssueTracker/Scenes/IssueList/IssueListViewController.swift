@@ -7,9 +7,6 @@
 
 import UIKit
 
-
-import UIKit
-
 //MARK:- Typealias
 typealias IssueViewModel = ListIssues.FetchIssues.ViewModel.DisplayedIssue
 
@@ -19,8 +16,6 @@ protocol IssueListDisplayLogic: class {
     func displayFetchedLabels(viewModel: ListLabels.FetchLists.ViewModel)
     func displayFetchedMilestone(viewModel: ListMilestones.FetchLists.ViewModel)
     func didOpenCloseIssue(fetch : ListIssues.FetchCategory)
-    //func successfullyClosedIssue()
-    //func successfullyOpenedIssue()
 }
 
 final class IssueListViewController: UIViewController {
@@ -34,6 +29,7 @@ final class IssueListViewController: UIViewController {
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var acitivityView: UIView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
+    @IBOutlet weak var filterButton: CustomAddButton!
     
     // MARK:- Properties
     var interactor: IssueListBusinessLogic?
@@ -67,12 +63,14 @@ final class IssueListViewController: UIViewController {
             }
         }
     }
+    
     var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
     var isFiltering: Bool {
         return searchController.isActive && !isSearchBarEmpty
     }
+    
     
     // MARK:- Object Lifecycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -102,6 +100,7 @@ final class IssueListViewController: UIViewController {
         setupSearchController()
         setupOpenCollectionview()
         setupNormalMode()
+        setupInteraction()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -118,10 +117,8 @@ final class IssueListViewController: UIViewController {
     
     @IBAction func onNavigationLeftBarBtnPressed(_ sender: Any) {
         if isEditing {
-            // left bar button = Select all / Deselect all
             if selectedItems > 0 { deselectAllItems() }
             else { selectAllItems() }
-            
         }
     }
     
@@ -215,20 +212,21 @@ extension IssueListViewController {
     }
     
     private func setupNormalMode() {
-        
         selectedItems = 0
         let tabbarHeight = tabBarController?.tabBar.frame.height ?? 0
         tabBarController?.tabBar.frame.origin.y = view.frame.height - tabbarHeight
         titleLabel.text = "Issue"
         newIssueButton.isHidden = false
+        filterButton.isHidden = true
         navigationItem.rightBarButtonItem?.title = "Edit"
-        navigationItem.leftBarButtonItem?.title = "Filter"
+        navigationItem.leftBarButtonItem?.title = ""
     }
     
     private func setupEditMode() {
         let tabbarHeight = self.tabBarController!.tabBar.frame.height
         self.tabBarController!.tabBar.frame.origin.y = view.frame.height + tabbarHeight
         newIssueButton.isHidden = true
+        filterButton.isHidden = true
         closeIssueButton.isEnabled = false
         titleLabel.text = "0 Selected"
         navigationItem.rightBarButtonItem?.title = "Cancel"
@@ -245,6 +243,11 @@ extension IssueListViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
     }
+    
+    private func setupInteraction() {
+        let interaction = UIContextMenuInteraction(delegate: self)
+        filterButton.addInteraction(interaction)
+    }
 }
 
 // MARK:- Implement IssueListDisplayLogic
@@ -257,51 +260,44 @@ extension IssueListViewController: IssueListDisplayLogic {
     
     func displayUsers(viewModel: ListUsers.FetchUsers.ViewModel) {
         displayedUsers = viewModel.displayedUser
-        print(displayedUsers)
     }
     
     func displayFetchedMilestone(viewModel: ListMilestones.FetchLists.ViewModel) {
         displayedMilestones = viewModel.displayedMilestones
-        print(displayedMilestones)
+    }
+    
+    func displayFetchedLabels(viewModel: ListLabels.FetchLists.ViewModel) {
+        displayedLabels = viewModel.displayedLabels
     }
     
     func didOpenCloseIssue(fetch : ListIssues.FetchCategory) {
         fetchIssues(request: fetch)
     }
     
-//    func successfullyClosedIssue() {
-//        fetchIssues(request: .Open)
-//    }
-    
     private func fetchUsers() {
         let request = ListUsers.FetchUsers.Request()
         interactor?.fetchUsers(request: request)
     }
     
-    func fetchLabels() {
+    private func fetchLabels() {
         let request = ListLabels.FetchLists.Request()
         interactor?.fetchLabels(request: request)
     }
     
-    func fetchMilestones() {
+    private func fetchMilestones() {
         let request = ListMilestones.FetchLists.Request()
         interactor?.fetchMilestones(request: request)
     }
     
+    // Fetch, Open, Close, Delete Issue
     private func fetchIssues(request: ListIssues.FetchCategory) {
         let request = ListIssues.FetchIssues.Request(request: request)
         interactor?.fetchIssues(request: request)
     }
     
-    func displayFetchedLabels(viewModel: ListLabels.FetchLists.ViewModel) {
-        displayedLabels = viewModel.displayedLabels
-        print(displayedLabels)
-    }
-    
-    private func deleteIssue(at indexPath: IndexPath) {
-        // TODO:
-            // update할 테이블이 너무 많아서 BE에 부담가는 듯
-            // delete issue는 후순위로 미루기
+    private func openIssue(at indexPath: IndexPath) {
+        let issueId = displayedIssues[indexPath.item].issueId
+        interactor?.openIssue(request: ListIssues.OpenIssue.Request(issueId: issueId))
     }
     
     private func closeIssue(at indexPath: IndexPath) {
@@ -310,9 +306,134 @@ extension IssueListViewController: IssueListDisplayLogic {
         interactor?.closeIssue(request: ListIssues.CloseIssue.Request(issueId: issueId))
     }
     
-    private func openIssue(at indexPath: IndexPath) {
-        let issueId = displayedIssues[indexPath.item].issueId
-        interactor?.openIssue(request: ListIssues.OpenIssue.Request(issueId: issueId))
+    private func deleteIssue(at indexPath: IndexPath) {
+        // TODO:
+            // update할 테이블이 너무 많아서 BE에 부담가는 듯
+            // delete issue는 후순위로 미루기
+    }
+    
+}
+
+// MARK:- UISearchResultUpdating
+extension IssueListViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        let category = FilterCategory(rawValue: searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
+        filterContentForSearchText(searchBar.text!, category: category ?? .All)
+        // 여기 있을 애들이 아닌데....
+        filterButton.isHidden = !searchController.isActive
+        openCloseSwitch.isHidden = searchController.isActive
+    }
+    
+    func filterContentForSearchText(_ searchText: String, category: FilterCategory) {
+        filteredIssues = displayedIssues.filter({ (issue: IssueViewModel) -> Bool in
+            // TO DO:
+                // category mathcing 되는 것에 따라 relaodData 되게끔
+            let doesCategoryMatch = filterMatchingCategory(issue: issue, category: category)
+            if isSearchBarEmpty {
+                return
+            } else {
+                return issue.title.lowercased().contains(searchText.lowercased()) || issue.content.lowercased().contains(searchText.lowercased())
+            }
+        })
+        issueListCollectionView.reloadData()
+    }
+
+}
+
+// MARK:- UIContextMenuInteractionDelegate
+extension IssueListViewController: UIContextMenuInteractionDelegate {
+    
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        fetchUsers()
+        fetchLabels()
+        fetchMilestones()
+        return UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil,
+            actionProvider: { [unowned self] _ in
+                let children = [filterAuthor(), filterLabel(), filterMilestone(), filterAsignee()]
+                return UIMenu(title: "", children: children)
+            }
+        )
+    }
+    
+    func filterAuthor() -> UIMenu {
+        var authors = [String]()
+        displayedUsers.forEach({ user in
+            authors.append(user.name)
+        })
+        let chooseAuthor = authors.enumerated().map({ (idx, author) in
+            return UIAction(
+                title: author,
+                image: nil,
+                identifier: UIAction.Identifier(author),
+                handler: { _ in
+                    print("Name : \(author)")
+                })
+        })
+        return UIMenu(
+            title: "Author",
+            image: UIImage(systemName: "chevron.right"),
+            children: chooseAuthor)
+    }
+    
+    func filterLabel() -> UIMenu {
+        var labels = [String]()
+        displayedLabels.forEach({ label in
+            labels.append(label.name)
+        })
+        let chooseLabel = labels.enumerated().map({ (idx, label) in
+            return UIAction(
+                title: label,
+                image: nil,
+                identifier: UIAction.Identifier(label),
+                handler: { _ in
+                    print("Label : \(label)")
+                })
+        })
+        return UIMenu(
+            title: "Label",
+            image: UIImage(systemName: "chevron.right"),
+            children: chooseLabel)
+    }
+    
+    func filterMilestone() -> UIMenu {
+        var milestones = [String]()
+        displayedMilestones.forEach({ milestone in
+            milestones.append(milestone.title)
+        })
+        let chooseMilestone = milestones.enumerated().map({ (idx, milestone) in
+            return UIAction(
+                title: milestone,
+                image: nil,
+                identifier: UIAction.Identifier(milestone),
+                handler: { _ in
+                    print("Name : \(milestone)")
+                })
+        })
+        return UIMenu(
+            title: "Milestone",
+            image: UIImage(systemName: "chevron.right"),
+            children: chooseMilestone)
+    }
+    
+    func filterAsignee() -> UIMenu {
+        let asignees = ["Yo", "Asignee", "What", "Up"]
+        let chooseAsignee = asignees.enumerated().map({ (idx, asignee) in
+            return UIAction(
+                title: asignee,
+                image: nil,
+                identifier: UIAction.Identifier(asignee),
+                handler: { _ in
+                    print("Name : \(asignee)")
+                })
+        })
+        return UIMenu(
+            title: "Asignee",
+            image: UIImage(systemName: "chevron.right"),
+            children: chooseAsignee)
     }
     
 }
@@ -385,23 +506,6 @@ extension IssueListViewController: UICollectionViewDelegate {
         if isEditing {
             selectedItems -= 1
         }
-    }
-    
-}
-
-// MARK:- UISearchResultUpdating
-extension IssueListViewController: UISearchResultsUpdating {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        let searchBar = searchController.searchBar
-        filterContentForSearchText(searchBar.text!)
-    }
-    
-    func filterContentForSearchText(_ searchText: String) {
-        filteredIssues = displayedIssues.filter({ (issue: IssueViewModel) -> Bool in
-            return issue.title.lowercased().contains(searchText.lowercased()) || issue.content.lowercased().contains(searchText.lowercased())
-        })
-        issueListCollectionView.reloadData()
     }
     
 }
