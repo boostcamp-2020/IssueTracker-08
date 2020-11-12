@@ -1,9 +1,12 @@
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { getTimeString } from '../../utils/time';
 import { getMilestonePercent } from '../../utils/number';
+import { MilestoneContext } from '../../stores/MilestoneStore';
+import { putOptions } from '../../utils/fetchOptions';
+import { PUT_MILESTONE_STATE } from '../../utils/api';
 
 const Container = styled.div`
   display: flex;
@@ -78,8 +81,36 @@ const MilestoneContainer = ({
   openIssue,
   closeIssue,
 }) => {
-  const history = useHistory();
+  const { milestoneDispatch, updateMilestone } = useContext(MilestoneContext);
   const percent = getMilestonePercent(openIssue, openIssue + closeIssue);
+
+  const closedMilestone = async () => {
+    const body = {
+      isOpen: 0,
+    };
+    const options = putOptions(body);
+    await fetch(PUT_MILESTONE_STATE(id), options);
+
+    milestoneDispatch({
+      type: 'CLOSED_MILESTONE',
+      payload: id,
+      update: updateMilestone,
+    });
+  };
+
+  const reopenMilestone = async () => {
+    const body = {
+      isOpen: 1,
+    };
+    const options = putOptions(body);
+    await fetch(PUT_MILESTONE_STATE(id), options);
+
+    milestoneDispatch({
+      type: 'REOPEN_MILESTONE',
+      payload: id,
+      update: updateMilestone,
+    });
+  };
 
   return (
     <Container>
@@ -99,7 +130,11 @@ const MilestoneContainer = ({
           <ActionButton>
             <StyledLink to={'/milestone/edit/' + id}>Edit</StyledLink>
           </ActionButton>
-          <ActionButton>Close</ActionButton>
+          {isOpen ? (
+            <ActionButton onClick={closedMilestone}>Close</ActionButton>
+          ) : (
+            <ActionButton onClick={reopenMilestone}>ReOpen</ActionButton>
+          )}
           <ActionButton color="red">Delete</ActionButton>
         </RowInfoContainer>
       </MilestoneInfoBox>

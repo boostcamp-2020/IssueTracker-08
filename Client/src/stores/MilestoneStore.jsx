@@ -41,11 +41,12 @@ const MilestoneStore = (props) => {
       value={{
         milestones,
         loading,
-        milestoneDispatch,
         isOpenClicked,
         setIsOpenClicked,
         open,
         closed,
+        milestoneDispatch,
+        updateMilestone,
       }}
     >
       {props.children}
