@@ -13,29 +13,36 @@ export default function OpenHeaderBtn({
   issueStatus,
   openIssues,
   changeIssue,
+  checkItems,
 }) {
   return (
     <>
-      {issueStatus === 'open' ? (
-        <IssueNumBtn
-          style={{ fontWeight: 'bold' }}
-          onClick={(e) => {
-            changeIssue(e, 'CHANGE_STATUS_OPEN');
-          }}
-        >
-          <IssueOpenedIcon className="HeaderIcon" size={16} />
-          {openIssues.length} Open{' '}
-        </IssueNumBtn>
+      {checkItems.isAllChecked === true ? (
+        <></>
       ) : (
-        <IssueNumBtn
-          style={{ color: '#586069' }}
-          onClick={(e) => {
-            changeIssue(e, 'CHANGE_STATUS_OPEN');
-          }}
-        >
-          <IssueOpenedIcon className="HeaderIcon" size={16} />
-          {openIssues.length} Open{' '}
-        </IssueNumBtn>
+        <>
+          {issueStatus === 'open' ? (
+            <IssueNumBtn
+              style={{ fontWeight: 'bold' }}
+              onClick={(e) => {
+                changeIssue('CHANGE_STATUS_OPEN');
+              }}
+            >
+              <IssueOpenedIcon className="HeaderIcon" size={16} />
+              {openIssues.length} Open{' '}
+            </IssueNumBtn>
+          ) : (
+            <IssueNumBtn
+              style={{ color: '#586069' }}
+              onClick={(e) => {
+                changeIssue('CHANGE_STATUS_OPEN');
+              }}
+            >
+              <IssueOpenedIcon className="HeaderIcon" size={16} />
+              {openIssues.length} Open{' '}
+            </IssueNumBtn>
+          )}
+        </>
       )}
     </>
   );

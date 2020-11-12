@@ -21,3 +21,7 @@ export const GET_CLOSED_ISSUE = config.BASE_URL + 'api/issues/closed';
 export const GET_ALL_USERS = config.BASE_URL + 'api/users';
 
 export const GET_ALL_MILESTONES = config.BASE_URL + 'api/milestones';
+
+export const CLOSE_ISSUE = (id) => config.BASE_URL + 'api/issues/close/' + id;
+
+export const OPEN_ISSUE = (id) => config.BASE_URL + 'api/issues/open/' + id;
