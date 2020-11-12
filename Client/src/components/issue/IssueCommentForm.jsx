@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+
 import { GET_USER, POST_COMMENT, POST_CLOSE_ISSUE } from '../../utils/api';
 import { getOptions, postOptions } from '../../utils/fetchOptions';
 
@@ -221,7 +222,7 @@ const IssueCommentForm = ({ issueId, userId }) => {
 
   return (
     <Main>
-      <AuthorImage src={userImage}></AuthorImage>
+      <AuthorImage src={userImage} />
       <IssueFormContainer>
         <WriteTab>Write</WriteTab>
         <PreviewTab>Preview</PreviewTab>
@@ -231,7 +232,7 @@ const IssueCommentForm = ({ issueId, userId }) => {
           ref={commentRef}
           value={comment}
           onChange={commentHandleChange}
-        ></IssueComment>
+        />
         <FileAttachContainer>
           <div>{FileAttachMsg}</div>
         </FileAttachContainer>

@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { getOptions } from '../../utils/fetchOptions';
-import { GET_COMMENTS } from '../../utils/api.js';
+import React, { useContext } from 'react';
 
-export default function OtherComments({ issueId }) {
-  console.log(issueId);
-  const [comments, setComments] = useState('');
+import CommentContainer from '../comment/CommentContainer';
+import { CommentContext } from '../../stores/CommentStore';
 
-  const getComments = async () => {
-    const options = getOptions();
-    const response = await fetch(GET_COMMENTS(issueId), options);
-    // const responseJSON = await response.json();
-    // console.log(responseJSON);
-    // setComments(responseJSON.data[0]);
-    // console.log(responseJSON.data[0]);
-    // console.log(setComments);
-  };
+const OtherComments = () => {
+  const { comments, loading } = useContext(CommentContext);
 
-  useEffect(() => {
-    getComments();
-  }, []);
+  let commentList = <div>Loading...</div>;
+  if (!loading) {
+    commentList = comments.map((comment) => (
+      <CommentContainer
+        key={comment.commentId}
+        userId={comment.userId}
+        name={comment.name}
+        content={comment.content}
+        imageUrl={comment.imageUrl}
+        createAt={comment.createAt}
+      />
+    ));
+  }
+  return <>{commentList}</>;
+};
 
-  return <p>코멘츠</p>;
-}
+export default OtherComments;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import CommentStore from '../../stores/CommentStore';
 import IssueCommentForm from '../../components/issue/IssueCommentForm';
 import IssueComments from '../../components/issue/IssueComments';
 import { GET_ISSUE } from '../../utils/api.js';
@@ -150,43 +151,43 @@ export default function IssueDetailPage({ match, location }) {
   }, []);
 
   return (
-    <>
-      <Container>
-        <IssueHeader>
-          <IssueTitle>{issueAuthorInfo.title}</IssueTitle>
-          <EditButton>Edit</EditButton>
-        </IssueHeader>
-        <IssueInfo>
-          <IssueStateButton state={issueAuthorInfo.isOpen} />
-          <IssueAuthor>{issueAuthorInfo.name}</IssueAuthor>
-          <IssuedTime>
-            opened this issue {getDiffTime(issueAuthorInfo.closeAt)} ago ·
-          </IssuedTime>
-          <IssueCommentNum>0 comments</IssueCommentNum>
-        </IssueInfo>
-        <DiscussionBucket>
-          <Discussion>
-            <AuthorImage src={`${issueAuthorInfo.imageUrl}`}></AuthorImage>
-            <DiscussionContent>
-              <CommentTimeline>
-                <CommentAuthor>{issueAuthorInfo.name}</CommentAuthor>
-                <CommentedTime>
-                  commented {getDiffTime(issueAuthorInfo.closeAt)} ago
-                </CommentedTime>
-                <AuthorLevel>Member</AuthorLevel>
-                <Emoticon src="/images/emoticon.svg"></Emoticon>
-                <Menu src="/images/menu.svg"></Menu>
-              </CommentTimeline>
-              <Comment>
-                <p>{issueAuthorInfo.content}</p>
-              </Comment>
-            </DiscussionContent>
-          </Discussion>
-          {/* TODO : 코멘트들 받아와서 map으로 뿌려주는 컴포넌트 구현 */}
-          <IssueComments issueId={issueId} />
-        </DiscussionBucket>
-        <IssueCommentForm issueId={issueId} userId={userId} />
-      </Container>
-    </>
+    <Container>
+      <IssueHeader>
+        <IssueTitle>{issueAuthorInfo.title}</IssueTitle>
+        <EditButton>Edit</EditButton>
+      </IssueHeader>
+      <IssueInfo>
+        <IssueStateButton state={issueAuthorInfo.isOpen} />
+        <IssueAuthor>{issueAuthorInfo.name}</IssueAuthor>
+        <IssuedTime>
+          opened this issue {getDiffTime(issueAuthorInfo.closeAt)} ago ·
+        </IssuedTime>
+        <IssueCommentNum>0 comments</IssueCommentNum>
+      </IssueInfo>
+      <DiscussionBucket>
+        <Discussion>
+          <AuthorImage src={`${issueAuthorInfo.imageUrl}`} />
+          <DiscussionContent>
+            <CommentTimeline>
+              <CommentAuthor>{issueAuthorInfo.name}</CommentAuthor>
+              <CommentedTime>
+                commented {getDiffTime(issueAuthorInfo.closeAt)} ago
+              </CommentedTime>
+              <AuthorLevel>Member</AuthorLevel>
+              <Emoticon src="/images/emoticon.svg"></Emoticon>
+              <Menu src="/images/menu.svg"></Menu>
+            </CommentTimeline>
+            <Comment>
+              <p>{issueAuthorInfo.content}</p>
+            </Comment>
+          </DiscussionContent>
+        </Discussion>
+        {/* TODO : 코멘트들 받아와서 map으로 뿌려주는 컴포넌트 구현 */}
+        <CommentStore issueId={match.params.issueId}>
+          <IssueComments />
+        </CommentStore>
+      </DiscussionBucket>
+      <IssueCommentForm issueId={issueId} userId={userId} />
+    </Container>
   );
 }
