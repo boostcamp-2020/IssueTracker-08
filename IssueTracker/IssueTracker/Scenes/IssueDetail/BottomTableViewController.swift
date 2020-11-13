@@ -121,7 +121,7 @@ class BottomTableViewController: UITableViewController {
                 }
                 
             }
-            cell.labelMilestoneTitle.text = displayedMilestones[1][indexPath.item].title
+            cell.labelMilestoneTitle.text = displayedMilestones[indexPath.row][indexPath.item].title
             cell.labelMilestoneTitle.isHidden = false
         }
         
@@ -143,6 +143,14 @@ class BottomTableViewController: UITableViewController {
 }
 
 extension BottomTableViewController: IssueListDisplayLogic {
+    func displayFetchedComment(viewModel: ListComment.FetchDetail.ViewModel) {
+        // 재활용
+    }
+    
+    func didOpenCloseIssue(fetch: ListIssues.FetchCategory) {
+        // 재활용
+    }
+    
     func displayOpenIssues(viewModel: ListIssues.FetchIssues.ViewModel) {
         // 재활용
     }
