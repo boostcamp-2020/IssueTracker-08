@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import IssueListHeader from './issueListHeader';
 import IssueListList from './issueList';
-import IssuesStore from '../../../contexts/issueContext';
 
 const Container = styled.div`
   margin-top: 20px;
@@ -11,12 +10,10 @@ const Container = styled.div`
 
 const IssueMain = () => {
   return (
-    <IssuesStore>
-      <Container>
-        <IssueListHeader />
-        <IssueListList />
-      </Container>
-    </IssuesStore>
+    <Container>
+      <IssueListHeader />
+      <IssueListList />
+    </Container>
   );
 };
 

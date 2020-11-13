@@ -4,6 +4,7 @@ import {
   MilestoneIcon,
   IssueClosedIcon,
 } from '@primer/octicons-react';
+
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
@@ -93,13 +94,21 @@ const MilestoneContainer = styled.div`
   }
 `;
 
-const issueListTemplate = ({ issue }) => {
+const issueListTemplate = ({ issue, checkItems }) => {
   const history = useHistory();
 
   return (
     <Container>
       {' '}
-      <input type="checkbox" className="issueCheckbox" />
+      {checkItems.isAllChecked === true ? (
+        <input
+          type="checkbox"
+          className="issueCheckbox"
+          checked={checkItems.isAllChecked}
+        />
+      ) : (
+        <input type="checkbox" className="issueCheckbox" />
+      )}
       {issue.isOpen === 1 ? (
         <IssueOpenedIcon className="issueOpenedIcon" size={16} />
       ) : (
