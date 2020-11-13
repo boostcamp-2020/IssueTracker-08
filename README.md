@@ -2,6 +2,7 @@
 
 <div align="center">
 
+
 <img width = 900 src = "https://user-images.githubusercontent.com/34840140/97556676-1eeaa500-1a1d-11eb-8fe7-6b9420af20f7.png">
 
 ![Swift](https://img.shields.io/badge/swift-v5.1-orange?logo=swift)
@@ -25,6 +26,7 @@
 </div>
 
 ## :link: IssueTracker-8
+
 WEB RELEASE : http://118.67.131.96:8000/  <br>
 iOS RELEASE : https://kr.object.ncloudstorage.com/release-server/Web/index.html
 
@@ -34,15 +36,17 @@ iOS RELEASE : https://kr.object.ncloudstorage.com/release-server/Web/index.html
 
 | 🐳 권예지 [@Yejikwon](https://github.com/Yejikwon) | 🐹 김도연 [@do02reen24](https://github.com/do02reen24) | 🐼 김영렬 [@rile1036](https://github.com/rile1036) | 🐶 윤영우 [@yoonwoo123](https://github.com/yoonwoo123) | 🐲 조수정 [@Sueaty](https://github.com/Sueaty) |
 | ------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------- | ----------------------------------------------------- | --------------------------------------------- |
-| 재밌게 살기!                                      | 개발을 사랑(?)하자                                    | 햄버거가 식었어요..                               | JS 어서오고~                                          | 스위리 발은 🐶발                      |
+| 재밌게 살기!                                      | 개발을 사랑(?)하자                                    | 햄버거가 식었어요..                               | JS 어서오고~                                          | 스위리 발은 🐶발                               |
 | **대전에서 판교까지 슝 =3**                       | **맛있는 밥만 있으면 충분^^**                         | **귀염뽀짝 iOS 개발자**                           | **마스크로 숨길 수 없는 미남**                        | **스위리 쏘 쓰윗**                            |
 
 
 
 ## Sprint Backlog
+
 [Google Spreadsheet](https://docs.google.com/spreadsheets/d/19wkM--KlfBSZAe7_RBzZKZ5Rq0YNnLkuxhtWNhTGxDA/edit?usp=sharing)
 
 ## 📚 API 문서
+
 [Issue & Comment API 문서](https://documenter.getpostman.com/view/10085882/TVYNYF44#b5e26198-7c6d-4148-830b-19552dc47f41) <br/>
 [Label API 문서](https://documenter.getpostman.com/view/7326919/TVYNYvFB) <br/>
 [Milestone API 문서](https://documenter.getpostman.com/view/13282124/TVYJ7HM9) <br/>
@@ -69,7 +73,32 @@ iOS RELEASE : https://kr.object.ncloudstorage.com/release-server/Web/index.html
 * 상단의 `🐼ISSUES` 버튼을 통해 모든 페이지에서 홈(Issue 목록)으로 이동가능
 * 로그인을 한 유저의 경우 이슈 목록 페이지를 보여줌
 
+
+
+### Issue 생성 페이지
+
+![이슈생성](https://user-images.githubusercontent.com/45933675/99026309-0b5b4480-25ae-11eb-9102-90bf7c42fa75.PNG)
+
+- 
+
 ### Issue 상세 페이지
+
+![이슈디테일3](https://user-images.githubusercontent.com/45933675/99026307-0a2a1780-25ae-11eb-9c21-a5e9e4028229.PNG)
+
+- 이슈 클릭 시 상세 화면입니다.
+- 본인이 쓴 글이 아닐 시 Edit 버튼이 보이지 않습니다.
+
+
+
+![클로즈이슈](https://user-images.githubusercontent.com/45933675/99026312-0bf3db00-25ae-11eb-879d-c6c66a03b5d4.PNG)
+
+- Close issue 버튼 클릭 시 이슈가 닫히고 Reopen issue 시  다시 열립니다.
+
+
+
+![디테일코멘트](https://user-images.githubusercontent.com/45933675/99026310-0b5b4480-25ae-11eb-855f-26e2bdbf5526.PNG)
+
+- 이슈 코멘트를 적지 않을 시 Comment 버튼이 비활성화 상태이고, 글을 적으면 생성 버튼이 활성화됩니다.
 
 
 
