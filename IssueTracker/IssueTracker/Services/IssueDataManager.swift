@@ -47,6 +47,15 @@ struct CommentResponseData: Decodable {
     var createAt: String
 }
 
+struct IssuePostResponse: Decodable {
+    var status: String
+    var data: IssuePostResponseData
+}
+
+struct IssuePostResponseData: Decodable {
+    var issueId: Int
+}
+
 protocol IssueDataManagerProtocol {
     func fetchIssues(request: ListIssues.FetchIssues.Request, completion: @escaping ([Issue]) -> Void)
     func postCloseIssue(request: ListIssues.CloseIssue.Request, completion: @escaping (String) -> Void)
@@ -141,7 +150,7 @@ final class IssueDataManager: IssueDataManagerProtocol {
         let jsonData = try? JSONEncoder().encode(requestData)
         NetworkService.shared.postOauthData(url: EndPoint.issues, token: request.token, jsonData: jsonData!, completion: { data in
             guard let receivedData = try?
-                    JSONDecoder().decode(CURDResponse.self, from: data) else {
+                    JSONDecoder().decode(IssuePostResponse.self, from: data) else {
                 return
             }
             let result = receivedData.status
