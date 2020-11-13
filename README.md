@@ -120,10 +120,29 @@ iOS RELEASE : https://kr.object.ncloudstorage.com/release-server/Web/index.html
 
 <hr/>
 
+### 📌 Issue 생성 페이지
+![이슈생성](https://user-images.githubusercontent.com/45933675/99026309-0b5b4480-25ae-11eb-9102-90bf7c42fa75.PNG)
 
+- 코멘트 입력 시 글자 수 실시간으로 띄워줌(2초 간격)
+- 생성 시 생성한 상세 페이지로 이동
 
 ### 📌 Issue 상세 페이지
+![이슈디테일3](https://user-images.githubusercontent.com/45933675/99026307-0a2a1780-25ae-11eb-9c21-a5e9e4028229.PNG)
 
+- 이슈 클릭 시 상세 화면입니다.
+- 본인이 쓴 글이 아닐 시 Edit 버튼이 보이지 않습니다.
+
+
+
+![클로즈이슈](https://user-images.githubusercontent.com/45933675/99026312-0bf3db00-25ae-11eb-879d-c6c66a03b5d4.PNG)
+
+- Close issue 버튼 클릭 시 이슈가 닫히고 Reopen issue 시  다시 열립니다.
+
+
+
+![디테일코멘트](https://user-images.githubusercontent.com/45933675/99026310-0b5b4480-25ae-11eb-855f-26e2bdbf5526.PNG)
+
+- 이슈 코멘트를 적지 않을 시 Comment 버튼이 비활성화 상태이고, 글을 적으면 생성 버튼이 활성화됩니다.
 
 
 ### 📌 Label 페이지
