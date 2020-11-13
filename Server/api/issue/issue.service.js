@@ -47,9 +47,12 @@ module.exports = {
     const { userId, title, content } = req;
     const params = [userId, title, content];
     const results = await requestQuery(query.CREATE_ISSUE, params);
+    const result = {
+      issueId: results.data[0].insertId,
+    };
 
     if (results.status === 'success') {
-      return callBack(null, '이슈 생성이 완료되었습니다.');
+      return callBack(null, result);
     }
 
     return callBack(results.data);

@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { createElement } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import MenuButton from '../../components/MenuButton';
+
+import NewButton from '../../components/shared/button/NewButton';
+import IssueListInfo from '../../components/issue/main/issueMain';
+
+import IssuesStore from '../../stores/IssueStore';
+import UserStore from '../../stores/UserStore';
+import LabelStore from '../../stores/LabelStore';
+
+import LabelBtn from './button/LabelBtn';
+import MilestoneBtn from './button/MilestoneBtn';
 
 const Container = styled.div`
   display: flex;
@@ -17,36 +25,9 @@ const IssueMenu = styled.div`
   justify-content: space-between;
 `;
 
-const IssueList = styled.div`
-  display: flex;
-  width: 100%;
-  border: 1px solid #ebecef;
-  border-radius: 4px;
-  padding: 10px;
-  margin-top: 30px;
-`;
-
 const MenuDiv = styled.div`
   display: flex;
   flex: ${(props) => props.flex};
-`;
-
-const IssueButton = styled.button`
-  width: 120px;
-  box-shadow: 0px 1px 0px 0px #3dc21b;
-  background: linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
-  background-color: #44c767;
-  border-radius: 6px;
-  border: 1px solid #18ab29;
-  display: inline-block;
-  cursor: pointer;
-  color: white;
-  font-size: 15px;
-  font-weight: bold;
-  padding: 10px;
-  text-decoration: none;
-  text-shadow: 0px -1px 0px #2f6627;
-  margin-left: 20px;
 `;
 
 const FilterButton = styled.button`
@@ -74,35 +55,34 @@ const FilterInput = styled.input`
   padding-left: 20px;
 `;
 
+const IssueProvider = ({ contexts, children }) =>
+  contexts.reduce(
+    (prev, context) =>
+      createElement(context, {
+        children: prev,
+      }),
+    children
+  );
+
 export default function IssuePage() {
   return (
-    <Container>
-      <IssueMenu>
-        <MenuDiv flex="1">
-          <FilterButton>Filters</FilterButton>
-          <FilterInput type="text" placeholder="🔎 Search all issue" />
-        </MenuDiv>
-        <MenuDiv flex="0">
-          <MenuButton
-            link="/label"
-            name="Label"
-            img="/images/label.svg"
-          ></MenuButton>
-          <MenuButton
-            link="/milestone"
-            name="Milestones"
-            img="/images/milestone.svg"
-          ></MenuButton>
-        </MenuDiv>
-        <MenuDiv flex="0">
-          <Link to="/issue/post">
-            <IssueButton>New issue</IssueButton>
-          </Link>
-        </MenuDiv>
-      </IssueMenu>
-      <IssueList>
-        <div>TODO : 이슈 목록 코드를 구현해주세요.</div>
-      </IssueList>
-    </Container>
+    <IssueProvider contexts={[IssuesStore, UserStore, LabelStore]}>
+      <Container>
+        <IssueMenu>
+          <MenuDiv flex="1">
+            <FilterButton>Filters</FilterButton>
+            <FilterInput type="text" placeholder="🔎 Search all issue" />
+          </MenuDiv>
+          <MenuDiv flex="0">
+            <LabelBtn />
+            <MilestoneBtn />
+          </MenuDiv>
+          <MenuDiv flex="0">
+            <NewButton link="/issue/post" name="issue" />
+          </MenuDiv>
+        </IssueMenu>
+        <IssueListInfo />
+      </Container>
+    </IssueProvider>
   );
 }

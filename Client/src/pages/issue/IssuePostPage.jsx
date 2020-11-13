@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import IssueForm from '../../components/IssueForm';
+import IssueForm from '../../components/issue/IssueForm';
 
 const Container = styled.div`
   display: flex;
@@ -13,11 +13,13 @@ const Container = styled.div`
   margin: auto;
 `;
 
+const userId = localStorage.getItem('userId');
+
 export default function IssuePostPage() {
   return (
     <>
       <Container>
-        <IssueForm />
+        <IssueForm userId={userId} />
       </Container>
     </>
   );
