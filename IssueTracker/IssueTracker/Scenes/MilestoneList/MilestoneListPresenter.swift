@@ -22,19 +22,18 @@ extension MilestoneListPresenter: MilestoneListPresentationLogic {
     func presentFetchedMilestones(response: ListMilestones.FetchLists.Response) {
         var displayedMilestones: [ListMilestones.FetchLists.ViewModel.DisplayedMilestone] = []
         for milestone in response.milestones {
-            var description = milestone.content
-            if description!.isEmpty { description = "No description provided" }
-            let dueDate = FormattedDateFromString(dueDate: milestone.dueDate ?? "")
             let displayedMilestone = ListMilestones.FetchLists.ViewModel.DisplayedMilestone(
                 id: milestone.id,
                 title: milestone.title,
-                dueDate: dueDate,
-                content: description!
+                dueDate: milestone.dueDate,
+                content: milestone.content ?? "No description provided",
+                openIssue: milestone.openIssue,
+                closeIssue: milestone.closeIssue
             )
             displayedMilestones.append(displayedMilestone)
         }
         let viewModel = ListMilestones.FetchLists.ViewModel(displayedMilestones: displayedMilestones)
-        viewController?.displayFetchedOrders(viewModel: viewModel)
+        viewController?.displayFetchedMilestone(viewModel: viewModel)
     }
     
     func presentPostResult(response: CreateMilestones.CreateMilestone.Response) {

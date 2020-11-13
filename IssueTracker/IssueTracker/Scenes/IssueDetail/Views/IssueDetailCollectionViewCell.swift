@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import MarkdownView
 
 class IssueDetailCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userID: UILabel!
     @IBOutlet weak var timeDifference: UILabel!
-    @IBOutlet weak var content: UILabel!
-    
+    @IBOutlet weak var content: MarkdownView!
+    @IBOutlet weak var editButton: UIButton!
 }

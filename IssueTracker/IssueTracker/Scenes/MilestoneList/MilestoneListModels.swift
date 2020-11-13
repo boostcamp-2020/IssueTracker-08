@@ -13,6 +13,28 @@ struct Milestone: Decodable {
     var dueDate: String?
     var content: String?
     var isOpen: Int
+    var openIssue: Int
+    var closeIssue: Int
+}
+
+enum milestoneDetail {
+    enum FetchLists {
+        struct Request { var id: Int }
+        struct Response {
+            var milestones: Milestone
+        }
+        struct ViewModel {
+            struct DisplayedMilestone {
+                var id: Int
+                var title: String
+                var dueDate: String?
+                var content: String
+                var openIssue: Int
+                var closeIssue: Int
+            }
+            var displayedMilestones: DisplayedMilestone
+        }
+    }
 }
 
 enum ListMilestones {
@@ -27,6 +49,8 @@ enum ListMilestones {
                 var title: String
                 var dueDate: String?
                 var content: String
+                var openIssue: Int
+                var closeIssue: Int
             }
             var displayedMilestones: [DisplayedMilestone]
         }

@@ -21,8 +21,10 @@ struct IssueAssign: Decodable {
 
 struct Issue: Decodable {
     var issueId: Int
+    var userId: Int
     var email: String
     var name: String
+    var milestoneId: Int?
     var milestone: String?
     var title: String
     var content: String
@@ -33,26 +35,48 @@ struct Issue: Decodable {
     var assign: [IssueAssign]?
 }
 
-
 enum ListIssues {
-    enum FetchLists {
-        struct Request { }
+    
+    enum FetchCategory: String {
+        case Open = "open"
+        case Closed = "closed"
+    }
+    
+    enum FetchIssues {
+        struct Request {
+            var request: FetchCategory
+        }
         struct Response {
             var issues: [Issue]
         }
         struct ViewModel {
             struct DisplayedIssue {
                 var issueId: Int
+                var userId: Int
                 var title: String
                 var content: String
                 var milestone: String?
                 var label: [IssueLabel]?
+                var allLabel: [IssueLabel]?
+                var assign: [IssueAssign]?
             }
             var displayedIssues: [DisplayedIssue]
         }
     }
     
     enum CloseIssue {
+        struct Request { var issueId: Int }
+        struct Response { var status: String }
+        struct ViewModel {
+            struct DisplayedAlert {
+                var title: String
+                var message: String
+            }
+            var displayedAlert: DisplayedAlert
+        }
+    }
+    
+    enum OpenIssue {
         struct Request { var issueId: Int }
         struct Response { var status: String }
         struct ViewModel {

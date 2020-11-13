@@ -44,6 +44,7 @@ class PopUpViewController: UIViewController {
     
     @IBOutlet weak var colorPickerButton: UIButton!
     @IBOutlet weak var reloadButton: UIButton!
+    @IBOutlet weak var dataPickerView: UIView!
     
     // MARK:- Properties
     var mode: PopupMode = .CreateLabel
@@ -74,6 +75,7 @@ class PopUpViewController: UIViewController {
     private func setupLabelMode() {
         totalLabel[2].text = "색상"
         descriptionTextField.isHidden = true
+        dataPickerView.isHidden = true
         if mode == .EditLabel {
             titleTextField.text = displayedLabel?.name
             detailTestField.text = displayedLabel?.description
@@ -90,13 +92,39 @@ class PopUpViewController: UIViewController {
         reloadButton.isHidden = true
         labelColorField.isHidden = true
         colorHexLabel.isHidden = true
+        datePicker()
         if mode == .EditMilestone {
             titleTextField.text = displayedMilestone?.title
-            detailTestField.text = FormattedEditDateString(dueDate: (displayedMilestone?.dueDate)!)
             descriptionTextField.text = displayedMilestone?.content
         }
     }
     
+    private func datePicker() {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .dateAndTime
+        datePicker.locale = .current
+        datePicker.preferredDatePickerStyle = .compact
+        datePicker.calendar = .current
+        datePicker.tintColor = .black
+    
+        let timeData = datePicker.subviews[0].subviews[1].subviews[0] as! UILabel
+        let dateData = datePicker.subviews[0].subviews[0].subviews[0] as! UILabel
+        timeData.font = timeData.font.withSize(14)
+        dateData.font = dateData.font.withSize(14)
+        datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
+        if mode == .EditMilestone {
+            
+            if displayedMilestone?.dueDate == nil {
+                datePicker.date = FormattedEditDate(dueDate: FormattedDateToString(dueDate: Date()) )
+            }
+            else { datePicker.date = FormattedEditDate(dueDate: (displayedMilestone?.dueDate)!) }
+        }
+        datePicker.subviews[0].subviews[0].backgroundColor = .white
+        datePicker.subviews[0].subviews[1].backgroundColor = .white
+        
+        dataPickerView.addSubview(datePicker)
+    }
+
     private func disMissLabel() {
         if mode == .CreateLabel {
             let newLabel = PopupItem.LabelItem(
@@ -118,10 +146,13 @@ class PopUpViewController: UIViewController {
     }
     
     private func disMissMilestone() {
+        let pickerDate = dataPickerView.subviews[0] as! UIDatePicker
+        let dueDate = FormattedDateToString(dueDate: pickerDate.date)
+        
         if mode == .CreateMilestone {
             let newLabel = PopupItem.MilestoneItem(
                 title: titleTextField.text!,
-                dueDate: detailTestField.text!,
+                dueDate: dueDate,
                 content: descriptionTextField.text!
             )
             milestoneDelegate?.popupViewController(self, didFinishAdding: newLabel)
@@ -129,7 +160,7 @@ class PopUpViewController: UIViewController {
             let newLabel = PopupItem.EditMilestoneItem(
                 id: displayedMilestone!.id,
                 title: titleTextField.text!,
-                dueDate:detailTestField.text!,
+                dueDate: dueDate,
                 content: descriptionTextField.text!
             )
             milestoneDelegate?.popupViewController(self, didFinishEditing: newLabel)
@@ -138,7 +169,13 @@ class PopUpViewController: UIViewController {
     }
     
     private func checkLabel() -> Bool {
+        // 값 비어있으면 false
         if titleTextField.text!.isEmpty || labelColorField.text!.isEmpty {
+            warningAlert()
+            return false
+        }
+        // 올바른 color 값이 아니면 false
+        else if !colorTextCheck(colorText: labelColorField.text!) {
             warningAlert()
             return false
         }
@@ -153,20 +190,39 @@ class PopUpViewController: UIViewController {
         return true
     }
     
+    private func colorTextCheck(colorText: String) -> Bool{
+        if colorText.count != 6 {
+            return false
+        }
+        else if colorText != UIColor(hexString: colorText).toHexString() {
+            return false
+        }
+        
+        return true
+    }
+    
     private func warningAlert() {
         let alert = UIAlertController(title: "경고",
-                                    message: "입력하지 않은 목록이 있습니다.",
+                                    message: "다시 확인해주세요.",
                                     preferredStyle: .alert)
         
-        let cancleAction = UIAlertAction(title:"Cancle", style: .default, handler: { (_) in })
+        let cancleAction = UIAlertAction(title:"Cancel", style: .default, handler: { (_) in })
         alert.addAction(cancleAction)
         present(alert, animated: true, completion:nil)
+    }
+    
+    //MARK:- OBJC
+    
+    @objc func handleDatePicker(_ datePicker: UIDatePicker) {
+        datePicker.subviews[0].subviews[0].backgroundColor = .white
+        datePicker.subviews[0].subviews[1].backgroundColor = .white
     }
     
     //MARK:- IBActions
     @IBAction func btnClickReload(_ sender: Any) {
         let reloadColor = randomColor()
         colorPickerButton.backgroundColor = reloadColor
+        descriptionTextField.isHidden = true
         labelColorField.text = reloadColor.toHexString()
     }
     
@@ -198,6 +254,7 @@ extension PopUpViewController: UIColorPickerViewControllerDelegate {
         let selectColor = viewController.selectedColor
         colorPickerButton.backgroundColor = selectColor
         labelColorField.text = selectColor.toHexString()
+        descriptionTextField.isHidden = true
     }
 }
 
@@ -217,14 +274,26 @@ extension PopUpViewController: UITextFieldDelegate {
         else if identifier == "titleText" {
             detailTestField.becomeFirstResponder()
         }
-//        else {
-//            if coordinator == "Label" { labelColorField.becomeFirstResponder() }
-//            else { descriptionTextField.becomeFirstResponder() }
-//        }
+        else {
+            if mode == .CreateLabel || mode == .EditLabel {
+                labelColorField.becomeFirstResponder()
+            } else {
+                descriptionTextField.becomeFirstResponder()
+            }
+        }
         return true
     }
     
     private func changeBtnColor(colorText: String) {
-        colorPickerButton.backgroundColor = UIColor(hexString: colorText)
+        if !colorTextCheck(colorText: colorText) {
+            descriptionTextField.layer.borderColor = UIColor.red.cgColor
+            descriptionTextField.layer.borderWidth = 1
+            descriptionTextField.isHidden = false
+            colorPickerButton.backgroundColor = UIColor.white
+        } else {
+            descriptionTextField.isHidden = true
+            colorPickerButton.backgroundColor = UIColor(hexString: colorText)
+        }
     }
 }
+

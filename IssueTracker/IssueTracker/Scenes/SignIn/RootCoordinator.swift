@@ -18,7 +18,15 @@ class RootCoordinator: Coordinator {
     
     func start() {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let signViewController = storyBoard.instantiateViewController(withIdentifier: "Signin") as? SignInViewController
+        if UserDefaults.standard.object(forKey: "JWT") == nil {
+            let signViewController = storyBoard.instantiateViewController(withIdentifier: "Signin") as? SignInViewController
+            window?.rootViewController = signViewController
+        }
+        else {
+            let tabbarViewController = storyBoard.instantiateViewController(withIdentifier: "TabBar") as? UITabBarController
+            window?.rootViewController = tabbarViewController
+        }
+        
         window?.makeKeyAndVisible()
     }
 }

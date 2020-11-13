@@ -9,6 +9,8 @@ import Foundation
 
 struct IssueDetail: Decodable {
     var issueId: Int
+    var userId: Int
+    var imageUrl: String
     var email: String
     var name: String
     var milestoneId: Int?
@@ -20,6 +22,15 @@ struct IssueDetail: Decodable {
     var closeAt: String
     var label: [IssueLabel]?
     var assign: [IssueAssign]?
+}
+
+struct comment: Decodable {
+    var commentId: Int
+    var userId: Int
+    var name: String
+    var imageUrl: String
+    var content: String
+    var createAt: String
 }
 
 enum ListIssueDetail {
@@ -34,4 +45,26 @@ enum ListIssueDetail {
             var displayedDetail: IssueDetail
         }
     }
+}
+
+enum ListComment {
+    enum FetchDetail {
+        struct Request {
+            var issueId: Int
+        }
+        struct Response {
+            var comment: [comment]
+        }
+        struct ViewModel {
+            var displayedComment: [comment]
+        }
+    }
+}
+
+struct bottomModel {
+    var title: String
+    var content: String
+    var label: [IssueLabel]?
+    var assign: [IssueAssign]?
+    var MilestoneId: Int?
 }

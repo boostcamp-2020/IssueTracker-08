@@ -191,6 +191,7 @@ extension LabelListViewController: PopupLabelViewControllerDelegate {
                 description: item.description
             )
         )
+        print(newLabel)
         interactor?.createNewLabel(request: newLabel)
     }
     
