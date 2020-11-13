@@ -1,14 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { Dropdown } from 'semantic-ui-react';
-import { CheckIcon } from '@primer/octicons-react';
-import { IssueOpenedIcon } from '@primer/octicons-react';
 
 import { IssueContext } from '../../../stores/IssueStore';
 import { UserContext } from '../../../stores/UserStore';
 import { LabelContext } from '../../../stores/LabelStore';
-import { GET_OPEN_ISSUE, GET_CLOSED_ISSUE } from '../../../utils/api';
-import { getOptions } from '../../../utils/fetchOptions';
+import {
+  GET_OPEN_ISSUE,
+  GET_CLOSED_ISSUE,
+  CLOSE_ISSUE,
+  OPEN_ISSUE,
+} from '../../../utils/api';
+import { getOptions, postOptions } from '../../../utils/fetchOptions';
+
+import OpenHeaderBtn from './button/openHeaderBtn';
+import ClosedHeaderBtn from './button/closedHeaderBtn';
+
+import AuthorDropdown from './button/authorDropdown';
+import LabelDropdown from './button/labelDropdown';
+import MilestoneDropdown from './button/milestoneDropdown';
+import AssigneeDropdown from './button/assigneeDropdown';
+import FilterDropdown from './button/filterDropdown';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -20,6 +31,15 @@ const HeaderContainer = styled.div`
   background-color: #f6f8fa;
   padding: 16px;
   position: relative;
+
+  .checked-item-count {
+    margin-left: 10px;
+    font-size: 15px;
+    background-color: Transparent;
+    border: none;
+    outline: none;
+    color: #586069;
+  }
 `;
 
 const FilterList = styled.div`
@@ -33,63 +53,6 @@ const FilterList = styled.div`
   }
 `;
 
-const DropdownContainer = styled.div`
-  font-size: 14px;
-  padding-left: 16px;
-  .dropdown {
-    cursor: pointer;
-    .dropdown-menu {
-      display: none;
-      font-size: 17px;
-      background: #f7f8fa;
-      border: 1px solid #ebecef;
-      .item:hover {
-        background: #f7f8fa;
-      }
-      .dropdown-item {
-        padding: 8px;
-        font-weight: 500;
-        font-size: 13.5px;
-        background: white;
-      }
-    }
-    .visible {
-      display: inline-block !important;
-    }
-
-    .dropdown-header {
-      font-size: 12px;
-      display: flex;
-      padding: 7px 7px 7px 16px;
-      align-items: center;
-      border-bottom: 1px solid var(--color-select-menu-border-secondary);
-    }
-
-    .dropdown-divider {
-      margin: 0;
-      border: none;
-      border-top: 1px solid #e7e8ea;
-    }
-
-    .show {
-      display: inline-block !important;
-    }
-  }
-`;
-
-const ItemContainer = styled.div`
-  display: flex;
-  align-items: center;
-  img {
-    margin-left: 10px;
-    margin-right: 8px;
-    border-radius: 50% !important;
-    width: 20px;
-    height: 20px;
-    object-fit: cover;
-  }
-`;
-
 const Container = styled.div`
   display: flex;
   .HeaderIcon {
@@ -97,51 +60,37 @@ const Container = styled.div`
   }
 `;
 
-const IssueNumBtn = styled.button`
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  background-color: Transparent;
-  border: none;
-  outline: none;
-`;
-
-const LabelColor = styled.div`
-  margin-left: 10px;
-  margin-right: 8px;
-  border-radius: 50% !important;
-  width: 20px;
-  height: 20px;
-  object-fit: cover;
-`;
-
-const FlexContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const FlexItem = styled.div`
-  flex: 1;
-  overflow: auto;
-`;
 const issueListHeader = () => {
-  const { openIssues, closeIssues, setIssues, milestones } = useContext(
-    IssueContext
-  );
+  const {
+    issues,
+    openIssues,
+    closeIssues,
+    checkItems,
+    setIssues,
+    milestones,
+    dispatchIssues,
+    setCheckItem,
+  } = useContext(IssueContext);
+
   const { users } = useContext(UserContext);
   const { labels } = useContext(LabelContext);
-  const changeIssue = async (event, status) => {
+
+  const [issueStatus, setIssueStatus] = useState('open');
+
+  const changeIssue = async (status) => {
     let response = null;
     let result = null;
 
     switch (status) {
       case 'CHANGE_STATUS_OPEN':
+        setIssueStatus('open');
         response = await fetch(GET_OPEN_ISSUE, getOptions());
         result = await response.json();
         setIssues(result.data);
         break;
 
       case 'CHANGE_STATUS_CLOSED':
+        setIssueStatus('closed');
         response = await fetch(GET_CLOSED_ISSUE, getOptions());
         result = await response.json();
         setIssues(result.data);
@@ -158,142 +107,131 @@ const issueListHeader = () => {
     menu.classList.toggle('visible');
   };
 
+  const filterHandler = async (e, type, payload = null) => {
+    try {
+      if (issueStatus === 'open') await changeIssue('CHANGE_STATUS_OPEN');
+      else await changeIssue('CHANGE_STATUS_CLOSED');
+
+      switch (type) {
+        case 'ALL':
+          break;
+
+        default:
+          dispatchIssues({ type, payload });
+          break;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const checkHandler = (checked) => {
+    if (checked) {
+      setCheckItem({ type: 'SELECT_ALL', data: issues });
+    } else {
+      setCheckItem({ type: 'DESELECT_ALL', data: new Set() });
+    }
+  };
+
+  const markAsOpenHandler = async () => {
+    alert(
+      `선택하신 ${checkItems.checkedItems.length}개의 이슈를 open 합니다! 🤗`
+    );
+
+    try {
+      checkItems.checkedItems.forEach(async (issue) => {
+        await fetch(OPEN_ISSUE(issue.issueId), postOptions());
+      });
+
+      if (issueStatus === 'open') await changeIssue('CHANGE_STATUS_OPEN');
+      else await changeIssue('CHANGE_STATUS_CLOSED');
+
+      window.location.reload(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const markAsCloseHandler = async () => {
+    alert(
+      `선택하신 ${checkItems.checkedItems.length}개의 이슈를 close 합니다! 😥`
+    );
+
+    try {
+      checkItems.checkedItems.forEach(async (issue) => {
+        await fetch(CLOSE_ISSUE(issue.issueId), postOptions());
+      });
+
+      if (issueStatus === 'open') await changeIssue('CHANGE_STATUS_OPEN');
+      else await changeIssue('CHANGE_STATUS_CLOSED');
+
+      window.location.reload(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <HeaderContainer>
       <Container>
-        <input type="checkbox" className="allIssue" />
-        <IssueNumBtn
-          onClick={(e) => {
-            changeIssue(e, 'CHANGE_STATUS_OPEN');
-          }}
-        >
-          <IssueOpenedIcon className="HeaderIcon" size={16} />
-          {openIssues.length} Open{' '}
-        </IssueNumBtn>
+        <input
+          type="checkbox"
+          className="allIssue"
+          onChange={(e) => checkHandler(e.target.checked)}
+        />
 
-        <IssueNumBtn
-          onClick={(e) => {
-            changeIssue(e, 'CHANGE_STATUS_CLOSED');
-          }}
-        >
-          <CheckIcon size={16} className="HeaderIcon" />
-          {closeIssues.length} Closed{' '}
-        </IssueNumBtn>
+        <OpenHeaderBtn
+          className="open-button"
+          issueStatus={issueStatus}
+          openIssues={openIssues}
+          changeIssue={changeIssue}
+          checkItems={checkItems}
+        />
+        <ClosedHeaderBtn
+          className="closed-button"
+          issueStatus={issueStatus}
+          closeIssues={closeIssues}
+          changeIssue={changeIssue}
+          checkItems={checkItems}
+        />
+
+        {checkItems.isAllChecked === false ? null : (
+          <div className="checked-item-count">
+            {checkItems.checkedItems.length} selected
+          </div>
+        )}
       </Container>
+
       <FilterList>
-        <DropdownContainer>
-          <Dropdown
-            className="dropdown"
-            text="Author"
-            onClick={(e) => {
-              clickHandler(e);
-            }}
-          >
-            <Dropdown.Menu className="dropdown-menu">
-              <Dropdown.Header
-                className="dropdown-header"
-                content="Filter by author"
-              />
-              {users &&
-                users.map((item, index) => (
-                  <div key={item.id} value={index}>
-                    <hr className="dropdown-divider" />
-                    <Dropdown.Item className="dropdown-item">
-                      <ItemContainer>
-                        <CheckIcon size={16} className="check-icon" />
-                        <img src={item.imageUrl} />
-                        <div>{item.name}</div>
-                      </ItemContainer>
-                    </Dropdown.Item>
-                  </div>
-                ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </DropdownContainer>
-
-        <DropdownContainer>
-          <Dropdown
-            text="Label"
-            onClick={(e) => {
-              clickHandler(e);
-            }}
-          >
-            <Dropdown.Menu className="dropdown-menu">
-              <Dropdown.Header
-                className="dropdown-header"
-                content="Filter by label"
-              />
-              {labels &&
-                labels.map((item, index) => (
-                  <div key={item.id} value={index}>
-                    <hr className="dropdown-divider" />
-                    <Dropdown.Item className="dropdown-item">
-                      <ItemContainer>
-                        <LabelColor style={{ background: item.color }} />
-                        <FlexContainer>
-                          <FlexItem>{item.name} </FlexItem>
-                          <div style={{ color: '#586069' }}>
-                            {' '}
-                            <FlexItem>{item.description} </FlexItem>
-                          </div>
-                        </FlexContainer>
-                      </ItemContainer>
-                    </Dropdown.Item>
-                  </div>
-                ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </DropdownContainer>
-
-        <DropdownContainer>
-          <Dropdown text="Milestones">
-            <Dropdown.Menu className="dropdown-menu">
-              <Dropdown.Header
-                className="dropdown-header"
-                content="Filter by milestones"
-              />
-              {milestones &&
-                milestones.map((item, index) => (
-                  <div key={item.id} value={index}>
-                    <hr className="dropdown-divider" />
-                    <Dropdown.Item className="dropdown-item">
-                      <FlexContainer>
-                        <FlexItem>{item.title} </FlexItem>
-                        <div style={{ color: '#586069' }}>
-                          {' '}
-                          <FlexItem>{item.content} </FlexItem>
-                        </div>
-                      </FlexContainer>
-                    </Dropdown.Item>
-                  </div>
-                ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </DropdownContainer>
-
-        <DropdownContainer>
-          <Dropdown text="Assignee">
-            <Dropdown.Menu className="dropdown-menu">
-              <Dropdown.Header
-                className="dropdown-header"
-                content="Filter by who's assigned"
-              />
-              {users &&
-                users.map((item, index) => (
-                  <div key={item.id} value={index}>
-                    <hr className="dropdown-divider" />
-                    <Dropdown.Item className="dropdown-item">
-                      <ItemContainer>
-                        <CheckIcon size={16} className="check-icon" />
-                        <img src={item.imageUrl} />
-                        <div>{item.name}</div>
-                      </ItemContainer>
-                    </Dropdown.Item>
-                  </div>
-                ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </DropdownContainer>
+        {checkItems.isAllChecked === false ? (
+          <>
+            <AuthorDropdown
+              users={users}
+              clickHandler={clickHandler}
+              filterHandler={filterHandler}
+            />
+            <LabelDropdown
+              labels={labels}
+              clickHandler={clickHandler}
+              filterHandler={filterHandler}
+            />
+            <MilestoneDropdown
+              milestones={milestones}
+              clickHandler={clickHandler}
+              filterHandler={filterHandler}
+            />
+            <AssigneeDropdown
+              users={users}
+              clickHandler={clickHandler}
+              filterHandler={filterHandler}
+            />
+          </>
+        ) : (
+          <FilterDropdown
+            markAsOpenHandler={markAsOpenHandler}
+            markAsCloseHandler={markAsCloseHandler}
+          />
+        )}
       </FilterList>
     </HeaderContainer>
   );

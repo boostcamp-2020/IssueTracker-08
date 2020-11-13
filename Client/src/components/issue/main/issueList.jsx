@@ -19,13 +19,17 @@ const NoIssueResult = styled.div`
 `;
 
 const IssueList = () => {
-  const { issues } = useContext(IssueContext);
+  const { issues, checkItems } = useContext(IssueContext);
 
   return (
     <div className="list-wrapper">
       {issues.length > 0 ? (
         issues.map((issue) => (
-          <IssueTemplate key={issue.issueId} issue={issue} />
+          <IssueTemplate
+            key={issue.issueId}
+            issue={issue}
+            checkItems={checkItems}
+          />
         ))
       ) : (
         <NoIssueResult>

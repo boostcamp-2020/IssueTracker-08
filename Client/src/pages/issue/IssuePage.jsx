@@ -1,13 +1,15 @@
 import React, { createElement } from 'react';
 import styled from 'styled-components';
 
-import MenuButton from '../../components/shared/button/MenuButton';
 import NewButton from '../../components/shared/button/NewButton';
 import IssueListInfo from '../../components/issue/main/issueMain';
 
 import IssuesStore from '../../stores/IssueStore';
 import UserStore from '../../stores/UserStore';
 import LabelStore from '../../stores/LabelStore';
+
+import LabelBtn from './button/LabelBtn';
+import MilestoneBtn from './button/MilestoneBtn';
 
 const Container = styled.div`
   display: flex;
@@ -72,16 +74,8 @@ export default function IssuePage() {
             <FilterInput type="text" placeholder="🔎 Search all issue" />
           </MenuDiv>
           <MenuDiv flex="0">
-            <MenuButton
-              link="/label"
-              name="Label"
-              img="/images/label.svg"
-            ></MenuButton>
-            <MenuButton
-              link="/milestone"
-              name="Milestones"
-              img="/images/milestone.svg"
-            ></MenuButton>
+            <LabelBtn />
+            <MilestoneBtn />
           </MenuDiv>
           <MenuDiv flex="0">
             <NewButton link="/issue/post" name="issue" />

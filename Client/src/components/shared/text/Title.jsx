@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const TitleStyle = styled.p`
   color: black;
-  weight: bold;
+  font-weight: bold;
   margin: 0px;
 `;
 
