@@ -1,5 +1,32 @@
 # iOS Readme
 
+## **`Sprint #3 - Day4`**
+
+### 최종결과화면
+
+| App Login | IssueList-Open | IssueList-Close | NewIssue | 
+| -------- | -------- | -------- | ------- |
+| <img width = 350, src = "https://i.imgur.com/2HoVWGq.png">| <img width = 350, src = "https://i.imgur.com/TujDjgM.png">| <img width = 350, src = "https://user-images.githubusercontent.com/22065692/99022451-1d38e980-25a6-11eb-83b1-0e1738ea48de.png">| <img width = 350, src = "https://user-images.githubusercontent.com/22065692/99022509-38a3f480-25a6-11eb-926f-094c819d3d8a.png">| 
+
+| Search-Filter | FilterButton | IssueDetail | IssueCardView | 
+| -------- | -------- | -------- | ------- |
+| <img width = 350, src = "https://user-images.githubusercontent.com/22065692/99022557-4ce7f180-25a6-11eb-8bd2-0837f1f84bb4.png">| <img width = 350, src = "https://user-images.githubusercontent.com/22065692/99022563-4f4a4b80-25a6-11eb-8240-3292aa47d37e.png"> | <img width = 350, src = "https://user-images.githubusercontent.com/22065692/99022691-83be0780-25a6-11eb-9713-397389966b8d.png">| <img width = 350, src = "https://user-images.githubusercontent.com/22065692/99022761-99333180-25a6-11eb-9e4e-1aaeb297595e.png">| 
+
+| LabelList | Label Add&Edit | MilestoneList | Milestone Add&Edit | 
+| -------- | -------- | -------- | ------- |
+| <img width = 350, src = "https://user-images.githubusercontent.com/22065692/99022831-b7992d00-25a6-11eb-8e18-ade88639cf7e.png">| <img width = 350, src = "https://user-images.githubusercontent.com/22065692/99022864-c41d8580-25a6-11eb-9856-236e108ae461.png"> | <img width = 350, src = "https://user-images.githubusercontent.com/22065692/99022908-db5c7300-25a6-11eb-9767-783ee6c37d1c.png">| <img width = 350, src = "https://user-images.githubusercontent.com/22065692/99022957-f16a3380-25a6-11eb-885a-d5b416d124d2.png">| 
+
+## **`Sprint #3 - Day3`**
+
+### New Issue Function
+* 이슈 생성, 수정 기능 추가
+    * Interactor, Presenter, Worker 생성
+    * 수정은 생성 화면 재활용
+
+### CardView 화면 구성
+* Manager과 Label은 스크롤뷰로 구성하여 드래그하여 확인할 수 있도록 구성
+* 마일스톤은 이름 값과 open, close를 확인하여 progress 표기
+
 ## **`Sprint #3 - Day2`**
 
 ### 결과화면
