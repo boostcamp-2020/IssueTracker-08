@@ -206,7 +206,7 @@ class PopUpViewController: UIViewController {
                                     message: "다시 확인해주세요.",
                                     preferredStyle: .alert)
         
-        let cancleAction = UIAlertAction(title:"Cancle", style: .default, handler: { (_) in })
+        let cancleAction = UIAlertAction(title:"Cancel", style: .default, handler: { (_) in })
         alert.addAction(cancleAction)
         present(alert, animated: true, completion:nil)
     }

@@ -175,7 +175,11 @@ class CardViewController: UIViewController {
                 )
             )
         } else {
-            // 받아와서 수정
+            issueIntractor?.openIssue(
+                request: ListIssues.OpenIssue.Request(
+                    issueId: issueId
+                )
+            )
         }
         navigationController?.popViewController(animated: true)
     }

@@ -14,7 +14,7 @@ enum FilterScope: String, CaseIterable {
     case Commented // 내가 댓글을 남긴 이슈
 }
 
-enum FilterModel: String {
+enum FilterCategory: String {
     case Author
     case Label
     case Milestone

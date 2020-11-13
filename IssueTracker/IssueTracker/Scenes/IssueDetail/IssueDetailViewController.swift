@@ -304,7 +304,7 @@ extension IssueDetailViewController: IssueDetailDisplayLogic {
             MilestoneId: displayIssue!.displayedDetail.milestoneId
         )
         cardViewController.setup(tag: issueId, displayData: cardViewData)
-        if displayIssue!.displayedDetail.issueId != UserDefaults.standard.object(forKey: "ID") as! Int {
+        if displayIssue!.displayedDetail.userId != UserDefaults.standard.object(forKey: "ID") as! Int {
             navigationItem.rightBarButtonItem = nil
         }
         

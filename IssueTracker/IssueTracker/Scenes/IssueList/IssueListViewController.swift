@@ -27,9 +27,6 @@ final class IssueListViewController: UIViewController {
     @IBOutlet weak var closeIssueButton: UIButton!
     @IBOutlet weak var issueListCollectionView: UICollectionView!
     @IBOutlet weak var openCloseSwitch: UISwitch!
-    @IBOutlet weak var loadingView: UIView!
-    @IBOutlet weak var acitivityView: UIView!
-    @IBOutlet weak var indicator: UIActivityIndicatorView!
     @IBOutlet weak var filterButton: CustomAddButton!
     
     // MARK:- Properties
@@ -45,11 +42,11 @@ final class IssueListViewController: UIViewController {
     private var displayedMilestones: [ListMilestones.FetchLists.ViewModel.DisplayedMilestone] = []
     private var displayedComments: [comment] = []
     
-    private var filterDict = ["Author" : 0, "Label" : 0, "Milestone" : 0, "Assignee" : 0]
+    private var filterDict: [FilterCategory: Int] = [.Author : 0, .Label : 0, .Milestone : 0, .Assignee : 0]
     
     var config = UICollectionLayoutListConfiguration(appearance: .plain)
     let searchController = UISearchController(searchResultsController: nil)
-
+    
     override var isEditing: Bool {
         willSet {
             if newValue { setupEditMode() }
@@ -71,7 +68,6 @@ final class IssueListViewController: UIViewController {
             }
         }
     }
-    
     var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
@@ -85,7 +81,7 @@ final class IssueListViewController: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
@@ -104,7 +100,6 @@ final class IssueListViewController: UIViewController {
     // MARK:- View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        startAnimating()
         setupSearchController()
         setupOpenCollectionview()
         setupNormalMode()
@@ -138,7 +133,6 @@ final class IssueListViewController: UIViewController {
     }
     
     @IBAction func switchAction(_ sender: UISwitch) {
-        startAnimating()
         if openCloseSwitch.isOn {
             fetchIssues(request: .Open)
             setupOpenCollectionview()
@@ -147,12 +141,6 @@ final class IssueListViewController: UIViewController {
             fetchIssues(request: .Closed)
             setupClosedCollectionView()
         }
-    }
-    
-    private func startAnimating() {
-        loadingView.isHidden = false
-        acitivityView.isHidden = false
-        indicator.startAnimating()
     }
     
     private func selectAllItems() {
@@ -171,7 +159,7 @@ final class IssueListViewController: UIViewController {
         }
         selectedItems = 0
     }
-
+    
 }
 
 // MARK:- Setup
@@ -188,7 +176,7 @@ extension IssueListViewController {
         presenter.viewController = viewController
         router.viewController = viewController
     }
-
+    
     private func setupOpenCollectionview() {
         config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
             let close = UIContextualAction(style: .normal, title: "Close") { (action, view, completion) in
@@ -199,7 +187,7 @@ extension IssueListViewController {
         }
         createListLayout()
     }
-
+    
     private func setupClosedCollectionView() {
         config.trailingSwipeActionsConfigurationProvider = { [unowned self] (indexPath) in
             let open = UIContextualAction(style: .normal, title: "Open") { (action, view, completion) in
@@ -309,7 +297,7 @@ extension IssueListViewController: IssueListDisplayLogic {
         let request = ListComment.FetchDetail.Request(issueId: id)
         interactor?.fetchComments(request: request)
     }
-
+    
     // Fetch, Open, Close, Delete Issue
     private func fetchIssues(request: ListIssues.FetchCategory) {
         let request = ListIssues.FetchIssues.Request(request: request)
@@ -329,8 +317,8 @@ extension IssueListViewController: IssueListDisplayLogic {
     
     private func deleteIssue(at indexPath: IndexPath) {
         // TODO:
-            // update할 테이블이 너무 많아서 BE에 부담가는 듯
-            // delete issue는 후순위로 미루기
+        // update할 테이블이 너무 많아서 BE에 부담가는 듯
+        // delete issue는 후순위로 미루기
     }
     
 }
@@ -373,15 +361,15 @@ extension IssueListViewController: UISearchResultsUpdating {
         case .Commented :
             for commentDetail in displayedComments {
                 // TODO:
-                    // 문제 : fetch가 비동기적으로 일어나면서 완료 이전에 if문 실행되어 모두 false
-                    // 예상해결방법 : ??
+                // 문제 : fetch가 비동기적으로 일어나면서 완료 이전에 if문 실행되어 모두 false
+                // 예상해결방법 : ??
                 fetchComments(id: issue.issueId)
                 if commentDetail.userId == userId { return true }
             }
             return false
         }
     }
-
+    
 }
 
 // MARK:- UISearchControllerDelegate
@@ -394,6 +382,7 @@ extension IssueListViewController: UISearchControllerDelegate {
     }
     
     func didDismissSearchController(_ searchController: UISearchController) {
+        fetchIssues(request: .Open)
         filterButton.isHidden = true
         openCloseSwitch.isHidden = false
         newIssueButton.isHidden = false
@@ -428,8 +417,6 @@ extension IssueListViewController: UIContextMenuInteractionDelegate {
         )
     }
     
-//    private func filterMenuPressed(type: )
-    
     func filterAuthor() -> UIMenu {
         var authors = [String]()
         var authorIDs = [Int]()
@@ -442,8 +429,8 @@ extension IssueListViewController: UIContextMenuInteractionDelegate {
                 title: author,
                 image: nil,
                 identifier: UIAction.Identifier("\(authorIDs[idx])"),
-                handler: { _ in
-                    print("Name : \(author)")
+                handler: { [unowned self] _ in
+                    filterMenuPressed(type: .Author, id: authorIDs[idx])
                 })
         })
         return UIMenu(
@@ -454,16 +441,19 @@ extension IssueListViewController: UIContextMenuInteractionDelegate {
     
     func filterLabel() -> UIMenu {
         var labels = [String]()
+        var labelIDs = [Int]()
         displayedLabels.forEach({ label in
             labels.append(label.name)
+
         })
         let chooseLabel = labels.enumerated().map({ (idx, label) in
             return UIAction(
                 title: label,
                 image: nil,
                 identifier: UIAction.Identifier(label),
-                handler: { _ in
-                    print("Label : \(label)")
+                attributes: UIMenuElement.Attributes.disabled,
+                handler: { [unowned self] _ in
+                    filterMenuPressed(type: .Label, id: labelIDs[idx])
                 })
         })
         return UIMenu(
@@ -474,16 +464,19 @@ extension IssueListViewController: UIContextMenuInteractionDelegate {
     
     func filterMilestone() -> UIMenu {
         var milestones = [String]()
+        var milestoneIDs = [Int]()
         displayedMilestones.forEach({ milestone in
             milestones.append(milestone.title)
+            milestoneIDs.append(milestone.id)
         })
         let chooseMilestone = milestones.enumerated().map({ (idx, milestone) in
             return UIAction(
                 title: milestone,
                 image: nil,
                 identifier: UIAction.Identifier(milestone),
-                handler: { _ in
-                    print("Name : \(milestone)")
+                attributes: UIMenuElement.Attributes.disabled,
+                handler: { [unowned self] _ in
+                    filterMenuPressed(type: .Milestone, id: milestoneIDs[idx])
                 })
         })
         return UIMenu(
@@ -494,22 +487,70 @@ extension IssueListViewController: UIContextMenuInteractionDelegate {
     
     func filterAssignee() -> UIMenu {
         var assignees = [String]()
+        var assigneeIDs = [Int]()
         displayedUsers.forEach({ assignee in
             assignees.append(assignee.name)
+            assigneeIDs.append(assignee.id)
         })
         let chooseAssignee = assignees.enumerated().map({ (idx, assignee) in
             return UIAction(
                 title: assignee,
                 image: nil,
                 identifier: UIAction.Identifier(assignee),
-                handler: { _ in
-                    print("Name : \(assignee)")
+                attributes: UIMenuElement.Attributes.disabled,
+                handler: { [unowned self] _ in
+                    filterMenuPressed(type: .Assignee, id: assigneeIDs[idx])
                 })
         })
         return UIMenu(
             title: "Assignee",
             image: UIImage(systemName: "chevron.right"),
             children: chooseAssignee)
+    }
+    
+    private func filterMenuPressed(type: FilterCategory, id: Int) {
+        switch type {
+        case .Author:
+            print("AUTHOR ID : \(id)")
+            guard let currentAuthor = filterDict[.Author] else { return }
+            if currentAuthor == id { filterDict.updateValue(0, forKey: .Author) }
+            else { filterDict.updateValue(id, forKey: .Author) }
+        case .Label:
+            print("LABEL ID : \(id)")
+            guard let currentLabel = filterDict[.Label] else { return }
+            if currentLabel == id { filterDict.updateValue(0, forKey: .Label) }
+            else { filterDict.updateValue(id, forKey: .Label) }
+        case .Milestone:
+            print("MILESTONE ID : \(id)")
+            guard let currentMilestone = filterDict[.Milestone] else { return }
+            if currentMilestone == id { filterDict.updateValue(0, forKey: .Milestone) }
+            else { filterDict.updateValue(id, forKey: .Milestone) }
+        case .Assignee:
+            print("ASSIGNEE ID : \(id)")
+            guard let currentAssignee = filterDict[.Assignee] else { return }
+            if currentAssignee == id { filterDict.updateValue(0, forKey: .Assignee) }
+            else { filterDict.updateValue(id, forKey: .Assignee) }
+        }
+        filterIssues()
+    }
+    
+    private func filterIssues() {
+        filteredIssues = displayedIssues.filter({ (issue: IssueViewModel) -> Bool in
+            return compareOptionWithFilterDict(issue: issue)
+        })
+        displayedIssues = filteredIssues
+        issueListCollectionView.reloadData()
+    }
+    
+    private func compareOptionWithFilterDict(issue: IssueViewModel) -> Bool {
+        guard let filterAuthor = filterDict[.Author],
+              let filterLabel = filterDict[.Label],
+              let filterMilestone = filterDict[.Milestone],
+              let filterAssignee = filterDict[.Assignee] else { return false }
+        
+        // ... api가 꼬였으므로 lable, milestone, assignee filter 몬해~
+        if filterAuthor > 0 && filterAuthor != issue.userId { return false }
+        else { return true }
     }
     
 }
@@ -552,15 +593,9 @@ extension IssueListViewController: UICollectionViewDataSource {
         }
         
         cell.accessories = [.multiselect(displayed: .whenEditing, options: .init()) ]
-        
-        if indexPath.item == 0 {
-            indicator.stopAnimating()
-            loadingView.isHidden = true
-            acitivityView.isHidden = true
-        }
         return cell
     }
-
+    
 }
 
 // MARK:- UICollectionViewDelegate

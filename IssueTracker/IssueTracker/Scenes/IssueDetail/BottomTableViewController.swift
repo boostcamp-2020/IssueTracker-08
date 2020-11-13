@@ -20,7 +20,7 @@ class BottomTableViewController: UITableViewController {
     var interactor: IssueListBusinessLogic?
     var displayedUsers: [ListUsers.FetchUsers.ViewModel.DisplayedUser] = []
     private var displayedLabels: [ListLabels.FetchLists.ViewModel.DisplayedLabel] = []
-    private var displayedMilestones: [[ListMilestones.FetchLists.ViewModel.DisplayedMilestone]] = [[]]
+    private var displayedMilestones: [ListMilestones.FetchLists.ViewModel.DisplayedMilestone] = []
     @IBOutlet weak var titleLabel: UILabel!
     var displayedData: bottomModel?
     
@@ -77,7 +77,7 @@ class BottomTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -121,7 +121,7 @@ class BottomTableViewController: UITableViewController {
                 }
                 
             }
-            cell.labelMilestoneTitle.text = displayedMilestones[indexPath.row][indexPath.item].title
+            cell.labelMilestoneTitle.text = displayedMilestones[indexPath.item].title
             cell.labelMilestoneTitle.isHidden = false
         }
         
@@ -170,18 +170,7 @@ extension BottomTableViewController: IssueListDisplayLogic {
     }
     
     func displayFetchedMilestone(viewModel: ListMilestones.FetchLists.ViewModel) {
-        displayedMilestones.append([])
-        displayedMilestones.append([])
-        displayedMilestones[1] = viewModel.displayedMilestones
-        if displayedData?.MilestoneId != nil {
-            for index in 0..<displayedMilestones.count {
-                if displayedMilestones[1][index].id == displayedData?.MilestoneId {
-                    displayedMilestones[0].append(displayedMilestones[1][index])
-                    break
-                }
-            }
-        }
-        print(displayedMilestones)
+        displayedMilestones = viewModel.displayedMilestones
         self.tableView.reloadData()
     }
     
