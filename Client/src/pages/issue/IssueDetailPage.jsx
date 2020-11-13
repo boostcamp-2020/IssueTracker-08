@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import IssueCommentForm from '../../components/issue/IssueCommentForm';
-import IssueComments from '../../components/issue/IssueComments';
+import CommentStore from '../../stores/CommentStore';
+import IssueDetailStore from '../../stores/IssueDetailStore';
+import CommentForm from '../../components/comment/CommentForm';
+import Comments from '../../components/comment/Comments';
 import { GET_ISSUE } from '../../utils/api.js';
 import { getOptions } from '../../utils/fetchOptions';
 import getDiffTime from '../../utils/getDiffTime';
 import Container from '../../components/shared/container/Container';
 import IssueStateButton from '../../components/issue/IssueStateButton';
+import EditButton from '../../components/issue/IssueEdit';
+import CommentNumber from '../../components/comment/CommentNumber';
 
 const IssueHeader = styled.div`
   display: flex;
@@ -17,20 +21,6 @@ const IssueHeader = styled.div`
 
 const IssueTitle = styled.h1`
   font-size: 30px;
-`;
-
-const EditButton = styled.button`
-  margin-left: auto;
-  height: 30px;
-  padding: 3px 12px;
-  font-size: 12px;
-  background-color: #fafbfc;
-  &:hover {
-    background-color: #e1e4e8;
-  }
-  border: 1px solid #e8e9ec;
-  border-radius: 6px;
-  cursor: pointer;
 `;
 
 const IssueInfo = styled.div`
@@ -50,11 +40,6 @@ const IssueAuthor = styled.p`
 
 const IssuedTime = styled.p`
   margin-right: 5px;
-  font-size: 14px;
-  color: #586069;
-`;
-
-const IssueCommentNum = styled.p`
   font-size: 14px;
   color: #586069;
 `;
@@ -133,14 +118,12 @@ const Comment = styled.div`
 
 export default function IssueDetailPage({ match, location }) {
   const [issueAuthorInfo, setIssueAuthorInfo] = useState('');
-  const [issueId, setIssueId] = useState(1);
+  const issueId = match.params.issueId;
   const userId = localStorage.getItem('userId');
 
   const getIssueAuthorInfo = async () => {
-    const id = match.params.issueId;
-    setIssueId(id);
     const options = getOptions();
-    const response = await fetch(GET_ISSUE(id), options);
+    const response = await fetch(GET_ISSUE(issueId), options);
     const responseJSON = await response.json();
     setIssueAuthorInfo(responseJSON.data[0]);
   };
@@ -149,44 +132,54 @@ export default function IssueDetailPage({ match, location }) {
     getIssueAuthorInfo();
   }, []);
 
+  const IssueProvider = ({ contexts, children }) =>
+    contexts.reduce(
+      (prev, context) =>
+        createElement(context, {
+          children: prev,
+        }),
+      children
+    );
+
   return (
-    <>
-      <Container>
-        <IssueHeader>
-          <IssueTitle>{issueAuthorInfo.title}</IssueTitle>
-          <EditButton>Edit</EditButton>
-        </IssueHeader>
-        <IssueInfo>
-          <IssueStateButton state={issueAuthorInfo.isOpen} />
-          <IssueAuthor>{issueAuthorInfo.name}</IssueAuthor>
-          <IssuedTime>
-            opened this issue {getDiffTime(issueAuthorInfo.closeAt)} ago ·
-          </IssuedTime>
-          <IssueCommentNum>0 comments</IssueCommentNum>
-        </IssueInfo>
-        <DiscussionBucket>
-          <Discussion>
-            <AuthorImage src={`${issueAuthorInfo.imageUrl}`}></AuthorImage>
-            <DiscussionContent>
-              <CommentTimeline>
-                <CommentAuthor>{issueAuthorInfo.name}</CommentAuthor>
-                <CommentedTime>
-                  commented {getDiffTime(issueAuthorInfo.closeAt)} ago
-                </CommentedTime>
-                <AuthorLevel>Member</AuthorLevel>
-                <Emoticon src="/images/emoticon.svg"></Emoticon>
-                <Menu src="/images/menu.svg"></Menu>
-              </CommentTimeline>
-              <Comment>
-                <p>{issueAuthorInfo.content}</p>
-              </Comment>
-            </DiscussionContent>
-          </Discussion>
-          {/* TODO : 코멘트들 받아와서 map으로 뿌려주는 컴포넌트 구현 */}
-          <IssueComments issueId={issueId} />
-        </DiscussionBucket>
-        <IssueCommentForm issueId={issueId} userId={userId} />
-      </Container>
-    </>
+    <IssueDetailStore issueId={issueId}>
+      <CommentStore issueId={issueId} state={issueAuthorInfo.isOpen}>
+        <Container>
+          <IssueHeader>
+            <IssueTitle>{issueAuthorInfo.title}</IssueTitle>
+            <EditButton visible={issueAuthorInfo.userId === Number(userId)} />
+          </IssueHeader>
+          <IssueInfo>
+            <IssueStateButton />
+            <IssueAuthor>{issueAuthorInfo.name}</IssueAuthor>
+            <IssuedTime>
+              opened this issue {getDiffTime(issueAuthorInfo.closeAt)} ago ·
+            </IssuedTime>
+            <CommentNumber />
+          </IssueInfo>
+          <DiscussionBucket>
+            <Discussion>
+              <AuthorImage src={`${issueAuthorInfo.imageUrl}`} />
+              <DiscussionContent>
+                <CommentTimeline>
+                  <CommentAuthor>{issueAuthorInfo.name}</CommentAuthor>
+                  <CommentedTime>
+                    commented {getDiffTime(issueAuthorInfo.closeAt)} ago
+                  </CommentedTime>
+                  <AuthorLevel>Member</AuthorLevel>
+                  <Emoticon src="/images/emoticon.svg"></Emoticon>
+                  <Menu src="/images/menu.svg"></Menu>
+                </CommentTimeline>
+                <Comment>
+                  <p>{issueAuthorInfo.content}</p>
+                </Comment>
+              </DiscussionContent>
+            </Discussion>
+            <Comments />
+            <CommentForm userId={userId} />
+          </DiscussionBucket>
+        </Container>
+      </CommentStore>
+    </IssueDetailStore>
   );
 }

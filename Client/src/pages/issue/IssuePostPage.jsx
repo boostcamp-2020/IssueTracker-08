@@ -13,11 +13,13 @@ const Container = styled.div`
   margin: auto;
 `;
 
+const userId = localStorage.getItem('userId');
+
 export default function IssuePostPage() {
   return (
     <>
       <Container>
-        <IssueForm />
+        <IssueForm userId={userId} />
       </Container>
     </>
   );

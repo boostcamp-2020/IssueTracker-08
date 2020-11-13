@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+
+import { IssueDetailContext } from '../../stores/IssueDetailStore';
 
 const StateButton = styled.button`
   color: white;
@@ -28,8 +30,10 @@ const State = styled.p`
   font-weight: bold;
 `;
 
-function IssueStateButton({ state }) {
-  if (state) {
+function IssueStateButton() {
+  const { issueDetail } = useContext(IssueDetailContext);
+
+  if (issueDetail.isOpen) {
     return (
       <StateButton open>
         <ExclamIcon src="/images/exclam_circle.svg" />

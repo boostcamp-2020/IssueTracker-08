@@ -1,8 +1,15 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import { GET_USER, POST_COMMENT, POST_CLOSE_ISSUE } from '../../utils/api';
+
+import { GET_USER, POST_COMMENT } from '../../utils/api';
 import { getOptions, postOptions } from '../../utils/fetchOptions';
+import { CommentContext } from '../../stores/CommentStore';
+import IssueCloseButton from '../issue/IssueCloseButton';
+
+const Main = styled.div`
+  display: flex;
+  margin-top: 40px;
+`;
 
 const AuthorImage = styled.img`
   border-radius: 50%;
@@ -10,36 +17,16 @@ const AuthorImage = styled.img`
   height: 40px;
 `;
 
-const Main = styled.div`
-  display: flex;
-`;
-
 const FileAttachMsg =
   'Attach files by dragging & dropping, selecting or pasting them.';
 
-const IssueFormContainer = styled.div`
+const CommentFormContainer = styled.div`
   width: 832px;
   border: 1px solid #ebecef;
   box-sizing: border-box;
   border-top-left-radius: 6px !important;
   border-top-right-radius: 6px !important;
   margin-left: 20px;
-`;
-
-const IssueTitleInput = styled.input`
-  width: 95%;
-  margin: 10px;
-  padding: 5px 12px;
-  font-size: 14px;
-  line-height: 20px;
-  background-position: right 8px center;
-  background-color: #fafbfc;
-  border: 1px solid #ebecef;
-  border-radius: 6px;
-  outline: none;
-  &:hover {
-    background-color: white;
-  }
 `;
 
 const WriteTab = styled.div`
@@ -126,36 +113,6 @@ const SubmitDiv = styled.div`
   margin: 10px;
 `;
 
-const CloseImage = styled.img`
-  width: 16px;
-`;
-
-const IssueState = styled.p`
-  font-size: 14px;
-  font-weight: bold;
-  margin-left: 8px;
-`;
-
-const IssueButton = styled.button`
-  width: 136px;
-  box-shadow: 0px 1px 0px 0px #fafbfc;
-  border-radius: 6px;
-  border: 1px solid #1b1f2326;
-  display: flex;
-  align-items: center;
-  height: 28px;
-  color: #24292e;
-  padding: 5px 16px;
-  text-decoration: none;
-  text-shadow: 0px -1px 0px #fafbfc;
-  cursor: pointer;
-  margin-left: auto;
-  background-color: #fafbfc;
-  :focus {
-    outline: none;
-  }
-`;
-
 const SubmitButton = styled.button`
   width: 100px;
   box-shadow: 0px 1px 0px 0px #3dc21b;
@@ -176,13 +133,13 @@ const SubmitButton = styled.button`
   background-color: ${(props) => (props.state ? '#44c767' : '#94d3a2')};
 `;
 
-const IssueCommentForm = ({ issueId, userId }) => {
-  const history = useHistory();
+const IssueCommentForm = ({ userId }) => {
+  const { issueId, commentDispatch } = useContext(CommentContext);
   const commentRef = useRef(false);
   const [comment, setComment] = useState('');
-  const [userImage, setUserImage] = useState('');
+  const [userInfo, setUserInfo] = useState('');
 
-  const createCommentData = () => {
+  const createCommentData = async () => {
     if (commentRef.current.value === '') {
       return;
     }
@@ -194,35 +151,38 @@ const IssueCommentForm = ({ issueId, userId }) => {
     };
 
     const options = postOptions(comment);
-    fetch(POST_COMMENT, options);
+    const response = await fetch(POST_COMMENT, options);
+    const result = await response.json();
     commentRef.current.value = '';
     setComment('');
+
+    comment.name = userInfo.name;
+    comment.imageUrl = userInfo.imageUrl;
+    comment.commentId = result.data.commentId;
+    comment.createAt = result.data.createAt;
+
+    commentDispatch({ type: 'NEW_COMMENT_ADD', payload: comment });
   };
 
   const commentHandleChange = () => {
     setComment(commentRef.current.value);
   };
 
-  const closeIssue = () => {
-    const options = postOptions();
-    fetch(POST_CLOSE_ISSUE(issueId), options);
-  };
-
-  const getUserImage = async () => {
+  const getUserInfo = async () => {
     const options = getOptions();
     const response = await fetch(GET_USER(userId), options);
     const responseJSON = await response.json();
-    setUserImage(responseJSON.data[0].imageUrl);
+    setUserInfo(responseJSON.data[0]);
   };
 
   useEffect(() => {
-    getUserImage();
+    getUserInfo();
   }, []);
 
   return (
     <Main>
-      <AuthorImage src={userImage}></AuthorImage>
-      <IssueFormContainer>
+      <AuthorImage src={userInfo.imageUrl} />
+      <CommentFormContainer>
         <WriteTab>Write</WriteTab>
         <PreviewTab>Preview</PreviewTab>
         <Hr />
@@ -231,21 +191,18 @@ const IssueCommentForm = ({ issueId, userId }) => {
           ref={commentRef}
           value={comment}
           onChange={commentHandleChange}
-        ></IssueComment>
+        />
         <FileAttachContainer>
           <div>{FileAttachMsg}</div>
         </FileAttachContainer>
         <SubmitDiv>
           <CancelButton>Cancel</CancelButton>
-          <IssueButton onClick={closeIssue}>
-            <CloseImage src="/images/red_close.svg" />
-            <IssueState>Close issue</IssueState>
-          </IssueButton>
+          <IssueCloseButton />
           <SubmitButton state={comment} onClick={createCommentData}>
             Comment
           </SubmitButton>
         </SubmitDiv>
-      </IssueFormContainer>
+      </CommentFormContainer>
     </Main>
   );
 };
