@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import getDiffTime from '../../utils/getDiffTime';
+import { getDiffTime } from '../../utils/time';
 
 const Discussion = styled.div`
   display: flex;
