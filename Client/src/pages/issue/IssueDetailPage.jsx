@@ -7,7 +7,7 @@ import CommentForm from '../../components/comment/CommentForm';
 import Comments from '../../components/comment/Comments';
 import { GET_ISSUE } from '../../utils/api.js';
 import { getOptions } from '../../utils/fetchOptions';
-import getDiffTime from '../../utils/getDiffTime';
+import { getDiffTime } from '../../utils/time';
 import Container from '../../components/shared/container/Container';
 import IssueStateButton from '../../components/issue/IssueStateButton';
 import EditButton from '../../components/issue/IssueEdit';
