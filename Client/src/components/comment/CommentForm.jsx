@@ -1,9 +1,10 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 
-import { GET_USER, POST_COMMENT, POST_CLOSE_ISSUE } from '../../utils/api';
+import { GET_USER, POST_COMMENT } from '../../utils/api';
 import { getOptions, postOptions } from '../../utils/fetchOptions';
 import { CommentContext } from '../../stores/CommentStore';
+import IssueCloseButton from '../issue/IssueCloseButton';
 
 const Main = styled.div`
   display: flex;
@@ -19,7 +20,7 @@ const AuthorImage = styled.img`
 const FileAttachMsg =
   'Attach files by dragging & dropping, selecting or pasting them.';
 
-const IssueFormContainer = styled.div`
+const CommentFormContainer = styled.div`
   width: 832px;
   border: 1px solid #ebecef;
   box-sizing: border-box;
@@ -112,36 +113,6 @@ const SubmitDiv = styled.div`
   margin: 10px;
 `;
 
-const CloseImage = styled.img`
-  width: 16px;
-`;
-
-const IssueState = styled.p`
-  font-size: 14px;
-  font-weight: bold;
-  margin-left: 8px;
-`;
-
-const IssueButton = styled.button`
-  width: 136px;
-  box-shadow: 0px 1px 0px 0px #fafbfc;
-  border-radius: 6px;
-  border: 1px solid #1b1f2326;
-  display: flex;
-  align-items: center;
-  height: 28px;
-  color: #24292e;
-  padding: 5px 16px;
-  text-decoration: none;
-  text-shadow: 0px -1px 0px #fafbfc;
-  cursor: pointer;
-  margin-left: auto;
-  background-color: #fafbfc;
-  :focus {
-    outline: none;
-  }
-`;
-
 const SubmitButton = styled.button`
   width: 100px;
   box-shadow: 0px 1px 0px 0px #3dc21b;
@@ -197,11 +168,6 @@ const IssueCommentForm = ({ userId }) => {
     setComment(commentRef.current.value);
   };
 
-  const closeIssue = () => {
-    const options = postOptions();
-    fetch(POST_CLOSE_ISSUE(issueId), options);
-  };
-
   const getUserInfo = async () => {
     const options = getOptions();
     const response = await fetch(GET_USER(userId), options);
@@ -216,7 +182,7 @@ const IssueCommentForm = ({ userId }) => {
   return (
     <Main>
       <AuthorImage src={userInfo.imageUrl} />
-      <IssueFormContainer>
+      <CommentFormContainer>
         <WriteTab>Write</WriteTab>
         <PreviewTab>Preview</PreviewTab>
         <Hr />
@@ -231,15 +197,12 @@ const IssueCommentForm = ({ userId }) => {
         </FileAttachContainer>
         <SubmitDiv>
           <CancelButton>Cancel</CancelButton>
-          <IssueButton onClick={closeIssue}>
-            <CloseImage src="/images/red_close.svg" />
-            <IssueState>Close issue</IssueState>
-          </IssueButton>
+          <IssueCloseButton />
           <SubmitButton state={comment} onClick={createCommentData}>
             Comment
           </SubmitButton>
         </SubmitDiv>
-      </IssueFormContainer>
+      </CommentFormContainer>
     </Main>
   );
 };

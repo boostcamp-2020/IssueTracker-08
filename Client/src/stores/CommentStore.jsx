@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer } from 'react';
 import useFetch from '../hooks/useFetch';
 import { GET_COMMENTS } from '../utils/api';
 import { getOptions } from '../utils/fetchOptions';
@@ -9,6 +9,7 @@ export const CommentContext = React.createContext();
 const CommentStore = (props) => {
   const [comments, commentDispatch] = useReducer(commentReducer, []);
   const issueId = props.issueId;
+  const state = props.state;
 
   const setIntiData = (initData) => {
     commentDispatch({ type: 'SET_INIT_DATA', payload: initData });
@@ -18,7 +19,7 @@ const CommentStore = (props) => {
 
   return (
     <CommentContext.Provider
-      value={{ issueId, comments, loading, commentDispatch }}
+      value={{ issueId, state, comments, loading, commentDispatch }}
     >
       {props.children}
     </CommentContext.Provider>
