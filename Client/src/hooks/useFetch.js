@@ -7,8 +7,11 @@ const useFetch = (callback, url, options) => {
     setLoading(true);
     const response = await fetch(url, options);
     const initialData = await response.json();
-    callback(initialData.data);
-    setLoading(false);
+
+    if (initialData.status) {
+      callback(initialData.data);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
