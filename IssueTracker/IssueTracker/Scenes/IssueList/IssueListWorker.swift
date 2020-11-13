@@ -9,7 +9,9 @@ import Foundation
 
 
 class IssueListWorker {
+    
     var dataManager: IssueDataManagerProtocol
+    
     init(dataManager: IssueDataManagerProtocol) {
         self.dataManager = dataManager
     }
@@ -26,6 +28,12 @@ class IssueListWorker {
         })
     }
     
+    func openIssue(request: ListIssues.OpenIssue.Request, completion: @escaping (String) -> Void) {
+        dataManager.postOpenIssue(request: request, completion: { result in
+            completion(result)
+        })
+    }
+
     func fetchUsers(request: ListUsers.FetchUsers.Request, completion: @escaping ([UserModel]) -> Void) {
         dataManager.fetchUsers(request: request, completion: { users in
             completion(users)
@@ -41,6 +49,12 @@ class IssueListWorker {
     func fetchMilestones(completion: @escaping ([Milestone]) -> Void) {
         dataManager.fetchMilestones(completion: { milestones in
             completion(milestones)
+        })
+    }
+    
+    func fetchComments(request: ListComment.FetchDetail.Request, completion: @escaping ([comment]) -> Void) {
+        dataManager.fetchComment(request: request, completion: { comments in
+            completion(comments)
         })
     }
 }

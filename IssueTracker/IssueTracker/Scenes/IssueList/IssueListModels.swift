@@ -21,6 +21,7 @@ struct IssueAssign: Decodable {
 
 struct Issue: Decodable {
     var issueId: Int
+    var userId: Int
     var email: String
     var name: String
     var milestoneId: Int?
@@ -51,10 +52,13 @@ enum ListIssues {
         struct ViewModel {
             struct DisplayedIssue {
                 var issueId: Int
+                var userId: Int
                 var title: String
                 var content: String
                 var milestone: String?
                 var label: [IssueLabel]?
+                var allLabel: [IssueLabel]?
+                var assign: [IssueAssign]?
             }
             var displayedIssues: [DisplayedIssue]
         }
@@ -71,11 +75,16 @@ enum ListIssues {
             var displayedAlert: DisplayedAlert
         }
     }
-}
-
-enum FilterCategory: String, CaseIterable {
-    case All // 전체 이슈 (open / close)
-    case Created // 내가작성한 이슈
-    case Assigned // 내게 할당된 이슈
-    case Mentioned // 내가 댓글을 남긴 이슈
+    
+    enum OpenIssue {
+        struct Request { var issueId: Int }
+        struct Response { var status: String }
+        struct ViewModel {
+            struct DisplayedAlert {
+                var title: String
+                var message: String
+            }
+            var displayedAlert: DisplayedAlert
+        }
+    }
 }

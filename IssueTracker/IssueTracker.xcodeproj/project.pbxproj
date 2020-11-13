@@ -27,6 +27,7 @@
 		80245274255988BB0029AB25 /* SignInModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80245273255988BB0029AB25 /* SignInModel.swift */; };
 		8024527925598D210029AB25 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8024527825598D210029AB25 /* EndPoint.swift */; };
 		8024528125598EF70029AB25 /* OAuthGithubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8024528025598EF70029AB25 /* OAuthGithubManager.swift */; };
+		802452ED255C27E80029AB25 /* FilterMdoel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802452EC255C27E80029AB25 /* FilterMdoel.swift */; };
 		8042B7E7254BA1C700910C6F /* UIColor+HexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7E6254BA1C700910C6F /* UIColor+HexString.swift */; };
 		8042B7F9254BAC3D00910C6F /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7F8254BAC3D00910C6F /* SignInViewController.swift */; };
 		8042B7FE254BAD7A00910C6F /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8042B7FD254BAD7A00910C6F /* RootCoordinator.swift */; };
@@ -122,6 +123,7 @@
 		80245273255988BB0029AB25 /* SignInModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInModel.swift; sourceTree = "<group>"; };
 		8024527825598D210029AB25 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		8024528025598EF70029AB25 /* OAuthGithubManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthGithubManager.swift; sourceTree = "<group>"; };
+		802452EC255C27E80029AB25 /* FilterMdoel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterMdoel.swift; sourceTree = "<group>"; };
 		8042B7E6254BA1C700910C6F /* UIColor+HexString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexString.swift"; sourceTree = "<group>"; };
 		8042B7F8254BAC3D00910C6F /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		8042B7FD254BAD7A00910C6F /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
@@ -282,6 +284,14 @@
 			path = IssueTrackerUITests;
 			sourceTree = "<group>";
 		};
+		802452EB255C27BC0029AB25 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				802452EC255C27E80029AB25 /* FilterMdoel.swift */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
 		8042B7E5254BA19500910C6F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +316,7 @@
 		80AA06F42549D07E00086F5F /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				802452EB255C27BC0029AB25 /* Filter */,
 				BD5B1FF42557AB1A00642483 /* IssueEnroll */,
 				BDCC5DDB2554F60A003C9607 /* IssueDetail */,
 				BD71232B2551AAB900D5D195 /* PopUpView */,
@@ -702,6 +713,7 @@
 				29338B9E255CE3FD0071C2A4 /* IssueEnrollWorker.swift in Sources */,
 				BDCC5DE72554F632003C9607 /* IssueDetailPresenter.swift in Sources */,
 				80163C73255009450073AAD5 /* CustomAddButton.swift in Sources */,
+				802452ED255C27E80029AB25 /* FilterMdoel.swift in Sources */,
 				BDCC5DE32554F632003C9607 /* IssueDetailViewController.swift in Sources */,
 				BD71231E25519FA000D5D195 /* LabelDataManager.swift in Sources */,
 				80AA070D2549F0A700086F5F /* IssueListPresenter.swift in Sources */,

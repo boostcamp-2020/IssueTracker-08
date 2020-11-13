@@ -11,9 +11,11 @@ import Foundation
 protocol IssueListBusinessLogic {
     func fetchIssues(request: ListIssues.FetchIssues.Request)
     func closeIssue(request: ListIssues.CloseIssue.Request)
+    func openIssue(request: ListIssues.OpenIssue.Request)
     func fetchUsers(request: ListUsers.FetchUsers.Request)
     func fetchLabels(request: ListLabels.FetchLists.Request)
     func fetchMilestones(request: ListMilestones.FetchLists.Request)
+    func fetchComments(request: ListComment.FetchDetail.Request)
 }
 
 protocol IssueListDataSource {
@@ -29,6 +31,7 @@ class IssueListInteractor {
     var users: [UserModel]?
     var labels: [Label]?
     var milestones: [Milestone]?
+  
 }
 
 extension IssueListInteractor: IssueListBusinessLogic {
@@ -43,9 +46,16 @@ extension IssueListInteractor: IssueListBusinessLogic {
     
     func closeIssue(request: ListIssues.CloseIssue.Request) {
         issueWorker.closeIssue(request: request, completion: { [unowned self] (result) -> Void in
-            self.responseStatus = result
             let response = ListIssues.CloseIssue.Response(status: result)
             self.presenter?.presentPostResult(response: response)
+        })
+    }
+    
+
+    func openIssue(request: ListIssues.OpenIssue.Request) {
+        issueWorker.openIssue(request: request, completion: { [unowned self] (result) -> Void in
+            let response = ListIssues.OpenIssue.Response(status: result)
+            presenter?.presentPostResult(response: response)
         })
     }
     
@@ -70,6 +80,13 @@ extension IssueListInteractor: IssueListBusinessLogic {
             self.milestones = milestones
             let response = ListMilestones.FetchLists.Response(milestones: milestones)
             self.presenter?.presentFetchedMilestones(response: response)
+        })
+    }
+    
+    func fetchComments(request: ListComment.FetchDetail.Request) {
+        issueWorker.fetchComments(request: request, completion: { (comments) -> Void in
+            let response = ListComment.FetchDetail.Response(comment: comments)
+            self.presenter?.presentFetchedComments(response: response)
         })
     }
 }
