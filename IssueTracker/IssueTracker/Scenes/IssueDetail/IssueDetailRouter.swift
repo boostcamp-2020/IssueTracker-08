@@ -27,6 +27,13 @@ class IssueDetailRouter: IssueDetailDataReceiving {
     var issueDetailData: Int?
     var issueEditData: DetailRouteData?
     weak var viewController: IssueDetailViewController?
+    weak var cardViewController: CardViewController?
+}
+
+extension IssueDetailRouter: IssueDetailRoutingLogic {
+    func routeToEnroll(destinationVC: IssueEnrollViewController) {
+        destinationVC.router?.issueEditData = issueEditData
+    }
 }
 
 extension IssueDetailRouter: IssueDetailRoutingLogic {

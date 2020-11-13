@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1F2F677E0B17EDFEC252EA13 /* Pods_IssueTracker_IssueTrackerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04B913ACEA472A6ED4C2AAAA /* Pods_IssueTracker_IssueTrackerUITests.framework */; };
+		29338B9A255CDCCF0071C2A4 /* IssueEnrollModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29338B99255CDCCF0071C2A4 /* IssueEnrollModel.swift */; };
+		29338B9C255CDFD20071C2A4 /* IssueEnrollInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29338B9B255CDFD20071C2A4 /* IssueEnrollInteractor.swift */; };
+		29338B9E255CE3FD0071C2A4 /* IssueEnrollWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29338B9D255CE3FD0071C2A4 /* IssueEnrollWorker.swift */; };
+		29338BA0255CE6730071C2A4 /* IssueEnrollPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29338B9F255CE6730071C2A4 /* IssueEnrollPresenter.swift */; };
 		800666CA2547D24200B42428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666C92547D24200B42428 /* AppDelegate.swift */; };
 		800666CC2547D24200B42428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666CB2547D24200B42428 /* SceneDelegate.swift */; };
 		800666CE2547D24200B42428 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800666CD2547D24200B42428 /* PopUpViewController.swift */; };
@@ -42,6 +46,8 @@
 		BD5B1FFE2557ACFE00642483 /* CALayer+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B1FFD2557ACFE00642483 /* CALayer+Border.swift */; };
 		BD5C8CBB255BE19D0092C47F /* OAuthAppleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C8CBA255BE19D0092C47F /* OAuthAppleManager.swift */; };
 		BD5C8CC3255C0CCC0092C47F /* IssueEnrollRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C8CC2255C0CCC0092C47F /* IssueEnrollRouter.swift */; };
+		BD5C8CDE255C38EC0092C47F /* BottomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C8CDD255C38EC0092C47F /* BottomTableViewController.swift */; };
+		BD5C8D12255C51EA0092C47F /* BottomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5C8D11255C51EA0092C47F /* BottomTableViewCell.swift */; };
 		BD5D411E254FD6D5008BCB36 /* LabelListModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D411D254FD6D5008BCB36 /* LabelListModels.swift */; };
 		BD5D412D254FDA85008BCB36 /* MilestoneListModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4128254FDA85008BCB36 /* MilestoneListModels.swift */; };
 		BD5D412E254FDA85008BCB36 /* MilestoneListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5D4129254FDA85008BCB36 /* MilestoneListInteractor.swift */; };
@@ -90,6 +96,10 @@
 /* Begin PBXFileReference section */
 		04B913ACEA472A6ED4C2AAAA /* Pods_IssueTracker_IssueTrackerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTracker_IssueTrackerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F1CE59EA9157BA9DFBC2777 /* Pods-IssueTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker.release.xcconfig"; path = "Target Support Files/Pods-IssueTracker/Pods-IssueTracker.release.xcconfig"; sourceTree = "<group>"; };
+		29338B99255CDCCF0071C2A4 /* IssueEnrollModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueEnrollModel.swift; sourceTree = "<group>"; };
+		29338B9B255CDFD20071C2A4 /* IssueEnrollInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueEnrollInteractor.swift; sourceTree = "<group>"; };
+		29338B9D255CE3FD0071C2A4 /* IssueEnrollWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueEnrollWorker.swift; sourceTree = "<group>"; };
+		29338B9F255CE6730071C2A4 /* IssueEnrollPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueEnrollPresenter.swift; sourceTree = "<group>"; };
 		4F983C8476DEF87744EFC079 /* Pods-IssueTrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTrackerTests.debug.xcconfig"; path = "Target Support Files/Pods-IssueTrackerTests/Pods-IssueTrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5A9FC34F6955FD30A256E27B /* Pods-IssueTracker-IssueTrackerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker-IssueTrackerUITests.release.xcconfig"; path = "Target Support Files/Pods-IssueTracker-IssueTrackerUITests/Pods-IssueTracker-IssueTrackerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7527E0FFD543E83A2E889933 /* Pods-IssueTrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTrackerTests.release.xcconfig"; path = "Target Support Files/Pods-IssueTrackerTests/Pods-IssueTrackerTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -132,6 +142,8 @@
 		BD5C8CAA255BD85B0092C47F /* IssueTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IssueTracker.entitlements; sourceTree = "<group>"; };
 		BD5C8CBA255BE19D0092C47F /* OAuthAppleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthAppleManager.swift; sourceTree = "<group>"; };
 		BD5C8CC2255C0CCC0092C47F /* IssueEnrollRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueEnrollRouter.swift; sourceTree = "<group>"; };
+		BD5C8CDD255C38EC0092C47F /* BottomTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomTableViewController.swift; sourceTree = "<group>"; };
+		BD5C8D11255C51EA0092C47F /* BottomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomTableViewCell.swift; sourceTree = "<group>"; };
 		BD5D411D254FD6D5008BCB36 /* LabelListModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListModels.swift; sourceTree = "<group>"; };
 		BD5D4128254FDA85008BCB36 /* MilestoneListModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneListModels.swift; sourceTree = "<group>"; };
 		BD5D4129254FDA85008BCB36 /* MilestoneListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MilestoneListInteractor.swift; sourceTree = "<group>"; };
@@ -360,6 +372,10 @@
 			children = (
 				BD5B1FF52557AB5200642483 /* IssueEnrollViewController.swift */,
 				BD5C8CC2255C0CCC0092C47F /* IssueEnrollRouter.swift */,
+				29338B99255CDCCF0071C2A4 /* IssueEnrollModel.swift */,
+				29338B9B255CDFD20071C2A4 /* IssueEnrollInteractor.swift */,
+				29338B9D255CE3FD0071C2A4 /* IssueEnrollWorker.swift */,
+				29338B9F255CE6730071C2A4 /* IssueEnrollPresenter.swift */,
 			);
 			path = IssueEnroll;
 			sourceTree = "<group>";
@@ -427,6 +443,7 @@
 				BDCC5DDC2554F632003C9607 /* IssueDetailViewController.swift */,
 				BDCC5DEE2554F655003C9607 /* IssueDetailRouter.swift */,
 				BDCC5DDE2554F632003C9607 /* IssueDetailWorker.swift */,
+				BD5C8CDD255C38EC0092C47F /* BottomTableViewController.swift */,
 			);
 			path = IssueDetail;
 			sourceTree = "<group>";
@@ -435,6 +452,7 @@
 			isa = PBXGroup;
 			children = (
 				BDCC5DF32554F65A003C9607 /* IssueDetailCollectionViewCell.swift */,
+				BD5C8D11255C51EA0092C47F /* BottomTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -692,6 +710,7 @@
 				8024527925598D210029AB25 /* EndPoint.swift in Sources */,
 				80245274255988BB0029AB25 /* SignInModel.swift in Sources */,
 				BD5D4131254FDA85008BCB36 /* MilestoneListWorker.swift in Sources */,
+				29338B9E255CE3FD0071C2A4 /* IssueEnrollWorker.swift in Sources */,
 				BDCC5DE72554F632003C9607 /* IssueDetailPresenter.swift in Sources */,
 				80163C73255009450073AAD5 /* CustomAddButton.swift in Sources */,
 				802452ED255C27E80029AB25 /* FilterMdoel.swift in Sources */,
@@ -701,12 +720,15 @@
 				8042B7E7254BA1C700910C6F /* UIColor+HexString.swift in Sources */,
 				BD5D414E254FDCFA008BCB36 /* LabelCollectionViewController.swift in Sources */,
 				BD5D4151254FDCFA008BCB36 /* LabelListInteractor.swift in Sources */,
+				29338BA0255CE6730071C2A4 /* IssueEnrollPresenter.swift in Sources */,
+				29338B9A255CDCCF0071C2A4 /* IssueEnrollModel.swift in Sources */,
 				BD5C8CC3255C0CCC0092C47F /* IssueEnrollRouter.swift in Sources */,
 				BD5D413E254FDAF3008BCB36 /* MilestoneDataManager.swift in Sources */,
 				BD5C8CBB255BE19D0092C47F /* OAuthAppleManager.swift in Sources */,
 				BD5D412D254FDA85008BCB36 /* MilestoneListModels.swift in Sources */,
 				BD5B1FF62557AB5200642483 /* IssueEnrollViewController.swift in Sources */,
 				80AA07032549ED4700086F5F /* IssueListCollectionViewCell.swift in Sources */,
+				BD5C8D12255C51EA0092C47F /* BottomTableViewCell.swift in Sources */,
 				80AA071C254A846800086F5F /* IssueListWorker.swift in Sources */,
 				800666CE2547D24200B42428 /* PopUpViewController.swift in Sources */,
 				8024528125598EF70029AB25 /* OAuthGithubManager.swift in Sources */,
@@ -716,6 +738,8 @@
 				BDCC5DE92554F632003C9607 /* CardViewController.swift in Sources */,
 				80AA07172549F0F800086F5F /* IssueListRouter.swift in Sources */,
 				BDD4CA48255A901E002242F9 /* UISwitch+OffColor.swift in Sources */,
+				BD5C8CDE255C38EC0092C47F /* BottomTableViewController.swift in Sources */,
+				29338B9C255CDFD20071C2A4 /* IssueEnrollInteractor.swift in Sources */,
 				BD5D414F254FDCFA008BCB36 /* LabelListWorker.swift in Sources */,
 				80AA06F72549D09F00086F5F /* IssueListViewController.swift in Sources */,
 				BDCC5DF42554F65A003C9607 /* IssueDetailCollectionViewCell.swift in Sources */,

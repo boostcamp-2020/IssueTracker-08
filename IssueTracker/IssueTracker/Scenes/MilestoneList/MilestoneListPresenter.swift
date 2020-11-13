@@ -22,13 +22,11 @@ extension MilestoneListPresenter: MilestoneListPresentationLogic {
     func presentFetchedMilestones(response: ListMilestones.FetchLists.Response) {
         var displayedMilestones: [ListMilestones.FetchLists.ViewModel.DisplayedMilestone] = []
         for milestone in response.milestones {
-            var description = milestone.content
-            if description!.isEmpty { description = "No description provided" }
             let displayedMilestone = ListMilestones.FetchLists.ViewModel.DisplayedMilestone(
                 id: milestone.id,
                 title: milestone.title,
                 dueDate: milestone.dueDate,
-                content: description!,
+                content: milestone.content ?? "No description provided",
                 openIssue: milestone.openIssue,
                 closeIssue: milestone.closeIssue
             )

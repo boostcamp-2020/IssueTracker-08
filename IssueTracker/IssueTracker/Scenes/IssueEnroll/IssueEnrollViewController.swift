@@ -11,6 +11,16 @@ import SafariServices
 enum EnrollMode {
     case CreateIssue
     case EditIssue
+    case CreateComment
+    case EditComment
+}
+
+protocol IssueEnrollDisplayLogic: class {
+    func displayAlert(viewModel: issueEnrolls.CreateIssue.ViewModel)
+    func displayEditAlert(viewModel:issueEnrolls.EditIssue.ViewModel)
+    func displayCommentAlert(viewModel: issueComment.CreateComment.ViewModel)
+    func displayEditCommentAlert(viewModel: issueComment.EditIssue.ViewModel)
+    func displayDeleteCommentAlert(viewModel: issueComment.DeleteIssue.ViewModel)
 }
 
 class IssueEnrollViewController: UIViewController {
@@ -31,7 +41,11 @@ class IssueEnrollViewController: UIViewController {
     private let markdownView = MarkdownView()
     private let menuController = UIMenuController.shared
     private let imagePicker = UIImagePickerController()
+    var interactor: IssueEnrollBusinessLogic?
     var router: (IssueEnrollDataReceiving)?
+    var commentId: Int?
+    var issueEditData: DetailRouteData?
+    @IBOutlet weak var commentDeleteBtn: UIButton!
     
     // MARK:- View Lifecycle
     
@@ -57,10 +71,78 @@ class IssueEnrollViewController: UIViewController {
     
     // MARK:- IBActions
     @IBAction func saveButton(_ sender: Any) {
-        // TO DO:
-            // Send to Server
+        if mode == .CreateIssue {
+            createIssue()
+        }
+        else if mode == .EditIssue {
+            editIssue()
+        }
+        else if mode == .CreateComment {
+            createComment()
+        }
+        else {
+            editComment()
+        }
     }
     
+    @IBAction func commentDeleteClick(_ sender: Any) {
+        let request = issueComment.DeleteIssue.Request(
+            commentId: commentDeleteData(
+                commentId: commentId!
+            )
+        )
+        interactor?.deleteComment(request: request)
+    }
+    
+    private func createIssue() {
+        let request = issueEnrolls.CreateIssue.Request(
+            newIssue: issueEnrollData(
+                userId: UserDefaults.standard.object(forKey: "ID") as! Int,
+
+                title: titleTextField.text!,
+                content: textDescription.text
+            ),
+            token: UserDefaults.standard.object(forKey: "JWT") as! String
+        )
+        interactor?.createNewIssue(request: request)
+    }
+    
+    private func editIssue() {
+        let request = issueEnrolls.EditIssue.Request(
+            editIssue: issueEnrollData(
+                userId: UserDefaults.standard.object(forKey: "ID") as! Int,
+                title: titleTextField.text!,
+                content: textDescription.text
+            ),
+            issueId: (router?.issueEditData!.id)!
+            ,
+            token: UserDefaults.standard.object(forKey: "JWT") as! String
+        )
+        interactor?.editIssue(request: request)
+    }
+    
+    private func createComment() {
+        let request = issueComment.CreateComment.Request(
+            comment: commentData(
+                userId: UserDefaults.standard.object(forKey: "ID") as! Int,
+                issueId: (router?.issueEditData!.id)!,
+                content: textDescription.text
+            )
+        )
+        interactor?.createNewComment(request: request)
+    }
+    
+    private func editComment() {
+        let request = issueComment.EditIssue.Request(
+            editComment: commentEditData(
+                userId: UserDefaults.standard.object(forKey: "ID") as! Int,
+                issueId: issueEditData!.id,
+                content: textDescription.text,
+                commentId: commentId!
+            )
+        )
+        interactor?.editComment(request: request)
+    }
 }
 
 // MARK:- Setup
@@ -81,12 +163,30 @@ extension IssueEnrollViewController {
             textDescription.text = router?.issueEditData?.content
             textDescription.textColor = UIColor.black
         }
+        else if mode == .CreateComment {
+            issueTitle.text = "New Comment"
+            titleTextField.text = router?.issueEditData?.title
+            titleTextField.isUserInteractionEnabled = false
+        }
+        else if mode == .EditComment {
+            titleTextField.text = issueEditData?.title
+            titleTextField.isUserInteractionEnabled = false
+            textDescription.text = issueEditData?.content
+            textDescription.textColor = UIColor.black
+            issueTitle.text = "Edit Comment"
+            commentDeleteBtn.isHidden = false
+        }
     }
     
     private func editSetup() {
         let viewController = self
+        let interactor = IssueEnrollInteractor()
+        let presenter = IssueEnrollPresenter()
         let router = IssueEnrollRouter()
+        viewController.interactor = interactor
+        interactor.presenter = presenter
         viewController.router = router
+        presenter.viewController = viewController
         router.viewController = viewController
     }
     
@@ -224,6 +324,75 @@ extension IssueEnrollViewController: UIImagePickerControllerDelegate,
             else { textDescription.text.append("\n\(imageURL)") }
         }
         dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+extension IssueEnrollViewController: IssueEnrollDisplayLogic {
+    
+    func displayAlert(viewModel: issueEnrolls.CreateIssue.ViewModel) {
+        let displayedAlert = viewModel.displayedAlert
+        let alert = UIAlertController(
+            title: displayedAlert.title,
+            message: displayedAlert.message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [unowned self] _ in
+            navigationController?.popViewController(animated: true)
+        }))
+        present(alert, animated: true)
+    }
+    
+    func displayEditAlert(viewModel: issueEnrolls.EditIssue.ViewModel) {
+        let displayedAlert = viewModel.displayedAlert
+        let alert = UIAlertController(
+            title: displayedAlert.title,
+            message: displayedAlert.message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [unowned self] _ in
+            navigationController?.popViewController(animated: true)
+        }))
+        present(alert, animated: true)
+    }
+    
+    func displayCommentAlert(viewModel: issueComment.CreateComment.ViewModel) {
+        let displayedAlert = viewModel.displayedAlert
+        let alert = UIAlertController(
+            title: displayedAlert.title,
+            message: displayedAlert.message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [unowned self] _ in
+            navigationController?.popViewController(animated: true)
+        }))
+        present(alert, animated: true)
+    }
+    
+    func displayEditCommentAlert(viewModel: issueComment.EditIssue.ViewModel) {
+        let displayedAlert = viewModel.displayedAlert
+        let alert = UIAlertController(
+            title: displayedAlert.title,
+            message: displayedAlert.message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [unowned self] _ in
+            navigationController?.popViewController(animated: true)
+        }))
+        present(alert, animated: true)
+    }
+    
+    func displayDeleteCommentAlert(viewModel: issueComment.DeleteIssue.ViewModel) {
+        let displayedAlert = viewModel.displayedAlert
+        let alert = UIAlertController(
+            title: displayedAlert.title,
+            message: displayedAlert.message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [unowned self] _ in
+            navigationController?.popViewController(animated: true)
+        }))
+        present(alert, animated: true)
     }
     
 }

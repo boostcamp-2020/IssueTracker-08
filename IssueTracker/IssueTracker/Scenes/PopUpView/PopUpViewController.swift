@@ -113,7 +113,11 @@ class PopUpViewController: UIViewController {
         dateData.font = dateData.font.withSize(14)
         datePicker.addTarget(self, action: #selector(handleDatePicker), for: .valueChanged)
         if mode == .EditMilestone {
-            datePicker.date = FormattedEditDate(dueDate: (displayedMilestone?.dueDate)!)
+            
+            if displayedMilestone?.dueDate == nil {
+                datePicker.date = FormattedEditDate(dueDate: FormattedDateToString(dueDate: Date()) )
+            }
+            else { datePicker.date = FormattedEditDate(dueDate: (displayedMilestone?.dueDate)!) }
         }
         datePicker.subviews[0].subviews[0].backgroundColor = .white
         datePicker.subviews[0].subviews[1].backgroundColor = .white

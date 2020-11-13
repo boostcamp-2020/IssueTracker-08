@@ -9,14 +9,14 @@ import Foundation
 
 enum EndPoint {
     static let baseURL: String = "http://118.67.131.96:3000"
-    
+
     static let issues: String = "\(Self.baseURL)/api/issues/"
     static let milestones: String = "\(Self.baseURL)/api/milestones/"
     static let labels: String = "\(Self.baseURL)/api/labels"
     static let issueDetail: String = "\(Self.baseURL)/api/issues"
     static let comments: String = "\(Self.issueDetail)/comment"
     static let users: String = "\(Self.baseURL)/api/users"
-    
+
     // MARK:- Sign In
     static let githubOAuth: String = "\(Self.baseURL)/auth/github/callback"
     static let githubURLScheme: String = "oauthLogin"

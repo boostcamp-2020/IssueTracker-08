@@ -27,7 +27,11 @@ class IssueListInteractor {
     var presenter: IssueListPresentationLogic?
     var issueWorker = IssueListWorker(dataManager: IssueDataManager())
     var issues: [Issue]?
-    
+    var responseStatus: String?
+    var users: [UserModel]?
+    var labels: [Label]?
+    var milestones: [Milestone]?
+  
 }
 
 extension IssueListInteractor: IssueListBusinessLogic {
@@ -47,6 +51,7 @@ extension IssueListInteractor: IssueListBusinessLogic {
         })
     }
     
+
     func openIssue(request: ListIssues.OpenIssue.Request) {
         issueWorker.openIssue(request: request, completion: { [unowned self] (result) -> Void in
             let response = ListIssues.OpenIssue.Response(status: result)
@@ -56,6 +61,7 @@ extension IssueListInteractor: IssueListBusinessLogic {
     
     func fetchUsers(request: ListUsers.FetchUsers.Request) {
         issueWorker.fetchUsers(request: request, completion: { users in
+            self.users = users
             let response = ListUsers.FetchUsers.Response(users: users)
             self.presenter?.presentFetchedUsers(response: response)
         })
@@ -63,6 +69,7 @@ extension IssueListInteractor: IssueListBusinessLogic {
     
     func fetchLabels(request: ListLabels.FetchLists.Request) {
         issueWorker.fetchLabels(completion: { [unowned self] (Labels) -> Void in
+            self.labels = Labels
             let response = ListLabels.FetchLists.Response(labels: Labels)
             self.presenter?.presentFetchedLabels(response: response)
         })
@@ -70,6 +77,7 @@ extension IssueListInteractor: IssueListBusinessLogic {
     
     func fetchMilestones(request: ListMilestones.FetchLists.Request) {
         issueWorker.fetchMilestones(completion: { (milestones) -> Void in
+            self.milestones = milestones
             let response = ListMilestones.FetchLists.Response(milestones: milestones)
             self.presenter?.presentFetchedMilestones(response: response)
         })
@@ -81,7 +89,6 @@ extension IssueListInteractor: IssueListBusinessLogic {
             self.presenter?.presentFetchedComments(response: response)
         })
     }
-    
 }
 
 extension IssueListInteractor: IssueListDataSource { }

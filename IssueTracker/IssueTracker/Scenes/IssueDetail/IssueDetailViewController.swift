@@ -31,11 +31,12 @@ class IssueDetailViewController: UIViewController {
     var runningAnimations = [UIViewPropertyAnimator]()
     var animationProgressWhenInterrupted: CGFloat = 0
     
-    private let cardHeight: CGFloat = 600
+    private let cardHeight: CGFloat = 650
     private let cardHandleAreaHeight: CGFloat = 95
     
     // MARK:- Other Variable
     
+    @IBOutlet weak var issueImage: UIImageView!
     @IBOutlet weak var userIdLabel: UILabel!
     @IBOutlet weak var issueTag: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
@@ -70,7 +71,6 @@ class IssueDetailViewController: UIViewController {
         super.viewDidLoad()
         setupCardView()
         setupCollectionview()
-        setupTabbar(AccessType: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,10 +79,27 @@ class IssueDetailViewController: UIViewController {
         loadingView.isHidden = false
         activityView.isHidden = false
         fetchIssue()
+        setupTabbar(AccessType: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         setupTabbar(AccessType: false)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editComment" {
+            let destinationVC = segue.destination as! IssueEnrollViewController
+            let senderButton: UIButton = sender as! UIButton
+            let indexpath: Int = Int(String(senderButton.restorationIdentifier!))!
+           
+            destinationVC.issueEditData = DetailRouteData(
+                id: issueId,
+                title: displayIssue!.displayedDetail.title,
+                content: displayComment[indexpath].content
+            )
+            destinationVC.commentId = displayComment[indexpath].commentId
+            destinationVC.mode = .EditComment
+        }
     }
     
     private func markdownTouchAnction(markdown: MarkdownView) {
@@ -166,9 +183,11 @@ extension IssueDetailViewController {
         userIdLabel.text = displayIssue!.displayedDetail.name
         issueTag.text = "#\(displayIssue!.displayedDetail.issueId)"
         titleLabel.text = displayIssue!.displayedDetail.title
+        
         if displayIssue!.displayedDetail.isOpen != 1 {
             openStatus[0].isHidden = true
             openStatus[1].isHidden = false
+            cardViewController.openCloseStatus(type: false)
         }
     }
     
@@ -277,6 +296,18 @@ extension IssueDetailViewController: IssueDetailDisplayLogic {
     func displayOpenIssue(viewModel: ListIssueDetail.FetchDetail.ViewModel) {
         displayIssue = viewModel
         setupView()
+        let cardViewData = bottomModel(
+            title: displayIssue!.displayedDetail.title,
+            content: displayIssue!.displayedDetail.content!,
+            label: displayIssue!.displayedDetail.label,
+            assign: displayIssue!.displayedDetail.assign,
+            MilestoneId: displayIssue!.displayedDetail.milestoneId
+        )
+        cardViewController.setup(tag: issueId, displayData: cardViewData)
+        if displayIssue!.displayedDetail.issueId != UserDefaults.standard.object(forKey: "ID") as! Int {
+            navigationItem.rightBarButtonItem = nil
+        }
+        
         IssueDetailCollectionView.reloadData()
     }
     
@@ -316,19 +347,34 @@ extension IssueDetailViewController: UICollectionViewDataSource {
             if cell.content.subviews.count > 0 {
                 cell.content.subviews.forEach { $0.removeFromSuperview() }
             }
+            let url = URL(string: displayIssue!.displayedDetail.imageUrl)
+            let data = try! Data(contentsOf: url!)
+            issueImage.image = UIImage(data: data)
+            cell.userImage.image = UIImage(data: data)
+            
             cell.content.load(markdown: displayIssue!.displayedDetail.content)
             cell.content.isScrollEnabled = false
+            cell.editButton.isHidden = true
         }
         else {
+            let userId = UserDefaults.standard.object(forKey: "ID")
+            if userId as! Int != displayComment[indexPath.item - 1].userId {
+                cell.editButton.isHidden = true
+            }
             let displayedComment = displayComment[indexPath.item - 1]
             cell.userID.text = displayedComment.name
             cell.timeDifference.text = FormattedDifferenceDateString(dueDate: displayedComment.createAt)
             if cell.content.subviews.count > 0 {
                 cell.content.subviews.forEach { $0.removeFromSuperview() }
             }
+            let url = URL(string: displayedComment.imageUrl)
+            let data = try! Data(contentsOf: url!)
+            cell.userImage.image = UIImage(data: data)
+            
             markdownTouchAnction(markdown: cell.content)
             cell.content.load(markdown: displayedComment.content)
             cell.content.isScrollEnabled = false
+            cell.editButton.restorationIdentifier = "\(indexPath.item - 1)"
         }
         
         if displayComment.count == indexPath.item {

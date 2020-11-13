@@ -12,6 +12,10 @@ protocol IssueDetailBusinessLogic {
     func fetchComment(request: ListComment.FetchDetail.Request)
 }
 
+protocol MilestoneDetailBusinessLogic {
+    func fetchMilestone(request: milestoneDetail.FetchLists.Request)
+}
+
 protocol IssueDetailDataSource {
     var issue: IssueDetail? { get }
     var comment: [comment]? { get }
@@ -19,6 +23,7 @@ protocol IssueDetailDataSource {
 
 class IssueDetailInteractor {
     var presenter: IssueDetailPresentationLogic?
+    var issuePresenter: IssueListPresentationLogic?
     var issueWorker = IssueDetailWorker(dataManager: IssueDetailDataManager())
     var issue: IssueDetail?
     var comment: [comment]?
@@ -44,3 +49,23 @@ extension IssueDetailInteractor: IssueDetailBusinessLogic {
 }
 
 extension IssueDetailInteractor: IssueDetailDataSource { }
+
+protocol CardViewDetailDataSource {
+    var milestone: Milestone? { get }
+}
+
+class CardViewDetailInteractor {
+    var presenter: CardViewPresentationLogic?
+    var cardViewWorker = CardViewWorker(dataManager: CardViewDataManager())
+    var milestone: Milestone?
+}
+
+extension CardViewDetailInteractor: MilestoneDetailBusinessLogic {
+    func fetchMilestone(request: milestoneDetail.FetchLists.Request) {
+        cardViewWorker.fetchMilestone(request: request, completion: { milestone in
+            self.milestone = milestone
+            let response = milestoneDetail.FetchLists.Response(milestones: milestone)
+            self.presenter?.presentFetchedMilestone(response: response)
+        })
+    }
+}

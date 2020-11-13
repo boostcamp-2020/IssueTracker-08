@@ -11,10 +11,10 @@ import Foundation
 protocol IssueListPresentationLogic {
     func presentFetchedIssues(response: ListIssues.FetchIssues.Response)
     func presentPostResult(response: ListIssues.CloseIssue.Response)
-    func presentPostResult(response: ListIssues.OpenIssue.Response)
     func presentFetchedUsers(response: ListUsers.FetchUsers.Response)
     func presentFetchedLabels(response: ListLabels.FetchLists.Response)
     func presentFetchedMilestones(response: ListMilestones.FetchLists.Response)
+    func presentPostResult(response: ListIssues.OpenIssue.Response)
     func presentFetchedComments(response: ListComment.FetchDetail.Response)
 }
 
@@ -117,6 +117,57 @@ extension IssueListPresenter: IssueListPresentationLogic {
         viewController?.displayFetchedMilestone(viewModel: viewModel)
     }
     
+    func presentFetchedUsers(response: ListUsers.FetchUsers.Response) {
+        var displayedUsers: [ListUsers.FetchUsers.ViewModel.DisplayedUser] = []
+        for users in response.users {
+            let displayedUser = ListUsers.FetchUsers.ViewModel.DisplayedUser(
+                id: users.id,
+                email: users.email,
+                name: users.email,
+                imageUrl: users.imageUrl
+            )
+            displayedUsers.append(displayedUser)
+        }
+        let viewModel = ListUsers.FetchUsers.ViewModel(displayedUser: displayedUsers)
+        viewController?.displayUsers(viewModel: viewModel)
+    }
+    
+    func presentFetchedLabels(response: ListLabels.FetchLists.Response) {
+        var displayedLabels: [ListLabels.FetchLists.ViewModel.DisplayedLabel] = []
+        for Label in response.labels {
+            var description = Label.description
+            if description! == "" {
+                description = "No description provided"
+            }
+            
+            let displayedLabel = ListLabels.FetchLists.ViewModel.DisplayedLabel(
+                id: Label.id,
+                name: Label.name,
+                color: Label.color,
+                description: description
+            )
+            displayedLabels.append(displayedLabel)
+        }
+        let viewModel = ListLabels.FetchLists.ViewModel(displayedLabels: displayedLabels)
+        viewController?.displayFetchedLabels(viewModel: viewModel)
+    }
+    
+    func presentFetchedMilestones(response: ListMilestones.FetchLists.Response) {
+        var displayedMilestones: [ListMilestones.FetchLists.ViewModel.DisplayedMilestone] = []
+        for milestone in response.milestones {
+            let displayedMilestone = ListMilestones.FetchLists.ViewModel.DisplayedMilestone(
+                id: milestone.id,
+                title: milestone.title,
+                dueDate: milestone.dueDate,
+                content: milestone.content ?? "No description provided",
+                openIssue: milestone.openIssue,
+                closeIssue: milestone.closeIssue
+            )
+            displayedMilestones.append(displayedMilestone)
+        }
+        let viewModel = ListMilestones.FetchLists.ViewModel(displayedMilestones: displayedMilestones)
+        viewController?.displayFetchedMilestone(viewModel: viewModel)
+      
     func presentFetchedComments(response: ListComment.FetchDetail.Response) {
         var displayedComments: [comment] = []
         for comments in response.comment {

@@ -21,6 +21,8 @@ extension IssueDetailPresenter : IssueDetailPresentationLogic {
         let displayedIssue = ListIssueDetail.FetchDetail.ViewModel(
             displayedDetail: IssueDetail(
                 issueId: response.issueDetail.issueId,
+                userId: response.issueDetail.userId,
+                imageUrl: response.issueDetail.imageUrl,
                 email: response.issueDetail.email,
                 name: response.issueDetail.name,
                 milestoneId: response.issueDetail.milestoneId,
@@ -52,5 +54,30 @@ extension IssueDetailPresenter : IssueDetailPresentationLogic {
         }
         let viewModel = ListComment.FetchDetail.ViewModel(displayedComment: displayedComments)
         viewController?.displayComment(viewModel: viewModel)
+    }
+}
+
+
+protocol CardViewPresentationLogic {
+    func presentFetchedMilestone(response: milestoneDetail.FetchLists.Response)
+}
+
+class CardViewPresenter {
+    weak var viewController: MilestoneDetailDisplayLogic?
+}
+
+extension CardViewPresenter : CardViewPresentationLogic {
+    func presentFetchedMilestone(response: milestoneDetail.FetchLists.Response) {
+        let displayedMilestone =  milestoneDetail.FetchLists.ViewModel(
+            displayedMilestones: milestoneDetail.FetchLists.ViewModel.DisplayedMilestone(
+                id: response.milestones.id,
+                title: response.milestones.title,
+                dueDate: response.milestones.dueDate,
+                content: response.milestones.content!,
+                openIssue: response.milestones.openIssue,
+                closeIssue: response.milestones.closeIssue
+            )
+        )
+        viewController?.displayFetchedMilestone(viewModel: displayedMilestone)
     }
 }

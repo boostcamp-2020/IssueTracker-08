@@ -33,7 +33,7 @@ class IssueListWorker {
             completion(result)
         })
     }
-    
+
     func fetchUsers(request: ListUsers.FetchUsers.Request, completion: @escaping ([UserModel]) -> Void) {
         dataManager.fetchUsers(request: request, completion: { users in
             completion(users)
