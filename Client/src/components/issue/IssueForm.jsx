@@ -166,7 +166,6 @@ const IssueForm = ({ userId }) => {
     const options = postOptions(issue);
     const response = await fetch(POST_ISSUE, options);
     const result = await response.json();
-    console.log('result', result);
 
     history.push(`/issue/${result.data.issueId}`);
   };

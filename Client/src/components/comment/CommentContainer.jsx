@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react';
-import styled, { css } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 
-import { CommentContext } from '../../stores/CommentStore';
 import getDiffTime from '../../utils/getDiffTime';
 
 const Discussion = styled.div`
@@ -58,7 +57,7 @@ const Comment = styled.div`
   padding: 15px;
 `;
 
-const CommentContainer = ({ userId, name, content, imageUrl, createAt }) => {
+const CommentContainer = ({ name, content, imageUrl, createAt }) => {
   const CommentInfo = (
     <Discussion>
       <AuthorImage src={`${imageUrl}`} />

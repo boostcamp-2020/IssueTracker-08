@@ -72,6 +72,7 @@ const IssueCloseButton = () => {
       </IssueButton>
     );
   }
+
   return <div>Loading..</div>;
 };
 
