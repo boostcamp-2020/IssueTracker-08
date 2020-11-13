@@ -36,8 +36,3 @@ extension IssueDetailRouter: IssueDetailRoutingLogic {
     }
 }
 
-extension IssueDetailRouter: IssueDetailRoutingLogic {
-    func routeToEnroll(destinationVC: IssueEnrollViewController) {
-        destinationVC.router?.issueEditData = issueEditData
-    }
-}
