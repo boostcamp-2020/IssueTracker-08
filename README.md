@@ -168,3 +168,43 @@ iOS RELEASE : https://kr.object.ncloudstorage.com/release-server/Web/index.html
 * Cancel 버튼을 통해 수정을 반영하지 않고 이전 페이지로 돌아갈 수 있음
 
 ![image](https://user-images.githubusercontent.com/50297117/99024181-5f175f00-25a9-11eb-993a-c2ee0bfe570c.png)
+
+## 📱 iOS
+
+### Login 및 Issue 목록보기 & 생성
+| LoginPage | Issue  | IssueList-Open | 
+| ------- | -------- | -------- | 
+| <img width = 350, src = "https://i.imgur.com/2HoVWGq.png"> | <img width = 350, src = "https://i.imgur.com/gUJsRF3.gif">| <img width = 350, src = "https://i.imgur.com/0KGBqxL.gif">|
+
+* Github login 및 Apple Login 
+* Open issue, Closed issue를 목록형태로 볼 수 있음
+* 목록에서 이슈 close, open이 가능 (삭제는 다중 선택 후 삭제 가능)
+
+### Issue Filter 및 Edit
+
+| IssueFilter  | IssueEdit | 
+| -------- | -------- | 
+| <img width = 350, src = "https://i.imgur.com/tGyekQF.gif">| <img width = 350, src = "https://i.imgur.com/JZpGTGt.gif">|
+
+* 현재 로그인 유저와 관련된 필터링은 search bar의 scope를 통해 가능
+* 그 외 조건들을 필터 하고 싶다면 필터 버튼 누르면 됨
+
+### Comment
+
+| Comment Add  | Comment Delete | 
+| -------- | -------- | 
+| <img width = 350, src = "https://i.imgur.com/srIN8sa.gif">| <img width = 350, src = "https://i.imgur.com/C5YqmpR.gif">|
+
+* 댓글 추가 버튼을 클릭 시, 댓글을 등록할 수 있는 페이지로 넘어갈 수 있음
+* 댓글 수정은 자신이 추가한 댓글만 수정할 수 있음
+* 댓글 삭제는 수정 페이지에서 삭제를 할 수 있음
+
+### Label 및 Milestone
+
+| Label | Milestone |
+| -------- | -------- |
+| <img width = 350, src = "https://i.imgur.com/6lblDjZ.gif">| <img width = 350, src = "https://i.imgur.com/HRzVjen.gif">
+
+* Label과 Milestone 추가, 수정, 삭제 가능
+    * Label 색은 타이핑이나 리로드 버튼을 눌러서 지정할 수 있고, 색을 선택하여 ColorPicker를 불러 지정할 수 있음
+* Milestone Date는 DatePicker를 클릭하여 시간, 날짜를 입력할 수 있으며 기본 값은 현재 날짜입니다.
