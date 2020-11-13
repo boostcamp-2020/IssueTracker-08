@@ -9,6 +9,150 @@
 
 -----
 
+## `💻 Sprint #3 - Day4`
+### 📌 [FE] IssueProvider 구현
+- reduce를 활용하여 프로바이더가 여러 개일 경우, 합쳐주는 IssueProvider를 구현했습니다.
+    ~~~jsx
+    const IssueProvider = ({ contexts, children }) =>
+      contexts.reduce(
+        (prev, context) =>
+          createElement(context, {
+            children: prev,
+          }),
+        children
+      );
+    ~~~
+    
+### 📌 [FE]  Issue, User Store & Reducer 구현
+- Issue 페이지에 Store를 적용하여 이슈 생성 / 리스트 / 이슈 리스트 헤더 등에서 모두 상태관리가 가능하도록 리팩토링하였습니다.
+
+### 📌 [FE]  상단 추가 필터 목록 구현
+- 작성자 추가 필터 옵션 선택 시 팝업창으로 목록을 띄우게 구현했다.
+- 이 때, `import { Dropdown } from 'semantic-ui-react'` 를 사용해봤는데 클래스를 또 따로 만들어서 디자인을 잡아줘야해서 불편함도 있었다.
+
+### 📌 [FE] Close Issue, Reopen Issue 동적으로 구현
+- Reducer를 사용하여 issueDetail Store의 isOpen 값을 변경해주었다.
+- reducer 함수에서 새로운 상태를 만들 때에는 [불변성](https://react.vlpt.us/basic/20-useReducer.html)을 지켜주어야 하기 때문에 spread 연산자를 사용 [reducer](https://medium.com/@ca3rot/%EC%95%84%EB%A7%88-%EC%9D%B4%EA%B2%8C-%EC%A0%9C%EC%9D%BC-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%89%AC%EC%9A%B8%EA%B1%B8%EC%9A%94-react-redux-%ED%94%8C%EB%A1%9C%EC%9A%B0%EC%9D%98-%EC%9D%B4%ED%95%B4-1585e911a0a6) 내부에서 스프레드 연산자를 사용하였다.
+
+### 📌 [FE] Milestone 생성, 수정, 삭제 구현
+- useContext와 useReducer를 사용하여 구현하였다.
+- Label 페이지에서 비슷하게 구현을 했던 내용이라 이전보다는 깨끗하게 코드를 작성할 수 있었다. 하지만 아직도 개선할 점이 많이 남은 것 같다.
+
+### 📌 [FE] 이모티콘 쉽게 import 하는 법 찾음
+~~~js
+@primer/octicons-react 설치
+~~~
+
+~~~js
+import {
+  IssueOpenedIcon,
+  MilestoneIcon,
+  IssueClosedIcon,
+} from '@primer/octicons-react';
+~~~
+
+- [아이콘 종류 확인하는 사이트 😍](https://primer.style/octicons/)
+
+
+---
+
+## `💻 Sprint #3 - Day3`
+### 📌 [FE] `useReducer`를 통한 Label 생성 및 제거 목록 관리
+- label 생성과 제거시 label 목록을 동적으로 관리해야했는데 각기 다른 파일(componenet)에서 상태를 관리하는 것이 어려웠다. useReducer의 dispatch 를 활용하여 상태를 쉽게 관리할 수 있음을 알게 되었다.
+```js
+export const labelReducer = (labels, { type, payload }) => {
+  switch (type) {
+    case 'SET_INIT_DATA':
+      return payload;
+
+    case 'PUT_LABEL':
+      return labels.map((label) => {
+        if (label.id === payload.id) {
+          label = payload;
+        }
+        return label;
+      });
+
+    case 'DELETE_LABEL':
+      return labels.filter((label) => label.id !== payload);
+
+    case 'NEW_LABEL_ADD':
+      return [...labels, payload];
+
+    default:
+      break;
+  }
+};
+```
+### 📌 [FE] `useReducer`를 통한 Label 생성 탭 관리
+- 위와 마찬가지로 동적으로 탭이 열리고 닫힐 필요가 있었고 이를 reducer를 통해 활용할 수 있었다. 각각의 상황에 따른 값을 정의해주어 탭의 상태를 관리하였다.
+```js
+export const newReducer = (isClickNew, { type }) => {
+  switch (type) {
+    case 'NEW_LABEL_TAB_OPEN':
+      return true;
+
+    case 'NEW_LABEL_TAB_CLOSE':
+      return false;
+
+    case 'NEW_LABEL_ADD':
+      return false;
+
+    default:
+      break;
+  }
+};
+```
+### 📌 [FE] Issue Detail 페이지 사용자 정보 동적 할당 (match, useState, useEffect)
+- useState를 사용하여 훅을 만들어서 페이지가 렌더링 될 때 useEffect로 한번만
+  fetch하여 필요한 이슈작성자 정보를 가져와서 동적 할당하였다. match는 각 URL에 들어가는   issueId를 가져왔다.
+- Open, Close의 상태에 따라 UI를 조건부 렌더링 하여 다르게 나타내었다.
+- 
+```jsx
+export default function IssueDetailPage({ match, location }) {
+  const [issueAuthorInfo, setIssueAuthorInfo] = useState('');
+  const [issueId, setIssueId] = useState(1);
+  const userId = localStorage.getItem('userId');
+
+  const getIssueAuthorInfo = async () => {
+    const id = match.params.issueId;
+    setIssueId(id);
+    const options = getOptions();
+    const response = await fetch(GET_ISSUE(id), options);
+    const responseJSON = await response.json();
+    setIssueAuthorInfo(responseJSON.data[0]);
+  };
+
+  useEffect(() => {
+    getIssueAuthorInfo();
+  }, []);
+
+```
+
+
+### 📌 [FE] 코멘트 입력 시 코멘트 생성 버튼 활성화 입력이 안되어 있을 시 비활성화
+- onChange와 Ref, useState 를 이용해서 변경사항을 바로 반영해주는 Handling 함수를
+  만들어 버튼 활성화를 동작시켰다.
+  
+```jsx
+  const IssueCommentForm = ({ issueId, userId }) => {
+  const history = useHistory();
+  const commentRef = useRef(false);
+  const [comment, setComment] = useState('');
+  const [userImage, setUserImage] = useState('');
+
+  const createCommentData = () => {
+    if (commentRef.current.value === '') {
+      return;
+    }
+
+    const comment = {
+      userId: userId,
+      issueId: issueId,
+      content: commentRef.current.value,
+    };
+```
+
 ## `💻 Sprint #3 - Day2`
 ### 📌 [FE] 컴포넌트 폴더 구조 변경
   - 컴포넌트 폴더에 관리할 파일들이 많아져 회의를 통해 폴더 구조를 구체화하였다.
