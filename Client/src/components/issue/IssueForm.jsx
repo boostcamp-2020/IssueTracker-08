@@ -2,8 +2,8 @@ import React, { useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { POST_ISSUE } from '../utils/api';
-import { postOptions } from '../utils/fetchOptions';
+import { POST_ISSUE } from '../../utils/api';
+import { postOptions } from '../../utils/fetchOptions';
 
 const FileAttachMsg =
   'Attach files by dragging & dropping, selecting or pasting them.';
@@ -149,23 +149,25 @@ const NumberOfLetters = styled.div`
   padding-right: 30px;
 `;
 
-const IssueForm = () => {
+const IssueForm = ({ userId }) => {
   const history = useHistory();
   const titleRef = useRef(false);
   const commentRef = useRef(false);
   const [comment, setComment] = useState('');
   const [isChange, setIsChange] = useState(false);
 
-  const createIssueData = (e) => {
+  const createIssueData = async (e) => {
     const issue = {
-      userId: 1,
+      userId: userId,
       milestoneId: null,
       title: titleRef.current.value,
       content: commentRef.current.value,
     };
     const options = postOptions(issue);
-    fetch(POST_ISSUE, options);
-    history.push('/');
+    const response = await fetch(POST_ISSUE, options);
+    const result = await response.json();
+
+    history.push(`/issue/${result.data.issueId}`);
   };
 
   const commentHandleChange = () => {

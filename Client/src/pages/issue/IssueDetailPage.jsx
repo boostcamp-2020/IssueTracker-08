@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import IssueCommentForm from '../../components/IssueCommentForm';
-
-const Container = styled.div`
-  padding: 20px 30px;
-`;
+import CommentStore from '../../stores/CommentStore';
+import IssueDetailStore from '../../stores/IssueDetailStore';
+import CommentForm from '../../components/comment/CommentForm';
+import Comments from '../../components/comment/Comments';
+import { GET_ISSUE } from '../../utils/api.js';
+import { getOptions } from '../../utils/fetchOptions';
+import { getDiffTime } from '../../utils/time';
+import Container from '../../components/shared/container/Container';
+import IssueStateButton from '../../components/issue/IssueStateButton';
+import EditButton from '../../components/issue/IssueEdit';
+import CommentNumber from '../../components/comment/CommentNumber';
 
 const IssueHeader = styled.div`
   display: flex;
@@ -17,48 +23,12 @@ const IssueTitle = styled.h1`
   font-size: 30px;
 `;
 
-const EditButton = styled.button`
-  margin-left: auto;
-  height: 30px;
-  padding: 3px 12px;
-  font-size: 12px;
-  background-color: #fafbfc;
-  &:hover {
-    background-color: #e1e4e8;
-  }
-  border: 1px solid #e8e9ec;
-  border-radius: 6px;
-  cursor: pointer;
-`;
-
 const IssueInfo = styled.div`
   display: flex;
   align-items: center;
   padding-bottom: 8px;
   border-bottom: 1px solid #e1e4e8;
   margin-bottom: 32px;
-`;
-
-const StateButton = styled.button`
-  color: white;
-  background-color: #28a745;
-  border-radius: 2em;
-  border-color: transparent;
-  margin-right: 8px;
-  padding: 5px 12px;
-  height: 35px;
-  display: flex;
-  align-items: center;
-`;
-
-const ExclamIcon = styled.img`
-  width: 15px;
-  margin-right: 4px;
-`;
-
-const State = styled.p`
-  font-size: 14px;
-  font-weight: bold;
 `;
 
 const IssueAuthor = styled.p`
@@ -70,11 +40,6 @@ const IssueAuthor = styled.p`
 
 const IssuedTime = styled.p`
   margin-right: 5px;
-  font-size: 14px;
-  color: #586069;
-`;
-
-const IssueCommentNum = styled.p`
   font-size: 14px;
   color: #586069;
 `;
@@ -151,43 +116,70 @@ const Comment = styled.div`
   padding: 15px;
 `;
 
-export default function IssueDetailPage() {
+export default function IssueDetailPage({ match, location }) {
+  const [issueAuthorInfo, setIssueAuthorInfo] = useState('');
+  const issueId = match.params.issueId;
+  const userId = localStorage.getItem('userId');
+
+  const getIssueAuthorInfo = async () => {
+    const options = getOptions();
+    const response = await fetch(GET_ISSUE(issueId), options);
+    const responseJSON = await response.json();
+    setIssueAuthorInfo(responseJSON.data[0]);
+  };
+
+  useEffect(() => {
+    getIssueAuthorInfo();
+  }, []);
+
+  const IssueProvider = ({ contexts, children }) =>
+    contexts.reduce(
+      (prev, context) =>
+        createElement(context, {
+          children: prev,
+        }),
+      children
+    );
+
   return (
-    <>
-      <Container>
-        <IssueHeader>
-          <IssueTitle>이슈 상세 화면</IssueTitle>
-          <EditButton>Edit</EditButton>
-        </IssueHeader>
-        <IssueInfo>
-          <StateButton>
-            <ExclamIcon src="/images/exclam_circle.svg"></ExclamIcon>
-            <State>Open</State>
-          </StateButton>
-          <IssueAuthor>yoonwoo123</IssueAuthor>
-          <IssuedTime>opened this issue 22 hours ago · </IssuedTime>
-          <IssueCommentNum>0 comments</IssueCommentNum>
-        </IssueInfo>
-        <DiscussionBucket>
-          <Discussion>
-            <AuthorImage src="https://avatars0.githubusercontent.com/u/45933675?s=88&u=2d19e9aa698b2fd95bb9a2ca4888b8d52bf1c304&v=4"></AuthorImage>
-            <DiscussionContent>
-              <CommentTimeline>
-                <CommentAuthor>yoonwoo123</CommentAuthor>
-                <CommentedTime>commented 22 hours ago</CommentedTime>
-                <AuthorLevel>Member</AuthorLevel>
-                <Emoticon src="/images/emoticon.svg"></Emoticon>
-                <Menu src="/images/menu.svg"></Menu>
-              </CommentTimeline>
-              <Comment>
-                <p>이슈 상세 화면입니다!</p>
-                <p>테스트용 아무말</p>
-              </Comment>
-            </DiscussionContent>
-          </Discussion>
-        </DiscussionBucket>
-        <IssueCommentForm />
-      </Container>
-    </>
+    <IssueDetailStore issueId={issueId}>
+      <CommentStore issueId={issueId} state={issueAuthorInfo.isOpen}>
+        <Container>
+          <IssueHeader>
+            <IssueTitle>{issueAuthorInfo.title}</IssueTitle>
+            <EditButton visible={issueAuthorInfo.userId === Number(userId)} />
+          </IssueHeader>
+          <IssueInfo>
+            <IssueStateButton />
+            <IssueAuthor>{issueAuthorInfo.name}</IssueAuthor>
+            <IssuedTime>
+              opened this issue {getDiffTime(issueAuthorInfo.closeAt)} ago ·
+            </IssuedTime>
+            <CommentNumber />
+          </IssueInfo>
+          <DiscussionBucket>
+            <Discussion>
+              <AuthorImage src={`${issueAuthorInfo.imageUrl}`} />
+              <DiscussionContent>
+                <CommentTimeline>
+                  <CommentAuthor>{issueAuthorInfo.name}</CommentAuthor>
+                  <CommentedTime>
+                    commented {getDiffTime(issueAuthorInfo.closeAt)} ago
+                  </CommentedTime>
+                  <AuthorLevel>Member</AuthorLevel>
+                  <Emoticon src="/images/emoticon.svg"></Emoticon>
+                  <Menu src="/images/menu.svg"></Menu>
+                </CommentTimeline>
+                <Comment>
+                  <p>{issueAuthorInfo.content}</p>
+                </Comment>
+              </DiscussionContent>
+            </Discussion>
+            <Comments />
+            <CommentForm userId={userId} />
+          </DiscussionBucket>
+        </Container>
+      </CommentStore>
+    </IssueDetailStore>
   );
 }

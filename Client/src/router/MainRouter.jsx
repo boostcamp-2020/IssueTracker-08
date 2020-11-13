@@ -8,6 +8,7 @@ import {
   Label,
   Milestone,
   MilestonePost,
+  MilestoneEdit,
 } from '../pages';
 
 export default function MainRouter() {
@@ -20,6 +21,7 @@ export default function MainRouter() {
         <Route path="/issue/:issueId" component={IssueDetail} />
         <Route path="/label" component={Label} />
         <Route path="/milestone/post" component={MilestonePost} />
+        <Route path="/milestone/edit/:milestoneId" component={MilestoneEdit} />
         <Route path="/milestone" component={Milestone} />
         <Redirect from="*" to="/" />
       </Switch>
