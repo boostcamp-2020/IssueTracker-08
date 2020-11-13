@@ -4,7 +4,17 @@ export const GET_ISSUE = (id) => config.BASE_URL + 'api/issues/' + id;
 
 export const GET_AUTH = config.BASE_URL + 'auth/';
 
+export const GET_USER = (id) => config.BASE_URL + 'api/users/profile/' + id;
+
 export const POST_ISSUE = config.BASE_URL + 'api/issues';
+export const POST_CLOSE_ISSUE = (id) =>
+  config.BASE_URL + 'api/issues/close/' + id;
+export const POST_OPEN_ISSUE = (id) =>
+  config.BASE_URL + 'api/issues/open/' + id;
+
+export const GET_COMMENTS = (id) =>
+  config.BASE_URL + 'api/issues/comment/' + id;
+export const POST_COMMENT = config.BASE_URL + 'api/issues/comment';
 
 export const GET_LABELS = config.BASE_URL + 'api/labels';
 
@@ -33,3 +43,9 @@ export const PUT_MILESTONE_STATE = (id) =>
 
 export const DELETE_MILESTONE = (id) =>
   config.BASE_URL + 'api/milestones/' + id;
+
+export const GET_ALL_MILESTONES = config.BASE_URL + 'api/milestones';
+
+export const CLOSE_ISSUE = (id) => config.BASE_URL + 'api/issues/close/' + id;
+
+export const OPEN_ISSUE = (id) => config.BASE_URL + 'api/issues/open/' + id;

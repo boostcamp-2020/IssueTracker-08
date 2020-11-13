@@ -1,38 +1,32 @@
-import React, { useRef, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 
-import { POST_ISSUE } from '../../utils/api';
-import { postOptions } from '../../utils/fetchOptions';
+import { GET_USER, POST_COMMENT } from '../../utils/api';
+import { getOptions, postOptions } from '../../utils/fetchOptions';
+import { CommentContext } from '../../stores/CommentStore';
+import IssueCloseButton from '../issue/IssueCloseButton';
+
+const Main = styled.div`
+  display: flex;
+  margin-top: 40px;
+`;
+
+const AuthorImage = styled.img`
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+`;
 
 const FileAttachMsg =
   'Attach files by dragging & dropping, selecting or pasting them.';
 
-const IssueFormContainer = styled.div`
-  width: 80%;
-  margin: auto;
+const CommentFormContainer = styled.div`
+  width: 832px;
   border: 1px solid #ebecef;
   box-sizing: border-box;
   border-top-left-radius: 6px !important;
   border-top-right-radius: 6px !important;
-`;
-
-const IssueTitleInput = styled.input`
-  width: 95%;
-  margin: 10px;
-  padding: 8px;
-  padding-bottom: 0;
-  font-size: 14px;
-  font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  line-height: 20px;
-  background-position: right 8px center;
-  background-color: #fafbfc;
-  border: 1px solid #ebecef;
-  border-radius: 6px;
-  outline: none;
-  &:hover {
-    background-color: white;
-  }
+  margin-left: 20px;
 `;
 
 const WriteTab = styled.div`
@@ -105,115 +99,112 @@ const FileAttachContainer = styled.div`
   color: #586069;
 `;
 
-const SubmitDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px;
-`;
-
 const CancelButton = styled.button`
   border: 0;
   outline: 0;
   background: 0;
   color: #586069;
   cursor: pointer;
-  font-size: 15px;
+`;
+
+const SubmitDiv = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 10px;
 `;
 
 const SubmitButton = styled.button`
-  width: 160px;
+  width: 100px;
   box-shadow: 0px 1px 0px 0px #3dc21b;
-  background: linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
-  background-color: #44c767;
   border-radius: 6px;
   border: 1px solid #18ab29;
   display: inline-block;
-  cursor: pointer;
   color: white;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
-  padding: 10px;
+  padding: 5px 16px;
   text-decoration: none;
   text-shadow: 0px -1px 0px #2f6627;
+  margin-left: 10px;
+  :focus {
+    outline: none;
+  }
+  cursor: ${(props) => (props.state ? 'pointer' : 'default')};
+  background-color: ${(props) => (props.state ? '#44c767' : '#94d3a2')};
 `;
 
-const CommentDiv = styled.div`
-  display: inline;
-`;
-
-const NumberOfLetters = styled.div`
-  color: #586069;
-  text-align: right;
-  margin: 0 8px;
-  padding-right: 30px;
-`;
-
-const IssueForm = ({ userId }) => {
-  const history = useHistory();
-  const titleRef = useRef(false);
+const IssueCommentForm = ({ userId }) => {
+  const { issueId, commentDispatch } = useContext(CommentContext);
   const commentRef = useRef(false);
   const [comment, setComment] = useState('');
-  const [isChange, setIsChange] = useState(false);
+  const [userInfo, setUserInfo] = useState('');
 
-  const createIssueData = async (e) => {
-    const issue = {
+  const createCommentData = async () => {
+    if (commentRef.current.value === '') {
+      return;
+    }
+
+    const comment = {
       userId: userId,
-      milestoneId: null,
-      title: titleRef.current.value,
+      issueId: issueId,
       content: commentRef.current.value,
     };
-    const options = postOptions(issue);
-    const response = await fetch(POST_ISSUE, options);
-    const result = await response.json();
 
-    history.push(`/issue/${result.data.issueId}`);
+    const options = postOptions(comment);
+    const response = await fetch(POST_COMMENT, options);
+    const result = await response.json();
+    commentRef.current.value = '';
+    setComment('');
+
+    comment.name = userInfo.name;
+    comment.imageUrl = userInfo.imageUrl;
+    comment.commentId = result.data.commentId;
+    comment.createAt = result.data.createAt;
+
+    commentDispatch({ type: 'NEW_COMMENT_ADD', payload: comment });
   };
 
   const commentHandleChange = () => {
-    setIsChange(false);
     setComment(commentRef.current.value);
   };
 
-  let countTimer;
-  const commentKeyUp = async () => {
-    clearTimeout(countTimer);
-    if (commentRef) {
-      countTimer = setTimeout(() => {
-        setIsChange(true);
-      }, 500);
-    }
+  const getUserInfo = async () => {
+    const options = getOptions();
+    const response = await fetch(GET_USER(userId), options);
+    const responseJSON = await response.json();
+    setUserInfo(responseJSON.data[0]);
   };
 
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
   return (
-    <IssueFormContainer>
-      <IssueTitleInput placeholder="Title" ref={titleRef} />
-      <WriteTab>Write</WriteTab>
-      <PreviewTab>Preview</PreviewTab>
-      <Hr />
-      <CommentDiv>
+    <Main>
+      <AuthorImage src={userInfo.imageUrl} />
+      <CommentFormContainer>
+        <WriteTab>Write</WriteTab>
+        <PreviewTab>Preview</PreviewTab>
+        <Hr />
         <IssueComment
           placeholder="Leave a comment"
           ref={commentRef}
           value={comment}
           onChange={commentHandleChange}
-          onKeyUp={commentKeyUp}
-        ></IssueComment>
-        <NumberOfLetters>
-          {isChange && `${comment.length} characters`}
-        </NumberOfLetters>
-      </CommentDiv>
-      <FileAttachContainer>
-        <div>{FileAttachMsg}</div>
-      </FileAttachContainer>
-      <SubmitDiv>
-        <Link to="/">
+        />
+        <FileAttachContainer>
+          <div>{FileAttachMsg}</div>
+        </FileAttachContainer>
+        <SubmitDiv>
           <CancelButton>Cancel</CancelButton>
-        </Link>
-        <SubmitButton onClick={createIssueData}>Submit new issue</SubmitButton>
-      </SubmitDiv>
-    </IssueFormContainer>
+          <IssueCloseButton />
+          <SubmitButton state={comment} onClick={createCommentData}>
+            Comment
+          </SubmitButton>
+        </SubmitDiv>
+      </CommentFormContainer>
+    </Main>
   );
 };
 
-export default IssueForm;
+export default IssueCommentForm;

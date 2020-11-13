@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { createElement } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
-import MenuButton from '../../components/shared/button/MenuButton';
 import NewButton from '../../components/shared/button/NewButton';
 import IssueListInfo from '../../components/issue/main/issueMain';
+
+import IssuesStore from '../../stores/IssueStore';
+import UserStore from '../../stores/UserStore';
+import LabelStore from '../../stores/LabelStore';
+
+import LabelBtn from './button/LabelBtn';
+import MilestoneBtn from './button/MilestoneBtn';
 
 const Container = styled.div`
   display: flex;
@@ -50,31 +55,34 @@ const FilterInput = styled.input`
   padding-left: 20px;
 `;
 
+const IssueProvider = ({ contexts, children }) =>
+  contexts.reduce(
+    (prev, context) =>
+      createElement(context, {
+        children: prev,
+      }),
+    children
+  );
+
 export default function IssuePage() {
   return (
-    <Container>
-      <IssueMenu>
-        <MenuDiv flex="1">
-          <FilterButton>Filters</FilterButton>
-          <FilterInput type="text" placeholder="🔎 Search all issue" />
-        </MenuDiv>
-        <MenuDiv flex="0">
-          <MenuButton
-            link="/label"
-            name="Label"
-            img="/images/label.svg"
-          ></MenuButton>
-          <MenuButton
-            link="/milestone"
-            name="Milestones"
-            img="/images/milestone.svg"
-          ></MenuButton>
-        </MenuDiv>
-        <MenuDiv flex="0">
-          <NewButton link="/issue/post" name="issue" />
-        </MenuDiv>
-      </IssueMenu>
-      <IssueListInfo />
-    </Container>
+    <IssueProvider contexts={[IssuesStore, UserStore, LabelStore]}>
+      <Container>
+        <IssueMenu>
+          <MenuDiv flex="1">
+            <FilterButton>Filters</FilterButton>
+            <FilterInput type="text" placeholder="🔎 Search all issue" />
+          </MenuDiv>
+          <MenuDiv flex="0">
+            <LabelBtn />
+            <MilestoneBtn />
+          </MenuDiv>
+          <MenuDiv flex="0">
+            <NewButton link="/issue/post" name="issue" />
+          </MenuDiv>
+        </IssueMenu>
+        <IssueListInfo />
+      </Container>
+    </IssueProvider>
   );
 }

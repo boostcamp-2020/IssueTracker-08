@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 
-import { GET_OPEN_ISSUE } from '../../../utils/api';
-import { getOptions } from '../../../utils/fetchOptions';
 import IssueTemplate from './issueListTemplate';
+import { IssueContext } from '../../../stores/IssueStore';
 
 const NoIssueResult = styled.div`
   height: 300px;
@@ -20,24 +19,17 @@ const NoIssueResult = styled.div`
 `;
 
 const IssueList = () => {
-  const [issues, setIssues] = useState([]);
-
-  const loadOpenIssues = async () => {
-    const response = await fetch(GET_OPEN_ISSUE, getOptions());
-    const result = await response.json();
-    setIssues(result.data);
-    return result.data;
-  };
-
-  useEffect(() => {
-    loadOpenIssues();
-  }, []);
+  const { issues, checkItems } = useContext(IssueContext);
 
   return (
     <div className="list-wrapper">
       {issues.length > 0 ? (
         issues.map((issue) => (
-          <IssueTemplate key={issue.issueId} issue={issue} />
+          <IssueTemplate
+            key={issue.issueId}
+            issue={issue}
+            checkItems={checkItems}
+          />
         ))
       ) : (
         <NoIssueResult>
