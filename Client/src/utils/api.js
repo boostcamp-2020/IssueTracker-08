@@ -19,3 +19,17 @@ export const GET_OPEN_ISSUE = config.BASE_URL + 'api/issues/open';
 export const GET_CLOSED_ISSUE = config.BASE_URL + 'api/issues/closed';
 
 export const GET_ALL_USERS = config.BASE_URL + 'api/users';
+
+export const GET_MILESTONES = config.BASE_URL + 'api/milestones';
+
+export const GET_MILESTONE = (id) => config.BASE_URL + 'api/milestones/' + id;
+
+export const POST_MILESTONE = config.BASE_URL + 'api/milestones';
+
+export const PUT_MILESTONE = (id) => config.BASE_URL + 'api/milestones/' + id;
+
+export const PUT_MILESTONE_STATE = (id) =>
+  config.BASE_URL + 'api/milestones/' + id + '/state';
+
+export const DELETE_MILESTONE = (id) =>
+  config.BASE_URL + 'api/milestones/' + id;

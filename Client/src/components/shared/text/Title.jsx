@@ -7,8 +7,8 @@ const TitleStyle = styled.p`
   margin: 0px;
 `;
 
-const Title = (prop) => {
-  return <TitleStyle>{prop.text}</TitleStyle>;
+const Title = ({ text }) => {
+  return <TitleStyle>{text}</TitleStyle>;
 };
 
 export default Title;

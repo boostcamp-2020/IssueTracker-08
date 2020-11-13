@@ -7,7 +7,7 @@ import {
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
-import getDiffTime from '../../../utils/getDiffTime';
+import { getDiffTime } from '../../../utils/time';
 
 const Container = styled.div`
   display: flex;
